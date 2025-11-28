@@ -1,0 +1,187 @@
+\documentclass[11pt,a4paper]{article}
+
+% Encoding and language
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[czech,english]{babel}
+
+% Page layout
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    margin=2.5cm
+}
+
+% Fonts
+\usepackage{lmodern}
+\usepackage{inconsolata} % nicer monospaced font for variable names
+
+% Tables
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{multirow}
+
+% Spacing and links
+\usepackage{setspace}
+\onehalfspacing
+\usepackage[hidelinks]{hyperref}
+
+% Paragraph spacing
+\setlength{\parskip}{6pt}
+\setlength{\parindent}{0pt}
+
+\title{Codebook for \texttt{normalised\_responses}}
+\author{Juda Kaleta}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\textbf{Data files.} The dataset is distributed in two formats: 
+\texttt{normalised\_responses\_<DATE>.RData} (R native) and 
+\texttt{normalised\_responses\_<DATE>.xlsx} (Excel). 
+Variable names and coding are identical across formats.
+
+\smallskip
+
+\paragraph{Metadata and context}
+These variables describe the school, class, and respondent context and support filtering, grouping, and multi-level models.
+
+{\small
+\begin{longtable}{p{2cm} p{1cm} p{5.5cm} p{4cm}}
+\caption{Codebook --- Metadata}\\
+\toprule
+\textbf{Variable} & \textbf{Type} & \textbf{Description} & \textbf{Coding}\\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Variable} & \textbf{Type} & \textbf{Description} & \textbf{Coding}\\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+
+\texttt{school\_id}     & factor  & School identifier (anonymized) & S01, S02, \dots \\
+\texttt{school\_level}  & factor  & School level (e.g., vocational, gymnasium, lower/higher secondary\dots) & categorical \\
+\texttt{school\_type}   & factor  & School type (public, church, private) & categorical \\
+\texttt{region}         & factor  & Czech region of the school & categorical \\
+\texttt{class\_label}   & factor  & Class identifier & e.g., 1, 2, 9A, septima \\
+\texttt{gender}         & factor  & Student gender (recoded) & M~=~male; F~=~female; O~=~other \\
+\texttt{history\_grade} & integer & Last reported history grade & 1--5 \\
+\end{longtable}
+}
+
+\paragraph{Historical knowledge (KN)}
+Items KN1--KN6 are multiple-choice knowledge questions scored via exact-text matching. Each is coded 0 (incorrect) or 1 (correct).
+{\small
+\begin{longtable}{p{2cm} p{1cm} p{5.5cm} p{4cm}}
+\caption{Codebook --- Knowledge}\\
+\toprule
+\textbf{Variable} & \textbf{Type} & \textbf{Description} & \textbf{Coding}\\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Variable} & \textbf{Type} & \textbf{Description} & \textbf{Coding}\\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+
+\texttt{KN1-KN6}  & integer & Knowledge items on events of 1918--1929 & 0 = incorrect, 1 = correct \\
+\end{longtable}
+
+\paragraph{Historical Perspective-Taking (HPT)}
+The HPT instrument assesses how well explanations align with Hannes's perspective in the 1930 vignette. Items are organised into three reasoning modes: POP (populist), ROA (role-of-agent), and CONT (context). Responses use a 1--4 “fit to situation’’ scale.
+
+{\small
+\begin{longtable}{p{2cm} p{1cm} p{5.5cm} p{4cm}}
+\caption{Codebook --- HPT}\\
+\toprule
+\textbf{Variable} & \textbf{Type} & \textbf{Description} & \textbf{Coding}\\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Variable} & \textbf{Type} & \textbf{Description} & \textbf{Coding}\\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+
+\texttt{POP1-POP3}   & integer & HPT populist reasoning items & 1--4 (higher = better fit) \\
+\texttt{ROA1-ROA3}   & integer & HPT role-of-agent reasoning items & 1--4 \\
+\texttt{CONT1-CONT3} & integer & HPT context reasoning items & 1--4 \\
+\end{longtable}
+}
+
+\paragraph{FR-LF mini (Right-wing authoritarian attitudes)}
+Two short subscales: RD (endorsement of a strict leader / one-party rule) and NS (statements normalising or relativising Nazi crimes). Items use a standard 1--5 Likert scale.
+
+{\small
+\begin{longtable}{p{2cm} p{1cm} p{5.5cm} p{4cm}}
+\caption{Codebook --- FR-LF mini}\\
+\toprule
+\textbf{Variable} & \textbf{Type} & \textbf{Description} & \textbf{Coding}\\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Variable} & \textbf{Type} & \textbf{Description} & \textbf{Coding}\\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+
+\texttt{RD1-RD3} & integer & Right-wing dictatorship acceptance & 1--5 (Likert) \\
+\texttt{NS1-NS3} & integer & Nazi-sympathy / relativization statements & 1--5 (Likert) \\
+\end{longtable}
+}
+
+\paragraph{KSA-3 (Authoritarianism)}
+An established 9-item authoritarianism short scale with three three-item facets: A (authoritarian aggression), U (submission/obedience), and K (conventionalism). All items use a 1--5 Likert response.
+
+{\small
+\begin{longtable}{p{2cm} p{1cm} p{5.5cm} p{4cm}}
+\caption{Codebook --- KSA-3}\\
+\toprule
+\textbf{Variable} & \textbf{Type} & \textbf{Description} & \textbf{Coding}\\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Variable} & \textbf{Type} & \textbf{Description} & \textbf{Coding}\\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+
+\texttt{A1-A3} & integer & Authoritarian aggression subscale & 1--5 (Likert) \\
+\texttt{U1-U3} & integer & Submission / obedience subscale & 1--5 (Likert) \\
+\texttt{K1-K3} & integer & Conventionalism subscale & 1--5 (Likert) \\
+\end{longtable}
+}
+
+\paragraph{SDR-5 (Social desirability)}
+A brief social desirability scale. SDR2--SDR4 are already reversed in the dataset (1$\leftrightarrow$5). Items can be summed or averaged depending on analytic needs.
+
+{\small
+\begin{longtable}{p{2cm} p{1cm} p{5.5cm} p{4cm}}
+\caption{Codebook --- SDR-5}\\
+\toprule
+\textbf{Variable} & \textbf{Type} & \textbf{Description} & \textbf{Coding}\\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Variable} & \textbf{Type} & \textbf{Description} & \textbf{Coding}\\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+
+\texttt{SDR1} & integer & Social desirability item 1 & 1--5 (Likert) \\
+\texttt{SDR2} & integer & Social desirability item 2 (reversed) & 1--5 (reversed Likert) \\
+\texttt{SDR3} & integer & Social desirability item 3 (reversed) & 1--5 (reversed Likert) \\
+\texttt{SDR4} & integer & Social desirability item 4 (reversed) & 1--5 (reversed Likert) \\
+\texttt{SDR5} & integer & Social desirability item 5 & 1--5 (Likert) \\
+\end{longtable}
+}
+
+\end{document}
