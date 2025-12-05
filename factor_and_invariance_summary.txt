@@ -1,0 +1,162 @@
+===== PCA =====
+Principal Components Analysis
+Call: principal(r = hpt_items, nfactors = 3, rotate = "varimax")
+Standardized loadings (pattern matrix) based upon correlation matrix
+        RC1   RC2   RC3   h2   u2 com
+POP1  -0.66  0.28  0.32 0.62 0.38 1.8
+POP2   0.08  0.87 -0.09 0.78 0.22 1.0
+POP3  -0.28  0.74  0.17 0.66 0.34 1.4
+ROA1   0.61  0.06  0.26 0.45 0.55 1.4
+ROA2   0.09  0.02  0.91 0.84 0.16 1.0
+ROA3   0.66 -0.09  0.07 0.45 0.55 1.1
+CONT1  0.63 -0.23  0.19 0.48 0.52 1.5
+CONT2  0.47 -0.32  0.06 0.32 0.68 1.8
+CONT3  0.68  0.12 -0.23 0.52 0.48 1.3
+
+                       RC1  RC2  RC3
+SS loadings           2.42 1.57 1.14
+Proportion Var        0.27 0.17 0.13
+Cumulative Var        0.27 0.44 0.57
+Proportion Explained  0.47 0.31 0.22
+Cumulative Proportion 0.47 0.78 1.00
+
+Mean item complexity =  1.4
+Test of the hypothesis that 3 components are sufficient.
+
+The root mean square of the residuals (RMSR) is  0.1 
+ with the empirical chi square  65.43  with prob <  2.3e-09 
+
+Fit based upon off diagonal values = 0.8
+===== EFA =====
+Factor Analysis using method =  ml
+Call: fa(r = hpt_items, nfactors = 2, rotate = "varimax", fm = "ml")
+Standardized loadings (pattern matrix) based upon correlation matrix
+        ML2   ML1      h2   u2 com
+POP1  -0.62  0.23 0.44388 0.56 1.3
+POP2   0.09  0.87 0.76066 0.24 1.0
+POP3  -0.31  0.53 0.37599 0.62 1.6
+ROA1   0.45 -0.05 0.20026 0.80 1.0
+ROA2   0.03  0.00 0.00081 1.00 1.1
+ROA3   0.55 -0.12 0.31694 0.68 1.1
+CONT1  0.52 -0.22 0.31847 0.68 1.4
+CONT2  0.42 -0.19 0.21761 0.78 1.4
+CONT3  0.54  0.00 0.29072 0.71 1.0
+
+                       ML2  ML1
+SS loadings           1.73 1.19
+Proportion Var        0.19 0.13
+Cumulative Var        0.19 0.33
+Proportion Explained  0.59 0.41
+Cumulative Proportion 0.59 1.00
+
+Mean item complexity =  1.2
+Test of the hypothesis that 2 factors are sufficient.
+
+df null model =  36  with the objective function =  1.46 with Chi Square =  115.21
+df of  the model are 19  and the objective function was  0.23 
+
+The root mean square of the residuals (RMSR) is  0.06 
+The df corrected root mean square of the residuals is  0.08 
+
+The harmonic n.obs is  80 with the empirical chi square  20.55  with prob <  0.36 
+The total n.obs was  84  with Likelihood Chi Square =  17.89  with prob <  0.53 
+
+Tucker Lewis Index of factoring reliability =  1.027
+RMSEA index =  0  and the 90 % confidence intervals are  0 0.09
+BIC =  -66.3
+Fit based upon off diagonal values = 0.93
+Measures of factor score adequacy             
+                                                   ML2  ML1
+Correlation of (regression) scores with factors   0.85 0.89
+Multiple R square of scores with factors          0.72 0.79
+Minimum correlation of possible factor scores     0.44 0.58
+
+===== CFA (2-factor) =====
+lavaan 0.6-20 ended normally after 20 iterations
+
+  Estimator                                         ML
+  Optimization method                           NLMINB
+  Number of model parameters                        19
+
+                                                  Used       Total
+  Number of observations                            78          84
+
+Model Test User Model:
+                                                      
+  Test statistic                                35.416
+  Degrees of freedom                                26
+  P-value (Chi-square)                           0.103
+
+Model Test Baseline Model:
+
+  Test statistic                               120.211
+  Degrees of freedom                                36
+  P-value                                        0.000
+
+User Model versus Baseline Model:
+
+  Comparative Fit Index (CFI)                    0.888
+  Tucker-Lewis Index (TLI)                       0.845
+
+Loglikelihood and Information Criteria:
+
+  Loglikelihood user model (H0)               -908.416
+  Loglikelihood unrestricted model (H1)       -890.707
+                                                      
+  Akaike (AIC)                                1854.831
+  Bayesian (BIC)                              1899.609
+  Sample-size adjusted Bayesian (SABIC)       1839.707
+
+Root Mean Square Error of Approximation:
+
+  RMSEA                                          0.068
+  90 Percent confidence interval - lower         0.000
+  90 Percent confidence interval - upper         0.120
+  P-value H_0: RMSEA <= 0.050                    0.282
+  P-value H_0: RMSEA >= 0.080                    0.391
+
+Standardized Root Mean Square Residual:
+
+  SRMR                                           0.079
+
+Parameter Estimates:
+
+  Standard errors                             Standard
+  Information                                 Expected
+  Information saturated (h1) model          Structured
+
+Latent Variables:
+                   Estimate  Std.Err  z-value  P(>|z|)   Std.lv  Std.all
+  HPT_PC =~                                                             
+    POP1              0.695    0.118    5.885    0.000    0.695    0.701
+    POP2              0.269    0.121    2.230    0.026    0.269    0.288
+    POP3              0.450    0.112    4.011    0.000    0.450    0.498
+    CONT1            -0.493    0.111   -4.458    0.000   -0.493   -0.547
+    CONT2            -0.544    0.134   -4.045    0.000   -0.544   -0.501
+    CONT3            -0.411    0.109   -3.760    0.000   -0.411   -0.469
+  HPT_ROA =~                                                            
+    ROA1              0.498    0.138    3.612    0.000    0.498    0.497
+    ROA2              0.057    0.113    0.506    0.613    0.057    0.070
+    ROA3              0.688    0.153    4.504    0.000    0.688    0.719
+
+Covariances:
+                   Estimate  Std.Err  z-value  P(>|z|)   Std.lv  Std.all
+  HPT_PC ~~                                                             
+    HPT_ROA          -0.718    0.149   -4.806    0.000   -0.718   -0.718
+
+Variances:
+                   Estimate  Std.Err  z-value  P(>|z|)   Std.lv  Std.all
+   .POP1              0.500    0.123    4.080    0.000    0.500    0.508
+   .POP2              0.804    0.133    6.047    0.000    0.804    0.917
+   .POP3              0.615    0.112    5.512    0.000    0.615    0.752
+   .CONT1             0.569    0.108    5.289    0.000    0.569    0.701
+   .CONT2             0.881    0.160    5.497    0.000    0.881    0.749
+   .CONT3             0.598    0.106    5.618    0.000    0.598    0.780
+   .ROA1              0.757    0.150    5.060    0.000    0.757    0.753
+   .ROA2              0.654    0.105    6.229    0.000    0.654    0.995
+   .ROA3              0.444    0.181    2.451    0.014    0.444    0.484
+    HPT_PC            1.000                               1.000    1.000
+    HPT_ROA           1.000                               1.000    1.000
+
+
+===== Measurement Invariance =====
