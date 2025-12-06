@@ -1,0 +1,10 @@
+07_appendix-tables-and-figures.Rmd
+
+Purpose: Produce clean publication-ready outputs.
+Content:
+
+Tables for reliability, CFA, model summaries.
+
+Plots of HPT score distributions, ideology distributions, predicted effects.
+
+Item characteristic curves for DIF findings.

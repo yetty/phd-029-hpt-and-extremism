@@ -1,0 +1,30 @@
+R = Rscript
+
+# List your Rmd reports here
+RMDS = \
+  01_measurement-checks.Rmd \
+  02_descriptives-and-zero-order.Rmd \
+  03_multilevel-models-hypothesis-tests.Rmd
+
+PDFS = $(RMDS:.Rmd=.pdf)
+
+.PHONY: all clean list
+
+all: $(PDFS)
+
+# Generic rule: any .Rmd -> .pdf
+%.pdf: %.Rmd
+	$(R) -e "rmarkdown::render('$<', output_format='pdf_document', output_file='$@')"
+
+# File-specific data dependency (this report loads normalised_responses.RData)
+01_measurement-checks.pdf: normalised_responses.RData
+02_descriptives-and-zero-order.pdf: normalised_responses.RData
+03_multilevel-models-hypothesis-tests.pdf: normalised_responses.RData
+
+list:
+	@echo "Rmd files:" $(RMDS)
+
+clean:
+	@echo "Cleaning PDFs and knit/LaTeX artifacts…"
+	@rm -f *.pdf *.md *.tex *.aux *.log *.out *.toc *.bbl *.blg *.fls *.fdb_latexmk
+	@rm -rf */_cache */cache */*_cache */figure */figs

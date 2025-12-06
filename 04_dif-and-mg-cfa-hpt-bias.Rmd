@@ -1,0 +1,14 @@
+05_dif-and-mg-cfa-hpt-bias.Rmd
+
+Purpose: Assess whether ideological attitude groups respond differently to HPT items even with equal underlying HPT competence.
+Content:
+
+Create low/high ideology groups.
+
+DIF analysis for each HPT item.
+
+Multi-group CFA (configural → metric → scalar) to test measurement invariance.
+
+Interpretation: Does measurement bias support or weaken H1?
+
+This file directly implements the “ideological contamination” tests proposed in the PCI RR.
