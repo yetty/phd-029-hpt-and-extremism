@@ -1,4 +1,4 @@
-07_appendix-tables-and-figures.Rmd
+06_appendix-tables-and-figures.Rmd
 
 Purpose: Produce clean publication-ready outputs.
 Content:
