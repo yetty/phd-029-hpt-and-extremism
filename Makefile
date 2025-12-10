@@ -16,7 +16,7 @@ all: $(PDFS)
 
 # Generic rule: any .Rmd -> .pdf
 %.pdf: %.Rmd
-	$(R) -e "rmarkdown::render('$<', output_format='pdf_document', output_file='$@')"
+	$(R) -e "rmarkdown::render('$<', output_format='all', output_dir='outputs')"
 
 # File-specific data dependency (this report loads normalised_responses.RData)
 01_measurement-checks.pdf: normalised_responses.RData
@@ -27,8 +27,3 @@ all: $(PDFS)
 
 list:
 	@echo "Rmd files:" $(RMDS)
-
-clean:
-	@echo "Cleaning PDFs and knit/LaTeX artifacts…"
-	@rm -f *.pdf *.md *.tex *.aux *.log *.out *.toc *.bbl *.blg *.fls *.fdb_latexmk
-	@rm -rf */_cache */cache */*_cache */figure */figs

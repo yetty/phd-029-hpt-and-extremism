@@ -1,0 +1,1239 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  10pt,
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[landscape,margin=0.7in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\setlength{\LTcapwidth}{\textwidth}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Measurement checks --- HPT (Czech data)},
+  pdfauthor={HPT and Extremism project},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Measurement checks --- HPT (Czech data)}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{Reliability, dimensionality, presentism-contextualization
+contrast, and ICCs}
+\author{HPT and Extremism project}
+\date{2025-12-10}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{3}
+\tableofcontents
+}
+\hypertarget{what-this-document-does}{%
+\section{What this document does}\label{what-this-document-does}}
+
+This report checks whether our \textbf{Historical Perspective-Taking
+(HPT)} instrument behaves well \textbf{before} we run any hypothesis
+tests.
+
+We do four things:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Reliability:} Are the HPT subscales internally consistent? We
+  report \textbf{Cronbach's alpha (\(\alpha\))} and \textbf{McDonald's
+  omega (\(\omega\))} for the three HPT modes: \textbf{POP},
+  \textbf{ROA}, \textbf{CONT} (three items each; response scale 1-4).
+\item
+  \textbf{Dimensionality (CFA/EFA):} Does the \textbf{factor structure}
+  match prior research (roughly, \textbf{POP+CONT together} versus
+  \textbf{ROA} as a separate factor; or three distinct but correlated
+  factors)?
+\item
+  \textbf{Presentism-contextualization contrast:} Do \textbf{POP}
+  (presentist) and \textbf{CONT} (contextualization) show the expected
+  contrast in the Czech data (differences in means / correlations)?
+\item
+  \textbf{Class-level clustering (ICCs):} Are scores clustered by
+  \textbf{class} (so that multilevel models are justified later)?
+\end{enumerate}
+
+\begin{quote}
+\textbf{Input:} We assume a file \texttt{normalised\_data.RData}
+providing an object \texttt{normalised\_data} with variables
+\texttt{POP1-3}, \texttt{ROA1-3}, \texttt{CONT1-3}, and
+\texttt{class\_label}. \textbf{Output:} A human-readable PDF with
+tables/figures and short interpretations.
+\end{quote}
+
+\hypertarget{setup-and-data-loading}{%
+\section{Setup and data loading}\label{setup-and-data-loading}}
+
+We load common R packages, then load the preprocessed dataset your
+pipeline already created.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{options}\NormalTok{(}\AttributeTok{width =} \DecValTok{120}\NormalTok{)}
+
+\CommentTok{\# Data handling \& plots}
+\FunctionTok{library}\NormalTok{(tidyverse)}
+
+\CommentTok{\# Psychometrics}
+\FunctionTok{library}\NormalTok{(psych)        }\CommentTok{\# alpha, omega, polychoric, EFA helpers}
+\FunctionTok{library}\NormalTok{(lavaan)       }\CommentTok{\# CFA}
+\FunctionTok{library}\NormalTok{(semTools)     }\CommentTok{\# model comparisons \& extras}
+
+\CommentTok{\# Multilevel ICCs}
+\FunctionTok{library}\NormalTok{(lme4)}
+\FunctionTok{library}\NormalTok{(performance)}
+
+\CommentTok{\# Tables}
+\FunctionTok{library}\NormalTok{(knitr)}
+
+
+\CommentTok{\# Make kableExtra use longtable/booktabs and avoid loading tabu}
+\FunctionTok{options}\NormalTok{(}\AttributeTok{kableExtra.latex.load\_packages =} \ConstantTok{FALSE}\NormalTok{)}
+\FunctionTok{library}\NormalTok{(kableExtra)}
+
+\CommentTok{\# Load the dataset created in 00\_data{-}preparation}
+\FunctionTok{load}\NormalTok{(}\StringTok{"normalised\_responses.RData"}\NormalTok{)}
+\FunctionTok{stopifnot}\NormalTok{(}\FunctionTok{exists}\NormalTok{(}\StringTok{"normalised\_responses"}\NormalTok{))}
+\NormalTok{dat }\OtherTok{\textless{}{-}}\NormalTok{ normalised\_responses}
+
+
+\NormalTok{print\_tbl }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(df, caption, }\AttributeTok{digits =} \DecValTok{3}\NormalTok{, }\AttributeTok{escape =} \ConstantTok{TRUE}\NormalTok{) \{}
+  \FunctionTok{kbl}\NormalTok{(df, }\AttributeTok{booktabs =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{longtable =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{caption =}\NormalTok{ caption, }\AttributeTok{digits =}\NormalTok{ digits, }\AttributeTok{escape =}\NormalTok{ escape) }\SpecialCharTok{|\textgreater{}}
+    \FunctionTok{kable\_styling}\NormalTok{(}\AttributeTok{full\_width =} \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{latex\_options =} \FunctionTok{c}\NormalTok{(}\StringTok{"hold\_position"}\NormalTok{))}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+We verify that \textbf{HPT items} and \textbf{class labels} exist. If
+something is missing, we stop with a clear message.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\# {-}{-} check{-}columns {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\NormalTok{hpt\_cols }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(}\StringTok{"POP"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{), }\FunctionTok{paste0}\NormalTok{(}\StringTok{"ROA"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{), }\FunctionTok{paste0}\NormalTok{(}\StringTok{"CONT"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{))}
+\NormalTok{need   }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(hpt\_cols, }\StringTok{"class\_label"}\NormalTok{)}
+\NormalTok{miss   }\OtherTok{\textless{}{-}} \FunctionTok{setdiff}\NormalTok{(need, }\FunctionTok{names}\NormalTok{(dat))}
+\ControlFlowTok{if}\NormalTok{ (}\FunctionTok{length}\NormalTok{(miss)) }\FunctionTok{stop}\NormalTok{(}\StringTok{"Missing variables: "}\NormalTok{, }\FunctionTok{paste}\NormalTok{(miss, }\AttributeTok{collapse =} \StringTok{", "}\NormalTok{))}
+
+\CommentTok{\# Keep rows complete on HPT items for psychometric checks}
+\NormalTok{hpt\_items }\OtherTok{\textless{}{-}}\NormalTok{ dat }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(}\FunctionTok{all\_of}\NormalTok{(hpt\_cols)) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{drop\_na}\NormalTok{()}
+\NormalTok{n\_complete }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(hpt\_items)}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"Rows with complete HPT data:"}\NormalTok{, n\_complete, }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows with complete HPT data: 155
+\end{verbatim}
+
+We create an \textbf{analysis dataframe} keeping only rows with complete
+HPT data and a non-missing \texttt{class\_label}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Keep only rows that are COMPLETE on all HPT items AND have a class\_label}
+\NormalTok{keep }\OtherTok{\textless{}{-}} \FunctionTok{complete.cases}\NormalTok{(dat[, hpt\_cols]) }\SpecialCharTok{\&} \SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(dat}\SpecialCharTok{$}\NormalTok{class\_label)}
+
+\NormalTok{analysis\_df }\OtherTok{\textless{}{-}}\NormalTok{ dat[keep, }\FunctionTok{c}\NormalTok{(hpt\_cols, }\StringTok{"class\_label"}\NormalTok{)] }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{as\_tibble}\NormalTok{()}
+
+\NormalTok{nrow\_all   }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(dat)}
+\NormalTok{nrow\_keep  }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(analysis\_df)}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"Rows in full data: "}\NormalTok{, nrow\_all,  }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{,}
+    \StringTok{"Rows kept (complete HPT + class\_label): "}\NormalTok{, nrow\_keep, }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, }\AttributeTok{sep =} \StringTok{""}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows in full data: 164
+## Rows kept (complete HPT + class_label): 155
+\end{verbatim}
+
+\hypertarget{step-1-descriptives-and-scale-construction}{%
+\section{Step 1 --- Descriptives and scale
+construction}\label{step-1-descriptives-and-scale-construction}}
+
+\textbf{Why:} Simple summaries catch obvious data problems and help
+readers develop intuition.
+
+\begin{itemize}
+\tightlist
+\item
+  We compute subscale \textbf{means} for POP, ROA, CONT (each ranges
+  1-4).
+\item
+  We also compute a grand \textbf{HPT\_total} (mean of the three
+  subscales).
+\item
+  Then we print summaries and a quick correlation overview.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{hpt\_items }\OtherTok{\textless{}{-}}\NormalTok{ analysis\_df }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(}\FunctionTok{all\_of}\NormalTok{(hpt\_cols))  }\CommentTok{\# 9 HPT items}
+
+\NormalTok{hpt\_scores }\OtherTok{\textless{}{-}}\NormalTok{ hpt\_items }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{POP  =} \FunctionTok{rowMeans}\NormalTok{(}\FunctionTok{select}\NormalTok{(., }\FunctionTok{starts\_with}\NormalTok{(}\StringTok{"POP"}\NormalTok{)),  }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{ROA  =} \FunctionTok{rowMeans}\NormalTok{(}\FunctionTok{select}\NormalTok{(., }\FunctionTok{starts\_with}\NormalTok{(}\StringTok{"ROA"}\NormalTok{)),  }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{CONT =} \FunctionTok{rowMeans}\NormalTok{(}\FunctionTok{select}\NormalTok{(., }\FunctionTok{starts\_with}\NormalTok{(}\StringTok{"CONT"}\NormalTok{)), }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{HPT\_total =} \FunctionTok{rowMeans}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{c}\NormalTok{(POP, ROA, CONT)), }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{  )}
+
+\FunctionTok{summary}\NormalTok{(}\FunctionTok{select}\NormalTok{(hpt\_scores, POP, ROA, CONT, HPT\_total))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       POP             ROA             CONT         HPT_total    
+##  Min.   :1.000   Min.   :1.000   Min.   :1.000   Min.   :1.000  
+##  1st Qu.:1.333   1st Qu.:2.333   1st Qu.:2.333   1st Qu.:2.333  
+##  Median :2.000   Median :3.000   Median :2.667   Median :2.556  
+##  Mean   :1.981   Mean   :2.813   Mean   :2.720   Mean   :2.505  
+##  3rd Qu.:2.500   3rd Qu.:3.333   3rd Qu.:3.333   3rd Qu.:2.778  
+##  Max.   :3.667   Max.   :4.000   Max.   :4.000   Max.   :3.333
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cor}\NormalTok{(}\FunctionTok{select}\NormalTok{(hpt\_scores, POP, ROA, CONT), }\AttributeTok{use =} \StringTok{"pairwise.complete.obs"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##             POP        ROA       CONT
+## POP   1.0000000 -0.1708805 -0.3756052
+## ROA  -0.1708805  1.0000000  0.4024527
+## CONT -0.3756052  0.4024527  1.0000000
+\end{verbatim}
+
+\hypertarget{step-2-reliability-alpha-and-omega-for-pop-roa-cont}{%
+\section{\texorpdfstring{Step 2 --- Reliability: \(\alpha\) and
+\(\omega\) for
+POP-ROA-CONT}{Step 2 --- Reliability: \textbackslash alpha and \textbackslash omega for POP-ROA-CONT}}\label{step-2-reliability-alpha-and-omega-for-pop-roa-cont}}
+
+\textbf{Why:} Reliability indicates whether items that are supposed to
+measure the same thing \textbf{hang together}. We report:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{\(\alpha\) (alpha)} on raw item data (common baseline), and
+\item
+  \textbf{\(\alpha\) and \(\omega\)} from \textbf{polychoric}
+  correlations (better for ordinal 1-4 items).
+\end{itemize}
+
+Interpretation tip for readers:
+\textbf{\(\omega_{\text{total}} \gtrsim .70\)} is often seen as
+acceptable; \textbf{\(\omega_{\text{hier}}\)} indicates strength of a
+general factor (useful if items might reflect a dominant common trait).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{alpha\_poly }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x) \{}
+\NormalTok{  pc }\OtherTok{\textless{}{-}}\NormalTok{ psych}\SpecialCharTok{::}\FunctionTok{polychoric}\NormalTok{(x)}\SpecialCharTok{$}\NormalTok{rho}
+\NormalTok{  psych}\SpecialCharTok{::}\FunctionTok{alpha}\NormalTok{(pc, }\AttributeTok{n.obs =} \FunctionTok{nrow}\NormalTok{(x))}
+\NormalTok{\}}
+\NormalTok{omega\_poly }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x) \{}
+\NormalTok{  pc }\OtherTok{\textless{}{-}}\NormalTok{ psych}\SpecialCharTok{::}\FunctionTok{polychoric}\NormalTok{(x)}\SpecialCharTok{$}\NormalTok{rho}
+\NormalTok{  psych}\SpecialCharTok{::}\FunctionTok{omega}\NormalTok{(pc, }\AttributeTok{n.obs =} \FunctionTok{nrow}\NormalTok{(x), }\AttributeTok{nfactors =} \DecValTok{1}\NormalTok{, }\AttributeTok{plot =} \ConstantTok{FALSE}\NormalTok{)}
+\NormalTok{\}}
+
+\NormalTok{subsets }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}
+  \AttributeTok{POP  =}\NormalTok{ hpt\_items }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(}\FunctionTok{starts\_with}\NormalTok{(}\StringTok{"POP"}\NormalTok{)),}
+  \AttributeTok{ROA  =}\NormalTok{ hpt\_items }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(}\FunctionTok{starts\_with}\NormalTok{(}\StringTok{"ROA"}\NormalTok{)),}
+  \AttributeTok{CONT =}\NormalTok{ hpt\_items }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(}\FunctionTok{starts\_with}\NormalTok{(}\StringTok{"CONT"}\NormalTok{))}
+\NormalTok{)}
+
+\NormalTok{rel\_table }\OtherTok{\textless{}{-}}\NormalTok{ purrr}\SpecialCharTok{::}\FunctionTok{imap\_dfr}\NormalTok{(subsets, }\ControlFlowTok{function}\NormalTok{(df, nm)\{}
+\NormalTok{  a\_raw  }\OtherTok{\textless{}{-}}\NormalTok{ psych}\SpecialCharTok{::}\FunctionTok{alpha}\NormalTok{(df)}
+\NormalTok{  a\_poly }\OtherTok{\textless{}{-}} \FunctionTok{alpha\_poly}\NormalTok{(df)}
+\NormalTok{  om     }\OtherTok{\textless{}{-}} \FunctionTok{omega\_poly}\NormalTok{(df)}
+  \FunctionTok{tibble}\NormalTok{(}
+    \AttributeTok{scale =}\NormalTok{ nm,}
+    \AttributeTok{k\_items =} \FunctionTok{ncol}\NormalTok{(df),}
+    \AttributeTok{alpha\_raw  =} \FunctionTok{unname}\NormalTok{(a\_raw}\SpecialCharTok{$}\NormalTok{total}\SpecialCharTok{$}\NormalTok{raw\_alpha),}
+    \AttributeTok{alpha\_poly =} \FunctionTok{unname}\NormalTok{(a\_poly}\SpecialCharTok{$}\NormalTok{total}\SpecialCharTok{$}\NormalTok{raw\_alpha),}
+    \AttributeTok{omega\_total =} \FunctionTok{unname}\NormalTok{(om}\SpecialCharTok{$}\NormalTok{omega.tot),}
+    \AttributeTok{omega\_hier  =} \FunctionTok{unname}\NormalTok{(om}\SpecialCharTok{$}\NormalTok{omega.h)}
+\NormalTok{  )}
+\NormalTok{\})}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required namespace: GPArotation
+\end{verbatim}
+
+\begin{verbatim}
+## Omega_h for 1 factor is not meaningful, just omega_t
+## Omega_h for 1 factor is not meaningful, just omega_t
+## Omega_h for 1 factor is not meaningful, just omega_t
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print\_tbl}\NormalTok{(rel\_table, }\AttributeTok{digits =} \DecValTok{3}\NormalTok{, }\AttributeTok{caption =} \StringTok{"Reliability of HPT subscales (alpha and omega)."}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[t]{lrrrr}
+\caption{\label{tab:reliability}Reliability of HPT subscales (alpha and omega).}\\
+\toprule
+scale & k\_items & alpha\_raw & alpha\_poly & omega\_total\\
+\midrule
+POP & 3 & 0.526 & 0.580 & 0.596\\
+ROA & 3 & 0.513 & 0.536 & 0.596\\
+CONT & 3 & 0.648 & 0.709 & 0.714\\
+\bottomrule
+\end{longtable}
+
+\textbf{How to read this table:} Higher values mean items within a
+subscale are consistent. If a subscale shows \textbf{low \(\alpha\) and
+\(\omega\)}, consider revisiting items or treating the subscale
+cautiously in later analyses.
+
+\hypertarget{step-3-dimensionality-cfaefa}{%
+\section{Step 3 --- Dimensionality
+(CFA/EFA)}\label{step-3-dimensionality-cfaefa}}
+
+\textbf{Goal:} Check whether our data reproduce the \textbf{structure}
+reported in prior HPT work (often: \textbf{POP+CONT} vs \textbf{ROA}, or
+a \textbf{three-factor} model with POP, CONT, ROA as correlated
+factors).
+
+We fit three \textbf{confirmatory factor models} using \textbf{ordered}
+items (WLSMV):
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{M1 (two factors):} \emph{F1} loads on \texttt{POP1-3} and
+  \texttt{CONT1-3}; \emph{F2} loads on \texttt{ROA1-3}.
+\item
+  \textbf{M2 (three factors):} \emph{POP}, \emph{CONT}, \emph{ROA} as
+  separate but correlated.
+\item
+  \textbf{M3 (one factor):} Everything loads on a single general factor.
+\end{itemize}
+
+We then compare model fit and inspect loadings.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{hpt\_ord }\OtherTok{\textless{}{-}}\NormalTok{ hpt\_items  }\CommentTok{\# same data; we explicitly treat items as ordered}
+
+\NormalTok{m1\_2factor }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{}}
+\StringTok{F1 =\textasciitilde{} POP1 + POP2 + POP3 + CONT1 + CONT2 + CONT3}
+\StringTok{F2 =\textasciitilde{} ROA1 + ROA2 + ROA3}
+\StringTok{F1 \textasciitilde{}\textasciitilde{} F2}
+\StringTok{\textquotesingle{}}
+\NormalTok{m2\_3factor }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{}}
+\StringTok{POP  =\textasciitilde{} POP1 + POP2 + POP3}
+\StringTok{CONT =\textasciitilde{} CONT1 + CONT2 + CONT3}
+\StringTok{ROA  =\textasciitilde{} ROA1 + ROA2 + ROA3}
+\StringTok{POP \textasciitilde{}\textasciitilde{} CONT + ROA}
+\StringTok{CONT \textasciitilde{}\textasciitilde{} ROA}
+\StringTok{\textquotesingle{}}
+\NormalTok{m3\_1factor }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{}}
+\StringTok{G =\textasciitilde{} POP1 + POP2 + POP3 + ROA1 + ROA2 + ROA3 + CONT1 + CONT2 + CONT3}
+\StringTok{\textquotesingle{}}
+
+\NormalTok{fit\_2 }\OtherTok{\textless{}{-}} \FunctionTok{cfa}\NormalTok{(m1\_2factor, }\AttributeTok{data =}\NormalTok{ hpt\_ord, }\AttributeTok{ordered =}\NormalTok{ hpt\_cols, }\AttributeTok{estimator =} \StringTok{"WLSMV"}\NormalTok{)}
+\NormalTok{fit\_3 }\OtherTok{\textless{}{-}} \FunctionTok{cfa}\NormalTok{(m2\_3factor, }\AttributeTok{data =}\NormalTok{ hpt\_ord, }\AttributeTok{ordered =}\NormalTok{ hpt\_cols, }\AttributeTok{estimator =} \StringTok{"WLSMV"}\NormalTok{)}
+\NormalTok{fit\_1 }\OtherTok{\textless{}{-}} \FunctionTok{cfa}\NormalTok{(m3\_1factor, }\AttributeTok{data =}\NormalTok{ hpt\_ord, }\AttributeTok{ordered =}\NormalTok{ hpt\_cols, }\AttributeTok{estimator =} \StringTok{"WLSMV"}\NormalTok{)}
+
+\CommentTok{\# Compare fits side{-}by{-}side}
+\NormalTok{semTools}\SpecialCharTok{::}\FunctionTok{compareFit}\NormalTok{(fit\_2, fit\_3, fit\_1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## The following lavaan models were compared:
+##     fit_3
+##     fit_2
+##     fit_1
+## To view results, assign the compareFit() output to an object and  use the summary() method; see the class?FitDiff help page.
+\end{verbatim}
+
+Now we print key indices and standardized loadings for each model.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{report\_fit }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(fit) \{}
+  \FunctionTok{list}\NormalTok{(}
+    \AttributeTok{indices =} \FunctionTok{fitMeasures}\NormalTok{(fit, }\FunctionTok{c}\NormalTok{(}\StringTok{"cfi"}\NormalTok{,}\StringTok{"tli"}\NormalTok{,}\StringTok{"rmsea"}\NormalTok{,}\StringTok{"rmsea.ci.lower"}\NormalTok{,}\StringTok{"rmsea.ci.upper"}\NormalTok{,}\StringTok{"srmr"}\NormalTok{)),}
+    \AttributeTok{loadings =} \FunctionTok{standardizedSolution}\NormalTok{(fit) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{as\_tibble}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(op }\SpecialCharTok{==} \StringTok{"=\textasciitilde{}"}\NormalTok{)}
+\NormalTok{  )}
+\NormalTok{\}}
+
+\NormalTok{cfa\_summary }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}
+  \StringTok{\textasciigrave{}}\AttributeTok{2{-}factor (POP+CONT vs ROA)}\StringTok{\textasciigrave{}} \OtherTok{=} \FunctionTok{report\_fit}\NormalTok{(fit\_2),}
+  \StringTok{\textasciigrave{}}\AttributeTok{3{-}factor (POP/CONT/ROA)}\StringTok{\textasciigrave{}}    \OtherTok{=} \FunctionTok{report\_fit}\NormalTok{(fit\_3),}
+  \StringTok{\textasciigrave{}}\AttributeTok{1{-}factor (general)}\StringTok{\textasciigrave{}}          \OtherTok{=} \FunctionTok{report\_fit}\NormalTok{(fit\_1)}
+\NormalTok{)}
+
+\CommentTok{\# Print nicely}
+\NormalTok{purrr}\SpecialCharTok{::}\FunctionTok{iwalk}\NormalTok{(cfa\_summary, }\ControlFlowTok{function}\NormalTok{(x, nm)\{}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{\#\#\#"}\NormalTok{, nm, }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+  \FunctionTok{print}\NormalTok{(x}\SpecialCharTok{$}\NormalTok{indices)}
+  \FunctionTok{print}\NormalTok{(}\FunctionTok{kable}\NormalTok{(x}\SpecialCharTok{$}\NormalTok{loadings, }\AttributeTok{digits =} \DecValTok{3}\NormalTok{))}
+\NormalTok{\})}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## ### 2-factor (POP+CONT vs ROA) 
+##            cfi            tli          rmsea rmsea.ci.lower rmsea.ci.upper           srmr 
+##          0.985          0.979          0.038          0.000          0.078          0.069 
+## 
+## 
+## |lhs |op |rhs   | est.std|    se|       z| pvalue| ci.lower| ci.upper|
+## |:---|:--|:-----|-------:|-----:|-------:|------:|--------:|--------:|
+## |F1  |=~ |POP1  |   0.598| 0.077|   7.723|  0.000|    0.446|    0.750|
+## |F1  |=~ |POP2  |   0.270| 0.082|   3.272|  0.001|    0.108|    0.431|
+## |F1  |=~ |POP3  |   0.431| 0.074|   5.838|  0.000|    0.287|    0.576|
+## |F1  |=~ |CONT1 |  -0.700| 0.066| -10.528|  0.000|   -0.830|   -0.569|
+## |F1  |=~ |CONT2 |  -0.620| 0.072|  -8.654|  0.000|   -0.761|   -0.480|
+## |F1  |=~ |CONT3 |  -0.624| 0.070|  -8.980|  0.000|   -0.761|   -0.488|
+## |F2  |=~ |ROA1  |   0.725| 0.099|   7.324|  0.000|    0.531|    0.919|
+## |F2  |=~ |ROA2  |   0.277| 0.099|   2.800|  0.005|    0.083|    0.471|
+## |F2  |=~ |ROA3  |   0.602| 0.092|   6.585|  0.000|    0.423|    0.782|
+## 
+## ### 3-factor (POP/CONT/ROA) 
+##            cfi            tli          rmsea rmsea.ci.lower rmsea.ci.upper           srmr 
+##          1.000          1.029          0.000          0.000          0.036          0.052 
+## 
+## 
+## |lhs  |op |rhs   | est.std|    se|      z| pvalue| ci.lower| ci.upper|
+## |:----|:--|:-----|-------:|-----:|------:|------:|--------:|--------:|
+## |POP  |=~ |POP1  |   0.816| 0.105|  7.771|  0.000|    0.610|    1.022|
+## |POP  |=~ |POP2  |   0.346| 0.088|  3.914|  0.000|    0.173|    0.519|
+## |POP  |=~ |POP3  |   0.533| 0.076|  6.972|  0.000|    0.383|    0.682|
+## |CONT |=~ |CONT1 |   0.730| 0.068| 10.776|  0.000|    0.597|    0.863|
+## |CONT |=~ |CONT2 |   0.630| 0.072|  8.702|  0.000|    0.488|    0.772|
+## |CONT |=~ |CONT3 |   0.650| 0.071|  9.185|  0.000|    0.512|    0.789|
+## |ROA  |=~ |ROA1  |   0.725| 0.096|  7.549|  0.000|    0.537|    0.913|
+## |ROA  |=~ |ROA2  |   0.282| 0.098|  2.868|  0.004|    0.089|    0.476|
+## |ROA  |=~ |ROA3  |   0.600| 0.090|  6.671|  0.000|    0.424|    0.777|
+## 
+## ### 1-factor (general) 
+##            cfi            tli          rmsea rmsea.ci.lower rmsea.ci.upper           srmr 
+##          0.958          0.944          0.062          0.022          0.096          0.080 
+## 
+## 
+## |lhs |op |rhs   | est.std|    se|       z| pvalue| ci.lower| ci.upper|
+## |:---|:--|:-----|-------:|-----:|-------:|------:|--------:|--------:|
+## |G   |=~ |POP1  |   0.584| 0.077|   7.574|  0.000|    0.433|    0.735|
+## |G   |=~ |POP2  |   0.254| 0.082|   3.112|  0.002|    0.094|    0.415|
+## |G   |=~ |POP3  |   0.418| 0.074|   5.652|  0.000|    0.273|    0.563|
+## |G   |=~ |ROA1  |  -0.539| 0.082|  -6.544|  0.000|   -0.700|   -0.377|
+## |G   |=~ |ROA2  |  -0.207| 0.087|  -2.381|  0.017|   -0.378|   -0.037|
+## |G   |=~ |ROA3  |  -0.472| 0.076|  -6.255|  0.000|   -0.621|   -0.324|
+## |G   |=~ |CONT1 |  -0.684| 0.064| -10.774|  0.000|   -0.809|   -0.560|
+## |G   |=~ |CONT2 |  -0.610| 0.070|  -8.718|  0.000|   -0.747|   -0.473|
+## |G   |=~ |CONT3 |  -0.609| 0.067|  -9.103|  0.000|   -0.740|   -0.478|
+\end{verbatim}
+
+\textbf{How to interpret:} Prefer models with \textbf{CFI/TLI
+\(\gtrsim .95\)}, \textbf{RMSEA \(\lesssim .06\)-\(.08\)}, \textbf{SRMR
+\(\lesssim .08\)} (rules of thumb). If the 2- or 3-factor model clearly
+outperforms 1-factor and loadings align with expectations (POP \& CONT
+together; ROA separate---or all three distinct), the data support the
+theorized structure.
+
+\hypertarget{optional-data-driven-efa-polychoric}{%
+\subsubsection{Optional: Data-driven EFA
+(polychoric)}\label{optional-data-driven-efa-polychoric}}
+
+\textbf{Why:} As a sensitivity check, we can inspect
+\textbf{exploratory} factor analysis using polychoric correlations.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pc }\OtherTok{\textless{}{-}}\NormalTok{ psych}\SpecialCharTok{::}\FunctionTok{polychoric}\NormalTok{(hpt\_ord)}\SpecialCharTok{$}\NormalTok{rho}
+\NormalTok{efa2 }\OtherTok{\textless{}{-}}\NormalTok{ psych}\SpecialCharTok{::}\FunctionTok{fa}\NormalTok{(pc, }\AttributeTok{nfactors =} \DecValTok{2}\NormalTok{, }\AttributeTok{fm =} \StringTok{"pa"}\NormalTok{, }\AttributeTok{rotate =} \StringTok{"oblimin"}\NormalTok{)}
+\NormalTok{efa3 }\OtherTok{\textless{}{-}}\NormalTok{ psych}\SpecialCharTok{::}\FunctionTok{fa}\NormalTok{(pc, }\AttributeTok{nfactors =} \DecValTok{3}\NormalTok{, }\AttributeTok{fm =} \StringTok{"pa"}\NormalTok{, }\AttributeTok{rotate =} \StringTok{"oblimin"}\NormalTok{)}
+
+\FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{EFA (2 factors):}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## EFA (2 factors):
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(efa2}\SpecialCharTok{$}\NormalTok{loadings, }\AttributeTok{cutoff =} \FloatTok{0.25}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Loadings:
+##       PA1    PA2   
+## POP1  -0.351  0.410
+## POP2          0.568
+## POP3          0.513
+## ROA1   0.663       
+## ROA2   0.408  0.288
+## ROA3   0.548       
+## CONT1  0.637       
+## CONT2  0.465 -0.273
+## CONT3  0.515       
+## 
+##                  PA1   PA2
+## SS loadings    1.933 0.967
+## Proportion Var 0.215 0.107
+## Cumulative Var 0.215 0.322
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{EFA (3 factors):}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## EFA (3 factors):
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(efa3}\SpecialCharTok{$}\NormalTok{loadings, }\AttributeTok{cutoff =} \FloatTok{0.25}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Loadings:
+##       PA1    PA2    PA3   
+## POP1          0.544       
+## POP2          0.453  0.260
+## POP3          0.680       
+## ROA1                 0.598
+## ROA2                 0.486
+## ROA3                 0.448
+## CONT1  0.700              
+## CONT2  0.442              
+## CONT3  0.741              
+## 
+##                  PA1   PA2   PA3
+## SS loadings    1.294 1.037 0.909
+## Proportion Var 0.144 0.115 0.101
+## Cumulative Var 0.144 0.259 0.360
+\end{verbatim}
+
+\hypertarget{step-4-presentism-contextualization-contrast-pop-vs-cont}{%
+\section{Step 4 --- Presentism-contextualization contrast (POP vs
+CONT)}\label{step-4-presentism-contextualization-contrast-pop-vs-cont}}
+
+\textbf{Idea:} Prior work suggests \textbf{presentist} choices (POP) and
+\textbf{contextualized} reasoning (CONT) should \textbf{pull in opposite
+directions}. Here we check whether the \textbf{Czech data} replicate
+that \textbf{contrast}: (a) compare means; (b) inspect the POP-CONT
+correlation.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Rebuild subscale scores locally to avoid scope/version issues}
+\NormalTok{hpt\_scores\_local }\OtherTok{\textless{}{-}}\NormalTok{ hpt\_items }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{POP  =} \FunctionTok{rowMeans}\NormalTok{(}\FunctionTok{select}\NormalTok{(., }\FunctionTok{starts\_with}\NormalTok{(}\StringTok{"POP"}\NormalTok{)),  }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{ROA  =} \FunctionTok{rowMeans}\NormalTok{(}\FunctionTok{select}\NormalTok{(., }\FunctionTok{starts\_with}\NormalTok{(}\StringTok{"ROA"}\NormalTok{)),  }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{CONT =} \FunctionTok{rowMeans}\NormalTok{(}\FunctionTok{select}\NormalTok{(., }\FunctionTok{starts\_with}\NormalTok{(}\StringTok{"CONT"}\NormalTok{)), }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{HPT\_total =} \FunctionTok{rowMeans}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{c}\NormalTok{(POP, ROA, CONT)), }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{  )}
+
+\CommentTok{\# Sanity check: make sure the columns exist}
+\FunctionTok{stopifnot}\NormalTok{(}\FunctionTok{all}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"POP"}\NormalTok{,}\StringTok{"ROA"}\NormalTok{,}\StringTok{"CONT"}\NormalTok{,}\StringTok{"HPT\_total"}\NormalTok{) }\SpecialCharTok{\%in\%} \FunctionTok{names}\NormalTok{(hpt\_scores\_local)))}
+
+\NormalTok{contrast\_tbl }\OtherTok{\textless{}{-}}\NormalTok{ hpt\_scores\_local }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}
+    \AttributeTok{mean\_POP   =} \FunctionTok{mean}\NormalTok{(POP,  }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),  }\AttributeTok{sd\_POP   =} \FunctionTok{sd}\NormalTok{(POP,  }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{mean\_CONT  =} \FunctionTok{mean}\NormalTok{(CONT, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),  }\AttributeTok{sd\_CONT  =} \FunctionTok{sd}\NormalTok{(CONT, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{r\_POP\_CONT =} \FunctionTok{cor}\NormalTok{(POP, CONT, }\AttributeTok{use =} \StringTok{"pairwise.complete.obs"}\NormalTok{)}
+\NormalTok{  )}
+
+\FunctionTok{print\_tbl}\NormalTok{(contrast\_tbl, }\AttributeTok{digits =} \DecValTok{3}\NormalTok{, }\AttributeTok{caption =} \StringTok{"POP vs CONT: means, SDs, and correlation."}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[t]{rrrrr}
+\caption{\label{tab:pop-cont-contrast}POP vs CONT: means, SDs, and correlation.}\\
+\toprule
+mean\_POP & sd\_POP & mean\_CONT & sd\_CONT & r\_POP\_CONT\\
+\midrule
+1.981 & 0.676 & 2.72 & 0.738 & -0.376\\
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Simple paired comparison (descriptive; not a preregistered test)}
+\NormalTok{t\_test }\OtherTok{\textless{}{-}} \FunctionTok{t.test}\NormalTok{(hpt\_scores\_local}\SpecialCharTok{$}\NormalTok{POP, hpt\_scores\_local}\SpecialCharTok{$}\NormalTok{CONT, }\AttributeTok{paired =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{t\_test}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Paired t-test
+## 
+## data:  hpt_scores_local$POP and hpt_scores_local$CONT
+## t = -7.8529, df = 154, p-value = 6.46e-13
+## alternative hypothesis: true mean difference is not equal to 0
+## 95 percent confidence interval:
+##  -0.9258866 -0.5536833
+## sample estimates:
+## mean difference 
+##      -0.7397849
+\end{verbatim}
+
+\textbf{Reading the results:}
+
+\begin{itemize}
+\tightlist
+\item
+  If \textbf{mean\_CONT \(>\) mean\_POP} and/or
+  \textbf{\(r_{\text{POP,CONT}} < 0\)}, that supports the expected
+  contrast.
+\item
+  If they move \textbf{together} (positive correlation and similar
+  means), interpretation of the HPT construct may require caution.
+\end{itemize}
+
+\hypertarget{step-5-distribution-checks}{%
+\section{Step 5 --- Distribution
+checks}\label{step-5-distribution-checks}}
+
+\textbf{Why:} Skewed or piled-up scores can cause model or inference
+issues. We look at item-level and scale-level histograms.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{long\_items }\OtherTok{\textless{}{-}}\NormalTok{ hpt\_items }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{pivot\_longer}\NormalTok{(}\AttributeTok{cols =} \FunctionTok{everything}\NormalTok{(), }\AttributeTok{names\_to =} \StringTok{"item"}\NormalTok{, }\AttributeTok{values\_to =} \StringTok{"score"}\NormalTok{)}
+
+\CommentTok{\# Item distributions}
+\FunctionTok{ggplot}\NormalTok{(long\_items, }\FunctionTok{aes}\NormalTok{(score)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{binwidth =} \FloatTok{0.5}\NormalTok{, }\AttributeTok{boundary =} \DecValTok{0}\NormalTok{, }\AttributeTok{closed =} \StringTok{"left"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ item, }\AttributeTok{ncol =} \DecValTok{3}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"HPT item score distributions"}\NormalTok{, }\AttributeTok{x =} \StringTok{"Score (1{-}4)"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Count"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{/home/yetty/Projects/phd-029-hpt-and-extremism/outputs/01_measurement-checks_files/figure-latex/distributions-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Scale distributions}
+\FunctionTok{ggplot}\NormalTok{(hpt\_scores }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{pivot\_longer}\NormalTok{(}\FunctionTok{c}\NormalTok{(POP, ROA, CONT, HPT\_total), }\AttributeTok{names\_to =} \StringTok{"scale"}\NormalTok{, }\AttributeTok{values\_to =} \StringTok{"score"}\NormalTok{),}
+       \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ score)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{binwidth =} \FloatTok{0.25}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ scale, }\AttributeTok{scales =} \StringTok{"free"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Subscale/total score distributions"}\NormalTok{, }\AttributeTok{x =} \StringTok{"Mean score (1{-}4)"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Count"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{/home/yetty/Projects/phd-029-hpt-and-extremism/outputs/01_measurement-checks_files/figure-latex/distributions-2.pdf}
+
+\hypertarget{step-6-class-level-iccs-is-a-multilevel-model-warranted}{%
+\section{Step 6 --- Class-level ICCs (is a multilevel model
+warranted?)}\label{step-6-class-level-iccs-is-a-multilevel-model-warranted}}
+
+\textbf{Why:} Students are nested in \textbf{classes}; scores may be
+more similar within a class. The \textbf{Intraclass Correlation
+Coefficient (ICC)} estimates the fraction of variance at the class
+level. If ICC \(\gtrsim .05\), multilevel modeling is usually advisable.
+
+We fit \textbf{null (random-intercept)} models for \textbf{HPT\_total},
+\textbf{POP}, \textbf{ROA}, \textbf{CONT} and extract ICCs.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# analysis\_df and hpt\_scores already exist and are aligned}
+\NormalTok{icc\_data }\OtherTok{\textless{}{-}}\NormalTok{ analysis\_df }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{transmute}\NormalTok{(class\_label) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{bind\_cols}\NormalTok{(hpt\_scores }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(POP, ROA, CONT, HPT\_total))}
+
+\NormalTok{mk\_icc }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(dv)\{}
+\NormalTok{  f }\OtherTok{\textless{}{-}} \FunctionTok{reformulate}\NormalTok{(}\StringTok{"1 + (1|class\_label)"}\NormalTok{, }\AttributeTok{response =}\NormalTok{ dv)}
+\NormalTok{  fit }\OtherTok{\textless{}{-}} \FunctionTok{lmer}\NormalTok{(f, }\AttributeTok{data =}\NormalTok{ icc\_data, }\AttributeTok{REML =} \ConstantTok{TRUE}\NormalTok{)}
+
+  \CommentTok{\# Extract variance components}
+\NormalTok{  vc }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(}\FunctionTok{VarCorr}\NormalTok{(fit))}
+\NormalTok{  var\_class }\OtherTok{\textless{}{-}}\NormalTok{ vc}\SpecialCharTok{$}\NormalTok{vcov[vc}\SpecialCharTok{$}\NormalTok{grp }\SpecialCharTok{==} \StringTok{"class\_label"}\NormalTok{][}\DecValTok{1}\NormalTok{]}
+\NormalTok{  var\_resid }\OtherTok{\textless{}{-}}\NormalTok{ vc}\SpecialCharTok{$}\NormalTok{vcov[vc}\SpecialCharTok{$}\NormalTok{grp }\SpecialCharTok{==} \StringTok{"Residual"}\NormalTok{][}\DecValTok{1}\NormalTok{]}
+
+\NormalTok{  icc }\OtherTok{\textless{}{-}}\NormalTok{ var\_class }\SpecialCharTok{/}\NormalTok{ (var\_class }\SpecialCharTok{+}\NormalTok{ var\_resid)}
+
+  \FunctionTok{tibble}\NormalTok{(}
+    \AttributeTok{DV =}\NormalTok{ dv,}
+    \AttributeTok{ICC =}\NormalTok{ icc,}
+    \AttributeTok{var\_class =}\NormalTok{ var\_class,}
+    \AttributeTok{var\_resid =}\NormalTok{ var\_resid,}
+    \AttributeTok{singular =} \FunctionTok{isSingular}\NormalTok{(fit)}
+\NormalTok{  )}
+\NormalTok{\}}
+
+\NormalTok{icc\_tbl }\OtherTok{\textless{}{-}}\NormalTok{ purrr}\SpecialCharTok{::}\FunctionTok{map\_dfr}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"HPT\_total"}\NormalTok{,}\StringTok{"POP"}\NormalTok{,}\StringTok{"ROA"}\NormalTok{,}\StringTok{"CONT"}\NormalTok{), mk\_icc)}
+
+\FunctionTok{print\_tbl}\NormalTok{(icc\_tbl, }\AttributeTok{digits =} \DecValTok{3}\NormalTok{, }\AttributeTok{caption =} \StringTok{"Null{-}model ICCs by outcome (computed from variance components)."}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[t]{lrrrl}
+\caption{\label{tab:icc}Null-model ICCs by outcome (computed from variance components).}\\
+\toprule
+DV & ICC & var\_class & var\_resid & singular\\
+\midrule
+HPT\_total & 0.014 & 0.002 & 0.146 & FALSE\\
+POP & 0.009 & 0.004 & 0.453 & FALSE\\
+ROA & 0.010 & 0.005 & 0.452 & FALSE\\
+CONT & 0.048 & 0.026 & 0.519 & FALSE\\
+\bottomrule
+\end{longtable}
+
+\textbf{Interpretation:}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Higher ICC} \(\Rightarrow\) more clustering by class.
+\item
+  Non-trivial ICCs motivate \textbf{multilevel} models for confirmatory
+  analyses.
+\end{itemize}
+
+\hypertarget{step-7-knowledge-mini-test-kn1kn6}{%
+\section{Step 7 --- Knowledge mini-test
+(KN1--KN6)}\label{step-7-knowledge-mini-test-kn1kn6}}
+
+Why: The KN items are dichotomous (0/1). We report:
+
+\begin{itemize}
+\tightlist
+\item
+  KR-20 (equivalent to alpha for dichotomous items)
+\item
+  Item difficulty (p = proportion correct)
+\item
+  Point-biserial discrimination (w.r.t. total score)
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{kn\_cols }\OtherTok{\textless{}{-}} \FunctionTok{paste0}\NormalTok{(}\StringTok{"KN"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{6}\NormalTok{)}
+\NormalTok{has\_kn  }\OtherTok{\textless{}{-}} \FunctionTok{all}\NormalTok{(kn\_cols }\SpecialCharTok{\%in\%} \FunctionTok{names}\NormalTok{(dat))}
+
+\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\NormalTok{has\_kn) \{}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{**Knowledge section skipped:** KN1–KN6 not found in data.}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\NormalTok{\} }\ControlFlowTok{else}\NormalTok{ \{}
+\NormalTok{  kn\_items }\OtherTok{\textless{}{-}}\NormalTok{ dat[keep, kn\_cols]  }\CommentTok{\# align to analysis\_df rows via \textquotesingle{}keep\textquotesingle{}}
+  \CommentTok{\# Basic sanity: coerce to numeric 0/1}
+\NormalTok{  kn\_items }\OtherTok{\textless{}{-}}\NormalTok{ kn\_items }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{mutate}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{everything}\NormalTok{(), }\SpecialCharTok{\textasciitilde{}} \FunctionTok{as.numeric}\NormalTok{(.)))}
+
+  \CommentTok{\# Total score, difficulty (p), discrimination (point{-}biserial)}
+\NormalTok{  kn\_total }\OtherTok{\textless{}{-}} \FunctionTok{rowSums}\NormalTok{(kn\_items, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+
+\NormalTok{  item\_stats }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}
+    \AttributeTok{item =}\NormalTok{ kn\_cols,}
+    \AttributeTok{difficulty\_p =} \FunctionTok{sapply}\NormalTok{(kn\_items, }\ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{mean}\NormalTok{(x, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)),}
+    \AttributeTok{discr\_pb =} \FunctionTok{sapply}\NormalTok{(kn\_items, }\ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{cor}\NormalTok{(x, kn\_total }\SpecialCharTok{{-}}\NormalTok{ x, }\AttributeTok{use =} \StringTok{"pairwise.complete.obs"}\NormalTok{))}
+\NormalTok{  )}
+
+  \CommentTok{\# KR{-}20 (alpha on dichotomous items)}
+\NormalTok{  kn\_alpha }\OtherTok{\textless{}{-}}\NormalTok{ psych}\SpecialCharTok{::}\FunctionTok{alpha}\NormalTok{(kn\_items)}
+
+  \FunctionTok{print\_tbl}\NormalTok{(item\_stats, }\AttributeTok{digits =} \DecValTok{3}\NormalTok{, }\AttributeTok{caption =} \StringTok{"KN items: difficulty (p) and point{-}biserial discrimination."}\NormalTok{)}
+
+  \FunctionTok{print\_tbl}\NormalTok{(}\FunctionTok{tibble}\NormalTok{(}
+    \AttributeTok{k\_items =} \FunctionTok{ncol}\NormalTok{(kn\_items),}
+    \AttributeTok{total\_mean =} \FunctionTok{mean}\NormalTok{(kn\_total, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{total\_sd   =} \FunctionTok{sd}\NormalTok{(kn\_total, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{alpha\_KR20 =} \FunctionTok{unname}\NormalTok{(kn\_alpha}\SpecialCharTok{$}\NormalTok{total}\SpecialCharTok{$}\NormalTok{raw\_alpha)}
+\NormalTok{  ), }\AttributeTok{digits =} \DecValTok{3}\NormalTok{, }\AttributeTok{caption =} \StringTok{"KN total: summary and KR{-}20 (alpha for dichotomous items)."}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[t]{rrrr}
+\caption{\label{tab:kn-items}KN total: summary and KR-20 (alpha for dichotomous items).}\\
+\toprule
+k\_items & total\_mean & total\_sd & alpha\_KR20\\
+\midrule
+6 & 3.335 & 1.625 & 0.564\\
+\bottomrule
+\end{longtable}
+
+\hypertarget{step-8-ideology-batteries-fr-lf-mini-ksa-3-and-social-desirability-sdr-5}{%
+\section{Step 8 --- Ideology batteries (FR-LF mini, KSA-3) and Social
+Desirability
+(SDR-5)}\label{step-8-ideology-batteries-fr-lf-mini-ksa-3-and-social-desirability-sdr-5}}
+
+Why:
+
+\begin{itemize}
+\tightlist
+\item
+  We need reliable predictors and controls before hypothesis tests.
+\item
+  We report \(\alpha\)/\(\omega\) (polychoric), optional CFA fits, and
+  descriptive summaries.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Helper: reliability table for Likert batteries (polychoric + omega total)}
+\NormalTok{alpha\_poly\_likert }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x) \{}
+\NormalTok{  pc }\OtherTok{\textless{}{-}}\NormalTok{ psych}\SpecialCharTok{::}\FunctionTok{polychoric}\NormalTok{(x)}\SpecialCharTok{$}\NormalTok{rho}
+\NormalTok{  psych}\SpecialCharTok{::}\FunctionTok{alpha}\NormalTok{(pc, }\AttributeTok{n.obs =} \FunctionTok{nrow}\NormalTok{(x))}
+\NormalTok{\}}
+\NormalTok{omega\_total\_poly\_likert }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x) \{}
+\NormalTok{  pc }\OtherTok{\textless{}{-}}\NormalTok{ psych}\SpecialCharTok{::}\FunctionTok{polychoric}\NormalTok{(x)}\SpecialCharTok{$}\NormalTok{rho}
+  \ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{all}\NormalTok{(}\FunctionTok{eigen}\NormalTok{(pc, }\AttributeTok{symmetric =} \ConstantTok{TRUE}\NormalTok{)}\SpecialCharTok{$}\NormalTok{values }\SpecialCharTok{\textgreater{}} \FloatTok{1e{-}6}\NormalTok{)) pc }\OtherTok{\textless{}{-}}\NormalTok{ psych}\SpecialCharTok{::}\FunctionTok{cor.smooth}\NormalTok{(pc)}
+  \FunctionTok{suppressWarnings}\NormalTok{(psych}\SpecialCharTok{::}\FunctionTok{omega}\NormalTok{(pc, }\AttributeTok{n.obs =} \FunctionTok{nrow}\NormalTok{(x), }\AttributeTok{nfactors =} \DecValTok{1}\NormalTok{, }\AttributeTok{plot =} \ConstantTok{FALSE}\NormalTok{)}\SpecialCharTok{$}\NormalTok{omega.tot)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{fr-lf-mini-rd1-rd3-ns1-ns3}{%
+\subsection{FR-LF mini (RD1-RD3,
+NS1-NS3)}\label{fr-lf-mini-rd1-rd3-ns1-ns3}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fr\_cols }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(}\StringTok{"RD"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{), }\FunctionTok{paste0}\NormalTok{(}\StringTok{"NS"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{))}
+\NormalTok{has\_fr  }\OtherTok{\textless{}{-}} \FunctionTok{all}\NormalTok{(fr\_cols }\SpecialCharTok{\%in\%} \FunctionTok{names}\NormalTok{(dat))}
+
+\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\NormalTok{has\_fr) \{}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{**FR{-}LF mini section skipped:** RD1–3 and/or NS1–3 not found.}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\NormalTok{\} }\ControlFlowTok{else}\NormalTok{ \{}
+\NormalTok{  fr\_df }\OtherTok{\textless{}{-}}\NormalTok{ dat[keep, fr\_cols] }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{as\_tibble}\NormalTok{()}
+\NormalTok{  RD }\OtherTok{\textless{}{-}}\NormalTok{ fr\_df }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(}\FunctionTok{starts\_with}\NormalTok{(}\StringTok{"RD"}\NormalTok{))}
+\NormalTok{  NS }\OtherTok{\textless{}{-}}\NormalTok{ fr\_df }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(}\FunctionTok{starts\_with}\NormalTok{(}\StringTok{"NS"}\NormalTok{))}
+
+\NormalTok{  fr\_rel }\OtherTok{\textless{}{-}} \FunctionTok{bind\_rows}\NormalTok{(}
+\NormalTok{    \{}
+\NormalTok{      a }\OtherTok{\textless{}{-}}\NormalTok{ psych}\SpecialCharTok{::}\FunctionTok{alpha}\NormalTok{(RD); ap }\OtherTok{\textless{}{-}} \FunctionTok{alpha\_poly\_likert}\NormalTok{(RD); wt }\OtherTok{\textless{}{-}} \FunctionTok{omega\_total\_poly\_likert}\NormalTok{(RD)}
+      \FunctionTok{tibble}\NormalTok{(}\AttributeTok{scale =} \StringTok{"FR{-}LF: RD"}\NormalTok{, }\AttributeTok{k\_items =} \FunctionTok{ncol}\NormalTok{(RD),}
+             \AttributeTok{alpha\_raw =}\NormalTok{ a}\SpecialCharTok{$}\NormalTok{total}\SpecialCharTok{$}\NormalTok{raw\_alpha, }\AttributeTok{alpha\_poly =}\NormalTok{ ap}\SpecialCharTok{$}\NormalTok{total}\SpecialCharTok{$}\NormalTok{raw\_alpha, }\AttributeTok{omega\_total =}\NormalTok{ wt)}
+\NormalTok{    \},}
+\NormalTok{    \{}
+\NormalTok{      a }\OtherTok{\textless{}{-}}\NormalTok{ psych}\SpecialCharTok{::}\FunctionTok{alpha}\NormalTok{(NS); ap }\OtherTok{\textless{}{-}} \FunctionTok{alpha\_poly\_likert}\NormalTok{(NS); wt }\OtherTok{\textless{}{-}} \FunctionTok{omega\_total\_poly\_likert}\NormalTok{(NS)}
+      \FunctionTok{tibble}\NormalTok{(}\AttributeTok{scale =} \StringTok{"FR{-}LF: NS"}\NormalTok{, }\AttributeTok{k\_items =} \FunctionTok{ncol}\NormalTok{(NS),}
+             \AttributeTok{alpha\_raw =}\NormalTok{ a}\SpecialCharTok{$}\NormalTok{total}\SpecialCharTok{$}\NormalTok{raw\_alpha, }\AttributeTok{alpha\_poly =}\NormalTok{ ap}\SpecialCharTok{$}\NormalTok{total}\SpecialCharTok{$}\NormalTok{raw\_alpha, }\AttributeTok{omega\_total =}\NormalTok{ wt)}
+\NormalTok{    \},}
+\NormalTok{    \{}
+\NormalTok{      a }\OtherTok{\textless{}{-}}\NormalTok{ psych}\SpecialCharTok{::}\FunctionTok{alpha}\NormalTok{(fr\_df); ap }\OtherTok{\textless{}{-}} \FunctionTok{alpha\_poly\_likert}\NormalTok{(fr\_df); wt }\OtherTok{\textless{}{-}} \FunctionTok{omega\_total\_poly\_likert}\NormalTok{(fr\_df)}
+      \FunctionTok{tibble}\NormalTok{(}\AttributeTok{scale =} \StringTok{"FR{-}LF: total (RD+NS)"}\NormalTok{, }\AttributeTok{k\_items =} \FunctionTok{ncol}\NormalTok{(fr\_df),}
+             \AttributeTok{alpha\_raw =}\NormalTok{ a}\SpecialCharTok{$}\NormalTok{total}\SpecialCharTok{$}\NormalTok{raw\_alpha, }\AttributeTok{alpha\_poly =}\NormalTok{ ap}\SpecialCharTok{$}\NormalTok{total}\SpecialCharTok{$}\NormalTok{raw\_alpha, }\AttributeTok{omega\_total =}\NormalTok{ wt)}
+\NormalTok{    \}}
+\NormalTok{  )}
+
+  \FunctionTok{print\_tbl}\NormalTok{(fr\_rel, }\AttributeTok{digits =} \DecValTok{3}\NormalTok{, }\AttributeTok{caption =} \StringTok{"FR{-}LF mini reliability (alpha, polychoric alpha, omega total)."}\NormalTok{)}
+
+  \CommentTok{\# Optional CFA: 2 correlated factors (RD, NS), ordered WLSMV}
+\NormalTok{  fr\_model }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{}}
+\StringTok{  RD =\textasciitilde{} RD1 + RD2 + RD3}
+\StringTok{  NS =\textasciitilde{} NS1 + NS2 + NS3}
+\StringTok{  RD \textasciitilde{}\textasciitilde{} NS}
+\StringTok{  \textquotesingle{}}
+\NormalTok{  fr\_fit }\OtherTok{\textless{}{-}} \FunctionTok{try}\NormalTok{(lavaan}\SpecialCharTok{::}\FunctionTok{cfa}\NormalTok{(fr\_model, }\AttributeTok{data =}\NormalTok{ fr\_df, }\AttributeTok{ordered =} \FunctionTok{colnames}\NormalTok{(fr\_df), }\AttributeTok{estimator =} \StringTok{"WLSMV"}\NormalTok{), }\AttributeTok{silent =} \ConstantTok{TRUE}\NormalTok{)}
+  \ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{inherits}\NormalTok{(fr\_fit, }\StringTok{"try{-}error"}\NormalTok{)) \{}
+    \FunctionTok{print}\NormalTok{(}\FunctionTok{fitMeasures}\NormalTok{(fr\_fit, }\FunctionTok{c}\NormalTok{(}\StringTok{"cfi"}\NormalTok{,}\StringTok{"tli"}\NormalTok{,}\StringTok{"rmsea"}\NormalTok{,}\StringTok{"srmr"}\NormalTok{)))}
+\NormalTok{  \} }\ControlFlowTok{else}\NormalTok{ \{}
+    \FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{FR{-}LF CFA skipped (model failed to converge).}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\NormalTok{  \}}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Omega_h for 1 factor is not meaningful, just omega_t
+## Omega_h for 1 factor is not meaningful, just omega_t
+## Omega_h for 1 factor is not meaningful, just omega_t
+\end{verbatim}
+
+\begin{verbatim}
+##   cfi   tli rmsea  srmr 
+## 1.000 1.002 0.000 0.048
+\end{verbatim}
+
+\hypertarget{ksa-3-a1-a3-u1-u3-k1-k3}{%
+\subsection{KSA-3 (A1-A3, U1-U3, K1-K3)}\label{ksa-3-a1-a3-u1-u3-k1-k3}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ksa\_cols }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(}\StringTok{"A"}\NormalTok{,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{), }\FunctionTok{paste0}\NormalTok{(}\StringTok{"U"}\NormalTok{,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{), }\FunctionTok{paste0}\NormalTok{(}\StringTok{"K"}\NormalTok{,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{))}
+\NormalTok{has\_ksa  }\OtherTok{\textless{}{-}} \FunctionTok{all}\NormalTok{(ksa\_cols }\SpecialCharTok{\%in\%} \FunctionTok{names}\NormalTok{(dat))}
+
+\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\NormalTok{has\_ksa) \{}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{**KSA{-}3 section skipped:** A1–A3, U1–U3, and/or K1–K3 not found.}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\NormalTok{\} }\ControlFlowTok{else}\NormalTok{ \{}
+\NormalTok{  ksa\_df }\OtherTok{\textless{}{-}}\NormalTok{ dat[keep, ksa\_cols] }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{as\_tibble}\NormalTok{()}
+\NormalTok{  A }\OtherTok{\textless{}{-}}\NormalTok{ ksa\_df }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(}\FunctionTok{starts\_with}\NormalTok{(}\StringTok{"A"}\NormalTok{))}
+\NormalTok{  U }\OtherTok{\textless{}{-}}\NormalTok{ ksa\_df }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(}\FunctionTok{starts\_with}\NormalTok{(}\StringTok{"U"}\NormalTok{))}
+\NormalTok{  K }\OtherTok{\textless{}{-}}\NormalTok{ ksa\_df }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(}\FunctionTok{starts\_with}\NormalTok{(}\StringTok{"K"}\NormalTok{))}
+
+\NormalTok{  ksa\_rel }\OtherTok{\textless{}{-}} \FunctionTok{bind\_rows}\NormalTok{(}
+\NormalTok{    \{}
+\NormalTok{      a }\OtherTok{\textless{}{-}}\NormalTok{ psych}\SpecialCharTok{::}\FunctionTok{alpha}\NormalTok{(A); ap }\OtherTok{\textless{}{-}} \FunctionTok{alpha\_poly\_likert}\NormalTok{(A); wt }\OtherTok{\textless{}{-}} \FunctionTok{omega\_total\_poly\_likert}\NormalTok{(A)}
+      \FunctionTok{tibble}\NormalTok{(}\AttributeTok{scale =} \StringTok{"KSA{-}3: Aggression (A)"}\NormalTok{, }\AttributeTok{k\_items =} \DecValTok{3}\NormalTok{,}
+             \AttributeTok{alpha\_raw =}\NormalTok{ a}\SpecialCharTok{$}\NormalTok{total}\SpecialCharTok{$}\NormalTok{raw\_alpha, }\AttributeTok{alpha\_poly =}\NormalTok{ ap}\SpecialCharTok{$}\NormalTok{total}\SpecialCharTok{$}\NormalTok{raw\_alpha, }\AttributeTok{omega\_total =}\NormalTok{ wt)}
+\NormalTok{    \},}
+\NormalTok{    \{}
+\NormalTok{      a }\OtherTok{\textless{}{-}}\NormalTok{ psych}\SpecialCharTok{::}\FunctionTok{alpha}\NormalTok{(U); ap }\OtherTok{\textless{}{-}} \FunctionTok{alpha\_poly\_likert}\NormalTok{(U); wt }\OtherTok{\textless{}{-}} \FunctionTok{omega\_total\_poly\_likert}\NormalTok{(U)}
+      \FunctionTok{tibble}\NormalTok{(}\AttributeTok{scale =} \StringTok{"KSA{-}3: Submission (U)"}\NormalTok{, }\AttributeTok{k\_items =} \DecValTok{3}\NormalTok{,}
+             \AttributeTok{alpha\_raw =}\NormalTok{ a}\SpecialCharTok{$}\NormalTok{total}\SpecialCharTok{$}\NormalTok{raw\_alpha, }\AttributeTok{alpha\_poly =}\NormalTok{ ap}\SpecialCharTok{$}\NormalTok{total}\SpecialCharTok{$}\NormalTok{raw\_alpha, }\AttributeTok{omega\_total =}\NormalTok{ wt)}
+\NormalTok{    \},}
+\NormalTok{    \{}
+\NormalTok{      a }\OtherTok{\textless{}{-}}\NormalTok{ psych}\SpecialCharTok{::}\FunctionTok{alpha}\NormalTok{(K); ap }\OtherTok{\textless{}{-}} \FunctionTok{alpha\_poly\_likert}\NormalTok{(K); wt }\OtherTok{\textless{}{-}} \FunctionTok{omega\_total\_poly\_likert}\NormalTok{(K)}
+      \FunctionTok{tibble}\NormalTok{(}\AttributeTok{scale =} \StringTok{"KSA{-}3: Conventionalism (K)"}\NormalTok{, }\AttributeTok{k\_items =} \DecValTok{3}\NormalTok{,}
+             \AttributeTok{alpha\_raw =}\NormalTok{ a}\SpecialCharTok{$}\NormalTok{total}\SpecialCharTok{$}\NormalTok{raw\_alpha, }\AttributeTok{alpha\_poly =}\NormalTok{ ap}\SpecialCharTok{$}\NormalTok{total}\SpecialCharTok{$}\NormalTok{raw\_alpha, }\AttributeTok{omega\_total =}\NormalTok{ wt)}
+\NormalTok{    \},}
+\NormalTok{    \{}
+\NormalTok{      a }\OtherTok{\textless{}{-}}\NormalTok{ psych}\SpecialCharTok{::}\FunctionTok{alpha}\NormalTok{(ksa\_df); ap }\OtherTok{\textless{}{-}} \FunctionTok{alpha\_poly\_likert}\NormalTok{(ksa\_df); wt }\OtherTok{\textless{}{-}} \FunctionTok{omega\_total\_poly\_likert}\NormalTok{(ksa\_df)}
+      \FunctionTok{tibble}\NormalTok{(}\AttributeTok{scale =} \StringTok{"KSA{-}3: total"}\NormalTok{, }\AttributeTok{k\_items =} \DecValTok{9}\NormalTok{,}
+             \AttributeTok{alpha\_raw =}\NormalTok{ a}\SpecialCharTok{$}\NormalTok{total}\SpecialCharTok{$}\NormalTok{raw\_alpha, }\AttributeTok{alpha\_poly =}\NormalTok{ ap}\SpecialCharTok{$}\NormalTok{total}\SpecialCharTok{$}\NormalTok{raw\_alpha, }\AttributeTok{omega\_total =}\NormalTok{ wt)}
+\NormalTok{    \}}
+\NormalTok{  )}
+
+  \FunctionTok{print\_tbl}\NormalTok{(ksa\_rel, }\AttributeTok{digits =} \DecValTok{3}\NormalTok{, }\AttributeTok{caption =} \StringTok{"KSA{-}3 reliability (alpha, polychoric alpha, omega total)."}\NormalTok{)}
+
+  \CommentTok{\# Optional CFA: 3 correlated factors (A, U, K)}
+\NormalTok{  ksa\_model }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{}}
+\StringTok{  A =\textasciitilde{} A1 + A2 + A3}
+\StringTok{  U =\textasciitilde{} U1 + U2 + U3}
+\StringTok{  K =\textasciitilde{} K1 + K2 + K3}
+\StringTok{  A \textasciitilde{}\textasciitilde{} U + K}
+\StringTok{  U \textasciitilde{}\textasciitilde{} K}
+\StringTok{  \textquotesingle{}}
+\NormalTok{  ksa\_fit }\OtherTok{\textless{}{-}} \FunctionTok{try}\NormalTok{(lavaan}\SpecialCharTok{::}\FunctionTok{cfa}\NormalTok{(ksa\_model, }\AttributeTok{data =}\NormalTok{ ksa\_df, }\AttributeTok{ordered =} \FunctionTok{colnames}\NormalTok{(ksa\_df), }\AttributeTok{estimator =} \StringTok{"WLSMV"}\NormalTok{), }\AttributeTok{silent =} \ConstantTok{TRUE}\NormalTok{)}
+  \ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{inherits}\NormalTok{(ksa\_fit, }\StringTok{"try{-}error"}\NormalTok{)) \{}
+    \FunctionTok{print}\NormalTok{(}\FunctionTok{fitMeasures}\NormalTok{(ksa\_fit, }\FunctionTok{c}\NormalTok{(}\StringTok{"cfi"}\NormalTok{,}\StringTok{"tli"}\NormalTok{,}\StringTok{"rmsea"}\NormalTok{,}\StringTok{"srmr"}\NormalTok{)))}
+\NormalTok{  \} }\ControlFlowTok{else}\NormalTok{ \{}
+    \FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{KSA{-}3 CFA skipped (model failed to converge).}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\NormalTok{  \}}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Omega_h for 1 factor is not meaningful, just omega_t
+## Omega_h for 1 factor is not meaningful, just omega_t
+## Omega_h for 1 factor is not meaningful, just omega_t
+## Omega_h for 1 factor is not meaningful, just omega_t
+\end{verbatim}
+
+\begin{verbatim}
+##   cfi   tli rmsea  srmr 
+## 0.974 0.961 0.068 0.072
+\end{verbatim}
+
+\hypertarget{sdr-5-sdr1-sdr5}{%
+\subsection{SDR-5 (SDR1-SDR5)}\label{sdr-5-sdr1-sdr5}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sdr\_cols }\OtherTok{\textless{}{-}} \FunctionTok{paste0}\NormalTok{(}\StringTok{"SDR"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{)}
+\NormalTok{has\_sdr  }\OtherTok{\textless{}{-}} \FunctionTok{all}\NormalTok{(sdr\_cols }\SpecialCharTok{\%in\%} \FunctionTok{names}\NormalTok{(dat))}
+
+\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\NormalTok{has\_sdr) \{}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{**SDR{-}5 section skipped:** SDR1–SDR5 not found.}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\NormalTok{\} }\ControlFlowTok{else}\NormalTok{ \{}
+\NormalTok{  sdr\_df }\OtherTok{\textless{}{-}}\NormalTok{ dat[keep, sdr\_cols] }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{as\_tibble}\NormalTok{()}
+  \CommentTok{\# }\AlertTok{NOTE}\CommentTok{: Your data reportedly already has SDR2–SDR4 reversed. If unsure, you can}
+  \CommentTok{\# check symmetry and optionally reverse here before reliability.}
+\NormalTok{  a\_sdr  }\OtherTok{\textless{}{-}}\NormalTok{ psych}\SpecialCharTok{::}\FunctionTok{alpha}\NormalTok{(sdr\_df)}
+\NormalTok{  ap\_sdr }\OtherTok{\textless{}{-}} \FunctionTok{alpha\_poly\_likert}\NormalTok{(sdr\_df)}
+\NormalTok{  wt\_sdr }\OtherTok{\textless{}{-}} \FunctionTok{omega\_total\_poly\_likert}\NormalTok{(sdr\_df)}
+
+  \FunctionTok{print\_tbl}\NormalTok{(}\FunctionTok{tibble}\NormalTok{(}
+    \AttributeTok{scale =} \StringTok{"SDR{-}5"}\NormalTok{,}
+    \AttributeTok{k\_items =} \DecValTok{5}\NormalTok{,}
+    \AttributeTok{alpha\_raw =}\NormalTok{ a\_sdr}\SpecialCharTok{$}\NormalTok{total}\SpecialCharTok{$}\NormalTok{raw\_alpha,}
+    \AttributeTok{alpha\_poly =}\NormalTok{ ap\_sdr}\SpecialCharTok{$}\NormalTok{total}\SpecialCharTok{$}\NormalTok{raw\_alpha,}
+    \AttributeTok{omega\_total =}\NormalTok{ wt\_sdr}
+\NormalTok{  ), }\AttributeTok{digits =} \DecValTok{3}\NormalTok{, }\AttributeTok{caption =} \StringTok{"SDR{-}5 reliability (alpha, polychoric alpha, omega total)."}\NormalTok{) }
+
+  \CommentTok{\# Optional CFA: 1 factor}
+\NormalTok{  sdr\_model }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{}SDR =\textasciitilde{} SDR1 + SDR2 + SDR3 + SDR4 + SDR5\textquotesingle{}}
+\NormalTok{  sdr\_fit }\OtherTok{\textless{}{-}} \FunctionTok{try}\NormalTok{(lavaan}\SpecialCharTok{::}\FunctionTok{cfa}\NormalTok{(sdr\_model, }\AttributeTok{data =}\NormalTok{ sdr\_df, }\AttributeTok{ordered =} \FunctionTok{colnames}\NormalTok{(sdr\_df), }\AttributeTok{estimator =} \StringTok{"WLSMV"}\NormalTok{), }\AttributeTok{silent =} \ConstantTok{TRUE}\NormalTok{)}
+  \ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{inherits}\NormalTok{(sdr\_fit, }\StringTok{"try{-}error"}\NormalTok{)) \{}
+    \FunctionTok{print}\NormalTok{(}\FunctionTok{fitMeasures}\NormalTok{(sdr\_fit, }\FunctionTok{c}\NormalTok{(}\StringTok{"cfi"}\NormalTok{,}\StringTok{"tli"}\NormalTok{,}\StringTok{"rmsea"}\NormalTok{,}\StringTok{"srmr"}\NormalTok{)))}
+\NormalTok{  \} }\ControlFlowTok{else}\NormalTok{ \{}
+    \FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{SDR{-}5 CFA skipped (model failed to converge).}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\NormalTok{  \}}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Some items ( SDR1 SDR5 ) were negatively correlated with the first principal component and 
+## probably should be reversed.  
+## To do this, run the function again with the 'check.keys=TRUE' option
+\end{verbatim}
+
+\begin{verbatim}
+## Some items ( SDR1 SDR5 ) were negatively correlated with the first principal component and 
+## probably should be reversed.  
+## To do this, run the function again with the 'check.keys=TRUE' option
+\end{verbatim}
+
+\begin{verbatim}
+## Omega_h for 1 factor is not meaningful, just omega_t
+\end{verbatim}
+
+\begin{verbatim}
+##   cfi   tli rmsea  srmr 
+## 0.753 0.507 0.203 0.111
+\end{verbatim}
+
+\hypertarget{step-9-cross-construct-correlations-hpt-kn-fr-lf-ksa-3-sdr-5}{%
+\section{Step 9 --- Cross-construct correlations (HPT, KN, FR-LF, KSA-3,
+SDR-5)}\label{step-9-cross-construct-correlations-hpt-kn-fr-lf-ksa-3-sdr-5}}
+
+Why: Useful overview to see how constructs relate before multilevel
+models.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Build scale scores that exist in your data (gracefully skipping any missing block)}
+\NormalTok{scales\_list }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}
+  \AttributeTok{HPT\_total =}\NormalTok{ hpt\_scores}\SpecialCharTok{$}\NormalTok{HPT\_total,}
+  \AttributeTok{HPT\_POP   =}\NormalTok{ hpt\_scores}\SpecialCharTok{$}\NormalTok{POP,}
+  \AttributeTok{HPT\_ROA   =}\NormalTok{ hpt\_scores}\SpecialCharTok{$}\NormalTok{ROA,}
+  \AttributeTok{HPT\_CONT  =}\NormalTok{ hpt\_scores}\SpecialCharTok{$}\NormalTok{CONT}
+\NormalTok{)}
+
+\ControlFlowTok{if}\NormalTok{ (has\_kn) \{}
+\NormalTok{  scales\_list}\SpecialCharTok{$}\NormalTok{KN\_total }\OtherTok{\textless{}{-}} \FunctionTok{rowSums}\NormalTok{(dat[keep, kn\_cols], }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{\}}
+
+\ControlFlowTok{if}\NormalTok{ (has\_fr) \{}
+\NormalTok{  fr\_df }\OtherTok{\textless{}{-}}\NormalTok{ dat[keep, fr\_cols]}
+\NormalTok{  scales\_list}\SpecialCharTok{$}\NormalTok{FR\_RD     }\OtherTok{\textless{}{-}} \FunctionTok{rowMeans}\NormalTok{(fr\_df[, }\FunctionTok{paste0}\NormalTok{(}\StringTok{"RD"}\NormalTok{,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{)], }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{  scales\_list}\SpecialCharTok{$}\NormalTok{FR\_NS     }\OtherTok{\textless{}{-}} \FunctionTok{rowMeans}\NormalTok{(fr\_df[, }\FunctionTok{paste0}\NormalTok{(}\StringTok{"NS"}\NormalTok{,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{)], }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{  scales\_list}\SpecialCharTok{$}\NormalTok{FR\_total  }\OtherTok{\textless{}{-}} \FunctionTok{rowMeans}\NormalTok{(fr\_df, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{\}}
+
+\ControlFlowTok{if}\NormalTok{ (has\_ksa) \{}
+\NormalTok{  ksa\_df }\OtherTok{\textless{}{-}}\NormalTok{ dat[keep, ksa\_cols]}
+\NormalTok{  scales\_list}\SpecialCharTok{$}\NormalTok{KSA\_A     }\OtherTok{\textless{}{-}} \FunctionTok{rowMeans}\NormalTok{(ksa\_df[, }\FunctionTok{paste0}\NormalTok{(}\StringTok{"A"}\NormalTok{,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{)], }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{  scales\_list}\SpecialCharTok{$}\NormalTok{KSA\_U     }\OtherTok{\textless{}{-}} \FunctionTok{rowMeans}\NormalTok{(ksa\_df[, }\FunctionTok{paste0}\NormalTok{(}\StringTok{"U"}\NormalTok{,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{)], }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{  scales\_list}\SpecialCharTok{$}\NormalTok{KSA\_K     }\OtherTok{\textless{}{-}} \FunctionTok{rowMeans}\NormalTok{(ksa\_df[, }\FunctionTok{paste0}\NormalTok{(}\StringTok{"K"}\NormalTok{,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{)], }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{  scales\_list}\SpecialCharTok{$}\NormalTok{KSA\_total }\OtherTok{\textless{}{-}} \FunctionTok{rowMeans}\NormalTok{(ksa\_df, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{\}}
+
+\ControlFlowTok{if}\NormalTok{ (has\_sdr) \{}
+\NormalTok{  sdr\_df }\OtherTok{\textless{}{-}}\NormalTok{ dat[keep, sdr\_cols]}
+\NormalTok{  scales\_list}\SpecialCharTok{$}\NormalTok{SDR\_total }\OtherTok{\textless{}{-}} \FunctionTok{rowMeans}\NormalTok{(sdr\_df, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{\}}
+
+\NormalTok{scales\_df }\OtherTok{\textless{}{-}} \FunctionTok{as\_tibble}\NormalTok{(scales\_list)}
+
+\CommentTok{\# Pairwise complete correlations}
+\NormalTok{cors }\OtherTok{\textless{}{-}} \FunctionTok{cor}\NormalTok{(scales\_df, }\AttributeTok{use =} \StringTok{"pairwise.complete.obs"}\NormalTok{)}
+
+\FunctionTok{print\_tbl}\NormalTok{(}\FunctionTok{round}\NormalTok{(cors, }\DecValTok{3}\NormalTok{), }\AttributeTok{caption =} \StringTok{"Cross{-}construct correlations (pairwise complete)."}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[t]{lrrrrrrrrrrrrr}
+\caption{\label{tab:cross-construct-correlations}Cross-construct correlations (pairwise complete).}\\
+\toprule
+  & HPT\_total & HPT\_POP & HPT\_ROA & HPT\_CONT & KN\_total & FR\_RD & FR\_NS & FR\_total & KSA\_A & KSA\_U & KSA\_K & KSA\_total & SDR\_total\\
+\midrule
+HPT\_total & 1.000 & 0.246 & 0.744 & 0.656 & 0.117 & -0.030 & 0.020 & -0.008 & 0.110 & 0.086 & 0.164 & 0.155 & 0.091\\
+HPT\_POP & 0.246 & 1.000 & -0.171 & -0.376 & -0.310 & 0.084 & 0.060 & 0.083 & 0.100 & 0.098 & 0.167 & 0.157 & 0.092\\
+HPT\_ROA & 0.744 & -0.171 & 1.000 & 0.402 & 0.259 & -0.054 & -0.040 & -0.052 & 0.034 & 0.036 & 0.077 & 0.062 & 0.015\\
+HPT\_CONT & 0.656 & -0.376 & 0.402 & 1.000 & 0.229 & -0.075 & 0.013 & -0.040 & 0.051 & 0.012 & 0.033 & 0.042 & 0.045\\
+KN\_total & 0.117 & -0.310 & 0.259 & 0.229 & 1.000 & -0.124 & -0.194 & -0.192 & -0.020 & 0.000 & 0.021 & 0.009 & 0.014\\
+\addlinespace
+FR\_RD & -0.030 & 0.084 & -0.054 & -0.075 & -0.124 & 1.000 & 0.401 & 0.840 & 0.405 & 0.398 & 0.357 & 0.494 & -0.046\\
+FR\_NS & 0.020 & 0.060 & -0.040 & 0.013 & -0.194 & 0.401 & 1.000 & 0.835 & 0.364 & 0.259 & 0.179 & 0.342 & -0.201\\
+FR\_total & -0.008 & 0.083 & -0.052 & -0.040 & -0.192 & 0.840 & 0.835 & 1.000 & 0.458 & 0.372 & 0.319 & 0.487 & -0.143\\
+KSA\_A & 0.110 & 0.100 & 0.034 & 0.051 & -0.020 & 0.405 & 0.364 & 0.458 & 1.000 & 0.353 & 0.444 & 0.799 & -0.157\\
+KSA\_U & 0.086 & 0.098 & 0.036 & 0.012 & 0.000 & 0.398 & 0.259 & 0.372 & 0.353 & 1.000 & 0.396 & 0.731 & -0.165\\
+\addlinespace
+KSA\_K & 0.164 & 0.167 & 0.077 & 0.033 & 0.021 & 0.357 & 0.179 & 0.319 & 0.444 & 0.396 & 1.000 & 0.789 & -0.020\\
+KSA\_total & 0.155 & 0.157 & 0.062 & 0.042 & 0.009 & 0.494 & 0.342 & 0.487 & 0.799 & 0.731 & 0.789 & 1.000 & -0.146\\
+SDR\_total & 0.091 & 0.092 & 0.015 & 0.045 & 0.014 & -0.046 & -0.201 & -0.143 & -0.157 & -0.165 & -0.020 & -0.146 & 1.000\\
+\bottomrule
+\end{longtable}
+
+\hypertarget{reproducibility-appendix}{%
+\section{Reproducibility appendix}\label{reproducibility-appendix}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sessionInfo}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## R version 4.4.2 (2024-10-31)
+## Platform: x86_64-pc-linux-gnu
+## Running under: Ubuntu 24.04.3 LTS
+## 
+## Matrix products: default
+## BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.12.0 
+## LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.12.0
+## 
+## locale:
+##  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C               LC_TIME=cs_CZ.UTF-8        LC_COLLATE=en_US.UTF-8    
+##  [5] LC_MONETARY=cs_CZ.UTF-8    LC_MESSAGES=en_US.UTF-8    LC_PAPER=cs_CZ.UTF-8       LC_NAME=C                 
+##  [9] LC_ADDRESS=C               LC_TELEPHONE=C             LC_MEASUREMENT=cs_CZ.UTF-8 LC_IDENTIFICATION=C       
+## 
+## time zone: Europe/Prague
+## tzcode source: system (glibc)
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] kableExtra_1.4.0   knitr_1.50         performance_0.15.1 lme4_1.1-38        Matrix_1.7-1       semTools_0.5-7    
+##  [7] lavaan_0.6-20      psych_2.4.12       lubridate_1.9.4    forcats_1.0.0      stringr_1.5.1      dplyr_1.1.4       
+## [13] purrr_1.1.0        readr_2.1.5        tidyr_1.3.1        tibble_3.2.1       ggplot2_4.0.1      tidyverse_2.0.0   
+## 
+## loaded via a namespace (and not attached):
+##  [1] gtable_0.3.6         xfun_0.54            insight_1.4.2        lattice_0.22-5       tzdb_0.5.0          
+##  [6] quadprog_1.5-8       vctrs_0.6.5          tools_4.4.2          Rdpack_2.6.4         generics_0.1.3      
+## [11] stats4_4.4.2         parallel_4.4.2       sandwich_3.1-1       pkgconfig_2.0.3      lavaan.mi_0.1-0     
+## [16] RColorBrewer_1.1-3   S7_0.2.1             lifecycle_1.0.4      GPArotation_2024.3-1 compiler_4.4.2      
+## [21] farver_2.1.2         textshaping_0.4.1    mnormt_2.1.1         codetools_0.2-20     htmltools_0.5.8.1   
+## [26] yaml_2.3.10          pillar_1.10.0        nloptr_2.2.1         MASS_7.3-61          reformulas_0.4.1    
+## [31] boot_1.3-31          multcomp_1.4-28      nlme_3.1-166         tidyselect_1.2.1     digest_0.6.37       
+## [36] mvtnorm_1.3-2        stringi_1.8.4        labeling_0.4.3       splines_4.4.2        fastmap_1.2.0       
+## [41] grid_4.4.2           cli_3.6.5            magrittr_2.0.3       survival_3.7-0       pbivnorm_0.6.0      
+## [46] TH.data_1.1-4        withr_3.0.2          scales_1.4.0         estimability_1.5.1   timechange_0.3.0    
+## [51] rmarkdown_2.29       emmeans_1.10.6       zoo_1.8-14           hms_1.1.3            coda_0.19-4.1       
+## [56] evaluate_1.0.5       rbibutils_2.3        viridisLite_0.4.2    rlang_1.1.6          Rcpp_1.0.13-1       
+## [61] xtable_1.8-4         glue_1.8.0           xml2_1.3.6           svglite_2.2.2        rstudioapi_0.17.1   
+## [66] minqa_1.2.8          R6_2.6.1             systemfonts_1.3.1
+\end{verbatim}
+
+\end{document}

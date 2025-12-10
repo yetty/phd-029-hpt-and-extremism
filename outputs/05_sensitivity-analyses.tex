@@ -1,0 +1,806 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  10pt,
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[landscape,margin=0.7in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\setlength{\LTcapwidth}{\textwidth}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{longtable}
+\usepackage{colortbl}
+\usepackage{array}
+\usepackage{anyfontsize}
+\usepackage{multirow}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Sensitivity analyses --- HPT (Czech data)},
+  pdfauthor={HPT and Extremism project},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Sensitivity analyses --- HPT (Czech data)}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{Robustness checks for scoring, ideology operationalisation,
+exclusions, and random-slopes}
+\author{HPT and Extremism project}
+\date{2025-12-10}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{3}
+\tableofcontents
+}
+\hypertarget{purpose-and-scope}{%
+\section{Purpose and scope}\label{purpose-and-scope}}
+
+This file documents \textbf{exploratory robustness checks} of our main
+results. We vary how HPT is scored, how ideology is operationalised,
+which observations are included, and whether class-level \textbf{random
+slopes} are needed. The goal is to see if substantive conclusions
+survive reasonable perturbations---\textbf{not} to hunt for
+significance.
+
+HPT scoring follows the Hartmann--Hasselhorn / Huijgen instrument logic;
+note earlier reports that ROA items can behave inconsistently across
+samples, motivating ROA-free alternatives here. We also leverage the
+FR-LF dimensions RD and NS for ideology variants, aligned with the
+codebook of our dataset. These analyses correspond to the
+``contamination'' checks pre-registered in the project snapshot.
+
+\hypertarget{setup}{%
+\subsection{Setup}\label{setup}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Core packages}
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{library}\NormalTok{(lme4)}
+\FunctionTok{library}\NormalTok{(lmerTest)}
+\FunctionTok{library}\NormalTok{(broom)}
+\FunctionTok{library}\NormalTok{(broom.mixed)}
+\FunctionTok{library}\NormalTok{(performance)}
+\FunctionTok{library}\NormalTok{(gt)}
+\FunctionTok{library}\NormalTok{(glue)}
+
+\CommentTok{\# Nice printing}
+\FunctionTok{theme\_set}\NormalTok{(}\FunctionTok{theme\_bw}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{data}{%
+\subsection{Data}\label{data}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Load the dataset created in 00\_data{-}preparation}
+\FunctionTok{load}\NormalTok{(}\StringTok{"normalised\_responses.RData"}\NormalTok{)}
+\FunctionTok{stopifnot}\NormalTok{(}\FunctionTok{exists}\NormalTok{(}\StringTok{"normalised\_responses"}\NormalTok{))}
+\NormalTok{dat\_raw }\OtherTok{\textless{}{-}}\NormalTok{ normalised\_responses}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{How to read variables.} Variable names and coding (KN,
+POP/ROA/CONT, RD/NS, KSA facets, SDR) are defined in the project
+codebook and used verbatim here.
+
+\hypertarget{scoring-variants-for-hpt}{%
+\section{1. Scoring variants for HPT}\label{scoring-variants-for-hpt}}
+
+\textbf{Why:} In prior literature, POP and CONT often form one factor,
+while ROA can be unstable (e.g., ROA1 cross-loads in some samples). We
+therefore compare the \textbf{original 9-item average} with
+\textbf{ROA-free} and \textbf{problem-item-free} scores.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dat }\OtherTok{\textless{}{-}}\NormalTok{ dat\_raw }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \CommentTok{\# Per codebook, POP/ROA/CONT are coded 1–4 (higher = better fit). :contentReference[oaicite:5]\{index=5\}}
+    \AttributeTok{HPT\_total\_9   =} \FunctionTok{rowMeans}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{c}\NormalTok{(POP1}\SpecialCharTok{:}\NormalTok{POP3, ROA1}\SpecialCharTok{:}\NormalTok{ROA3, CONT1}\SpecialCharTok{:}\NormalTok{CONT3)), }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{HPT\_total\_6   =} \FunctionTok{rowMeans}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{c}\NormalTok{(POP1}\SpecialCharTok{:}\NormalTok{POP3, CONT1}\SpecialCharTok{:}\NormalTok{CONT3)), }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),           }\CommentTok{\# exclude all ROA}
+    \AttributeTok{HPT\_total\_8   =} \FunctionTok{rowMeans}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{c}\NormalTok{(POP1}\SpecialCharTok{:}\NormalTok{POP3, ROA2}\SpecialCharTok{:}\NormalTok{ROA3, CONT1}\SpecialCharTok{:}\NormalTok{CONT3)), }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{) }\CommentTok{\# drop ROA1 only}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{descriptives}{%
+\subsubsection{Descriptives}\label{descriptives}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{hpt\_desc }\OtherTok{\textless{}{-}}\NormalTok{ dat }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}
+    \StringTok{\textasciigrave{}}\AttributeTok{9{-}item (POP+ROA+CONT)}\StringTok{\textasciigrave{}} \OtherTok{=} \FunctionTok{mean}\NormalTok{(HPT\_total\_9,  }\AttributeTok{na.rm=}\ConstantTok{TRUE}\NormalTok{),}
+    \StringTok{\textasciigrave{}}\AttributeTok{8{-}item (drop ROA1)}\StringTok{\textasciigrave{}}     \OtherTok{=} \FunctionTok{mean}\NormalTok{(HPT\_total\_8,  }\AttributeTok{na.rm=}\ConstantTok{TRUE}\NormalTok{),}
+    \StringTok{\textasciigrave{}}\AttributeTok{6{-}item (drop all ROA)}\StringTok{\textasciigrave{}}  \OtherTok{=} \FunctionTok{mean}\NormalTok{(HPT\_total\_6,  }\AttributeTok{na.rm=}\ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{pivot\_longer}\NormalTok{(}\FunctionTok{everything}\NormalTok{(), }\AttributeTok{names\_to=}\StringTok{"Score"}\NormalTok{, }\AttributeTok{values\_to=}\StringTok{"Mean"}\NormalTok{)}
+
+\FunctionTok{gt}\NormalTok{(hpt\_desc) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{fmt\_number}\NormalTok{(}\AttributeTok{columns=}\NormalTok{Mean, }\AttributeTok{decimals=}\DecValTok{2}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{tab\_header}\NormalTok{(}\AttributeTok{title=}\StringTok{"HPT scoring variants — means (higher = better)"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}[t]
+\caption*{
+{\fontsize{20}{25}\selectfont  HPT scoring variants \textemdash means (higher = better)\fontsize{12}{15}\selectfont }
+} 
+\fontsize{12.0pt}{14.0pt}\selectfont
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}lr}
+\toprule
+Score & Mean \\ 
+\midrule\addlinespace[2.5pt]
+9-item (POP+ROA+CONT) & 2.51 \\ 
+8-item (drop ROA1) & 2.47 \\ 
+6-item (drop all ROA) & 2.36 \\ 
+\bottomrule
+\end{tabular*}
+\end{table}
+
+\textbf{Interpretation.} If the \textbf{rankings of groups/effects} are
+stable across these scores, conclusions do not hinge on ROA behaviour.
+If results flip only when ROA is included, they are \textbf{fragile} and
+likely influenced by ROA idiosyncrasies noted in earlier work.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{ideology-operationalisations}{%
+\section{2. Ideology
+operationalisations}\label{ideology-operationalisations}}
+
+\textbf{Why:} FR-LF defines six dimensions; we focus on \textbf{RD
+(right-authoritarian rule)} and \textbf{NS (Nazi relativisation)}. We
+test (a) \textbf{NS-only}, (b) \textbf{RD+NS combined} (FR-LF mini), and
+(c) \textbf{KSA-3} authoritarianism (total and facets).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dat }\OtherTok{\textless{}{-}}\NormalTok{ dat }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{KN\_total   =} \FunctionTok{rowSums}\NormalTok{(}\FunctionTok{across}\NormalTok{(KN1}\SpecialCharTok{:}\NormalTok{KN6), }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),        }\CommentTok{\# knowledge mini{-}test}
+    \AttributeTok{SDR\_total  =} \FunctionTok{rowSums}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{starts\_with}\NormalTok{(}\StringTok{"SDR"}\NormalTok{)), }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{NS\_sum     =} \FunctionTok{rowSums}\NormalTok{(}\FunctionTok{across}\NormalTok{(NS1}\SpecialCharTok{:}\NormalTok{NS3), }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{RD\_sum     =} \FunctionTok{rowSums}\NormalTok{(}\FunctionTok{across}\NormalTok{(RD1}\SpecialCharTok{:}\NormalTok{RD3), }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{FRLF\_mini  =}\NormalTok{ NS\_sum }\SpecialCharTok{+}\NormalTok{ RD\_sum,                               }\CommentTok{\# FR{-}LF logic (NS + RD)}
+    \AttributeTok{KSA\_A      =} \FunctionTok{rowSums}\NormalTok{(}\FunctionTok{across}\NormalTok{(A1}\SpecialCharTok{:}\NormalTok{A3), }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{KSA\_U      =} \FunctionTok{rowSums}\NormalTok{(}\FunctionTok{across}\NormalTok{(U1}\SpecialCharTok{:}\NormalTok{U3), }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{KSA\_K      =} \FunctionTok{rowSums}\NormalTok{(}\FunctionTok{across}\NormalTok{(K1}\SpecialCharTok{:}\NormalTok{K3), }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{KSA\_total  =}\NormalTok{ KSA\_A }\SpecialCharTok{+}\NormalTok{ KSA\_U }\SpecialCharTok{+}\NormalTok{ KSA\_K}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \CommentTok{\# z{-}standardize predictors for comparability of β}
+  \FunctionTok{mutate}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{c}\NormalTok{(NS\_sum, FRLF\_mini, KSA\_total, KN\_total, SDR\_total), scale, }\AttributeTok{.names=}\StringTok{"\{.col\}\_z"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Interpretation.} If \textbf{NS-only} predicts HPT similarly to
+(or more strongly than) broad authoritarianism (KSA-3), the HPT score
+may be \textbf{ideologically contaminated} by Nazi-congruent attitudes,
+consistent with our preregistered concern.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{exclusions-knowledge-outliers-extreme-sdr}{%
+\section{3. Exclusions: knowledge outliers \& extreme
+SDR}\label{exclusions-knowledge-outliers-extreme-sdr}}
+
+\textbf{Rules (predefined here for sensitivity only):}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Knowledge outliers:} drop KN totals outside the Tukey fence
+  ({[}Q\_1-1.5,IQR,;Q\_3+1.5,IQR{]}).
+\item
+  \textbf{Extreme SDR:} drop the \textbf{top 10\%} of SDR totals
+  (possible ``faking good''). Codebook notes SDR2--SDR4 are reversed
+  already.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Compute fences}
+\NormalTok{kn\_q }\OtherTok{\textless{}{-}} \FunctionTok{quantile}\NormalTok{(dat}\SpecialCharTok{$}\NormalTok{KN\_total, }\AttributeTok{probs =} \FunctionTok{c}\NormalTok{(.}\DecValTok{25}\NormalTok{, .}\DecValTok{75}\NormalTok{), }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{kn\_iqr }\OtherTok{\textless{}{-}}\NormalTok{ kn\_q[}\DecValTok{2}\NormalTok{]}\SpecialCharTok{{-}}\NormalTok{kn\_q[}\DecValTok{1}\NormalTok{]}
+\NormalTok{kn\_low }\OtherTok{\textless{}{-}}\NormalTok{ kn\_q[}\DecValTok{1}\NormalTok{] }\SpecialCharTok{{-}} \FloatTok{1.5}\SpecialCharTok{*}\NormalTok{kn\_iqr}
+\NormalTok{kn\_high}\OtherTok{\textless{}{-}}\NormalTok{ kn\_q[}\DecValTok{2}\NormalTok{] }\SpecialCharTok{+} \FloatTok{1.5}\SpecialCharTok{*}\NormalTok{kn\_iqr}
+
+\NormalTok{sdr\_p90 }\OtherTok{\textless{}{-}} \FunctionTok{quantile}\NormalTok{(dat}\SpecialCharTok{$}\NormalTok{SDR\_total, }\AttributeTok{probs =}\NormalTok{ .}\DecValTok{90}\NormalTok{, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+
+\NormalTok{dat }\OtherTok{\textless{}{-}}\NormalTok{ dat }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{excl\_KN  =}\NormalTok{ KN\_total }\SpecialCharTok{\textless{}}\NormalTok{ kn\_low }\SpecialCharTok{|}\NormalTok{ KN\_total }\SpecialCharTok{\textgreater{}}\NormalTok{ kn\_high,}
+    \AttributeTok{excl\_SDR =}\NormalTok{ SDR\_total }\SpecialCharTok{\textgreater{}=}\NormalTok{ sdr\_p90,}
+    \AttributeTok{keep\_all =} \ConstantTok{TRUE}\NormalTok{,}
+    \AttributeTok{keep\_excl=} \SpecialCharTok{!}\NormalTok{(excl\_KN }\SpecialCharTok{|}\NormalTok{ excl\_SDR)}
+\NormalTok{  )}
+
+\NormalTok{table\_excl }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}
+  \AttributeTok{Criterion =} \FunctionTok{c}\NormalTok{(}\StringTok{"Total N"}\NormalTok{, }\StringTok{"Drop KN outliers"}\NormalTok{, }\StringTok{"Drop top{-}10\% SDR"}\NormalTok{, }\StringTok{"Kept (both rules)"}\NormalTok{),}
+  \AttributeTok{N =} \FunctionTok{c}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(dat),}
+        \FunctionTok{sum}\NormalTok{(dat}\SpecialCharTok{$}\NormalTok{excl\_KN, }\AttributeTok{na.rm=}\ConstantTok{TRUE}\NormalTok{),}
+        \FunctionTok{sum}\NormalTok{(dat}\SpecialCharTok{$}\NormalTok{excl\_SDR, }\AttributeTok{na.rm=}\ConstantTok{TRUE}\NormalTok{),}
+        \FunctionTok{sum}\NormalTok{(dat}\SpecialCharTok{$}\NormalTok{keep\_excl, }\AttributeTok{na.rm=}\ConstantTok{TRUE}\NormalTok{))}
+\NormalTok{)}
+
+\FunctionTok{gt}\NormalTok{(table\_excl) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{tab\_header}\NormalTok{(}\AttributeTok{title=}\StringTok{"Exclusion counts (for sensitivity runs)"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}[t]
+\caption*{
+{\fontsize{20}{25}\selectfont  Exclusion counts (for sensitivity runs)\fontsize{12}{15}\selectfont }
+} 
+\fontsize{12.0pt}{14.0pt}\selectfont
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}lr}
+\toprule
+Criterion & N \\ 
+\midrule\addlinespace[2.5pt]
+Total N & 164 \\ 
+Drop KN outliers & 0 \\ 
+Drop top-10\% SDR & 22 \\ 
+Kept (both rules) & 142 \\ 
+\bottomrule
+\end{tabular*}
+\end{table}
+
+\textbf{Interpretation.} If effects persist after dropping
+\textbf{low-knowledge} and \textbf{high-SDR} respondents, results are
+less likely to be artefacts of misunderstanding or impression
+management.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{mixed-models-with-class-clustering-random-slopes}{%
+\section{4. Mixed models with class clustering \& random
+slopes}\label{mixed-models-with-class-clustering-random-slopes}}
+
+We estimate multilevel models (students nested in classes), starting
+with random intercepts and then allowing the \textbf{ideology effect to
+vary by class}. We fit the models for each \textbf{HPT scoring} and
+\textbf{ideology} variant.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fit\_models }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(data, hpt\_var, ideol\_var)\{}
+\NormalTok{  form0 }\OtherTok{\textless{}{-}} \FunctionTok{as.formula}\NormalTok{(}\FunctionTok{glue}\NormalTok{(}\StringTok{"\{hpt\_var\} \textasciitilde{} \{ideol\_var\} + KN\_total\_z + SDR\_total\_z + (1 | class\_label)"}\NormalTok{))}
+\NormalTok{  form1 }\OtherTok{\textless{}{-}} \FunctionTok{as.formula}\NormalTok{(}\FunctionTok{glue}\NormalTok{(}\StringTok{"\{hpt\_var\} \textasciitilde{} \{ideol\_var\} + KN\_total\_z + SDR\_total\_z + (1 + \{ideol\_var\} | class\_label)"}\NormalTok{))}
+\NormalTok{  m0 }\OtherTok{\textless{}{-}} \FunctionTok{lmer}\NormalTok{(form0, }\AttributeTok{data =}\NormalTok{ data)}
+  \CommentTok{\# Try random slope; if singular, fall back to intercept{-}only}
+\NormalTok{  m1 }\OtherTok{\textless{}{-}} \FunctionTok{try}\NormalTok{(}\FunctionTok{lmer}\NormalTok{(form1, }\AttributeTok{data =}\NormalTok{ data), }\AttributeTok{silent =} \ConstantTok{TRUE}\NormalTok{)}
+  \ControlFlowTok{if}\NormalTok{(}\FunctionTok{inherits}\NormalTok{(m1,}\StringTok{"try{-}error"}\NormalTok{) }\SpecialCharTok{||} \FunctionTok{isTRUE}\NormalTok{(}\FunctionTok{isSingular}\NormalTok{(m1))) m1 }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
+  \FunctionTok{list}\NormalTok{(}\AttributeTok{m0=}\NormalTok{m0, }\AttributeTok{m1=}\NormalTok{m1)}
+\NormalTok{\}}
+
+\NormalTok{tidy\_model }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(m)\{}
+  \FunctionTok{tibble}\NormalTok{(}
+    \AttributeTok{term   =}\NormalTok{ broom.mixed}\SpecialCharTok{::}\FunctionTok{tidy}\NormalTok{(m, }\AttributeTok{effects=}\StringTok{"fixed"}\NormalTok{)}\SpecialCharTok{$}\NormalTok{term,}
+    \AttributeTok{estimate =}\NormalTok{ broom.mixed}\SpecialCharTok{::}\FunctionTok{tidy}\NormalTok{(m, }\AttributeTok{effects=}\StringTok{"fixed"}\NormalTok{)}\SpecialCharTok{$}\NormalTok{estimate,}
+    \AttributeTok{conf.low =} \FunctionTok{confint}\NormalTok{(m, }\AttributeTok{method=}\StringTok{"Wald"}\NormalTok{)[}\FunctionTok{names}\NormalTok{(}\FunctionTok{fixef}\NormalTok{(m)),}\DecValTok{1}\NormalTok{],}
+    \AttributeTok{conf.high=} \FunctionTok{confint}\NormalTok{(m, }\AttributeTok{method=}\StringTok{"Wald"}\NormalTok{)[}\FunctionTok{names}\NormalTok{(}\FunctionTok{fixef}\NormalTok{(m)),}\DecValTok{2}\NormalTok{],}
+    \AttributeTok{p.value  =}\NormalTok{ broom.mixed}\SpecialCharTok{::}\FunctionTok{tidy}\NormalTok{(m, }\AttributeTok{effects=}\StringTok{"fixed"}\NormalTok{)}\SpecialCharTok{$}\NormalTok{p.value,}
+    \AttributeTok{R2\_marg  =}\NormalTok{ performance}\SpecialCharTok{::}\FunctionTok{r2\_nakagawa}\NormalTok{(m)}\SpecialCharTok{$}\NormalTok{R2\_marginal,}
+    \AttributeTok{R2\_cond  =}\NormalTok{ performance}\SpecialCharTok{::}\FunctionTok{r2\_nakagawa}\NormalTok{(m)}\SpecialCharTok{$}\NormalTok{R2\_conditional}
+\NormalTok{  )}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{run-model-grid}{%
+\subsubsection{Run model grid}\label{run-model-grid}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{hpt\_vars   }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"HPT\_total\_9"}\NormalTok{,}\StringTok{"HPT\_total\_8"}\NormalTok{,}\StringTok{"HPT\_total\_6"}\NormalTok{)}
+\NormalTok{ideol\_vars }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"NS\_sum\_z"}\NormalTok{,}\StringTok{"FRLF\_mini\_z"}\NormalTok{,}\StringTok{"KSA\_total\_z"}\NormalTok{)}
+
+\CommentTok{\# Full sample}
+\NormalTok{grid\_full }\OtherTok{\textless{}{-}} \FunctionTok{expand\_grid}\NormalTok{(}\AttributeTok{hpt=}\NormalTok{hpt\_vars, }\AttributeTok{ideol=}\NormalTok{ideol\_vars) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{fits =} \FunctionTok{map2}\NormalTok{(hpt, ideol, }\SpecialCharTok{\textasciitilde{}}\FunctionTok{fit\_models}\NormalTok{(dat }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(keep\_all), .x, .y)),}
+         \AttributeTok{m0   =} \FunctionTok{map}\NormalTok{(fits, }\StringTok{"m0"}\NormalTok{),}
+         \AttributeTok{m1   =} \FunctionTok{map}\NormalTok{(fits, }\StringTok{"m1"}\NormalTok{))}
+
+\CommentTok{\# Exclusion sample (drop KN outliers \& top{-}10\% SDR)}
+\NormalTok{grid\_excl }\OtherTok{\textless{}{-}} \FunctionTok{expand\_grid}\NormalTok{(}\AttributeTok{hpt=}\NormalTok{hpt\_vars, }\AttributeTok{ideol=}\NormalTok{ideol\_vars) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{fits =} \FunctionTok{map2}\NormalTok{(hpt, ideol, }\SpecialCharTok{\textasciitilde{}}\FunctionTok{fit\_models}\NormalTok{(dat }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(keep\_excl), .x, .y)),}
+         \AttributeTok{m0   =} \FunctionTok{map}\NormalTok{(fits, }\StringTok{"m0"}\NormalTok{),}
+         \AttributeTok{m1   =} \FunctionTok{map}\NormalTok{(fits, }\StringTok{"m1"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{summaries-key-coefficient-ideology}{%
+\subsubsection{Summaries (key coefficient =
+ideology)}\label{summaries-key-coefficient-ideology}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{summarise\_grid }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(grid, label)\{}
+\NormalTok{  out0 }\OtherTok{\textless{}{-}}\NormalTok{ grid }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{tidy0 =} \FunctionTok{map}\NormalTok{(m0, tidy\_model)) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{unnest}\NormalTok{(tidy0) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{filter}\NormalTok{(term }\SpecialCharTok{==} \StringTok{"(Intercept)"} \SpecialCharTok{|} \FunctionTok{str\_detect}\NormalTok{(term, }\StringTok{"NS\_sum\_z|FRLF\_mini\_z|KSA\_total\_z"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{select}\NormalTok{(hpt, ideol, term, estimate, conf.low, conf.high, p.value, R2\_marg, R2\_cond) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{model =} \StringTok{"RI"}\NormalTok{) }\CommentTok{\# random intercept}
+
+\NormalTok{  out1 }\OtherTok{\textless{}{-}}\NormalTok{ grid }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{map\_lgl}\NormalTok{(m1, is.null)) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{tidy1 =} \FunctionTok{map}\NormalTok{(m1, tidy\_model)) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{unnest}\NormalTok{(tidy1) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{filter}\NormalTok{(term }\SpecialCharTok{==} \StringTok{"(Intercept)"} \SpecialCharTok{|} \FunctionTok{str\_detect}\NormalTok{(term, }\StringTok{"NS\_sum\_z|FRLF\_mini\_z|KSA\_total\_z"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{select}\NormalTok{(hpt, ideol, term, estimate, conf.low, conf.high, p.value, R2\_marg, R2\_cond) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{model =} \StringTok{"RS"}\NormalTok{) }\CommentTok{\# random slope (ideology)}
+
+  \FunctionTok{bind\_rows}\NormalTok{(out0, out1) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{mutate}\NormalTok{(}\AttributeTok{sample =}\NormalTok{ label)}
+\NormalTok{\}}
+
+\NormalTok{tab\_full }\OtherTok{\textless{}{-}} \FunctionTok{summarise\_grid}\NormalTok{(grid\_full, }\StringTok{"Full"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Random effect variances not available. Returned R2 does not account for random effects.
+## Random effect variances not available. Returned R2 does not account for random effects.
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: There were 2 warnings in `mutate()`.
+## The first warning was:
+## i In argument: `tidy0 = map(m0, tidy_model)`.
+## Caused by warning:
+## ! Can't compute random effect variances. Some variance components equal
+##   zero. Your model may suffer from singularity (see `?lme4::isSingular`
+##   and `?performance::check_singularity`).
+##   Decrease the `tolerance` level to force the calculation of random effect
+##   variances, or impose priors on your random effects parameters (using
+##   packages like `brms` or `glmmTMB`).
+## i Run `dplyr::last_dplyr_warnings()` to see the 1 remaining warning.
+\end{verbatim}
+
+\begin{verbatim}
+## Random effect variances not available. Returned R2 does not account for random effects.
+## Random effect variances not available. Returned R2 does not account for random effects.
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: There were 2 warnings in `mutate()`.
+## The first warning was:
+## i In argument: `tidy1 = map(m1, tidy_model)`.
+## Caused by warning:
+## ! Can't compute random effect variances. Some variance components equal
+##   zero. Your model may suffer from singularity (see `?lme4::isSingular`
+##   and `?performance::check_singularity`).
+##   Decrease the `tolerance` level to force the calculation of random effect
+##   variances, or impose priors on your random effects parameters (using
+##   packages like `brms` or `glmmTMB`).
+## i Run `dplyr::last_dplyr_warnings()` to see the 1 remaining warning.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tab\_excl }\OtherTok{\textless{}{-}} \FunctionTok{summarise\_grid}\NormalTok{(grid\_excl, }\StringTok{"Exclusions applied"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Random effect variances not available. Returned R2 does not account for random effects.
+## Random effect variances not available. Returned R2 does not account for random effects.
+## Random effect variances not available. Returned R2 does not account for random effects.
+## Random effect variances not available. Returned R2 does not account for random effects.
+## Random effect variances not available. Returned R2 does not account for random effects.
+## Random effect variances not available. Returned R2 does not account for random effects.
+## Random effect variances not available. Returned R2 does not account for random effects.
+## Random effect variances not available. Returned R2 does not account for random effects.
+## Random effect variances not available. Returned R2 does not account for random effects.
+## Random effect variances not available. Returned R2 does not account for random effects.
+## Random effect variances not available. Returned R2 does not account for random effects.
+## Random effect variances not available. Returned R2 does not account for random effects.
+## Random effect variances not available. Returned R2 does not account for random effects.
+## Random effect variances not available. Returned R2 does not account for random effects.
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: There were 14 warnings in `mutate()`.
+## The first warning was:
+## i In argument: `tidy0 = map(m0, tidy_model)`.
+## Caused by warning:
+## ! Can't compute random effect variances. Some variance components equal
+##   zero. Your model may suffer from singularity (see `?lme4::isSingular`
+##   and `?performance::check_singularity`).
+##   Decrease the `tolerance` level to force the calculation of random effect
+##   variances, or impose priors on your random effects parameters (using
+##   packages like `brms` or `glmmTMB`).
+## i Run `dplyr::last_dplyr_warnings()` to see the 13 remaining warnings.
+\end{verbatim}
+
+\begin{verbatim}
+## Random effect variances not available. Returned R2 does not account for random effects.
+## Random effect variances not available. Returned R2 does not account for random effects.
+## Random effect variances not available. Returned R2 does not account for random effects.
+## Random effect variances not available. Returned R2 does not account for random effects.
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: There were 4 warnings in `mutate()`.
+## The first warning was:
+## i In argument: `tidy1 = map(m1, tidy_model)`.
+## Caused by warning:
+## ! Can't compute random effect variances. Some variance components equal
+##   zero. Your model may suffer from singularity (see `?lme4::isSingular`
+##   and `?performance::check_singularity`).
+##   Decrease the `tolerance` level to force the calculation of random effect
+##   variances, or impose priors on your random effects parameters (using
+##   packages like `brms` or `glmmTMB`).
+## i Run `dplyr::last_dplyr_warnings()` to see the 3 remaining warnings.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tab\_models }\OtherTok{\textless{}{-}} \FunctionTok{bind\_rows}\NormalTok{(tab\_full, tab\_excl) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{ideol =} \FunctionTok{recode}\NormalTok{(ideol,}
+                        \AttributeTok{NS\_sum\_z=}\StringTok{"NS (z)"}\NormalTok{, }\AttributeTok{FRLF\_mini\_z=}\StringTok{"FR{-}LF: RD+NS (z)"}\NormalTok{, }\AttributeTok{KSA\_total\_z=}\StringTok{"KSA{-}3 total (z)"}\NormalTok{),}
+         \AttributeTok{hpt   =} \FunctionTok{recode}\NormalTok{(hpt,}
+                        \AttributeTok{HPT\_total\_9=}\StringTok{"HPT 9{-}item"}\NormalTok{, }\AttributeTok{HPT\_total\_8=}\StringTok{"HPT 8{-}item (drop ROA1)"}\NormalTok{,}
+                        \AttributeTok{HPT\_total\_6=}\StringTok{"HPT 6{-}item (no ROA)"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{arrange}\NormalTok{(sample, hpt, ideol, model)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tab\_models }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{c}\NormalTok{(estimate, conf.low, conf.high, R2\_marg, R2\_cond), }\SpecialCharTok{\textasciitilde{}}\FunctionTok{round}\NormalTok{(., }\DecValTok{3}\NormalTok{)),}
+         \AttributeTok{p.value =} \FunctionTok{signif}\NormalTok{(p.value, }\DecValTok{3}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{gt}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{tab\_header}\NormalTok{(}\AttributeTok{title=}\StringTok{"Multilevel models: ideology → HPT (controls: KN, SDR; class clustered)"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{tab\_spanner}\NormalTok{(}\AttributeTok{label =} \StringTok{"Effect (β and 95\% CI)"}\NormalTok{, }\AttributeTok{columns =} \FunctionTok{c}\NormalTok{(estimate, conf.low, conf.high)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{cols\_label}\NormalTok{(}\AttributeTok{sample=}\StringTok{"Sample"}\NormalTok{, }\AttributeTok{hpt=}\StringTok{"HPT score"}\NormalTok{, }\AttributeTok{ideol=}\StringTok{"Ideology"}\NormalTok{, }\AttributeTok{model=}\StringTok{"Model"}\NormalTok{,}
+             \AttributeTok{estimate=}\StringTok{"β"}\NormalTok{, }\AttributeTok{conf.low=}\StringTok{"CI low"}\NormalTok{, }\AttributeTok{conf.high=}\StringTok{"CI high"}\NormalTok{,}
+             \AttributeTok{p.value=}\StringTok{"p"}\NormalTok{, }\AttributeTok{R2\_marg=}\StringTok{"R² (marg.)"}\NormalTok{, }\AttributeTok{R2\_cond=}\StringTok{"R² (cond.)"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}[t]
+\caption*{
+{\fontsize{20}{25}\selectfont  Multilevel models: ideology \textrightarrow HPT (controls: KN, SDR; class clustered)\fontsize{12}{15}\selectfont }
+} 
+\fontsize{12.0pt}{14.0pt}\selectfont
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}lllrrrrrrll}
+\toprule
+ &  &  & \multicolumn{3}{c}{Effect (\ensuremath{\beta} and 95\% CI)} &  &  &  &  &  \\ 
+\cmidrule(lr){4-6}
+HPT score & Ideology & term & \ensuremath{\beta} & CI low & CI high & p & R\texttwosuperior (marg.) & R\texttwosuperior (cond.) & Model & Sample \\ 
+\midrule\addlinespace[2.5pt]
+HPT 6-item (no ROA) & FR-LF: RD+NS (z) & (Intercept) & 2.339 & 2.263 & 2.415 & 2.42e-14 & 0.001 & 0.016 & RI & Exclusions applied \\ 
+HPT 6-item (no ROA) & FR-LF: RD+NS (z) & FRLF\_mini\_z & 0.005 & -0.069 & 0.079 & 8.90e-01 & 0.001 & 0.016 & RI & Exclusions applied \\ 
+HPT 6-item (no ROA) & FR-LF: RD+NS (z) & (Intercept) & 2.337 & 2.267 & 2.407 & 9.35e-27 & 0.003 & 0.058 & RS & Exclusions applied \\ 
+HPT 6-item (no ROA) & FR-LF: RD+NS (z) & FRLF\_mini\_z & 0.011 & -0.087 & 0.110 & 8.27e-01 & 0.003 & 0.058 & RS & Exclusions applied \\ 
+HPT 6-item (no ROA) & KSA-3 total (z) & (Intercept) & 2.336 & 2.268 & 2.404 & 1.40e-105 & 0.032 & NA & RI & Exclusions applied \\ 
+HPT 6-item (no ROA) & KSA-3 total (z) & KSA\_total\_z & 0.078 & 0.005 & 0.152 & 3.83e-02 & 0.032 & NA & RI & Exclusions applied \\ 
+HPT 6-item (no ROA) & KSA-3 total (z) & (Intercept) & 2.333 & 2.264 & 2.402 & 2.92e-103 & 0.039 & NA & RS & Exclusions applied \\ 
+HPT 6-item (no ROA) & KSA-3 total (z) & KSA\_total\_z & 0.084 & -0.014 & 0.183 & 1.32e-01 & 0.039 & NA & RS & Exclusions applied \\ 
+HPT 6-item (no ROA) & NS (z) & (Intercept) & 2.339 & 2.268 & 2.410 & 1.07e-14 & 0.010 & 0.015 & RI & Exclusions applied \\ 
+HPT 6-item (no ROA) & NS (z) & NS\_sum\_z & 0.040 & -0.033 & 0.113 & 2.85e-01 & 0.010 & 0.015 & RI & Exclusions applied \\ 
+HPT 6-item (no ROA) & NS (z) & (Intercept) & 2.336 & 2.268 & 2.405 & 1.55e-94 & 0.010 & NA & RS & Exclusions applied \\ 
+HPT 6-item (no ROA) & NS (z) & NS\_sum\_z & 0.039 & -0.050 & 0.127 & 4.06e-01 & 0.010 & NA & RS & Exclusions applied \\ 
+HPT 8-item (drop ROA1) & FR-LF: RD+NS (z) & (Intercept) & 2.462 & 2.397 & 2.528 & 1.17e-110 & 0.007 & NA & RI & Exclusions applied \\ 
+HPT 8-item (drop ROA1) & FR-LF: RD+NS (z) & FRLF\_mini\_z & -0.001 & -0.071 & 0.068 & 9.74e-01 & 0.007 & NA & RI & Exclusions applied \\ 
+HPT 8-item (drop ROA1) & KSA-3 total (z) & (Intercept) & 2.458 & 2.393 & 2.523 & 3.42e-111 & 0.030 & NA & RI & Exclusions applied \\ 
+HPT 8-item (drop ROA1) & KSA-3 total (z) & KSA\_total\_z & 0.065 & -0.005 & 0.135 & 7.11e-02 & 0.030 & NA & RI & Exclusions applied \\ 
+HPT 8-item (drop ROA1) & NS (z) & (Intercept) & 2.461 & 2.396 & 2.527 & 9.23e-111 & 0.009 & NA & RI & Exclusions applied \\ 
+HPT 8-item (drop ROA1) & NS (z) & NS\_sum\_z & 0.020 & -0.050 & 0.090 & 5.72e-01 & 0.009 & NA & RI & Exclusions applied \\ 
+HPT 9-item & FR-LF: RD+NS (z) & (Intercept) & 2.497 & 2.430 & 2.564 & 4.56e-110 & 0.017 & NA & RI & Exclusions applied \\ 
+HPT 9-item & FR-LF: RD+NS (z) & FRLF\_mini\_z & -0.004 & -0.076 & 0.067 & 9.03e-01 & 0.017 & NA & RI & Exclusions applied \\ 
+HPT 9-item & KSA-3 total (z) & (Intercept) & 2.492 & 2.425 & 2.558 & 1.23e-110 & 0.042 & NA & RI & Exclusions applied \\ 
+HPT 9-item & KSA-3 total (z) & KSA\_total\_z & 0.069 & -0.003 & 0.141 & 6.18e-02 & 0.042 & NA & RI & Exclusions applied \\ 
+HPT 9-item & NS (z) & (Intercept) & 2.496 & 2.429 & 2.563 & 3.70e-110 & 0.019 & NA & RI & Exclusions applied \\ 
+HPT 9-item & NS (z) & NS\_sum\_z & 0.020 & -0.051 & 0.092 & 5.81e-01 & 0.019 & NA & RI & Exclusions applied \\ 
+HPT 6-item (no ROA) & FR-LF: RD+NS (z) & (Intercept) & 2.348 & 2.268 & 2.427 & 3.60e-15 & 0.008 & 0.053 & RI & Full \\ 
+HPT 6-item (no ROA) & FR-LF: RD+NS (z) & FRLF\_mini\_z & -0.015 & -0.082 & 0.053 & 6.65e-01 & 0.008 & 0.053 & RI & Full \\ 
+HPT 6-item (no ROA) & FR-LF: RD+NS (z) & (Intercept) & 2.349 & 2.270 & 2.428 & 7.60e-15 & 0.008 & 0.069 & RS & Full \\ 
+HPT 6-item (no ROA) & FR-LF: RD+NS (z) & FRLF\_mini\_z & -0.010 & -0.088 & 0.068 & 8.04e-01 & 0.008 & 0.069 & RS & Full \\ 
+HPT 6-item (no ROA) & KSA-3 total (z) & (Intercept) & 2.346 & 2.274 & 2.419 & 3.80e-15 & 0.019 & 0.046 & RI & Full \\ 
+HPT 6-item (no ROA) & KSA-3 total (z) & KSA\_total\_z & 0.047 & -0.022 & 0.116 & 1.86e-01 & 0.019 & 0.046 & RI & Full \\ 
+HPT 6-item (no ROA) & KSA-3 total (z) & (Intercept) & 2.346 & 2.278 & 2.415 & 1.68e-15 & 0.028 & 0.103 & RS & Full \\ 
+HPT 6-item (no ROA) & KSA-3 total (z) & KSA\_total\_z & 0.057 & -0.040 & 0.155 & 2.83e-01 & 0.028 & 0.103 & RS & Full \\ 
+HPT 6-item (no ROA) & NS (z) & (Intercept) & 2.347 & 2.270 & 2.424 & 1.64e-15 & 0.008 & 0.045 & RI & Full \\ 
+HPT 6-item (no ROA) & NS (z) & NS\_sum\_z & 0.010 & -0.055 & 0.076 & 7.56e-01 & 0.008 & 0.045 & RI & Full \\ 
+HPT 6-item (no ROA) & NS (z) & (Intercept) & 2.348 & 2.271 & 2.424 & 7.61e-15 & 0.008 & 0.052 & RS & Full \\ 
+HPT 6-item (no ROA) & NS (z) & NS\_sum\_z & 0.011 & -0.059 & 0.080 & 7.73e-01 & 0.008 & 0.052 & RS & Full \\ 
+HPT 8-item (drop ROA1) & FR-LF: RD+NS (z) & (Intercept) & 2.469 & 2.401 & 2.537 & 1.03e-12 & 0.018 & 0.039 & RI & Full \\ 
+HPT 8-item (drop ROA1) & FR-LF: RD+NS (z) & FRLF\_mini\_z & -0.009 & -0.073 & 0.055 & 7.88e-01 & 0.018 & 0.039 & RI & Full \\ 
+HPT 8-item (drop ROA1) & FR-LF: RD+NS (z) & (Intercept) & 2.471 & 2.400 & 2.542 & 4.22e-16 & 0.011 & NA & RS & Full \\ 
+HPT 8-item (drop ROA1) & FR-LF: RD+NS (z) & FRLF\_mini\_z & 0.000 & -0.080 & 0.081 & 9.97e-01 & 0.011 & NA & RS & Full \\ 
+HPT 8-item (drop ROA1) & KSA-3 total (z) & (Intercept) & 2.468 & 2.407 & 2.529 & 3.15e-11 & 0.028 & 0.034 & RI & Full \\ 
+HPT 8-item (drop ROA1) & KSA-3 total (z) & KSA\_total\_z & 0.043 & -0.023 & 0.108 & 2.03e-01 & 0.028 & 0.034 & RI & Full \\ 
+HPT 8-item (drop ROA1) & NS (z) & (Intercept) & 2.469 & 2.403 & 2.535 & 1.03e-12 & 0.017 & 0.035 & RI & Full \\ 
+HPT 8-item (drop ROA1) & NS (z) & NS\_sum\_z & 0.006 & -0.057 & 0.068 & 8.61e-01 & 0.017 & 0.035 & RI & Full \\ 
+HPT 9-item & FR-LF: RD+NS (z) & (Intercept) & 2.509 & 2.445 & 2.573 & 4.04e-12 & 0.026 & 0.035 & RI & Full \\ 
+HPT 9-item & FR-LF: RD+NS (z) & FRLF\_mini\_z & -0.001 & -0.067 & 0.064 & 9.66e-01 & 0.026 & 0.035 & RI & Full \\ 
+HPT 9-item & KSA-3 total (z) & (Intercept) & 2.507 & 2.448 & 2.567 & 1.45e-130 & 0.043 & NA & RI & Full \\ 
+HPT 9-item & KSA-3 total (z) & KSA\_total\_z & 0.055 & -0.011 & 0.121 & 1.04e-01 & 0.043 & NA & RI & Full \\ 
+HPT 9-item & NS (z) & (Intercept) & 2.508 & 2.446 & 2.571 & 5.38e-12 & 0.028 & 0.034 & RI & Full \\ 
+HPT 9-item & NS (z) & NS\_sum\_z & 0.016 & -0.048 & 0.079 & 6.30e-01 & 0.028 & 0.034 & RI & Full \\ 
+\bottomrule
+\end{tabular*}
+\end{table}
+
+\textbf{How to read the table.}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Rows} = combinations of HPT scoring (9/8/6 items), ideology
+  metric (NS only; FR-LF RD+NS; KSA-3), and model type: \textbf{RI} =
+  random-intercept by class; \textbf{RS} = also random \textbf{slope} of
+  ideology by class (shown only when not singular).
+\item
+  \textbf{Key cell} = the \textbf{β for ideology} (standardised), with
+  \textbf{95\% CI}.
+\item
+  \textbf{R² (marg./cond.)} give variance explained by fixed effects and
+  by full model.
+\end{itemize}
+
+\textbf{Interpretation guide.}
+
+\begin{itemize}
+\tightlist
+\item
+  If \textbf{NS (z)} predicts HPT strongly while KSA-3 does not, HPT may
+  be \textbf{aligned with Nazi-congruent content} rather than general
+  authoritarianism---i.e., content \textbf{congruence} instead of better
+  historical reasoning. This is the contamination mechanism we flagged.
+\item
+  If effects are \textbf{stable across 9/8/6-item} HPT scores,
+  conclusions are \textbf{robust} to ROA decisions. If they require ROA
+  to appear, caution is warranted given prior ROA instability.
+\item
+  If \textbf{random slopes} improve fit (higher R²\_cond; non-singular),
+  the ideology--HPT link \textbf{varies by class}. That suggests
+  classroom climate/teaching may moderate how ideology maps onto HPT.
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{sanity-checks-clarity-plots-optional-quick-look}{%
+\section{5. Sanity checks \& clarity plots (optional quick
+look)}\label{sanity-checks-clarity-plots-optional-quick-look}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dat }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(NS\_sum, HPT\_total\_9)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{alpha=}\NormalTok{.}\DecValTok{3}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method=}\StringTok{"lm"}\NormalTok{, }\AttributeTok{se=}\ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x=}\StringTok{"NS (sum)"}\NormalTok{, }\AttributeTok{y=}\StringTok{"HPT total (9{-}item)"}\NormalTok{,}
+       \AttributeTok{title=}\StringTok{"Bivariate check (unadjusted): NS vs. HPT"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{plot.title.position=}\StringTok{"plot"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: Removed 4 rows containing non-finite outside the scale range
+## (`stat_smooth()`).
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: Removed 4 rows containing missing values or values outside the scale
+## range (`geom_point()`).
+\end{verbatim}
+
+\includegraphics{/home/yetty/Projects/phd-029-hpt-and-extremism/outputs/05_sensitivity-analyses_files/figure-latex/quick-plots-1.pdf}
+
+\textbf{Interpretation.} These quick plots are only to \textbf{visualise
+direction}; final inferences come from the multilevel models with
+controls.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{read-outs-you-can-cite-in-prose}{%
+\section{6. Read-outs you can cite in
+prose}\label{read-outs-you-can-cite-in-prose}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Stable conclusions} across HPT \textbf{9/8/6} scoring →
+  results \textbf{do not depend} on ROA items. (ROA instability has been
+  noted previously.)
+\item
+  \textbf{NS-only} predicting as much/more than \textbf{KSA-3} →
+  supports the \textbf{ideological contamination} concern in our PCI RR
+  snapshot.
+\item
+  Survives \textbf{knowledge/SDR exclusions} → less likely driven by
+  misunderstanding or impression management; SDR handling follows our
+  codebook.
+\item
+  \textbf{Random slopes needed} → ideology effects differ \textbf{by
+  class}, implying a pedagogical moderation worth exploring (teaching of
+  context vs.~presentism etc.), in line with the HPT literature's
+  emphasis on contextual frames.
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{reproducibility-appendix}{%
+\section{Reproducibility appendix}\label{reproducibility-appendix}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sessionInfo}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## R version 4.4.2 (2024-10-31)
+## Platform: x86_64-pc-linux-gnu
+## Running under: Ubuntu 24.04.3 LTS
+## 
+## Matrix products: default
+## BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.12.0 
+## LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.12.0
+## 
+## locale:
+##  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+##  [3] LC_TIME=cs_CZ.UTF-8        LC_COLLATE=en_US.UTF-8    
+##  [5] LC_MONETARY=cs_CZ.UTF-8    LC_MESSAGES=en_US.UTF-8   
+##  [7] LC_PAPER=cs_CZ.UTF-8       LC_NAME=C                 
+##  [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+## [11] LC_MEASUREMENT=cs_CZ.UTF-8 LC_IDENTIFICATION=C       
+## 
+## time zone: Europe/Prague
+## tzcode source: system (glibc)
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] glue_1.8.0          gt_1.1.0            performance_0.15.1 
+##  [4] broom.mixed_0.2.9.6 broom_1.0.7         lmerTest_3.1-3     
+##  [7] lme4_1.1-38         Matrix_1.7-1        lubridate_1.9.4    
+## [10] forcats_1.0.0       stringr_1.5.1       dplyr_1.1.4        
+## [13] purrr_1.1.0         readr_2.1.5         tidyr_1.3.1        
+## [16] tibble_3.2.1        ggplot2_4.0.1       tidyverse_2.0.0    
+## 
+## loaded via a namespace (and not attached):
+##  [1] gtable_0.3.6        xfun_0.54           insight_1.4.2      
+##  [4] lattice_0.22-5      tzdb_0.5.0          numDeriv_2016.8-1.1
+##  [7] vctrs_0.6.5         tools_4.4.2         Rdpack_2.6.4       
+## [10] generics_0.1.3      parallel_4.4.2      pkgconfig_2.0.3    
+## [13] RColorBrewer_1.1-3  S7_0.2.1            lifecycle_1.0.4    
+## [16] compiler_4.4.2      farver_2.1.2        codetools_0.2-20   
+## [19] htmltools_0.5.8.1   yaml_2.3.10         pillar_1.10.0      
+## [22] furrr_0.3.1         nloptr_2.2.1        MASS_7.3-61        
+## [25] reformulas_0.4.1    boot_1.3-31         nlme_3.1-166       
+## [28] parallelly_1.45.1   tidyselect_1.2.1    digest_0.6.37      
+## [31] stringi_1.8.4       future_1.68.0       listenv_0.10.0     
+## [34] labeling_0.4.3      splines_4.4.2       fastmap_1.2.0      
+## [37] grid_4.4.2          cli_3.6.5           magrittr_2.0.3     
+## [40] withr_3.0.2         scales_1.4.0        backports_1.5.0    
+## [43] timechange_0.3.0    rmarkdown_2.29      globals_0.18.0     
+## [46] hms_1.1.3           evaluate_1.0.5      knitr_1.50         
+## [49] rbibutils_2.3       mgcv_1.9-1          rlang_1.1.6        
+## [52] Rcpp_1.0.13-1       xml2_1.3.6          minqa_1.2.8        
+## [55] R6_2.6.1            fs_1.6.5
+\end{verbatim}
+
+\end{document}

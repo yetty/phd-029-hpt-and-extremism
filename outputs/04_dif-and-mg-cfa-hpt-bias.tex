@@ -1,0 +1,968 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  10pt,
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[landscape,margin=0.7in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\setlength{\LTcapwidth}{\textwidth}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Measurement checks --- HPT (Czech data)},
+  pdfauthor={HPT and Extremism project},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Measurement checks --- HPT (Czech data)}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{DIF \& multi-group CFA by ideological attitude (ideological
+contamination tests)}
+\author{HPT and Extremism project}
+\date{2025-12-10}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{3}
+\tableofcontents
+}
+\hypertarget{purpose-plan}{%
+\section{Purpose \& plan}\label{purpose-plan}}
+
+We assess whether \emph{ideological attitude groups} respond differently
+to the HPT items \textbf{even at equal underlying HPT competence}.
+Concretely:
+
+\begin{itemize}
+\tightlist
+\item
+  Create \textbf{low/high ideology} groups from FR-LF-mini and KSA-3
+  (see codebook).\\
+\item
+  Run \textbf{item-level DIF} (ordinal logistic) for each HPT item.
+\item
+  Run \textbf{multi-group CFA} (configural → metric → scalar).
+\item
+  \textbf{Interpretation:} If we find pervasive DIF and/or scalar
+  non-invariance, this supports the PCI RR H1 that HPT scores can be
+  ideologically contaminated.
+\item
+  Background on HPT instrument and typical factor solutions:
+\end{itemize}
+
+\hypertarget{setup}{%
+\section{Setup}\label{setup}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{options}\NormalTok{(}\AttributeTok{width =} \DecValTok{120}\NormalTok{)}
+\FunctionTok{library}\NormalTok{(dplyr)}
+\FunctionTok{library}\NormalTok{(tidyr)}
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(psych)}
+\FunctionTok{library}\NormalTok{(knitr)}
+\FunctionTok{library}\NormalTok{(stringr)}
+\FunctionTok{library}\NormalTok{(janitor)}
+\FunctionTok{library}\NormalTok{(difR)        }\CommentTok{\# DIF for ordinal items}
+\FunctionTok{library}\NormalTok{(lavaan)      }\CommentTok{\# CFA / invariance}
+\FunctionTok{library}\NormalTok{(semTools)    }\CommentTok{\# measurementInvariance, fitMeasures helpers}
+\FunctionTok{library}\NormalTok{(car)         }\CommentTok{\# recode}
+\FunctionTok{library}\NormalTok{(mirt)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{data}{%
+\section{Data}\label{data}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Load the dataset created in 00\_data{-}preparation}
+\FunctionTok{load}\NormalTok{(}\StringTok{"normalised\_responses.RData"}\NormalTok{)}
+\FunctionTok{stopifnot}\NormalTok{(}\FunctionTok{exists}\NormalTok{(}\StringTok{"normalised\_responses"}\NormalTok{))}
+\NormalTok{dat\_raw }\OtherTok{\textless{}{-}}\NormalTok{ normalised\_responses}
+\end{Highlighting}
+\end{Shaded}
+
+We use variables as defined in the \textbf{codebook} (metadata; KN1-KN6;
+POP1-POP3; ROA1-ROA3; CONT1-CONT3; FR-LF mini RD1-RD3 \& NS1-NS3; KSA-3
+A1-A3, U1-U3, K1-K3; SDR1-SDR5).
+
+\hypertarget{scoring-grouping}{%
+\subsection{Scoring \& grouping}\label{scoring-grouping}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{HPT items} are 1-4. To align a single ``more HPT-competent''
+  direction, we reverse only the \emph{presentism} items
+  (\texttt{POP1-POP3}): \texttt{POP*\_rev\ =\ 5\ -\ POP*}. CONT and ROA
+  are used as-is (higher = better contextual/agent-aware reasoning per
+  instrument notes).
+\item
+  \textbf{Ideology composite}: FR-LF-mini (RD1-3 + NS1-3) and KSA-3 (9
+  items). We z-score the two scale means and average them →
+  \textbf{IDEO\_Z}. \emph{Low} = bottom 33\%, \emph{High} = top 33\%
+  (middle third excluded to sharpen contrasts). FR-LF dimensions/logic
+  per Leipzig scale.
+\item
+  \textbf{Controls}: prior knowledge (sum KN1-KN6), social desirability
+  (SDR1-SDR5; note SDR2-SDR4 already reversed in your file).
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Select item blocks}
+\NormalTok{hpt\_items }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(}\StringTok{"POP"}\NormalTok{,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{), }\FunctionTok{paste0}\NormalTok{(}\StringTok{"ROA"}\NormalTok{,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{), }\FunctionTok{paste0}\NormalTok{(}\StringTok{"CONT"}\NormalTok{,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{))}
+\NormalTok{frlf\_items }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(}\StringTok{"RD"}\NormalTok{,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{), }\FunctionTok{paste0}\NormalTok{(}\StringTok{"NS"}\NormalTok{,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{))}
+\NormalTok{ksa\_items  }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(}\StringTok{"A"}\NormalTok{,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{), }\FunctionTok{paste0}\NormalTok{(}\StringTok{"U"}\NormalTok{,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{), }\FunctionTok{paste0}\NormalTok{(}\StringTok{"K"}\NormalTok{,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{))}
+\NormalTok{kn\_items   }\OtherTok{\textless{}{-}} \FunctionTok{paste0}\NormalTok{(}\StringTok{"KN"}\NormalTok{,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{6}\NormalTok{)}
+\NormalTok{sdr\_items  }\OtherTok{\textless{}{-}} \FunctionTok{paste0}\NormalTok{(}\StringTok{"SDR"}\NormalTok{,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{)}
+
+\NormalTok{dat }\OtherTok{\textless{}{-}}\NormalTok{ dat\_raw }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{all\_of}\NormalTok{(hpt\_items), as.numeric),}
+         \FunctionTok{across}\NormalTok{(}\FunctionTok{all\_of}\NormalTok{(frlf\_items), as.numeric),}
+         \FunctionTok{across}\NormalTok{(}\FunctionTok{all\_of}\NormalTok{(ksa\_items), as.numeric),}
+         \FunctionTok{across}\NormalTok{(}\FunctionTok{all\_of}\NormalTok{(kn\_items), as.numeric),}
+         \FunctionTok{across}\NormalTok{(}\FunctionTok{all\_of}\NormalTok{(sdr\_items), as.numeric)) }\SpecialCharTok{\%\textgreater{}\%}
+  \CommentTok{\# Reverse presentism items so higher = better HPT}
+  \FunctionTok{mutate}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{all\_of}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(}\StringTok{"POP"}\NormalTok{,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{)), }\SpecialCharTok{\textasciitilde{}} \DecValTok{5} \SpecialCharTok{{-}}\NormalTok{ .x, }\AttributeTok{.names =} \StringTok{"\{.col\}\_rev"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \CommentTok{\# Scale scores}
+  \FunctionTok{rowwise}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{HPT\_total =} \FunctionTok{mean}\NormalTok{(}\FunctionTok{c\_across}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(}\StringTok{"POP"}\NormalTok{,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{,}\StringTok{"\_rev"}\NormalTok{), ROA1}\SpecialCharTok{:}\NormalTok{ROA3, CONT1}\SpecialCharTok{:}\NormalTok{CONT3)), }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{HPT\_CONT  =} \FunctionTok{mean}\NormalTok{(}\FunctionTok{c\_across}\NormalTok{(CONT1}\SpecialCharTok{:}\NormalTok{CONT3), }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{HPT\_ROA   =} \FunctionTok{mean}\NormalTok{(}\FunctionTok{c\_across}\NormalTok{(ROA1}\SpecialCharTok{:}\NormalTok{ROA3), }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{HPT\_POPR  =} \FunctionTok{mean}\NormalTok{(}\FunctionTok{c\_across}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(}\StringTok{"POP"}\NormalTok{,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{,}\StringTok{"\_rev"}\NormalTok{)), }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{FRLF\_mean =} \FunctionTok{mean}\NormalTok{(}\FunctionTok{c\_across}\NormalTok{(}\FunctionTok{all\_of}\NormalTok{(frlf\_items)), }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{KSA\_mean  =} \FunctionTok{mean}\NormalTok{(}\FunctionTok{c\_across}\NormalTok{(}\FunctionTok{all\_of}\NormalTok{(ksa\_items)), }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{KN\_sum    =} \FunctionTok{sum}\NormalTok{(}\FunctionTok{c\_across}\NormalTok{(}\FunctionTok{all\_of}\NormalTok{(kn\_items)), }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{SDR\_mean  =} \FunctionTok{mean}\NormalTok{(}\FunctionTok{c\_across}\NormalTok{(}\FunctionTok{all\_of}\NormalTok{(sdr\_items)), }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ungroup}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{FRLF\_z =} \FunctionTok{as.numeric}\NormalTok{(}\FunctionTok{scale}\NormalTok{(FRLF\_mean)),}
+    \AttributeTok{KSA\_z  =} \FunctionTok{as.numeric}\NormalTok{(}\FunctionTok{scale}\NormalTok{(KSA\_mean)),}
+    \AttributeTok{IDEO\_Z =}\NormalTok{ (FRLF\_z }\SpecialCharTok{+}\NormalTok{ KSA\_z) }\SpecialCharTok{/} \DecValTok{2}
+\NormalTok{  )}
+
+\CommentTok{\# define groups by tertiles}
+\NormalTok{qs }\OtherTok{\textless{}{-}} \FunctionTok{quantile}\NormalTok{(dat}\SpecialCharTok{$}\NormalTok{IDEO\_Z, }\AttributeTok{probs =} \FunctionTok{c}\NormalTok{(.}\DecValTok{3334}\NormalTok{, .}\DecValTok{6666}\NormalTok{), }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{dat }\OtherTok{\textless{}{-}}\NormalTok{ dat }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{ideology\_group =} \FunctionTok{case\_when}\NormalTok{(}
+\NormalTok{      IDEO\_Z }\SpecialCharTok{\textless{}=}\NormalTok{ qs[}\DecValTok{1}\NormalTok{] }\SpecialCharTok{\textasciitilde{}} \StringTok{"Low"}\NormalTok{,}
+\NormalTok{      IDEO\_Z }\SpecialCharTok{\textgreater{}=}\NormalTok{ qs[}\DecValTok{2}\NormalTok{] }\SpecialCharTok{\textasciitilde{}} \StringTok{"High"}\NormalTok{,}
+      \ConstantTok{TRUE} \SpecialCharTok{\textasciitilde{}} \StringTok{"Mid"}
+\NormalTok{    )}
+\NormalTok{  )}
+
+\NormalTok{tab }\OtherTok{\textless{}{-}}\NormalTok{ dat }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{count}\NormalTok{(ideology\_group)}
+\FunctionTok{kable}\NormalTok{(tab, }\AttributeTok{caption =} \StringTok{"Group sizes (Low/High ideology; Mid excluded from group{-}wise tests)"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lr@{}}
+\caption{Group sizes (Low/High ideology; Mid excluded from group-wise
+tests)}\tabularnewline
+\toprule\noalign{}
+ideology\_group & n \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+ideology\_group & n \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+High & 55 \\
+Low & 55 \\
+Mid & 54 \\
+\end{longtable}
+
+\begin{quote}
+\textbf{Interpretation note.} We focus on \emph{Low} vs \emph{High}
+ideology to maximize contrast and statistical power for DIF/MG-CFA. The
+\emph{Mid} group is retained for descriptive context but excluded from
+two-group invariance tests.
+\end{quote}
+
+\hypertarget{descriptives-checks}{%
+\section{Descriptives (checks)}\label{descriptives-checks}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{desc\_tbl }\OtherTok{\textless{}{-}}\NormalTok{ dat }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(ideology\_group) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{n =} \FunctionTok{n}\NormalTok{(),}
+            \AttributeTok{HPT\_total =} \FunctionTok{mean}\NormalTok{(HPT\_total, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+            \AttributeTok{KN\_sum    =} \FunctionTok{mean}\NormalTok{(KN\_sum, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+            \AttributeTok{SDR\_mean  =} \FunctionTok{mean}\NormalTok{(SDR\_mean, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{arrange}\NormalTok{(}\FunctionTok{match}\NormalTok{(ideology\_group, }\FunctionTok{c}\NormalTok{(}\StringTok{"Low"}\NormalTok{,}\StringTok{"Mid"}\NormalTok{,}\StringTok{"High"}\NormalTok{)))}
+\FunctionTok{kable}\NormalTok{(desc\_tbl, }\AttributeTok{digits =} \DecValTok{2}\NormalTok{, }\AttributeTok{caption =} \StringTok{"Descriptives by ideology group (means)"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lrrrr@{}}
+\caption{Descriptives by ideology group (means)}\tabularnewline
+\toprule\noalign{}
+ideology\_group & n & HPT\_total & KN\_sum & SDR\_mean \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+ideology\_group & n & HPT\_total & KN\_sum & SDR\_mean \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Low & 55 & 2.91 & 3.73 & 3.15 \\
+Mid & 54 & 2.93 & 3.28 & 3.11 \\
+High & 55 & 2.75 & 3.04 & 2.90 \\
+\end{longtable}
+
+\hypertarget{dif-analysis-ordinal-logistic-item-by-item}{%
+\section{DIF analysis (ordinal logistic,
+item-by-item)}\label{dif-analysis-ordinal-logistic-item-by-item}}
+
+\textbf{Goal.} At \emph{equal HPT ability}, do Low/High ideology groups
+respond differently to specific items? We use \emph{matching on total
+HPT (item-rest)} and test both uniform and non-uniform DIF per item (α =
+.01, Bonferroni adjusted). This targets the \emph{``same trait,
+different item functioning''} mechanism of ideological contamination.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\# Keep only Low/High groups}
+\NormalTok{anal }\OtherTok{\textless{}{-}}\NormalTok{ dat[dat}\SpecialCharTok{$}\NormalTok{ideology\_group }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"Low"}\NormalTok{,}\StringTok{"High"}\NormalTok{), , drop }\OtherTok{=} \ConstantTok{FALSE}\NormalTok{]}
+
+\DocumentationTok{\#\# Ensure the HPT item list exists in the exact order we need}
+\NormalTok{hpt\_items }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"POP1"}\NormalTok{,}\StringTok{"POP2"}\NormalTok{,}\StringTok{"POP3"}\NormalTok{,}\StringTok{"ROA1"}\NormalTok{,}\StringTok{"ROA2"}\NormalTok{,}\StringTok{"ROA3"}\NormalTok{,}\StringTok{"CONT1"}\NormalTok{,}\StringTok{"CONT2"}\NormalTok{,}\StringTok{"CONT3"}\NormalTok{)}
+
+\DocumentationTok{\#\# Build item matrix with base subsetting (no tidy{-}eval)}
+\FunctionTok{stopifnot}\NormalTok{(}\FunctionTok{all}\NormalTok{(hpt\_items }\SpecialCharTok{\%in\%} \FunctionTok{names}\NormalTok{(anal)))}
+\NormalTok{hpt\_mat }\OtherTok{\textless{}{-}}\NormalTok{ anal[, hpt\_items, drop }\OtherTok{=} \ConstantTok{FALSE}\NormalTok{]}
+
+\DocumentationTok{\#\# Coerce to numeric safely}
+\ControlFlowTok{for}\NormalTok{ (j }\ControlFlowTok{in} \FunctionTok{seq\_along}\NormalTok{(hpt\_items)) \{}
+\NormalTok{  hpt\_mat[[j]] }\OtherTok{\textless{}{-}} \FunctionTok{suppressWarnings}\NormalTok{(}\FunctionTok{as.numeric}\NormalTok{(hpt\_mat[[j]]))}
+\NormalTok{\}}
+
+\DocumentationTok{\#\# Clean group factor}
+\NormalTok{grp }\OtherTok{\textless{}{-}} \FunctionTok{factor}\NormalTok{(anal}\SpecialCharTok{$}\NormalTok{ideology\_group, }\AttributeTok{levels =} \FunctionTok{c}\NormalTok{(}\StringTok{"Low"}\NormalTok{,}\StringTok{"High"}\NormalTok{))}
+
+\DocumentationTok{\#\# Drop rows with \textless{} 2 non{-}missing item responses (mirt can’t estimate for all{-}NA)}
+\NormalTok{keep }\OtherTok{\textless{}{-}} \FunctionTok{rowSums}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(hpt\_mat)) }\SpecialCharTok{\textgreater{}=} \DecValTok{2}
+\NormalTok{hpt\_mat }\OtherTok{\textless{}{-}}\NormalTok{ hpt\_mat[keep, , drop }\OtherTok{=} \ConstantTok{FALSE}\NormalTok{]}
+\NormalTok{grp     }\OtherTok{\textless{}{-}} \FunctionTok{droplevels}\NormalTok{(grp[keep])}
+
+\DocumentationTok{\#\# Sanity checks}
+\FunctionTok{stopifnot}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(hpt\_mat) }\SpecialCharTok{==} \FunctionTok{length}\NormalTok{(grp))}
+\FunctionTok{stopifnot}\NormalTok{(}\FunctionTok{nlevels}\NormalTok{(grp) }\SpecialCharTok{==} \DecValTok{2}\NormalTok{)}
+\FunctionTok{print}\NormalTok{(}\FunctionTok{table}\NormalTok{(grp))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## grp
+##  Low High 
+##   55   55
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(mirt)}
+
+\CommentTok{\# 1. Fit the Base Model (Configural: constrained slopes \& intercepts across groups)}
+\CommentTok{\#    We start with a constrained model because scheme="drop" will try to FREE parameters to see if fit improves.}
+\NormalTok{mod\_base }\OtherTok{\textless{}{-}} \FunctionTok{multipleGroup}\NormalTok{(}
+  \AttributeTok{data       =}\NormalTok{ hpt\_mat,}
+  \AttributeTok{model      =} \DecValTok{1}\NormalTok{,}
+  \AttributeTok{group      =}\NormalTok{ grp,}
+  \AttributeTok{itemtype   =} \StringTok{"graded"}\NormalTok{,}
+  \AttributeTok{invariance =} \FunctionTok{c}\NormalTok{(}\StringTok{"slopes"}\NormalTok{, }\StringTok{"intercepts"}\NormalTok{, }\StringTok{"free\_means"}\NormalTok{, }\StringTok{"free\_var"}\NormalTok{)}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 2. Robust Parameter Detection}
+\CommentTok{\#    Instead of guessing "d" or "a1", we ask the model what parameters exist.}
+\CommentTok{\#    graded models usually have \textquotesingle{}a1\textquotesingle{} (slope) and \textquotesingle{}d1\textquotesingle{}, \textquotesingle{}d2\textquotesingle{}, \textquotesingle{}d3\textquotesingle{}... (thresholds).}
+\NormalTok{params\_all }\OtherTok{\textless{}{-}}\NormalTok{ mirt}\SpecialCharTok{::}\FunctionTok{mod2values}\NormalTok{(mod\_base)}\SpecialCharTok{$}\NormalTok{name}
+\NormalTok{unique\_pars }\OtherTok{\textless{}{-}} \FunctionTok{unique}\NormalTok{(params\_all)}
+
+\CommentTok{\# Identify Slopes: usually start with \textquotesingle{}a\textquotesingle{} (e.g., a1)}
+\NormalTok{pars\_slope }\OtherTok{\textless{}{-}} \FunctionTok{grep}\NormalTok{(}\StringTok{"\^{}a"}\NormalTok{, unique\_pars, }\AttributeTok{value =} \ConstantTok{TRUE}\NormalTok{)}
+
+\CommentTok{\# Identify Thresholds: usually start with \textquotesingle{}d\textquotesingle{} (e.g., d1, d2, d3)}
+\CommentTok{\# Note: We ensure we don\textquotesingle{}t pick up \textquotesingle{}group\textquotesingle{} or other metadata parameters}
+\NormalTok{pars\_thr }\OtherTok{\textless{}{-}} \FunctionTok{grep}\NormalTok{(}\StringTok{"\^{}d}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{d+$"}\NormalTok{, unique\_pars, }\AttributeTok{value =} \ConstantTok{TRUE}\NormalTok{)}
+
+\ControlFlowTok{if}\NormalTok{ (}\FunctionTok{length}\NormalTok{(pars\_slope) }\SpecialCharTok{==} \DecValTok{0} \SpecialCharTok{||} \FunctionTok{length}\NormalTok{(pars\_thr) }\SpecialCharTok{==} \DecValTok{0}\NormalTok{) \{}
+  \FunctionTok{stop}\NormalTok{(}\StringTok{"Could not auto{-}detect parameter names. Please check mod2values(mod\_base)."}\NormalTok{)}
+\NormalTok{\}}
+
+\NormalTok{pars\_to\_test }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(pars\_slope, pars\_thr)}
+
+\CommentTok{\# 3. Run DIF}
+\NormalTok{dif\_out }\OtherTok{\textless{}{-}} \FunctionTok{DIF}\NormalTok{(}
+\NormalTok{  mod\_base,}
+  \AttributeTok{which.par   =}\NormalTok{ pars\_to\_test,}
+  \AttributeTok{scheme      =} \StringTok{"drop"}\NormalTok{,}
+  \AttributeTok{items2test  =} \FunctionTok{colnames}\NormalTok{(hpt\_mat),}
+  \AttributeTok{p.adjust    =} \StringTok{"bonferroni"}\NormalTok{,}
+  \AttributeTok{verbose     =} \ConstantTok{FALSE}
+\NormalTok{)}
+
+\CommentTok{\# 4. Tidy Output (Dynamic Aggregation)}
+\CommentTok{\#    DIF() returns columns like p.a1, p.d1, p.d2. We need to aggregate them.}
+\NormalTok{res\_tbl }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(dif\_out)}
+\NormalTok{res\_tbl}\SpecialCharTok{$}\NormalTok{Item }\OtherTok{\textless{}{-}} \FunctionTok{rownames}\NormalTok{(res\_tbl)}
+
+\CommentTok{\# Helper to get min p{-}value across a set of columns (e.g., all d{-}parameters)}
+\NormalTok{get\_min\_p }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(df, prefix\_list) \{}
+  \CommentTok{\# Find columns in df matching p.prefix (e.g., p.d1, p.d2)}
+\NormalTok{  cols }\OtherTok{\textless{}{-}} \FunctionTok{unlist}\NormalTok{(}\FunctionTok{lapply}\NormalTok{(prefix\_list, }\ControlFlowTok{function}\NormalTok{(p) }\FunctionTok{grep}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(}\StringTok{"\^{}p}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{."}\NormalTok{, p, }\StringTok{"$"}\NormalTok{), }\FunctionTok{names}\NormalTok{(df), }\AttributeTok{value=}\ConstantTok{TRUE}\NormalTok{)))}
+  \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{length}\NormalTok{(cols) }\SpecialCharTok{==} \DecValTok{0}\NormalTok{) }\FunctionTok{return}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\ConstantTok{NA}\NormalTok{, }\FunctionTok{nrow}\NormalTok{(df)))}
+  
+  \CommentTok{\# Return min p{-}value across these columns for each row}
+  \FunctionTok{apply}\NormalTok{(df[, cols, }\AttributeTok{drop=}\ConstantTok{FALSE}\NormalTok{], }\DecValTok{1}\NormalTok{, min, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{\}}
+
+\NormalTok{alpha }\OtherTok{\textless{}{-}} \FloatTok{0.01}
+
+\NormalTok{res\_tbl }\OtherTok{\textless{}{-}}\NormalTok{ res\_tbl }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \CommentTok{\# Aggregate specific params into broad categories}
+    \AttributeTok{p\_nonuniform =} \FunctionTok{get\_min\_p}\NormalTok{(}\FunctionTok{cur\_data}\NormalTok{(), pars\_slope), }\CommentTok{\# Min p of a1...}
+    \AttributeTok{p\_uniform    =} \FunctionTok{get\_min\_p}\NormalTok{(}\FunctionTok{cur\_data}\NormalTok{(), pars\_thr),   }\CommentTok{\# Min p of d1, d2...}
+    
+    \CommentTok{\# Flagging logic}
+    \AttributeTok{Flag\_nonuniform =} \FunctionTok{ifelse}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(p\_nonuniform) }\SpecialCharTok{\&}\NormalTok{ p\_nonuniform }\SpecialCharTok{\textless{}}\NormalTok{ alpha, }\StringTok{"YES"}\NormalTok{, }\StringTok{"no"}\NormalTok{),}
+    \AttributeTok{Flag\_uniform    =} \FunctionTok{ifelse}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(p\_uniform)    }\SpecialCharTok{\&}\NormalTok{ p\_uniform    }\SpecialCharTok{\textless{}}\NormalTok{ alpha, }\StringTok{"YES"}\NormalTok{, }\StringTok{"no"}\NormalTok{)}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(Item, p\_nonuniform, p\_uniform, Flag\_nonuniform, Flag\_uniform)}
+
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(}
+\NormalTok{  res\_tbl, }\AttributeTok{digits =} \DecValTok{4}\NormalTok{,}
+  \AttributeTok{caption =} \StringTok{"DIF per item (mirt; graded). Non{-}uniform = Slope (a1); Uniform = Any Threshold (d1{-}dK). Bonferroni α = 0.01."}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}llllll@{}}
+\caption{DIF per item (mirt; graded). Non-uniform = Slope (a1); Uniform
+= Any Threshold (d1-dK). Bonferroni α = 0.01.}\tabularnewline
+\toprule\noalign{}
+& Item & p\_nonuniform & p\_uniform & Flag\_nonuniform &
+Flag\_uniform \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+& Item & p\_nonuniform & p\_uniform & Flag\_nonuniform &
+Flag\_uniform \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+POP1 & POP1 & NA & NA & no & no \\
+POP2 & POP2 & NA & NA & no & no \\
+POP3 & POP3 & NA & NA & no & no \\
+ROA1 & ROA1 & NA & NA & no & no \\
+ROA2 & ROA2 & NA & NA & no & no \\
+ROA3 & ROA3 & NA & NA & no & no \\
+CONT1 & CONT1 & NA & NA & no & no \\
+CONT2 & CONT2 & NA & NA & no & no \\
+CONT3 & CONT3 & NA & NA & no & no \\
+\end{longtable}
+
+\textbf{How to read it (unchanged conceptually):}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Uniform DIF (thresholds/\texttt{d})} → one group consistently
+  picks higher/lower categories across the ability range.
+\item
+  \textbf{Non-uniform DIF (slopes/\texttt{a1})} → the group difference
+  changes with latent ability (interaction).
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{flagged }\OtherTok{\textless{}{-}} \FunctionTok{with}\NormalTok{(res\_tbl, Item[Flag\_uniform }\SpecialCharTok{==} \StringTok{"YES"} \SpecialCharTok{|}\NormalTok{ Flag\_nonuniform }\SpecialCharTok{==} \StringTok{"YES"}\NormalTok{])}
+\ControlFlowTok{if}\NormalTok{ (}\FunctionTok{length}\NormalTok{(flagged) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+\NormalTok{  which\_item }\OtherTok{\textless{}{-}} \FunctionTok{which}\NormalTok{(}\FunctionTok{colnames}\NormalTok{(hpt\_mat) }\SpecialCharTok{==}\NormalTok{ flagged[}\DecValTok{1}\NormalTok{])}
+  \FunctionTok{plot}\NormalTok{(mod\_base, }\AttributeTok{type =} \StringTok{"trace"}\NormalTok{, }\AttributeTok{which.items =}\NormalTok{ which\_item,}
+       \AttributeTok{facet\_items =} \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{groups =} \FunctionTok{levels}\NormalTok{(grp))}
+\NormalTok{\} }\ControlFlowTok{else}\NormalTok{ \{}
+  \CommentTok{\# CHANGED: "α" to "alpha" to prevent LaTeX encoding error}
+  \FunctionTok{plot.new}\NormalTok{(); }\FunctionTok{text}\NormalTok{(}\FloatTok{0.5}\NormalTok{, }\FloatTok{0.5}\NormalTok{, }\StringTok{"No DIF{-}flagged item at alpha = 0.01."}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{/home/yetty/Projects/phd-029-hpt-and-extremism/outputs/04_dif-and-mg-cfa-hpt-bias_files/figure-latex/DIF-plot-1.pdf}
+
+\hypertarget{multi-group-cfa-configural-metric-scalar}{%
+\section{Multi-group CFA (configural → metric →
+scalar)}\label{multi-group-cfa-configural-metric-scalar}}
+
+\textbf{Model.} Prior studies often find POP and CONT forming one factor
+and ROA another. To remain conservative and close to your codebook
+structure, we specify a \textbf{three-factor model} (POP\_rev, ROA,
+CONT) with POP items reversed so that all loadings point to \emph{more
+HPT-congruent} responses. We then test invariance across Low vs High
+ideology groups.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Build analysis frame with reversed POP and intact ROA/CONT}
+\NormalTok{cfad }\OtherTok{\textless{}{-}}\NormalTok{ dat }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(ideology\_group }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"Low"}\NormalTok{,}\StringTok{"High"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{transmute}\NormalTok{(}
+\NormalTok{    ideology\_group,}
+    \AttributeTok{POP1 =} \DecValTok{5} \SpecialCharTok{{-}} \SpecialCharTok{!!}\FunctionTok{sym}\NormalTok{(}\StringTok{"POP1"}\NormalTok{),}
+    \AttributeTok{POP2 =} \DecValTok{5} \SpecialCharTok{{-}} \SpecialCharTok{!!}\FunctionTok{sym}\NormalTok{(}\StringTok{"POP2"}\NormalTok{),}
+    \AttributeTok{POP3 =} \DecValTok{5} \SpecialCharTok{{-}} \SpecialCharTok{!!}\FunctionTok{sym}\NormalTok{(}\StringTok{"POP3"}\NormalTok{),}
+\NormalTok{    ROA1, ROA2, ROA3,}
+\NormalTok{    CONT1, CONT2, CONT3}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model\_3f }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{}}
+\StringTok{  POP =\textasciitilde{} POP1 + POP2 + POP3}
+\StringTok{  ROA =\textasciitilde{} ROA1 + ROA2 + ROA3}
+\StringTok{  CONT =\textasciitilde{} CONT1 + CONT2 + CONT3}
+\StringTok{  \# Allow the three reasoning modes to correlate}
+\StringTok{\textquotesingle{}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# We use standard lavaan syntax to run the 3 steps explicitly.}
+\CommentTok{\# This avoids the "lavTestLRT" error caused by the deprecated semTools wrapper.}
+
+\NormalTok{ord\_items }\OtherTok{\textless{}{-}} \FunctionTok{colnames}\NormalTok{(cfad)[}\FunctionTok{colnames}\NormalTok{(cfad) }\SpecialCharTok{!=} \StringTok{"ideology\_group"}\NormalTok{]}
+
+\CommentTok{\# 1. Configural: Same factor structure, no constraints}
+\NormalTok{fit\_conf }\OtherTok{\textless{}{-}} \FunctionTok{cfa}\NormalTok{(model\_3f, }\AttributeTok{data =}\NormalTok{ cfad, }\AttributeTok{group =} \StringTok{"ideology\_group"}\NormalTok{,}
+                \AttributeTok{ordered =}\NormalTok{ ord\_items, }\AttributeTok{estimator =} \StringTok{"WLSMV"}\NormalTok{)}
+
+\CommentTok{\# 2. Metric (Weak): Constrain loadings}
+\NormalTok{fit\_metr }\OtherTok{\textless{}{-}} \FunctionTok{cfa}\NormalTok{(model\_3f, }\AttributeTok{data =}\NormalTok{ cfad, }\AttributeTok{group =} \StringTok{"ideology\_group"}\NormalTok{,}
+                \AttributeTok{ordered =}\NormalTok{ ord\_items, }\AttributeTok{estimator =} \StringTok{"WLSMV"}\NormalTok{,}
+                \AttributeTok{group.equal =} \FunctionTok{c}\NormalTok{(}\StringTok{"loadings"}\NormalTok{))}
+
+\CommentTok{\# 3. Scalar (Strong): Constrain loadings and thresholds}
+\NormalTok{fit\_scal }\OtherTok{\textless{}{-}} \FunctionTok{cfa}\NormalTok{(model\_3f, }\AttributeTok{data =}\NormalTok{ cfad, }\AttributeTok{group =} \StringTok{"ideology\_group"}\NormalTok{,}
+                \AttributeTok{ordered =}\NormalTok{ ord\_items, }\AttributeTok{estimator =} \StringTok{"WLSMV"}\NormalTok{,}
+                \AttributeTok{group.equal =} \FunctionTok{c}\NormalTok{(}\StringTok{"loadings"}\NormalTok{, }\StringTok{"thresholds"}\NormalTok{))}
+
+\CommentTok{\# Extract Fit Measures}
+\NormalTok{get\_fit }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(fit) \{}
+\NormalTok{  fm }\OtherTok{\textless{}{-}} \FunctionTok{fitMeasures}\NormalTok{(fit, }\FunctionTok{c}\NormalTok{(}\StringTok{"chisq.scaled"}\NormalTok{, }\StringTok{"df.scaled"}\NormalTok{, }\StringTok{"pvalue.scaled"}\NormalTok{, }
+                           \StringTok{"cfi.scaled"}\NormalTok{, }\StringTok{"rmsea.scaled"}\NormalTok{, }\StringTok{"srmr"}\NormalTok{))}
+  \FunctionTok{return}\NormalTok{(fm)}
+\NormalTok{\}}
+
+\CommentTok{\# Combine into a table}
+\NormalTok{fits }\OtherTok{\textless{}{-}} \FunctionTok{bind\_rows}\NormalTok{(}
+  \AttributeTok{Configural =} \FunctionTok{get\_fit}\NormalTok{(fit\_conf),}
+  \AttributeTok{Metric     =} \FunctionTok{get\_fit}\NormalTok{(fit\_metr),}
+  \AttributeTok{Scalar     =} \FunctionTok{get\_fit}\NormalTok{(fit\_scal)}
+\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Model =} \FunctionTok{c}\NormalTok{(}\StringTok{"Configural"}\NormalTok{, }\StringTok{"Metric"}\NormalTok{, }\StringTok{"Scalar"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(Model, }\FunctionTok{everything}\NormalTok{())}
+
+\CommentTok{\# Display Table}
+\NormalTok{fits }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{where}\NormalTok{(is.numeric), round, }\DecValTok{3}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{kable}\NormalTok{(}\AttributeTok{caption =} \StringTok{"MG{-}CFA fit indices by invariance level (WLSMV)."}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1410}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1667}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1282}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1795}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1410}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1667}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.0769}}@{}}
+\caption{MG-CFA fit indices by invariance level (WLSMV).}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Model
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+chisq.scaled
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+df.scaled
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+pvalue.scaled
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+cfi.scaled
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+rmsea.scaled
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+srmr
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Model
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+chisq.scaled
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+df.scaled
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+pvalue.scaled
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+cfi.scaled
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+rmsea.scaled
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+srmr
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Configural & 55.417 & 48 & 0.215 & 0.965 & 0.055 & 0.094 \\
+Metric & 66.425 & 54 & 0.119 & 0.941 & 0.067 & 0.106 \\
+Scalar & 71.554 & 63 & 0.215 & 0.959 & 0.051 & 0.097 \\
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Calculate Deltas manually based on the table above}
+\CommentTok{\# Practical decision rules (Chen, 2007): ΔCFI ≤ {-}.010 and ΔRMSEA ≤ .015 support invariance.}
+
+\NormalTok{deltas }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}
+  \AttributeTok{step =} \FunctionTok{c}\NormalTok{(}\StringTok{"Configural {-}\textgreater{} Metric"}\NormalTok{, }\StringTok{"Metric {-}\textgreater{} Scalar"}\NormalTok{),}
+  
+  \CommentTok{\# Note: CFI usually goes DOWN as constraints are added (so we look at change)}
+  \AttributeTok{dCFI =} \FunctionTok{c}\NormalTok{(fits}\SpecialCharTok{$}\NormalTok{cfi.scaled[}\DecValTok{2}\NormalTok{] }\SpecialCharTok{{-}}\NormalTok{ fits}\SpecialCharTok{$}\NormalTok{cfi.scaled[}\DecValTok{1}\NormalTok{], }
+\NormalTok{           fits}\SpecialCharTok{$}\NormalTok{cfi.scaled[}\DecValTok{3}\NormalTok{] }\SpecialCharTok{{-}}\NormalTok{ fits}\SpecialCharTok{$}\NormalTok{cfi.scaled[}\DecValTok{2}\NormalTok{]),}
+  
+  \CommentTok{\# RMSEA usually goes UP (or stays same)}
+  \AttributeTok{dRMSEA =} \FunctionTok{c}\NormalTok{(fits}\SpecialCharTok{$}\NormalTok{rmsea.scaled[}\DecValTok{2}\NormalTok{] }\SpecialCharTok{{-}}\NormalTok{ fits}\SpecialCharTok{$}\NormalTok{rmsea.scaled[}\DecValTok{1}\NormalTok{], }
+\NormalTok{             fits}\SpecialCharTok{$}\NormalTok{rmsea.scaled[}\DecValTok{3}\NormalTok{] }\SpecialCharTok{{-}}\NormalTok{ fits}\SpecialCharTok{$}\NormalTok{rmsea.scaled[}\DecValTok{2}\NormalTok{])}
+\NormalTok{)}
+
+\CommentTok{\# FIX: Use mutate + across to round only numeric columns}
+\NormalTok{deltas }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{where}\NormalTok{(is.numeric), round, }\DecValTok{3}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{kable}\NormalTok{(}\AttributeTok{caption =} \StringTok{"Delta fit (CFI, RMSEA) across steps."}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lrr@{}}
+\caption{Delta fit (CFI, RMSEA) across steps.}\tabularnewline
+\toprule\noalign{}
+step & dCFI & dRMSEA \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+step & dCFI & dRMSEA \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Configural -\textgreater{} Metric & -0.024 & 0.012 \\
+Metric -\textgreater{} Scalar & 0.018 & -0.015 \\
+\end{longtable}
+
+\begin{quote}
+\textbf{How to read this.}
+
+\begin{itemize}
+\tightlist
+\item
+  If \textbf{metric holds} (small ΔCFI/ΔRMSEA), the \emph{loadings} are
+  equivalent across Low/High: the latent traits have the same meaning.
+\item
+  If \textbf{scalar fails} (large deltas), \emph{thresholds/intercepts}
+  differ → \textbf{latent means are not comparable}, consistent with
+  item-level bias. This would \textbf{support H1} (ideological
+  contamination).
+\end{itemize}
+\end{quote}
+
+\hypertarget{optional-two-factor-robustness-check}{%
+\section{(Optional) Two-factor robustness
+check}\label{optional-two-factor-robustness-check}}
+
+Some studies merge POP \& CONT into one factor and keep ROA separate; if
+desired, run the same invariance ladder for a 2-factor model and compare
+conclusions.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model\_2f }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{}}
+\StringTok{  CTX =\textasciitilde{} POP1 + POP2 + POP3 + CONT1 + CONT2 + CONT3}
+\StringTok{  ROA =\textasciitilde{} ROA1 + ROA2 + ROA3}
+\StringTok{\textquotesingle{}}
+\FunctionTok{measurementInvariance}\NormalTok{(model\_2f, }\AttributeTok{data =}\NormalTok{ cfad, }\AttributeTok{group =} \StringTok{"ideology\_group"}\NormalTok{,}
+                      \AttributeTok{estimator =} \StringTok{"WLSMV"}\NormalTok{,}
+                      \AttributeTok{ordered =} \FunctionTok{colnames}\NormalTok{(cfad)[}\FunctionTok{colnames}\NormalTok{(cfad)}\SpecialCharTok{!=}\StringTok{"ideology\_group"}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{interpretation-reporting}{%
+\section{Interpretation \& reporting}\label{interpretation-reporting}}
+
+\hypertarget{dif-summary-per-item-bias}{%
+\subsection{DIF summary (per-item
+bias)}\label{dif-summary-per-item-bias}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{kable}\NormalTok{(res\_tbl, }\AttributeTok{caption =} \StringTok{"Repeat: DIF results to reference in text."}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}llllll@{}}
+\caption{Repeat: DIF results to reference in text.}\tabularnewline
+\toprule\noalign{}
+& Item & p\_nonuniform & p\_uniform & Flag\_nonuniform &
+Flag\_uniform \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+& Item & p\_nonuniform & p\_uniform & Flag\_nonuniform &
+Flag\_uniform \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+POP1 & POP1 & NA & NA & no & no \\
+POP2 & POP2 & NA & NA & no & no \\
+POP3 & POP3 & NA & NA & no & no \\
+ROA1 & ROA1 & NA & NA & no & no \\
+ROA2 & ROA2 & NA & NA & no & no \\
+ROA3 & ROA3 & NA & NA & no & no \\
+CONT1 & CONT1 & NA & NA & no & no \\
+CONT2 & CONT2 & NA & NA & no & no \\
+CONT3 & CONT3 & NA & NA & no & no \\
+\end{longtable}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{If several POP or CONT items show DIF} (esp.~uniform DIF
+  favoring \emph{High} ideology), this indicates that \textbf{at the
+  same overall HPT ability} the High-ideology group tends to endorse
+  ``context-fitting'' options more strongly → \textbf{measurement bias}
+  consistent with H1.
+\item
+  \textbf{If DIF is absent or rare}, the items function similarly across
+  ideology groups → \textbf{weak evidence for ideological contamination}
+  at the item level.
+\end{itemize}
+
+\hypertarget{mg-cfa-summary-scale-level-bias}{%
+\subsection{MG-CFA summary (scale-level
+bias)}\label{mg-cfa-summary-scale-level-bias}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{kable}\NormalTok{(fits }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{mutate}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{where}\NormalTok{(is.numeric), round, }\DecValTok{3}\NormalTok{)),}
+      \AttributeTok{caption =} \StringTok{"Repeat: MG{-}CFA fit to reference in text."}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1410}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1667}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1282}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1795}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1410}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1667}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.0769}}@{}}
+\caption{Repeat: MG-CFA fit to reference in text.}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Model
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+chisq.scaled
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+df.scaled
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+pvalue.scaled
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+cfi.scaled
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+rmsea.scaled
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+srmr
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Model
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+chisq.scaled
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+df.scaled
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+pvalue.scaled
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+cfi.scaled
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+rmsea.scaled
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+srmr
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Configural & 55.417 & 48 & 0.215 & 0.965 & 0.055 & 0.094 \\
+Metric & 66.425 & 54 & 0.119 & 0.941 & 0.067 & 0.106 \\
+Scalar & 71.554 & 63 & 0.215 & 0.959 & 0.051 & 0.097 \\
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{kable}\NormalTok{(deltas }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{mutate}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{where}\NormalTok{(is.numeric), round, }\DecValTok{3}\NormalTok{)), }
+      \AttributeTok{caption =} \StringTok{"Repeat: Delta fit (CFI, RMSEA) thresholds."}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lrr@{}}
+\caption{Repeat: Delta fit (CFI, RMSEA) thresholds.}\tabularnewline
+\toprule\noalign{}
+step & dCFI & dRMSEA \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+step & dCFI & dRMSEA \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Configural -\textgreater{} Metric & -0.024 & 0.012 \\
+Metric -\textgreater{} Scalar & 0.018 & -0.015 \\
+\end{longtable}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Configural fit acceptable} + \textbf{metric holds} but
+  \textbf{scalar fails} → the construct is similar but item thresholds
+  differ → \textbf{comparisons of group means are biased}, supporting
+  H1.
+\item
+  \textbf{Scalar holds} → the full measurement is invariant → \textbf{no
+  scale-level contamination}; HPT score comparisons across ideology are
+  tenable.
+\end{itemize}
+
+\hypertarget{what-this-means-for-h1-pci-rr}{%
+\section{What this means for H1 (PCI
+RR)}\label{what-this-means-for-h1-pci-rr}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Supports H1 (contamination)} if (a) multiple items show DIF
+  and/or (b) scalar invariance fails. This means HPT performance may be
+  \textbf{inflated when students' ideology aligns with the vignette's
+  decisions/justifications} (the mechanism articulated in the PCI RR
+  plan).
+\item
+  \textbf{Weakens H1} if DIF is negligible and scalar invariance holds,
+  i.e., \textbf{items and scale behave equivalently} across ideology
+  groups.
+\end{itemize}
+
+\hypertarget{reproducibility-appendix}{%
+\section{Reproducibility appendix}\label{reproducibility-appendix}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sessionInfo}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## R version 4.4.2 (2024-10-31)
+## Platform: x86_64-pc-linux-gnu
+## Running under: Ubuntu 24.04.3 LTS
+## 
+## Matrix products: default
+## BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.12.0 
+## LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.12.0
+## 
+## locale:
+##  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C               LC_TIME=cs_CZ.UTF-8        LC_COLLATE=en_US.UTF-8    
+##  [5] LC_MONETARY=cs_CZ.UTF-8    LC_MESSAGES=en_US.UTF-8    LC_PAPER=cs_CZ.UTF-8       LC_NAME=C                 
+##  [9] LC_ADDRESS=C               LC_TELEPHONE=C             LC_MEASUREMENT=cs_CZ.UTF-8 LC_IDENTIFICATION=C       
+## 
+## time zone: Europe/Prague
+## tzcode source: system (glibc)
+## 
+## attached base packages:
+## [1] stats4    stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] mirt_1.45.1    lattice_0.22-5 car_3.1-3      carData_3.0-5  semTools_0.5-7 lavaan_0.6-20  difR_6.1.0    
+##  [8] janitor_2.2.1  stringr_1.5.1  knitr_1.50     psych_2.4.12   ggplot2_4.0.1  tidyr_1.3.1    dplyr_1.1.4   
+## 
+## loaded via a namespace (and not attached):
+##   [1] RColorBrewer_1.1-3   rstudioapi_0.17.1    audio_0.1-11         shape_1.4.6.1        magrittr_2.0.3      
+##   [6] TH.data_1.1-4        estimability_1.5.1   farver_2.1.2         nloptr_2.2.1         rmarkdown_2.29      
+##  [11] fs_1.6.5             vctrs_0.6.5          minqa_1.2.8          htmltools_0.5.8.1    forcats_1.0.0       
+##  [16] haven_2.5.4          cellranger_1.1.0     Formula_1.2-5        dcurver_0.9.3        parallelly_1.45.1   
+##  [21] testthat_3.3.1       sandwich_3.1-1       emmeans_1.10.6       rootSolve_1.8.2.4    zoo_1.8-14          
+##  [26] lubridate_1.9.4      admisc_0.39          lifecycle_1.0.4      iterators_1.0.14     pkgconfig_2.0.3     
+##  [31] Matrix_1.7-1         R6_2.6.1             fastmap_1.2.0        rbibutils_2.3        future_1.68.0       
+##  [36] snakecase_0.11.1     digest_0.6.37        Exact_3.3            vegan_2.7-2          progressr_0.18.0    
+##  [41] timechange_0.3.0     abind_1.4-8          httr_1.4.7           mgcv_1.9-1           compiler_4.4.2      
+##  [46] proxy_0.4-27         withr_3.0.2          S7_0.2.1             R.utils_2.13.0       MASS_7.3-61         
+##  [51] sessioninfo_1.2.3    GPArotation_2024.3-1 permute_0.9-8        gld_2.6.7            tools_4.4.2         
+##  [56] pbivnorm_0.6.0       future.apply_1.20.0  clipr_0.8.0          R.oo_1.27.1          glue_1.8.0          
+##  [61] quadprog_1.5-8       nlme_3.1-166         grid_4.4.2           cluster_2.1.8        generics_0.1.3      
+##  [66] gtable_0.3.6         tzdb_0.5.0           R.methodsS3_1.8.2    class_7.3-22         data.table_1.17.8   
+##  [71] lmom_3.2             hms_1.1.3            Deriv_4.1.6          foreach_1.5.2        pillar_1.10.0       
+##  [76] splines_4.4.2        survival_3.7-0       tidyselect_1.2.1     pbapply_1.7-4        reformulas_0.4.1    
+##  [81] gridExtra_2.3        deltaPlotR_1.6       xfun_0.54            expm_1.0-0           brio_1.1.5          
+##  [86] stringi_1.8.4        VGAM_1.1-14          yaml_2.3.10          boot_1.3-31          evaluate_1.0.5      
+##  [91] codetools_0.2-20     beepr_2.0            msm_1.8.2            tibble_3.2.1         cli_3.6.5           
+##  [96] xtable_1.8-4         DescTools_0.99.60    Rdpack_2.6.4         Rcpp_1.0.13-1        readxl_1.4.3        
+## [101] globals_0.18.0       polycor_0.8-1        coda_0.19-4.1        parallel_4.4.2       readr_2.1.5         
+## [106] lme4_1.1-38          listenv_0.10.0       glmnet_4.1-10        mvtnorm_1.3-2        SimDesign_2.21      
+## [111] scales_1.4.0         e1071_1.7-16         purrr_1.1.0          rlang_1.1.6          multcomp_1.4-28     
+## [116] mnormt_2.1.1         ltm_1.2-0
+\end{verbatim}
+
+\end{document}

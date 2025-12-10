@@ -3,12 +3,28 @@ title: "Hypothesis tests — HPT (Czech data)"
 subtitle: "Multilevel models for H1–H2"
 author: "HPT and Extremism project"
 date: "`r format(Sys.Date())`"
+always_allow_html: true
 output:
   pdf_document:
     latex_engine: xelatex
     number_sections: true
     toc: true
     toc_depth: 3
+    keep_tex: true
+    
+  md_document:
+    variant: markdown
+    preserve_yaml: false
+    toc: false
+
+# global chunk options
+knitr:
+  opts_chunk:
+    dev: "png"          # ensures image files are written
+    fig.path: "figures/" # directory for external images
+    dpi: 300
+
+
 fontsize: 10pt
 geometry:
   - landscape
