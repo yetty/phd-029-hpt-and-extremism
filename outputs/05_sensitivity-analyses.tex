@@ -136,7 +136,7 @@
 \subtitle{Robustness checks for scoring, ideology operationalisation,
 exclusions, and random-slopes}
 \author{HPT and Extremism project}
-\date{2025-12-10}
+\date{2025-12-11}
 
 \begin{document}
 \maketitle
@@ -247,7 +247,7 @@ Score & Mean \\
 \midrule\addlinespace[2.5pt]
 9-item (POP+ROA+CONT) & 2.51 \\ 
 8-item (drop ROA1) & 2.47 \\ 
-6-item (drop all ROA) & 2.36 \\ 
+6-item (drop all ROA) & 2.35 \\ 
 \bottomrule
 \end{tabular*}
 \end{table}
@@ -351,10 +351,10 @@ SDR}\label{exclusions-knowledge-outliers-extreme-sdr}}
 \toprule
 Criterion & N \\ 
 \midrule\addlinespace[2.5pt]
-Total N & 164 \\ 
+Total N & 184 \\ 
 Drop KN outliers & 0 \\ 
 Drop top-10\% SDR & 22 \\ 
-Kept (both rules) & 142 \\ 
+Kept (both rules) & 162 \\ 
 \bottomrule
 \end{tabular*}
 \end{table}
@@ -449,49 +449,6 @@ ideology)}\label{summaries-key-coefficient-ideology}}
 \NormalTok{\}}
 
 \NormalTok{tab\_full }\OtherTok{\textless{}{-}} \FunctionTok{summarise\_grid}\NormalTok{(grid\_full, }\StringTok{"Full"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## Random effect variances not available. Returned R2 does not account for random effects.
-## Random effect variances not available. Returned R2 does not account for random effects.
-\end{verbatim}
-
-\begin{verbatim}
-## Warning: There were 2 warnings in `mutate()`.
-## The first warning was:
-## i In argument: `tidy0 = map(m0, tidy_model)`.
-## Caused by warning:
-## ! Can't compute random effect variances. Some variance components equal
-##   zero. Your model may suffer from singularity (see `?lme4::isSingular`
-##   and `?performance::check_singularity`).
-##   Decrease the `tolerance` level to force the calculation of random effect
-##   variances, or impose priors on your random effects parameters (using
-##   packages like `brms` or `glmmTMB`).
-## i Run `dplyr::last_dplyr_warnings()` to see the 1 remaining warning.
-\end{verbatim}
-
-\begin{verbatim}
-## Random effect variances not available. Returned R2 does not account for random effects.
-## Random effect variances not available. Returned R2 does not account for random effects.
-\end{verbatim}
-
-\begin{verbatim}
-## Warning: There were 2 warnings in `mutate()`.
-## The first warning was:
-## i In argument: `tidy1 = map(m1, tidy_model)`.
-## Caused by warning:
-## ! Can't compute random effect variances. Some variance components equal
-##   zero. Your model may suffer from singularity (see `?lme4::isSingular`
-##   and `?performance::check_singularity`).
-##   Decrease the `tolerance` level to force the calculation of random effect
-##   variances, or impose priors on your random effects parameters (using
-##   packages like `brms` or `glmmTMB`).
-## i Run `dplyr::last_dplyr_warnings()` to see the 1 remaining warning.
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \NormalTok{tab\_excl }\OtherTok{\textless{}{-}} \FunctionTok{summarise\_grid}\NormalTok{(grid\_excl, }\StringTok{"Exclusions applied"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -530,12 +487,10 @@ ideology)}\label{summaries-key-coefficient-ideology}}
 \begin{verbatim}
 ## Random effect variances not available. Returned R2 does not account for random effects.
 ## Random effect variances not available. Returned R2 does not account for random effects.
-## Random effect variances not available. Returned R2 does not account for random effects.
-## Random effect variances not available. Returned R2 does not account for random effects.
 \end{verbatim}
 
 \begin{verbatim}
-## Warning: There were 4 warnings in `mutate()`.
+## Warning: There were 2 warnings in `mutate()`.
 ## The first warning was:
 ## i In argument: `tidy1 = map(m1, tidy_model)`.
 ## Caused by warning:
@@ -545,7 +500,7 @@ ideology)}\label{summaries-key-coefficient-ideology}}
 ##   Decrease the `tolerance` level to force the calculation of random effect
 ##   variances, or impose priors on your random effects parameters (using
 ##   packages like `brms` or `glmmTMB`).
-## i Run `dplyr::last_dplyr_warnings()` to see the 3 remaining warnings.
+## i Run `dplyr::last_dplyr_warnings()` to see the 1 remaining warning.
 \end{verbatim}
 
 \begin{Shaded}
@@ -585,56 +540,50 @@ ideology)}\label{summaries-key-coefficient-ideology}}
 \cmidrule(lr){4-6}
 HPT score & Ideology & term & \ensuremath{\beta} & CI low & CI high & p & R\texttwosuperior (marg.) & R\texttwosuperior (cond.) & Model & Sample \\ 
 \midrule\addlinespace[2.5pt]
-HPT 6-item (no ROA) & FR-LF: RD+NS (z) & (Intercept) & 2.339 & 2.263 & 2.415 & 2.42e-14 & 0.001 & 0.016 & RI & Exclusions applied \\ 
-HPT 6-item (no ROA) & FR-LF: RD+NS (z) & FRLF\_mini\_z & 0.005 & -0.069 & 0.079 & 8.90e-01 & 0.001 & 0.016 & RI & Exclusions applied \\ 
-HPT 6-item (no ROA) & FR-LF: RD+NS (z) & (Intercept) & 2.337 & 2.267 & 2.407 & 9.35e-27 & 0.003 & 0.058 & RS & Exclusions applied \\ 
-HPT 6-item (no ROA) & FR-LF: RD+NS (z) & FRLF\_mini\_z & 0.011 & -0.087 & 0.110 & 8.27e-01 & 0.003 & 0.058 & RS & Exclusions applied \\ 
-HPT 6-item (no ROA) & KSA-3 total (z) & (Intercept) & 2.336 & 2.268 & 2.404 & 1.40e-105 & 0.032 & NA & RI & Exclusions applied \\ 
-HPT 6-item (no ROA) & KSA-3 total (z) & KSA\_total\_z & 0.078 & 0.005 & 0.152 & 3.83e-02 & 0.032 & NA & RI & Exclusions applied \\ 
-HPT 6-item (no ROA) & KSA-3 total (z) & (Intercept) & 2.333 & 2.264 & 2.402 & 2.92e-103 & 0.039 & NA & RS & Exclusions applied \\ 
-HPT 6-item (no ROA) & KSA-3 total (z) & KSA\_total\_z & 0.084 & -0.014 & 0.183 & 1.32e-01 & 0.039 & NA & RS & Exclusions applied \\ 
-HPT 6-item (no ROA) & NS (z) & (Intercept) & 2.339 & 2.268 & 2.410 & 1.07e-14 & 0.010 & 0.015 & RI & Exclusions applied \\ 
-HPT 6-item (no ROA) & NS (z) & NS\_sum\_z & 0.040 & -0.033 & 0.113 & 2.85e-01 & 0.010 & 0.015 & RI & Exclusions applied \\ 
-HPT 6-item (no ROA) & NS (z) & (Intercept) & 2.336 & 2.268 & 2.405 & 1.55e-94 & 0.010 & NA & RS & Exclusions applied \\ 
-HPT 6-item (no ROA) & NS (z) & NS\_sum\_z & 0.039 & -0.050 & 0.127 & 4.06e-01 & 0.010 & NA & RS & Exclusions applied \\ 
-HPT 8-item (drop ROA1) & FR-LF: RD+NS (z) & (Intercept) & 2.462 & 2.397 & 2.528 & 1.17e-110 & 0.007 & NA & RI & Exclusions applied \\ 
-HPT 8-item (drop ROA1) & FR-LF: RD+NS (z) & FRLF\_mini\_z & -0.001 & -0.071 & 0.068 & 9.74e-01 & 0.007 & NA & RI & Exclusions applied \\ 
-HPT 8-item (drop ROA1) & KSA-3 total (z) & (Intercept) & 2.458 & 2.393 & 2.523 & 3.42e-111 & 0.030 & NA & RI & Exclusions applied \\ 
-HPT 8-item (drop ROA1) & KSA-3 total (z) & KSA\_total\_z & 0.065 & -0.005 & 0.135 & 7.11e-02 & 0.030 & NA & RI & Exclusions applied \\ 
-HPT 8-item (drop ROA1) & NS (z) & (Intercept) & 2.461 & 2.396 & 2.527 & 9.23e-111 & 0.009 & NA & RI & Exclusions applied \\ 
-HPT 8-item (drop ROA1) & NS (z) & NS\_sum\_z & 0.020 & -0.050 & 0.090 & 5.72e-01 & 0.009 & NA & RI & Exclusions applied \\ 
-HPT 9-item & FR-LF: RD+NS (z) & (Intercept) & 2.497 & 2.430 & 2.564 & 4.56e-110 & 0.017 & NA & RI & Exclusions applied \\ 
-HPT 9-item & FR-LF: RD+NS (z) & FRLF\_mini\_z & -0.004 & -0.076 & 0.067 & 9.03e-01 & 0.017 & NA & RI & Exclusions applied \\ 
-HPT 9-item & KSA-3 total (z) & (Intercept) & 2.492 & 2.425 & 2.558 & 1.23e-110 & 0.042 & NA & RI & Exclusions applied \\ 
-HPT 9-item & KSA-3 total (z) & KSA\_total\_z & 0.069 & -0.003 & 0.141 & 6.18e-02 & 0.042 & NA & RI & Exclusions applied \\ 
-HPT 9-item & NS (z) & (Intercept) & 2.496 & 2.429 & 2.563 & 3.70e-110 & 0.019 & NA & RI & Exclusions applied \\ 
-HPT 9-item & NS (z) & NS\_sum\_z & 0.020 & -0.051 & 0.092 & 5.81e-01 & 0.019 & NA & RI & Exclusions applied \\ 
-HPT 6-item (no ROA) & FR-LF: RD+NS (z) & (Intercept) & 2.348 & 2.268 & 2.427 & 3.60e-15 & 0.008 & 0.053 & RI & Full \\ 
-HPT 6-item (no ROA) & FR-LF: RD+NS (z) & FRLF\_mini\_z & -0.015 & -0.082 & 0.053 & 6.65e-01 & 0.008 & 0.053 & RI & Full \\ 
-HPT 6-item (no ROA) & FR-LF: RD+NS (z) & (Intercept) & 2.349 & 2.270 & 2.428 & 7.60e-15 & 0.008 & 0.069 & RS & Full \\ 
-HPT 6-item (no ROA) & FR-LF: RD+NS (z) & FRLF\_mini\_z & -0.010 & -0.088 & 0.068 & 8.04e-01 & 0.008 & 0.069 & RS & Full \\ 
-HPT 6-item (no ROA) & KSA-3 total (z) & (Intercept) & 2.346 & 2.274 & 2.419 & 3.80e-15 & 0.019 & 0.046 & RI & Full \\ 
-HPT 6-item (no ROA) & KSA-3 total (z) & KSA\_total\_z & 0.047 & -0.022 & 0.116 & 1.86e-01 & 0.019 & 0.046 & RI & Full \\ 
-HPT 6-item (no ROA) & KSA-3 total (z) & (Intercept) & 2.346 & 2.278 & 2.415 & 1.68e-15 & 0.028 & 0.103 & RS & Full \\ 
-HPT 6-item (no ROA) & KSA-3 total (z) & KSA\_total\_z & 0.057 & -0.040 & 0.155 & 2.83e-01 & 0.028 & 0.103 & RS & Full \\ 
-HPT 6-item (no ROA) & NS (z) & (Intercept) & 2.347 & 2.270 & 2.424 & 1.64e-15 & 0.008 & 0.045 & RI & Full \\ 
-HPT 6-item (no ROA) & NS (z) & NS\_sum\_z & 0.010 & -0.055 & 0.076 & 7.56e-01 & 0.008 & 0.045 & RI & Full \\ 
-HPT 6-item (no ROA) & NS (z) & (Intercept) & 2.348 & 2.271 & 2.424 & 7.61e-15 & 0.008 & 0.052 & RS & Full \\ 
-HPT 6-item (no ROA) & NS (z) & NS\_sum\_z & 0.011 & -0.059 & 0.080 & 7.73e-01 & 0.008 & 0.052 & RS & Full \\ 
-HPT 8-item (drop ROA1) & FR-LF: RD+NS (z) & (Intercept) & 2.469 & 2.401 & 2.537 & 1.03e-12 & 0.018 & 0.039 & RI & Full \\ 
-HPT 8-item (drop ROA1) & FR-LF: RD+NS (z) & FRLF\_mini\_z & -0.009 & -0.073 & 0.055 & 7.88e-01 & 0.018 & 0.039 & RI & Full \\ 
-HPT 8-item (drop ROA1) & FR-LF: RD+NS (z) & (Intercept) & 2.471 & 2.400 & 2.542 & 4.22e-16 & 0.011 & NA & RS & Full \\ 
-HPT 8-item (drop ROA1) & FR-LF: RD+NS (z) & FRLF\_mini\_z & 0.000 & -0.080 & 0.081 & 9.97e-01 & 0.011 & NA & RS & Full \\ 
-HPT 8-item (drop ROA1) & KSA-3 total (z) & (Intercept) & 2.468 & 2.407 & 2.529 & 3.15e-11 & 0.028 & 0.034 & RI & Full \\ 
-HPT 8-item (drop ROA1) & KSA-3 total (z) & KSA\_total\_z & 0.043 & -0.023 & 0.108 & 2.03e-01 & 0.028 & 0.034 & RI & Full \\ 
-HPT 8-item (drop ROA1) & NS (z) & (Intercept) & 2.469 & 2.403 & 2.535 & 1.03e-12 & 0.017 & 0.035 & RI & Full \\ 
-HPT 8-item (drop ROA1) & NS (z) & NS\_sum\_z & 0.006 & -0.057 & 0.068 & 8.61e-01 & 0.017 & 0.035 & RI & Full \\ 
-HPT 9-item & FR-LF: RD+NS (z) & (Intercept) & 2.509 & 2.445 & 2.573 & 4.04e-12 & 0.026 & 0.035 & RI & Full \\ 
-HPT 9-item & FR-LF: RD+NS (z) & FRLF\_mini\_z & -0.001 & -0.067 & 0.064 & 9.66e-01 & 0.026 & 0.035 & RI & Full \\ 
-HPT 9-item & KSA-3 total (z) & (Intercept) & 2.507 & 2.448 & 2.567 & 1.45e-130 & 0.043 & NA & RI & Full \\ 
-HPT 9-item & KSA-3 total (z) & KSA\_total\_z & 0.055 & -0.011 & 0.121 & 1.04e-01 & 0.043 & NA & RI & Full \\ 
-HPT 9-item & NS (z) & (Intercept) & 2.508 & 2.446 & 2.571 & 5.38e-12 & 0.028 & 0.034 & RI & Full \\ 
-HPT 9-item & NS (z) & NS\_sum\_z & 0.016 & -0.048 & 0.079 & 6.30e-01 & 0.028 & 0.034 & RI & Full \\ 
+HPT 6-item (no ROA) & FR-LF: RD+NS (z) & (Intercept) & 2.339 & 2.272 & 2.407 & 4.71e-14 & 0.008 & 0.012 & RI & Exclusions applied \\ 
+HPT 6-item (no ROA) & FR-LF: RD+NS (z) & FRLF\_mini\_z & 0.012 & -0.056 & 0.081 & 7.24e-01 & 0.008 & 0.012 & RI & Exclusions applied \\ 
+HPT 6-item (no ROA) & FR-LF: RD+NS (z) & (Intercept) & 2.335 & 2.270 & 2.401 & 2.56e-117 & 0.009 & NA & RS & Exclusions applied \\ 
+HPT 6-item (no ROA) & FR-LF: RD+NS (z) & FRLF\_mini\_z & 0.005 & -0.086 & 0.096 & 9.22e-01 & 0.009 & NA & RS & Exclusions applied \\ 
+HPT 6-item (no ROA) & KSA-3 total (z) & (Intercept) & 2.335 & 2.271 & 2.400 & 3.04e-120 & 0.034 & NA & RI & Exclusions applied \\ 
+HPT 6-item (no ROA) & KSA-3 total (z) & KSA\_total\_z & 0.073 & 0.004 & 0.142 & 3.92e-02 & 0.034 & NA & RI & Exclusions applied \\ 
+HPT 6-item (no ROA) & NS (z) & (Intercept) & 2.339 & 2.273 & 2.404 & 6.89e-15 & 0.013 & 0.013 & RI & Exclusions applied \\ 
+HPT 6-item (no ROA) & NS (z) & NS\_sum\_z & 0.033 & -0.036 & 0.101 & 3.52e-01 & 0.013 & 0.013 & RI & Exclusions applied \\ 
+HPT 8-item (drop ROA1) & FR-LF: RD+NS (z) & (Intercept) & 2.457 & 2.394 & 2.520 & 4.91e-125 & 0.001 & NA & RI & Exclusions applied \\ 
+HPT 8-item (drop ROA1) & FR-LF: RD+NS (z) & FRLF\_mini\_z & -0.004 & -0.070 & 0.062 & 9.02e-01 & 0.001 & NA & RI & Exclusions applied \\ 
+HPT 8-item (drop ROA1) & KSA-3 total (z) & (Intercept) & 2.454 & 2.391 & 2.516 & 2.19e-125 & 0.015 & NA & RI & Exclusions applied \\ 
+HPT 8-item (drop ROA1) & KSA-3 total (z) & KSA\_total\_z & 0.052 & -0.015 & 0.119 & 1.31e-01 & 0.015 & NA & RI & Exclusions applied \\ 
+HPT 8-item (drop ROA1) & NS (z) & (Intercept) & 2.457 & 2.394 & 2.520 & 4.47e-125 & 0.001 & NA & RI & Exclusions applied \\ 
+HPT 8-item (drop ROA1) & NS (z) & NS\_sum\_z & 0.008 & -0.058 & 0.075 & 8.09e-01 & 0.001 & NA & RI & Exclusions applied \\ 
+HPT 9-item & FR-LF: RD+NS (z) & (Intercept) & 2.492 & 2.428 & 2.556 & 4.00e-125 & 0.007 & NA & RI & Exclusions applied \\ 
+HPT 9-item & FR-LF: RD+NS (z) & FRLF\_mini\_z & -0.006 & -0.073 & 0.060 & 8.53e-01 & 0.007 & NA & RI & Exclusions applied \\ 
+HPT 9-item & KSA-3 total (z) & (Intercept) & 2.488 & 2.425 & 2.551 & 1.52e-125 & 0.024 & NA & RI & Exclusions applied \\ 
+HPT 9-item & KSA-3 total (z) & KSA\_total\_z & 0.057 & -0.011 & 0.124 & 1.02e-01 & 0.024 & NA & RI & Exclusions applied \\ 
+HPT 9-item & NS (z) & (Intercept) & 2.491 & 2.428 & 2.555 & 3.69e-125 & 0.007 & NA & RI & Exclusions applied \\ 
+HPT 9-item & NS (z) & NS\_sum\_z & 0.009 & -0.059 & 0.076 & 8.02e-01 & 0.007 & NA & RI & Exclusions applied \\ 
+HPT 6-item (no ROA) & FR-LF: RD+NS (z) & (Intercept) & 2.354 & 2.283 & 2.426 & 8.29e-16 & 0.009 & 0.035 & RI & Full \\ 
+HPT 6-item (no ROA) & FR-LF: RD+NS (z) & FRLF\_mini\_z & -0.005 & -0.069 & 0.058 & 8.68e-01 & 0.009 & 0.035 & RI & Full \\ 
+HPT 6-item (no ROA) & FR-LF: RD+NS (z) & (Intercept) & 2.356 & 2.284 & 2.428 & 1.89e-15 & 0.010 & 0.055 & RS & Full \\ 
+HPT 6-item (no ROA) & FR-LF: RD+NS (z) & FRLF\_mini\_z & -0.009 & -0.083 & 0.066 & 8.18e-01 & 0.010 & 0.055 & RS & Full \\ 
+HPT 6-item (no ROA) & KSA-3 total (z) & (Intercept) & 2.351 & 2.285 & 2.418 & 1.35e-15 & 0.022 & 0.036 & RI & Full \\ 
+HPT 6-item (no ROA) & KSA-3 total (z) & KSA\_total\_z & 0.049 & -0.016 & 0.114 & 1.42e-01 & 0.022 & 0.036 & RI & Full \\ 
+HPT 6-item (no ROA) & KSA-3 total (z) & (Intercept) & 2.349 & 2.283 & 2.414 & 3.74e-15 & 0.022 & 0.059 & RS & Full \\ 
+HPT 6-item (no ROA) & KSA-3 total (z) & KSA\_total\_z & 0.047 & -0.033 & 0.126 & 2.85e-01 & 0.022 & 0.059 & RS & Full \\ 
+HPT 6-item (no ROA) & NS (z) & (Intercept) & 2.354 & 2.283 & 2.424 & 3.85e-16 & 0.009 & 0.032 & RI & Full \\ 
+HPT 6-item (no ROA) & NS (z) & NS\_sum\_z & 0.009 & -0.053 & 0.072 & 7.70e-01 & 0.009 & 0.032 & RI & Full \\ 
+HPT 6-item (no ROA) & NS (z) & (Intercept) & 2.353 & 2.283 & 2.423 & 7.05e-16 & 0.010 & 0.038 & RS & Full \\ 
+HPT 6-item (no ROA) & NS (z) & NS\_sum\_z & 0.008 & -0.058 & 0.074 & 8.23e-01 & 0.010 & 0.038 & RS & Full \\ 
+HPT 8-item (drop ROA1) & FR-LF: RD+NS (z) & (Intercept) & 2.470 & 2.408 & 2.532 & 1.25e-15 & 0.006 & 0.016 & RI & Full \\ 
+HPT 8-item (drop ROA1) & FR-LF: RD+NS (z) & FRLF\_mini\_z & -0.008 & -0.069 & 0.053 & 7.97e-01 & 0.006 & 0.016 & RI & Full \\ 
+HPT 8-item (drop ROA1) & KSA-3 total (z) & (Intercept) & 2.467 & 2.408 & 2.526 & 3.18e-15 & 0.012 & 0.016 & RI & Full \\ 
+HPT 8-item (drop ROA1) & KSA-3 total (z) & KSA\_total\_z & 0.034 & -0.029 & 0.096 & 2.93e-01 & 0.012 & 0.016 & RI & Full \\ 
+HPT 8-item (drop ROA1) & NS (z) & (Intercept) & 2.469 & 2.408 & 2.531 & 6.07e-16 & 0.006 & 0.015 & RI & Full \\ 
+HPT 8-item (drop ROA1) & NS (z) & NS\_sum\_z & -0.001 & -0.062 & 0.059 & 9.67e-01 & 0.006 & 0.015 & RI & Full \\ 
+HPT 9-item & FR-LF: RD+NS (z) & (Intercept) & 2.507 & 2.446 & 2.568 & 5.76e-18 & 0.013 & 0.019 & RI & Full \\ 
+HPT 9-item & FR-LF: RD+NS (z) & FRLF\_mini\_z & -0.003 & -0.064 & 0.059 & 9.31e-01 & 0.013 & 0.019 & RI & Full \\ 
+HPT 9-item & KSA-3 total (z) & (Intercept) & 2.504 & 2.445 & 2.562 & 2.34e-17 & 0.024 & 0.026 & RI & Full \\ 
+HPT 9-item & KSA-3 total (z) & KSA\_total\_z & 0.046 & -0.017 & 0.109 & 1.58e-01 & 0.024 & 0.026 & RI & Full \\ 
+HPT 9-item & NS (z) & (Intercept) & 2.507 & 2.446 & 2.567 & 3.08e-18 & 0.013 & 0.018 & RI & Full \\ 
+HPT 9-item & NS (z) & NS\_sum\_z & 0.007 & -0.054 & 0.068 & 8.25e-01 & 0.013 & 0.018 & RI & Full \\ 
 \bottomrule
 \end{tabular*}
 \end{table}

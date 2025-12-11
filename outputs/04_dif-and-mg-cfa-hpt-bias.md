@@ -109,9 +109,9 @@ kable(tab, caption = "Group sizes (Low/High ideology; Mid excluded from group-wi
 
   ideology_group      n
   ---------------- ----
-  High               55
-  Low                55
-  Mid                54
+  High               61
+  Low                62
+  Mid                61
 
   : Group sizes (Low/High ideology; Mid excluded from group-wise tests)
 
@@ -135,9 +135,9 @@ kable(desc_tbl, digits = 2, caption = "Descriptives by ideology group (means)")
 
   ideology_group      n   HPT_total   KN_sum   SDR_mean
   ---------------- ---- ----------- -------- ----------
-  Low                55        2.91     3.73       3.15
-  Mid                54        2.93     3.28       3.11
-  High               55        2.75     3.04       2.90
+  Low                62        2.89     3.65       3.15
+  Mid                61        2.94     3.26       3.06
+  High               61        2.69     3.05       2.86
 
   : Descriptives by ideology group (means)
 
@@ -181,7 +181,7 @@ print(table(grp))
 
     ## grp
     ##  Low High 
-    ##   55   55
+    ##   62   61
 
 ``` r
 library(mirt)
@@ -374,11 +374,11 @@ fits %>%
   -------------------------------------------------------------------------------------------
   Model          chisq.scaled   df.scaled   pvalue.scaled   cfi.scaled   rmsea.scaled    srmr
   ------------ -------------- ----------- --------------- ------------ -------------- -------
-  Configural           55.417          48           0.215        0.965          0.055   0.094
+  Configural           61.343          48           0.093        0.940          0.070   0.098
 
-  Metric               66.425          54           0.119        0.941          0.067   0.106
+  Metric               76.352          54           0.024        0.899          0.085   0.113
 
-  Scalar               71.554          63           0.215        0.959          0.051   0.097
+  Scalar               76.592          63           0.117        0.939          0.061   0.102
   -------------------------------------------------------------------------------------------
 
   : MG-CFA fit indices by invariance level (WLSMV).
@@ -407,8 +407,8 @@ deltas %>%
 
   step                        dCFI   dRMSEA
   ----------------------- -------- --------
-  Configural -\> Metric     -0.024    0.012
-  Metric -\> Scalar          0.018   -0.015
+  Configural -\> Metric     -0.041    0.015
+  Metric -\> Scalar          0.040   -0.024
 
   : Delta fit (CFI, RMSEA) across steps.
 
@@ -477,11 +477,11 @@ kable(fits %>% mutate(across(where(is.numeric), round, 3)),
   -------------------------------------------------------------------------------------------
   Model          chisq.scaled   df.scaled   pvalue.scaled   cfi.scaled   rmsea.scaled    srmr
   ------------ -------------- ----------- --------------- ------------ -------------- -------
-  Configural           55.417          48           0.215        0.965          0.055   0.094
+  Configural           61.343          48           0.093        0.940          0.070   0.098
 
-  Metric               66.425          54           0.119        0.941          0.067   0.106
+  Metric               76.352          54           0.024        0.899          0.085   0.113
 
-  Scalar               71.554          63           0.215        0.959          0.051   0.097
+  Scalar               76.592          63           0.117        0.939          0.061   0.102
   -------------------------------------------------------------------------------------------
 
   : Repeat: MG-CFA fit to reference in text.
@@ -493,8 +493,8 @@ kable(deltas %>% mutate(across(where(is.numeric), round, 3)),
 
   step                        dCFI   dRMSEA
   ----------------------- -------- --------
-  Configural -\> Metric     -0.024    0.012
-  Metric -\> Scalar          0.018   -0.015
+  Configural -\> Metric     -0.041    0.015
+  Metric -\> Scalar          0.040   -0.024
 
   : Repeat: Delta fit (CFI, RMSEA) thresholds.
 
