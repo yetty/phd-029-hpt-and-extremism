@@ -11,30 +11,24 @@ This document runs the **main confirmatory analyses** for:
 
 Notes on constructs and scoring:
 
--   HPT instrument and subscores (POP, ROA, CONT) follow Hartmann &
-    Hasselhorn / Huijgen et al. For this file we use **HPT total, CONT,
-    POP** as DVs. (In our dataset, higher is coded as "fits Hannes's
-    situation better" across items; thus **higher CONT** means more
-    contextualized alignment; **higher POP** reflects stronger
-    endorsement of the presentism-trigger statements after our
-    recoding.)
--   FR-LF-mini uses **RD1--RD3** (right-dictatorship) and **NS1--NS3**
-    (Nazi relativization) with robust reliability and a validated
-    6-dimension parent scale. We analyze **total** and the **RD/NS
-    facets**.
+-   HPT subscores (POP, ROA, CONT) follow Hartmann & Hasselhorn /
+    Huijgen et al. We treat **POP items as presentist** and therefore
+    **reverse-score POP** so that **higher = more contextualised
+    reasoning**. DVs used here are **HPT total (CTX6: POP_rev+CONT)**,
+    **CONT**, and **POP_rev**.
+-   FR-LF-mini uses **RD1--RD3** and **NS1--NS3**; we analyse **total**
+    and **RD/NS facets**.
 -   KSA-3 (9 items; aggression, submission, conventionalism) is included
     as a convergent authoritarian predictor. (Registered.)
 
 # 2. Data, variables, and preprocessing
-
-We expect either `normalised_responses_<DATE>.RData` or `.xlsx` in the
-project root. Variable names match the codebook.
 
 ``` r
 # Core
 library(tidyverse)
 library(readxl)
 library(janitor)
+
 # Models + tables
 library(lme4)
 library(lmerTest)
@@ -46,8 +40,8 @@ library(glue)
 
 library(kableExtra)
 options(
-    modelsummary_format = "latex",
-    modelsummary_factory_latex = "kableExtra"
+  modelsummary_format = "latex",
+  modelsummary_factory_latex = "kableExtra"
 )
 ```
 
@@ -56,9 +50,42 @@ options(
 load("normalised_responses.RData")
 stopifnot(exists("normalised_responses"))
 
-dat_raw <- normalised_responses
+# Clean names to lower_snake so items are pop1/roa1/cont1 etc.
+dat_raw <- normalised_responses |> janitor::clean_names()
 
-dat_raw <- janitor::clean_names(dat_raw)
+# ------------------------------------------------------------------
+# Build a UNIQUE class identifier = school_id x class label
+# We support multiple plausible column names from the codebook.
+# ------------------------------------------------------------------
+# Detect school id column
+school_var <- names(dat_raw)[names(dat_raw) %in% c("school_id","school")]
+# Detect class label column (human-readable class label)
+class_label_var <- names(dat_raw)[names(dat_raw) %in% c("classroom_label","class_label","class")]
+
+if (length(school_var) == 0) stop("No school id column found (tried: school_id, school).")
+if (length(class_label_var) == 0) stop("No class label column found (tried: classroom_label, class_label, class).")
+
+school_var <- school_var[1]
+class_label_var <- class_label_var[1]
+
+# Force factors and create class_id
+dat_raw <- dat_raw |>
+  mutate(
+    !!school_var := as.factor(.data[[school_var]]),
+    !!class_label_var := as.factor(.data[[class_label_var]]),
+    class_id = interaction(.data[[school_var]], .data[[class_label_var]], drop = TRUE)
+  )
+
+# ------------------
+# HPT item vectors (lowercase after clean_names())
+# ------------------
+pop_items  <- paste0("pop", 1:3)
+roa_items  <- paste0("roa", 1:3)
+cont_items <- paste0("cont", 1:3)
+
+# Reverse POP items so higher = more contextualised (1-4 scale assumed)
+dat_raw <- dat_raw %>%
+  mutate(across(all_of(pop_items), ~ 5 - as.numeric(.), .names = "{.col}_rev"))
 ```
 
 ``` r
@@ -67,21 +94,18 @@ kn_items <- paste0("kn", 1:6)
 
 dat <- dat_raw |>
   mutate(
-    # across() returns a data frame of the selected columns; rowSums works on that
     kn_total = rowSums(across(all_of(kn_items)), na.rm = TRUE)
   )
 
-# ---- HPT ----
-pop_items   <- paste0("pop", 1:3)
-cont_items  <- paste0("cont", 1:3)
-roa_items   <- paste0("roa", 1:3)
-
+# ---- HPT (use reversed POP) ----
 dat <- dat |>
   mutate(
-    hpt_pop   = rowMeans(across(all_of(pop_items)),  na.rm = TRUE),
-    hpt_cont  = rowMeans(across(all_of(cont_items)), na.rm = TRUE),
-    hpt_roa   = rowMeans(across(all_of(roa_items)),  na.rm = TRUE),
-    hpt_total = rowMeans(cbind(hpt_pop, hpt_cont, hpt_roa), na.rm = TRUE)
+    hpt_pop_rev = rowMeans(across(paste0(pop_items, "_rev")), na.rm = TRUE),
+    hpt_cont    = rowMeans(across(all_of(cont_items)),       na.rm = TRUE),
+    hpt_roa     = rowMeans(across(all_of(roa_items)),        na.rm = TRUE),
+    # Primary total (CTX6 = POP_rev + CONT); keep 9-item as sensitivity if needed
+    hpt_total   = rowMeans(cbind(hpt_pop_rev, hpt_cont), na.rm = TRUE),
+    hpt_total9  = rowMeans(cbind(hpt_pop_rev, hpt_cont, hpt_roa), na.rm = TRUE)
   )
 
 # ---- FR-LF mini ----
@@ -110,33 +134,25 @@ dat <- dat |>
   )
 
 # ---- SDR-5 ----
-# (SDR2–SDR4 already reversed upstream)
 sdr_items <- paste0("sdr", 1:5)
 
 dat <- dat |>
   mutate(
     sdr5_tot = rowMeans(across(all_of(sdr_items)), na.rm = TRUE)
   )
-
-# ---- Clustering factor ----
-cluster_var <- dplyr::case_when(
-  "class_label" %in% names(dat) ~ "class_label",
-  "class"       %in% names(dat) ~ "class",
-  TRUE ~ NA_character_
-)
-if (is.na(cluster_var)) stop("No class cluster variable found (expected `class_label` or `class`).")
-dat[[cluster_var]] <- as.factor(dat[[cluster_var]])
 ```
 
 ``` r
-# Z-standardise continuous predictors (for comparability) and outcomes (optional)
+# Z-standardise continuous predictors (for comparability)
 z <- function(x) as.numeric(scale(x))
+
+# Ensure clustering vars present for every analysed row
 
 dat <- dat |>
   mutate(
     z_hpt_total = z(hpt_total),
     z_hpt_cont  = z(hpt_cont),
-    z_hpt_pop   = z(hpt_pop),
+    z_hpt_pop   = z(hpt_pop_rev),
 
     z_frlf_tot = z(frlf_tot),
     z_frlf_rd  = z(frlf_rd),
@@ -147,27 +163,22 @@ dat <- dat |>
     z_kn_total = z(kn_total),
     z_sdr5_tot = z(sdr5_tot)
   ) |>
-  drop_na(!!sym(cluster_var))   # must have cluster id
+  drop_na(all_of(c(school_var, "class_id")))
 ```
 
 # 3. Model plan
 
-We estimate **random‐intercept multilevel models** (students nested in
-classes). For each DV:
+We estimate **random‐intercept multilevel models** with **two clustering
+terms** (students nested in classes within schools):
 
--   **Base (FR-LF total):**
-    `DV ~ z_frlf_tot + z_ksa3_tot + z_kn_total + z_sdr5_tot + (1 | class)`
--   **Facet (RD/NS):**
-    `DV ~ z_frlf_rd + z_frlf_ns + z_ksa3_tot + z_kn_total + z_sdr5_tot + (1 | class)`
--   **Interaction (if preregistered):**
-    `DV ~ z_frlf_tot * z_kn_total + z_ksa3_tot + z_sdr5_tot + (1 | class)`
+-   Base (FR-LF total):
+    `DV ~ z_frlf_tot + z_ksa3_tot + z_kn_total + z_sdr5_tot + (1 | school_id) + (1 | class_id)`
+-   Facet (RD/NS):
+    `DV ~ z_frlf_rd + z_frlf_ns + z_ksa3_tot + z_kn_total + z_sdr5_tot + (1 | school_id) + (1 | class_id)`
+-   Interaction (if preregistered):
+    `DV ~ z_frlf_tot * z_kn_total + z_ksa3_tot + z_sdr5_tot + (1 | school_id) + (1 | class_id)`
 
-DVs: `z_hpt_total`, `z_hpt_cont`, `z_hpt_pop`.
-
-Interpretation (fixed effects): positive $\beta$ means **higher
-predictor → higher DV** (in SD units). For **H1--H2**, the key test is
-**FR-LF coefficients** (or RD/NS) remaining positive and significant
-**after controls**.
+DVs: `z_hpt_total` (CTX6), `z_hpt_cont`, `z_hpt_pop` (POP_rev).
 
 ``` r
 dv_list <- c("z_hpt_total","z_hpt_cont","z_hpt_pop")
@@ -175,40 +186,30 @@ dv_list <- c("z_hpt_total","z_hpt_cont","z_hpt_pop")
 fits <- list()
 
 for (dv in dv_list) {
-
-  # Build formulas INSIDE the loop (so {dv} exists when glue runs)
   form_base  <- as.formula(
-    glue("{dv} ~ z_frlf_tot + z_ksa3_tot + z_kn_total + z_sdr5_tot + (1 | {cluster_var})")
+    glue("{dv} ~ z_frlf_tot + z_ksa3_tot + z_kn_total + z_sdr5_tot + (1 | {school_var}) + (1 | class_id)")
   )
-
   form_facet <- as.formula(
-    glue("{dv} ~ z_frlf_rd + z_frlf_ns + z_ksa3_tot + z_kn_total + z_sdr5_tot + (1 | {cluster_var})")
+    glue("{dv} ~ z_frlf_rd + z_frlf_ns + z_ksa3_tot + z_kn_total + z_sdr5_tot + (1 | {school_var}) + (1 | class_id)")
   )
-
   form_int   <- as.formula(
-    glue("{dv} ~ z_frlf_tot * z_kn_total + z_ksa3_tot + z_sdr5_tot + (1 | {cluster_var})")
+    glue("{dv} ~ z_frlf_tot * z_kn_total + z_ksa3_tot + z_sdr5_tot + (1 | {school_var}) + (1 | class_id)")
   )
 
-  # Fit models
   m_base  <- lmer(form_base,  data = dat)
   m_facet <- lmer(form_facet, data = dat)
   m_int   <- lmer(form_int,   data = dat)
 
-  fits[[dv]] <- list(
-    base  = m_base,
-    facet = m_facet,
-    int   = m_int
-  )
+  fits[[dv]] <- list(base=m_base, facet=m_facet, int=m_int)
 }
 ```
 
 ``` r
-# Show standard errors in parentheses; alternatives include {t}, {p.value}, etc.
 msummary(
   list(
-    "HPT total — Base"  = fits$z_hpt_total$base,
-    "HPT total — Facet" = fits$z_hpt_total$facet,
-    "HPT total — Int."  = fits$z_hpt_total$int
+    "HPT total (CTX6) — Base"  = fits$z_hpt_total$base,
+    "HPT total (CTX6) — Facet" = fits$z_hpt_total$facet,
+    "HPT total (CTX6) — Int."  = fits$z_hpt_total$int
   ),
   statistic = "({std.error})",
   gof_omit = "IC|Log|AIC|BIC",
@@ -216,61 +217,66 @@ msummary(
 )
 ```
 
-+----------------------+--------------+---------------+--------------+
-|                      | HPT total    | HPT total --- | HPT total    |
-|                      | --- Base     | Facet         | --- Int.     |
-+======================+==============+===============+==============+
-| (Intercept)          | 0.003        | 0.001         | -0.023       |
-+----------------------+--------------+---------------+--------------+
-|                      | (0.076)      | (0.077)       | (0.075)      |
-+----------------------+--------------+---------------+--------------+
-| z_frlf_tot           | -0.083       |               | -0.084       |
-+----------------------+--------------+---------------+--------------+
-|                      | (0.089)      |               | (0.088)      |
-+----------------------+--------------+---------------+--------------+
-| z_ksa3_tot           | 0.184\*      | 0.188\*       | 0.194\*      |
-+----------------------+--------------+---------------+--------------+
-|                      | (0.088)      | (0.089)       | (0.088)      |
-+----------------------+--------------+---------------+--------------+
-| z_kn_total           | 0.077        | 0.080         | 0.061        |
-+----------------------+--------------+---------------+--------------+
-|                      | (0.075)      | (0.076)       | (0.075)      |
-+----------------------+--------------+---------------+--------------+
-| z_sdr5_tot           | 0.087        | 0.100         | 0.096        |
-+----------------------+--------------+---------------+--------------+
-|                      | (0.076)      | (0.078)       | (0.076)      |
-+----------------------+--------------+---------------+--------------+
-| z_frlf_rd            |              | -0.104        |              |
-+----------------------+--------------+---------------+--------------+
-|                      |              | (0.089)       |              |
-+----------------------+--------------+---------------+--------------+
-| z_frlf_ns            |              | 0.007         |              |
-+----------------------+--------------+---------------+--------------+
-|                      |              | (0.088)       |              |
-+----------------------+--------------+---------------+--------------+
-| z_frlf_tot ×         |              |               | -0.157+      |
-| z_kn_total           |              |               |              |
-+----------------------+--------------+---------------+--------------+
-|                      |              |               | (0.080)      |
-+----------------------+--------------+---------------+--------------+
-| SD (Intercept        | 0.042        | 0.052         | 0.000        |
-| class_label)         |              |               |              |
-+----------------------+--------------+---------------+--------------+
-| SD (Observations)    | 0.993        | 0.997         | 0.986        |
-+----------------------+--------------+---------------+--------------+
-| Num.Obs.             | 179          | 178           | 179          |
-+----------------------+--------------+---------------+--------------+
-| R2 Marg.             | 0.038        | 0.041         | 0.058        |
-+----------------------+--------------+---------------+--------------+
-| R2 Cond.             | 0.040        | 0.043         |              |
-+----------------------+--------------+---------------+--------------+
-| RMSE                 | 0.98         | 0.98          | 0.97         |
-+----------------------+--------------+---------------+--------------+
-| -   p \< 0.1, \* p   |              |               |              |
-|     \< 0.05, \*\* p  |              |               |              |
-|     \< 0.01, \*\*\*  |              |               |              |
-|     p \< 0.001       |              |               |              |
-+----------------------+--------------+---------------+--------------+
++-----------------+----------------+-----------------+----------------+
+|                 | HPT total      | HPT total       | HPT total      |
+|                 | (CTX6) ---     | (CTX6) ---      | (CTX6) ---     |
+|                 | Base           | Facet           | Int.           |
++=================+================+=================+================+
+| (Intercept)     | -0.027         | -0.031          | -0.029         |
++-----------------+----------------+-----------------+----------------+
+|                 | (0.090)        | (0.088)         | (0.090)        |
++-----------------+----------------+-----------------+----------------+
+| z_frlf_tot      | 0.036          |                 | 0.037          |
++-----------------+----------------+-----------------+----------------+
+|                 | (0.075)        |                 | (0.075)        |
++-----------------+----------------+-----------------+----------------+
+| z_ksa3_tot      | -0.081         | -0.079          | -0.080         |
++-----------------+----------------+-----------------+----------------+
+|                 | (0.075)        | (0.075)         | (0.075)        |
++-----------------+----------------+-----------------+----------------+
+| z_kn_total      | 0.320\*\*\*    | 0.322\*\*\*     | 0.318\*\*\*    |
++-----------------+----------------+-----------------+----------------+
+|                 | (0.064)        | (0.064)         | (0.065)        |
++-----------------+----------------+-----------------+----------------+
+| z_sdr5_tot      | -0.048         | -0.034          | -0.047         |
++-----------------+----------------+-----------------+----------------+
+|                 | (0.065)        | (0.067)         | (0.065)        |
++-----------------+----------------+-----------------+----------------+
+| z_frlf_rd       |                | -0.019          |                |
++-----------------+----------------+-----------------+----------------+
+|                 |                | (0.075)         |                |
++-----------------+----------------+-----------------+----------------+
+| z_frlf_ns       |                | 0.066           |                |
++-----------------+----------------+-----------------+----------------+
+|                 |                | (0.074)         |                |
++-----------------+----------------+-----------------+----------------+
+| z_frlf_tot ×    |                |                 | -0.019         |
+| z_kn_total      |                |                 |                |
++-----------------+----------------+-----------------+----------------+
+|                 |                |                 | (0.068)        |
++-----------------+----------------+-----------------+----------------+
+| SD (Intercept   | 0.000          | 0.000           | 0.000          |
+| class_id)       |                |                 |                |
++-----------------+----------------+-----------------+----------------+
+| SD (Intercept   | 0.158          | 0.150           | 0.155          |
+| school_id)      |                |                 |                |
++-----------------+----------------+-----------------+----------------+
+| SD              | 0.943          | 0.943           | 0.945          |
+| (Observations)  |                |                 |                |
++-----------------+----------------+-----------------+----------------+
+| Num.Obs.        | 228            | 227             | 228            |
++-----------------+----------------+-----------------+----------------+
+| R2 Marg.        | 0.105          | 0.106           | 0.105          |
++-----------------+----------------+-----------------+----------------+
+| RMSE            | 0.93           | 0.93            | 0.93           |
++-----------------+----------------+-----------------+----------------+
+| -   p \< 0.1,   |                |                 |                |
+|     \* p \<     |                |                 |                |
+|     0.05, \*\*  |                |                 |                |
+|     p \< 0.01,  |                |                 |                |
+|     \*\*\* p \< |                |                 |                |
+|     0.001       |                |                 |                |
++-----------------+----------------+-----------------+----------------+
 
 ``` r
 msummary(
@@ -285,66 +291,68 @@ msummary(
 )
 ```
 
-+---------------------------+------------+-------------+------------+
-|                           | CONT ---   | CONT ---    | CONT ---   |
-|                           | Base       | Facet       | Int.       |
-+===========================+============+=============+============+
-| (Intercept)               | 0.005      | -0.001      | -0.022     |
-+---------------------------+------------+-------------+------------+
-|                           | (0.097)    | (0.097)     | (0.099)    |
-+---------------------------+------------+-------------+------------+
-| z_frlf_tot                | -0.066     |             | -0.068     |
-+---------------------------+------------+-------------+------------+
-|                           | (0.088)    |             | (0.087)    |
-+---------------------------+------------+-------------+------------+
-| z_ksa3_tot                | 0.070      | 0.073       | 0.079      |
-+---------------------------+------------+-------------+------------+
-|                           | (0.088)    | (0.088)     | (0.088)    |
-+---------------------------+------------+-------------+------------+
-| z_kn_total                | 0.165\*    | 0.169\*     | 0.151\*    |
-+---------------------------+------------+-------------+------------+
-|                           | (0.074)    | (0.074)     | (0.074)    |
-+---------------------------+------------+-------------+------------+
-| z_sdr5_tot                | 0.061      | 0.080       | 0.068      |
-+---------------------------+------------+-------------+------------+
-|                           | (0.075)    | (0.077)     | (0.075)    |
-+---------------------------+------------+-------------+------------+
-| z_frlf_rd                 |            | -0.111      |            |
-+---------------------------+------------+-------------+------------+
-|                           |            | (0.087)     |            |
-+---------------------------+------------+-------------+------------+
-| z_frlf_ns                 |            | 0.038       |            |
-+---------------------------+------------+-------------+------------+
-|                           |            | (0.086)     |            |
-+---------------------------+------------+-------------+------------+
-| z_frlf_tot × z_kn_total   |            |             | -0.137+    |
-+---------------------------+------------+-------------+------------+
-|                           |            |             | (0.079)    |
-+---------------------------+------------+-------------+------------+
-| SD (Intercept             | 0.203      | 0.202       | 0.206      |
-| class_label)              |            |             |            |
-+---------------------------+------------+-------------+------------+
-| SD (Observations)         | 0.969      | 0.967       | 0.963      |
-+---------------------------+------------+-------------+------------+
-| Num.Obs.                  | 179        | 178         | 179        |
-+---------------------------+------------+-------------+------------+
-| R2 Marg.                  | 0.040      | 0.045       | 0.055      |
-+---------------------------+------------+-------------+------------+
-| R2 Cond.                  | 0.080      | 0.085       | 0.097      |
-+---------------------------+------------+-------------+------------+
-| RMSE                      | 0.94       | 0.94        | 0.94       |
-+---------------------------+------------+-------------+------------+
-| -   p \< 0.1, \* p \<     |            |             |            |
-|     0.05, \*\* p \< 0.01, |            |             |            |
-|     \*\*\* p \< 0.001     |            |             |            |
-+---------------------------+------------+-------------+------------+
++--------------------------+-------------+--------------+-------------+
+|                          | CONT ---    | CONT ---     | CONT ---    |
+|                          | Base        | Facet        | Int.        |
++==========================+=============+==============+=============+
+| (Intercept)              | -0.048      | -0.052       | -0.062      |
++--------------------------+-------------+--------------+-------------+
+|                          | (0.099)     | (0.098)      | (0.098)     |
++--------------------------+-------------+--------------+-------------+
+| z_frlf_tot               | 0.044       |              | 0.046       |
++--------------------------+-------------+--------------+-------------+
+|                          | (0.078)     |              | (0.077)     |
++--------------------------+-------------+--------------+-------------+
+| z_ksa3_tot               | 0.025       | 0.032        | 0.031       |
++--------------------------+-------------+--------------+-------------+
+|                          | (0.078)     | (0.078)      | (0.077)     |
++--------------------------+-------------+--------------+-------------+
+| z_kn_total               | 0.199\*\*   | 0.202\*\*    | 0.184\*\*   |
++--------------------------+-------------+--------------+-------------+
+|                          | (0.066)     | (0.066)      | (0.066)     |
++--------------------------+-------------+--------------+-------------+
+| z_sdr5_tot               | -0.015      | 0.005        | -0.007      |
++--------------------------+-------------+--------------+-------------+
+|                          | (0.067)     | (0.069)      | (0.067)     |
++--------------------------+-------------+--------------+-------------+
+| z_frlf_rd                |             | -0.045       |             |
++--------------------------+-------------+--------------+-------------+
+|                          |             | (0.078)      |             |
++--------------------------+-------------+--------------+-------------+
+| z_frlf_ns                |             | 0.099        |             |
++--------------------------+-------------+--------------+-------------+
+|                          |             | (0.077)      |             |
++--------------------------+-------------+--------------+-------------+
+| z_frlf_tot × z_kn_total  |             |              | -0.119+     |
++--------------------------+-------------+--------------+-------------+
+|                          |             |              | (0.070)     |
++--------------------------+-------------+--------------+-------------+
+| SD (Intercept class_id)  | 0.092       | 0.101        | 0.107       |
++--------------------------+-------------+--------------+-------------+
+| SD (Intercept school_id) | 0.176       | 0.168        | 0.165       |
++--------------------------+-------------+--------------+-------------+
+| SD (Observations)        | 0.972       | 0.970        | 0.967       |
++--------------------------+-------------+--------------+-------------+
+| Num.Obs.                 | 228         | 227          | 228         |
++--------------------------+-------------+--------------+-------------+
+| R2 Marg.                 | 0.041       | 0.046        | 0.053       |
++--------------------------+-------------+--------------+-------------+
+| R2 Cond.                 | 0.079       | 0.084        | 0.090       |
++--------------------------+-------------+--------------+-------------+
+| RMSE                     | 0.95        | 0.95         | 0.95        |
++--------------------------+-------------+--------------+-------------+
+| -   p \< 0.1, \* p \<    |             |              |             |
+|     0.05, \*\* p \<      |             |              |             |
+|     0.01, \*\*\* p \<    |             |              |             |
+|     0.001                |             |              |             |
++--------------------------+-------------+--------------+-------------+
 
 ``` r
 msummary(
   list(
-    "POP — Base"  = fits$z_hpt_pop$base,
-    "POP — Facet" = fits$z_hpt_pop$facet,
-    "POP — Int."  = fits$z_hpt_pop$int
+    "POP_rev — Base"  = fits$z_hpt_pop$base,
+    "POP_rev — Facet" = fits$z_hpt_pop$facet,
+    "POP_rev — Int."  = fits$z_hpt_pop$int
   ),
   statistic = "({std.error})",
   gof_omit = "IC|Log|AIC|BIC",
@@ -352,72 +360,72 @@ msummary(
 )
 ```
 
-+----------------------------+------------+-------------+------------+
-|                            | POP ---    | POP ---     | POP ---    |
-|                            | Base       | Facet       | Int.       |
-+============================+============+=============+============+
-| (Intercept)                | -0.005     | -0.000      | -0.011     |
-+----------------------------+------------+-------------+------------+
-|                            | (0.070)    | (0.071)     | (0.072)    |
-+----------------------------+------------+-------------+------------+
-| z_frlf_tot                 | -0.012     |             | -0.013     |
-+----------------------------+------------+-------------+------------+
-|                            | (0.084)    |             | (0.084)    |
-+----------------------------+------------+-------------+------------+
-| z_ksa3_tot                 | 0.175\*    | 0.178\*     | 0.177\*    |
-+----------------------------+------------+-------------+------------+
-|                            | (0.083)    | (0.084)     | (0.084)    |
-+----------------------------+------------+-------------+------------+
-| z_kn_total                 | -0         | -           | -0         |
-|                            | .332\*\*\* | 0.330\*\*\* | .335\*\*\* |
-+----------------------------+------------+-------------+------------+
-|                            | (0.071)    | (0.072)     | (0.072)    |
-+----------------------------+------------+-------------+------------+
-| z_sdr5_tot                 | 0.057      | 0.054       | 0.059      |
-+----------------------------+------------+-------------+------------+
-|                            | (0.072)    | (0.074)     | (0.072)    |
-+----------------------------+------------+-------------+------------+
-| z_frlf_rd                  |            | -0.016      |            |
-+----------------------------+------------+-------------+------------+
-|                            |            | (0.084)     |            |
-+----------------------------+------------+-------------+------------+
-| z_frlf_ns                  |            | -0.004      |            |
-+----------------------------+------------+-------------+------------+
-|                            |            | (0.083)     |            |
-+----------------------------+------------+-------------+------------+
-| z_frlf_tot × z_kn_total    |            |             | -0.035     |
-+----------------------------+------------+-------------+------------+
-|                            |            |             | (0.076)    |
-+----------------------------+------------+-------------+------------+
-| SD (Intercept class_label) | 0.000      | 0.000       | 0.000      |
-+----------------------------+------------+-------------+------------+
-| SD (Observations)          | 0.940      | 0.943       | 0.942      |
-+----------------------------+------------+-------------+------------+
-| Num.Obs.                   | 179        | 178         | 179        |
-+----------------------------+------------+-------------+------------+
-| R2 Marg.                   | 0.134      | 0.132       | 0.134      |
-+----------------------------+------------+-------------+------------+
-| RMSE                       | 0.93       | 0.93        | 0.93       |
-+----------------------------+------------+-------------+------------+
-| -   p \< 0.1, \* p \<      |            |             |            |
-|     0.05, \*\* p \< 0.01,  |            |             |            |
-|     \*\*\* p \< 0.001      |            |             |            |
-+----------------------------+------------+-------------+------------+
++-----------------------+--------------+---------------+--------------+
+|                       | POP_rev ---  | POP_rev ---   | POP_rev ---  |
+|                       | Base         | Facet         | Int.         |
++=======================+==============+===============+==============+
+| (Intercept)           | 0.004        | 0.000         | 0.016        |
++-----------------------+--------------+---------------+--------------+
+|                       | (0.062)      | (0.062)       | (0.062)      |
++-----------------------+--------------+---------------+--------------+
+| z_frlf_tot            | 0.003        |               | -0.000       |
++-----------------------+--------------+---------------+--------------+
+|                       | (0.073)      |               | (0.073)      |
++-----------------------+--------------+---------------+--------------+
+| z_ksa3_tot            | -0.176\*     | -0.179\*      | -0.181\*     |
++-----------------------+--------------+---------------+--------------+
+|                       | (0.073)      | (0.074)       | (0.073)      |
++-----------------------+--------------+---------------+--------------+
+| z_kn_total            | 0.340\*\*\*  | 0.338\*\*\*   | 0.352\*\*\*  |
++-----------------------+--------------+---------------+--------------+
+|                       | (0.063)      | (0.063)       | (0.063)      |
++-----------------------+--------------+---------------+--------------+
+| z_sdr5_tot            | -0.068       | -0.066        | -0.074       |
++-----------------------+--------------+---------------+--------------+
+|                       | (0.064)      | (0.066)       | (0.064)      |
++-----------------------+--------------+---------------+--------------+
+| z_frlf_rd             |              | 0.012         |              |
++-----------------------+--------------+---------------+--------------+
+|                       |              | (0.075)       |              |
++-----------------------+--------------+---------------+--------------+
+| z_frlf_ns             |              | -0.004        |              |
++-----------------------+--------------+---------------+--------------+
+|                       |              | (0.074)       |              |
++-----------------------+--------------+---------------+--------------+
+| z_frlf_tot ×          |              |               | 0.093        |
+| z_kn_total            |              |               |              |
++-----------------------+--------------+---------------+--------------+
+|                       |              |               | (0.067)      |
++-----------------------+--------------+---------------+--------------+
+| SD (Intercept         | 0.000        | 0.000         | 0.000        |
+| class_id)             |              |               |              |
++-----------------------+--------------+---------------+--------------+
+| SD (Intercept         | 0.000        | 0.000         | 0.000        |
+| school_id)            |              |               |              |
++-----------------------+--------------+---------------+--------------+
+| SD (Observations)     | 0.935        | 0.937         | 0.933        |
++-----------------------+--------------+---------------+--------------+
+| Num.Obs.              | 228          | 227           | 228          |
++-----------------------+--------------+---------------+--------------+
+| R2 Marg.              | 0.140        | 0.138         | 0.146        |
++-----------------------+--------------+---------------+--------------+
+| RMSE                  | 0.92         | 0.92          | 0.92         |
++-----------------------+--------------+---------------+--------------+
+| -   p \< 0.1, \* p \< |              |               |              |
+|     0.05, \*\* p \<   |              |               |              |
+|     0.01, \*\*\* p \< |              |               |              |
+|     0.001             |              |               |              |
++-----------------------+--------------+---------------+--------------+
 
 ``` r
-# Robust extractors so we ALWAYS return a single-row data.frame
 `%||%` <- function(a, b) if (!is.null(a) && length(a) > 0) a else b
 
 collect_metrics <- function(m) {
-  # ICC (allow for API differences)
   icc_val <- tryCatch({
     ic <- performance::icc(m)
-    as.numeric(
-      ic$ICC_adjusted %||% ic$ICC %||% ic$ICC_conditional %||% NA_real_
-    )
+    as.numeric(ic$ICC_adjusted %||% ic$ICC %||% ic$ICC_conditional %||% NA_real_)
   }, error = function(e) NA_real_)
 
-  # R2 (prefer Nakagawa; fallbacks to older names)
   r2m <- r2c <- NA_real_
   try({
     r2o <- performance::r2_nakagawa(m)
@@ -430,15 +438,15 @@ collect_metrics <- function(m) {
 
 metrics <- dplyr::bind_rows(
   list(
-    `HPT total — Base`  = collect_metrics(fits$z_hpt_total$base),
-    `HPT total — Facet` = collect_metrics(fits$z_hpt_total$facet),
-    `HPT total — Int.`  = collect_metrics(fits$z_hpt_total$int),
-    `CONT — Base`       = collect_metrics(fits$z_hpt_cont$base),
-    `CONT — Facet`      = collect_metrics(fits$z_hpt_cont$facet),
-    `CONT — Int.`       = collect_metrics(fits$z_hpt_cont$int),
-    `POP — Base`        = collect_metrics(fits$z_hpt_pop$base),
-    `POP — Facet`       = collect_metrics(fits$z_hpt_pop$facet),
-    `POP — Int.`        = collect_metrics(fits$z_hpt_pop$int)
+    `HPT total (CTX6) — Base`  = collect_metrics(fits$z_hpt_total$base),
+    `HPT total (CTX6) — Facet` = collect_metrics(fits$z_hpt_total$facet),
+    `HPT total (CTX6) — Int.`  = collect_metrics(fits$z_hpt_total$int),
+    `CONT — Base`               = collect_metrics(fits$z_hpt_cont$base),
+    `CONT — Facet`              = collect_metrics(fits$z_hpt_cont$facet),
+    `CONT — Int.`               = collect_metrics(fits$z_hpt_cont$int),
+    `POP_rev — Base`            = collect_metrics(fits$z_hpt_pop$base),
+    `POP_rev — Facet`           = collect_metrics(fits$z_hpt_pop$facet),
+    `POP_rev — Int.`            = collect_metrics(fits$z_hpt_pop$int)
   ),
   .id = "Model"
 )
@@ -452,26 +460,29 @@ metrics <- dplyr::bind_rows(
 
     ## Random effect variances not available. Returned R2 does not account for random effects.
 
+    ## Random effect variances not available. Returned R2 does not account for random effects.
+
+    ## Random effect variances not available. Returned R2 does not account for random effects.
+
 ``` r
 knitr::kable(metrics, digits = 3, caption = "Model fit and clustering (ICC, $R^2$).")
 ```
 
-  Model                     ICC    R2_m    R2_c
-  --------------------- ------- ------- -------
-  HPT total --- Base      0.002   0.038   0.040
-  HPT total --- Facet     0.003   0.041   0.043
-  HPT total --- Int.         NA   0.058      NA
-  CONT --- Base           0.042   0.040   0.080
-  CONT --- Facet          0.042   0.045   0.085
-  CONT --- Int.           0.044   0.055   0.097
-  POP --- Base               NA   0.134      NA
-  POP --- Facet              NA   0.132      NA
-  POP --- Int.               NA   0.134      NA
+  Model                            ICC    R2_m    R2_c
+  ---------------------------- ------- ------- -------
+  HPT total (CTX6) --- Base         NA   0.105      NA
+  HPT total (CTX6) --- Facet        NA   0.106      NA
+  HPT total (CTX6) --- Int.         NA   0.105      NA
+  CONT --- Base                  0.040   0.041   0.079
+  CONT --- Facet                 0.039   0.046   0.084
+  CONT --- Int.                  0.040   0.053   0.090
+  POP_rev --- Base                  NA   0.140      NA
+  POP_rev --- Facet                 NA   0.138      NA
+  POP_rev --- Int.                  NA   0.146      NA
 
   : Model fit and clustering (ICC, $R^2$).
 
 ``` r
-# Extract tidy tables for inference and interpretation sections
 tidy_all <- function(lst, label) {
   bind_rows(
     broom.mixed::tidy(lst$base,  effects="fixed", conf.int=TRUE) |> mutate(spec="Base"),
@@ -483,9 +494,9 @@ tidy_all <- function(lst, label) {
 }
 
 tidy_tbl <- bind_rows(
-  tidy_all(fits$z_hpt_total, "HPT total"),
+  tidy_all(fits$z_hpt_total, "HPT total (CTX6)"),
   tidy_all(fits$z_hpt_cont,  "CONT"),
-  tidy_all(fits$z_hpt_pop,   "POP")
+  tidy_all(fits$z_hpt_pop,   "POP_rev")
 )
 
 knitr::kable(
@@ -495,107 +506,107 @@ knitr::kable(
 )
 ```
 
-  ------------------------------------------------------------------------------------------
-  dv       spec          term                      estimate   conf.low   conf.high   p.value
-  -------- ------------- ----------------------- ---------- ---------- ----------- ---------
-  HPT      Base          z_frlf_tot                  -0.083     -0.259       0.092     0.350
-  total                                                                            
+  -----------------------------------------------------------------------------------------------
+  dv            spec          term                      estimate   conf.low   conf.high   p.value
+  ------------- ------------- ----------------------- ---------- ---------- ----------- ---------
+  HPT total     Base          z_frlf_tot                   0.036     -0.111       0.184     0.628
+  (CTX6)                                                                                
 
-  HPT      Base          z_ksa3_tot                   0.184      0.009       0.358     0.039
-  total                                                                            
+  HPT total     Base          z_ksa3_tot                  -0.081     -0.229       0.066     0.279
+  (CTX6)                                                                                
 
-  HPT      Base          z_kn_total                   0.077     -0.072       0.226     0.309
-  total                                                                            
+  HPT total     Base          z_kn_total                   0.320      0.194       0.446     0.000
+  (CTX6)                                                                                
 
-  HPT      Base          z_sdr5_tot                   0.087     -0.063       0.237     0.256
-  total                                                                            
+  HPT total     Base          z_sdr5_tot                  -0.048     -0.176       0.080     0.463
+  (CTX6)                                                                                
 
-  HPT      Facet         z_frlf_rd                   -0.104     -0.279       0.072     0.245
-  total                                                                            
+  HPT total     Facet         z_frlf_rd                   -0.019     -0.168       0.129     0.799
+  (CTX6)                                                                                
 
-  HPT      Facet         z_frlf_ns                    0.007     -0.167       0.181     0.939
-  total                                                                            
+  HPT total     Facet         z_frlf_ns                    0.066     -0.081       0.213     0.378
+  (CTX6)                                                                                
 
-  HPT      Facet         z_ksa3_tot                   0.188      0.012       0.364     0.036
-  total                                                                            
+  HPT total     Facet         z_ksa3_tot                  -0.079     -0.228       0.070     0.297
+  (CTX6)                                                                                
 
-  HPT      Facet         z_kn_total                   0.080     -0.069       0.230     0.291
-  total                                                                            
+  HPT total     Facet         z_kn_total                   0.322      0.196       0.448     0.000
+  (CTX6)                                                                                
 
-  HPT      Facet         z_sdr5_tot                   0.100     -0.054       0.253     0.203
-  total                                                                            
+  HPT total     Facet         z_sdr5_tot                  -0.034     -0.165       0.098     0.613
+  (CTX6)                                                                                
 
-  HPT      Interaction   z_frlf_tot                  -0.084     -0.258       0.091     0.345
-  total                                                                            
+  HPT total     Interaction   z_frlf_tot                   0.037     -0.111       0.185     0.626
+  (CTX6)                                                                                
 
-  HPT      Interaction   z_kn_total                   0.061     -0.088       0.210     0.420
-  total                                                                            
+  HPT total     Interaction   z_kn_total                   0.318      0.190       0.445     0.000
+  (CTX6)                                                                                
 
-  HPT      Interaction   z_ksa3_tot                   0.194      0.021       0.367     0.028
-  total                                                                            
+  HPT total     Interaction   z_ksa3_tot                  -0.080     -0.228       0.068     0.286
+  (CTX6)                                                                                
 
-  HPT      Interaction   z_sdr5_tot                   0.096     -0.053       0.245     0.206
-  total                                                                            
+  HPT total     Interaction   z_sdr5_tot                  -0.047     -0.175       0.082     0.476
+  (CTX6)                                                                                
 
-  HPT      Interaction   z_frlf_tot:z_kn_total       -0.157     -0.315       0.001     0.051
-  total                                                                            
+  HPT total     Interaction   z_frlf_tot:z_kn_total       -0.019     -0.153       0.115     0.779
+  (CTX6)                                                                                
 
-  CONT     Base          z_frlf_tot                  -0.066     -0.239       0.107     0.451
+  CONT          Base          z_frlf_tot                   0.044     -0.109       0.197     0.571
 
-  CONT     Base          z_ksa3_tot                   0.070     -0.104       0.244     0.429
+  CONT          Base          z_ksa3_tot                   0.025     -0.128       0.178     0.744
 
-  CONT     Base          z_kn_total                   0.165      0.018       0.312     0.028
+  CONT          Base          z_kn_total                   0.199      0.068       0.329     0.003
 
-  CONT     Base          z_sdr5_tot                   0.061     -0.088       0.209     0.422
+  CONT          Base          z_sdr5_tot                  -0.015     -0.148       0.117     0.818
 
-  CONT     Facet         z_frlf_rd                   -0.111     -0.283       0.061     0.204
+  CONT          Facet         z_frlf_rd                   -0.045     -0.199       0.108     0.561
 
-  CONT     Facet         z_frlf_ns                    0.038     -0.132       0.207     0.661
+  CONT          Facet         z_frlf_ns                    0.099     -0.052       0.250     0.198
 
-  CONT     Facet         z_ksa3_tot                   0.073     -0.101       0.248     0.408
+  CONT          Facet         z_ksa3_tot                   0.032     -0.122       0.186     0.681
 
-  CONT     Facet         z_kn_total                   0.169      0.022       0.316     0.024
+  CONT          Facet         z_kn_total                   0.202      0.072       0.333     0.002
 
-  CONT     Facet         z_sdr5_tot                   0.080     -0.071       0.231     0.296
+  CONT          Facet         z_sdr5_tot                   0.005     -0.130       0.141     0.937
 
-  CONT     Interaction   z_frlf_tot                  -0.068     -0.240       0.105     0.440
+  CONT          Interaction   z_frlf_tot                   0.046     -0.106       0.198     0.554
 
-  CONT     Interaction   z_kn_total                   0.151      0.004       0.298     0.045
+  CONT          Interaction   z_kn_total                   0.184      0.053       0.314     0.006
 
-  CONT     Interaction   z_ksa3_tot                   0.079     -0.094       0.252     0.370
+  CONT          Interaction   z_ksa3_tot                   0.031     -0.121       0.184     0.687
 
-  CONT     Interaction   z_sdr5_tot                   0.068     -0.079       0.216     0.362
+  CONT          Interaction   z_sdr5_tot                  -0.007     -0.139       0.125     0.914
 
-  CONT     Interaction   z_frlf_tot:z_kn_total       -0.137     -0.293       0.019     0.085
+  CONT          Interaction   z_frlf_tot:z_kn_total       -0.119     -0.256       0.019     0.091
 
-  POP      Base          z_frlf_tot                  -0.012     -0.179       0.154     0.883
+  POP_rev       Base          z_frlf_tot                   0.003     -0.142       0.148     0.969
 
-  POP      Base          z_ksa3_tot                   0.175      0.011       0.339     0.037
+  POP_rev       Base          z_ksa3_tot                  -0.176     -0.320      -0.032     0.017
 
-  POP      Base          z_kn_total                  -0.332     -0.472      -0.191     0.000
+  POP_rev       Base          z_kn_total                   0.340      0.216       0.463     0.000
 
-  POP      Base          z_sdr5_tot                   0.057     -0.085       0.199     0.429
+  POP_rev       Base          z_sdr5_tot                  -0.068     -0.193       0.058     0.289
 
-  POP      Facet         z_frlf_rd                   -0.016     -0.182       0.150     0.851
+  POP_rev       Facet         z_frlf_rd                    0.012     -0.135       0.159     0.869
 
-  POP      Facet         z_frlf_ns                   -0.004     -0.169       0.160     0.958
+  POP_rev       Facet         z_frlf_ns                   -0.004     -0.149       0.141     0.955
 
-  POP      Facet         z_ksa3_tot                   0.178      0.013       0.344     0.035
+  POP_rev       Facet         z_ksa3_tot                  -0.179     -0.324      -0.034     0.016
 
-  POP      Facet         z_kn_total                  -0.330     -0.472      -0.188     0.000
+  POP_rev       Facet         z_kn_total                   0.338      0.214       0.462     0.000
 
-  POP      Facet         z_sdr5_tot                   0.054     -0.092       0.199     0.468
+  POP_rev       Facet         z_sdr5_tot                  -0.066     -0.195       0.063     0.314
 
-  POP      Interaction   z_frlf_tot                  -0.013     -0.179       0.154     0.882
+  POP_rev       Interaction   z_frlf_tot                   0.000     -0.145       0.144     0.998
 
-  POP      Interaction   z_kn_total                  -0.335     -0.478      -0.193     0.000
+  POP_rev       Interaction   z_kn_total                   0.352      0.228       0.477     0.000
 
-  POP      Interaction   z_ksa3_tot                   0.177      0.012       0.342     0.036
+  POP_rev       Interaction   z_ksa3_tot                  -0.181     -0.325      -0.038     0.014
 
-  POP      Interaction   z_sdr5_tot                   0.059     -0.084       0.201     0.415
+  POP_rev       Interaction   z_sdr5_tot                  -0.074     -0.200       0.051     0.245
 
-  POP      Interaction   z_frlf_tot:z_kn_total       -0.035     -0.186       0.115     0.643
-  ------------------------------------------------------------------------------------------
+  POP_rev       Interaction   z_frlf_tot:z_kn_total        0.093     -0.039       0.225     0.166
+  -----------------------------------------------------------------------------------------------
 
   : Fixed effects (standardized coefficients).
 
@@ -605,49 +616,40 @@ Interpret **only the preregistered tests**:
 
 -   **H1 supported** if the coefficient for **FR-LF** (either
     `z_frlf_tot` in Base/Int. or `z_frlf_rd`/`z_frlf_ns` in Facet) is
-    **$>$ 0 and $p < .05$** for **HPT total** and/or **CONT**.
+    **\> 0 and p \< .05** for **HPT total (CTX6)** and/or **CONT**.
 -   **H2 supported** if the same holds **after** adding controls
     (**KN**, **SDR-5**) and **KSA-3** (already included), and --- if
     preregistered --- the **FR-LF × KN** interaction is **not
-    necessary** for the main effect to persist (or, if hypothesized, is
+    necessary** for the main effect to persist (or, if hypothesised, is
     significant in the expected direction).
 
-**Reading POP.** Given our recoding (1--4 "fit"), higher **POP** here
-reflects stronger agreement that the presentism-trigger statements "fit"
-Hannes. In the original instrument, POP and CONT came out as a single
-factor vs. ROA in CFA, and item wording can trip respondents; interpret
-POP cautiously and triangulate with CONT.
+**Reading POP_rev.** Because POP is reversed, higher **POP_rev** means
+**less presentism / more contextualised fit** on items that originally
+cued presentist endorsements. Interpret alongside **CONT**.
 
 # 5. Brief interpretation guide (for the write-up)
 
--   **Effect size:** Coefficients are **standardized** ($\beta$). Values
+-   **Effect size:** Coefficients are **standardised** (β). Values
     around 0.10 are small, 0.20--0.30 moderate for individual-level
     predictors in multilevel models; report 95% CIs.
 -   **Clustering:** Report **ICC** to show class-level variance.
--   **Model fit:** Report marginal and conditional $R^2$ and compare
-    Base vs. Facet vs. Interaction.
+-   **Model fit:** Report marginal and conditional R² and compare Base
+    vs. Facet vs. Interaction.
 -   **Substantive meaning:** A **positive FR-LF** effect on **HPT total
     / CONT** suggests that ideological affinity **elevates apparent
-    contextualization**, consistent with the contamination concern. Cite
-    the HPT literature and the FR-LF validation when interpreting.
+    contextualisation**, consistent with the contamination concern.
 -   **Controls:** If FR-LF remains significant after **KN** and
     **SDR-5**, state that results are **not explained** by prior
     knowledge or social desirability (per H2).
 
 # 6. Transparency and provenance
 
--   **Instrument provenance.** HPT instrument and subscale logic follow
-    Hartmann & Hasselhorn / Huijgen et al. (contextualization
-    vs. presentism; known POP/CONT factor behavior; potential item-level
-    ambiguities).
--   **FR-LF-mini.** Items RD1--3 and NS1--3 originate from the Leipzig
-    FR-LF, which shows a stable 6-factor structure and excellent
-    internal consistency in representative samples.
--   **Analysis plan.** This file implements the Stage 1 snapshot plan
-    (multilevel regressions; DVs: HPT total, CONT, POP; predictors:
-    FR-LF, KSA-3; controls: KN, SDR-5; class clustering).
--   **Variable names and coding** are taken from the project codebook to
-    ensure reproducibility.
+-   HPT structure and reversal logic follow Hartmann & Hasselhorn /
+    Huijgen et al.
+-   FR-LF-mini originates from the Leipzig FR-LF.
+-   Analysis plan: random-intercept LMMs; DVs: HPT total (CTX6), CONT,
+    POP_rev; predictors: FR-LF (total; RD/NS facets), KSA-3; controls:
+    KN, SDR-5; clustering: school + class_id.
 
 # 7. Session info
 
@@ -714,20 +716,3 @@ sessionInfo()
     ## [73] Rcpp_1.0.13-1       checkmate_2.3.3     svglite_2.2.2      
     ## [76] coda_0.19-4.1       nlme_3.1-166        xfun_0.54          
     ## [79] zoo_1.8-14          pkgconfig_2.0.3
-
-------------------------------------------------------------------------
-
-### Minimal reporting template (paste into manuscript)
-
--   **Model:** Random-intercept LMM (classes).
--   **DV:** HPT total (z); robustness for CONT (z) and POP (z).
--   **Predictors:** FR-LF total (z) or RD/NS facets (z); KSA-3 total
-    (z); controls KN (z), SDR-5 (z).
--   **Key result:** $\beta_{\text{FR-LF}}=\ldots$, 95% CI
-    $[\ldots,\ldots]$, $p=\ldots$; ICC = $\ldots$; $R^2_m=\ldots$,
-    $R^2_c=\ldots$.
--   **Decision:** H1 ... / H2 ... (per criteria above).
-
-*References for context*: Huijgen et al. on HPT structure and presentism
-risks; FR-LF validation and dimensionality; Stage 1 snapshot for
-analytic plan; project codebook for variables.

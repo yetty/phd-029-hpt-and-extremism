@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.12.5)  11 DEC 2025 10:30
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.12.5)  13 DEC 2025 06:52
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -984,36 +984,35 @@ LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
 ]
 LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <10> not available
 (Font)              Font shape `TU/lmtt/b/n' tried instead on input line 171.
-[2] [3]
-Missing character: There is no β (U+03B2) in font [lmmono10-italic]:!
-[4] [5] [6] [7]
+[2] [3] [4] [5] [6] [7] [8]
 Missing character: There is no β (U+03B2) in font [lmmono10-regular]:!
 Missing character: There is no β (U+03B2) in font [lmmono10-regular]:!
 
-Overfull \hbox (125.41159pt too wide) in alignment at lines 537--588
-[] [] [] [] [] [] [] [] [] [] [] 
+Overfull \hbox (116.00359pt too wide) in alignment at lines 560--611
+[] [] [] [] [] [] [] [] [] [] 
  []
 
 
-LaTeX Warning: Float too large for page by 176.53743pt on input line 589.
+LaTeX Warning: Float too large for page by 197.51741pt on input line 612.
 
-[8]
-Missing character: There is no β (U+03B2) in font [lmroman10-bold]:mapping=tex-text;!
+[9]
 File: /home/yetty/Projects/phd-029-hpt-and-extremism/outputs/05_sensitivity-analyses_files/figure-latex/quick-plots-1.pdf Graphic file (type pdf)
 <use /home/yetty/Projects/phd-029-hpt-and-extremism/outputs/05_sensitivity-analyses_files/figure-latex/quick-plots-1.pdf>
-[9] [10] [11] [12] [13] (./05_sensitivity-analyses.aux)
+[10]
+Missing character: There is no ≳ (U+2273) in font [lmroman10-regular]:mapping=tex-text;!
+[11] [12] [13] [14] (./05_sensitivity-analyses.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-11-14>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 21246 strings out of 470165
- 389306 string characters out of 5477486
- 1002046 words of memory out of 5000000
- 49537 multiletter control sequences out of 15000+600000
+ 21240 strings out of 470165
+ 389187 string characters out of 5477486
+ 998834 words of memory out of 5000000
+ 49531 multiletter control sequences out of 15000+600000
  634262 words of font info for 92 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 90i,10n,114p,1075b,618s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 90i,10n,114p,1075b,630s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on 05_sensitivity-analyses.pdf (13 pages).
+Output written on 05_sensitivity-analyses.pdf (14 pages).

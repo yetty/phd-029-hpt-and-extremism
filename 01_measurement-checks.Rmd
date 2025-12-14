@@ -11,7 +11,7 @@ output:
     toc: true
     toc_depth: 3
     keep_tex: true
-    
+  
   md_document:
     variant: markdown
     preserve_yaml: false
@@ -50,17 +50,17 @@ This report checks whether our **Historical Perspective-Taking (HPT)** instrumen
 
 We do four things:
 
-1. **Reliability:** Are the HPT subscales internally consistent? We report **Cronbach’s alpha ($\alpha$)** and **McDonald’s omega ($\omega$)** for the three HPT modes: **POP**, **ROA**, **CONT** (three items each; response scale 1-4).
-2. **Dimensionality (CFA/EFA):** Does the **factor structure** match prior research (roughly, **POP+CONT together** versus **ROA** as a separate factor; or three distinct but correlated factors)?
-3. **Presentism-contextualization contrast:** Do **POP** (presentist) and **CONT** (contextualization) show the expected contrast in the Czech data (differences in means / correlations)?
-4. **Class-level clustering (ICCs):** Are scores clustered by **class** (so that multilevel models are justified later)?
+1. **Reliability:** Are the HPT subscales internally consistent? We report **Cronbach’s alpha (\(\alpha\))** and **McDonald’s omega (\(\omega\))** for **POP**, **ROA**, **CONT** (three items each; 1–4).
+2. **Dimensionality (CFA/EFA):** Does the **factor structure** match prior research (e.g., **POP+CONT** vs **ROA**, or three correlated factors)?
+3. **Presentism–contextualization contrast:** Do **POP** (presentist) and **CONT** (contextualization) show the expected contrast?
+4. **Clustering (ICCs):** Are scores clustered by **school** and **class-within-school**?
 
-> **Input:** We assume a file `normalised_data.RData` providing an object `normalised_data` with variables `POP1-3`, `ROA1-3`, `CONT1-3`, and `class_label`.
-> **Output:** A human-readable PDF with tables/figures and short interpretations.
+> **Composite scores used** (for descriptives/ICCs and later files):
+> - **POP_rev = 5 − POP_raw** (so higher = more contextualized).
+> - **HPT_CTX6 = mean(POP_rev, CONT)** (default composite).
+> - **HPT_TOT9 = mean(POP_rev, CONT, ROA)** (includes ROA; robustness).
 
 # Setup and data loading
-
-We load common R packages, then load the preprocessed dataset your pipeline already created.
 
 ```{r,setup,message=FALSE, warning=FALSE}
 options(width = 120)
@@ -80,7 +80,6 @@ library(performance)
 # Tables
 library(knitr)
 
-
 # Make kableExtra use longtable/booktabs and avoid loading tabu
 options(kableExtra.latex.load_packages = FALSE)
 library(kableExtra)
@@ -90,6 +89,35 @@ load("normalised_responses.RData")
 stopifnot(exists("normalised_responses"))
 dat <- normalised_responses
 
+# Ensure clustering identifiers and unique class id
+stopifnot(all(c("school_id","class_label") %in% names(dat)))
+dat <- dat %>%
+  mutate(
+    school_id   = as.factor(school_id),
+    class_label = as.factor(class_label),
+    class_id    = interaction(school_id, class_label, drop = TRUE)
+  )
+
+# POP reversed item-wise and subscale helper
+POP_rev_items <- paste0("POP", 1:3)
+
+# Reverse POP items (1–4)
+dat <- dat %>%
+  mutate(
+    across(
+      all_of(POP_rev_items),
+      ~ 5 - suppressWarnings(as.numeric(.)),
+      .names = "{.col}_rev"     # <<< THIS was the culprit
+    )
+  ) %>%
+  mutate(
+    HPT_POP_raw = rowMeans(across(all_of(POP_rev_items)), na.rm = TRUE),
+    HPT_POP_rev = rowMeans(across(all_of(paste0(POP_rev_items, "_rev"))), na.rm = TRUE),
+    HPT_CONT    = rowMeans(across(CONT1:CONT3), na.rm = TRUE),
+    HPT_ROA     = rowMeans(across(ROA1:ROA3),   na.rm = TRUE),
+    HPT_CTX6    = rowMeans(cbind(HPT_POP_rev, HPT_CONT), na.rm = TRUE),
+    HPT_TOT9    = rowMeans(cbind(HPT_POP_rev, HPT_CONT, HPT_ROA), na.rm = TRUE)
+  )
 
 print_tbl <- function(df, caption, digits = 3, escape = TRUE) {
   kbl(df, booktabs = TRUE, longtable = TRUE, caption = caption, digits = digits, escape = escape) |>
@@ -102,62 +130,47 @@ We verify that **HPT items** and **class labels** exist. If something is missing
 ```{r,check-columns}
 ## -- check-columns ----------------------------
 hpt_cols <- c(paste0("POP", 1:3), paste0("ROA", 1:3), paste0("CONT", 1:3))
-need   <- c(hpt_cols, "class_label")
+need   <- c(hpt_cols, "class_label", "school_id")
 miss   <- setdiff(need, names(dat))
 if (length(miss)) stop("Missing variables: ", paste(miss, collapse = ", "))
 
-# Keep rows complete on HPT items for psychometric checks
-hpt_items <- dat %>% select(all_of(hpt_cols)) %>% drop_na()
-n_complete <- nrow(hpt_items)
-cat("Rows with complete HPT data:", n_complete, "\n")
-```
+# Keep only rows that are COMPLETE on all HPT items AND have class_label and school_id
+keep <- complete.cases(dat[, hpt_cols]) & !is.na(dat$class_label) & !is.na(dat$school_id)
 
-We create an **analysis dataframe** keeping only rows with complete HPT data and a non-missing `class_label`.
-```{r,align-analysis-frame}
-# Keep only rows that are COMPLETE on all HPT items AND have a class_label
-keep <- complete.cases(dat[, hpt_cols]) & !is.na(dat$class_label)
-
-analysis_df <- dat[keep, c(hpt_cols, "class_label")] %>%
+analysis_df <- dat[keep, c(hpt_cols, "class_label", "school_id", "class_id")] |> 
   as_tibble()
 
 nrow_all   <- nrow(dat)
 nrow_keep  <- nrow(analysis_df)
 cat("Rows in full data: ", nrow_all,  "\n",
-    "Rows kept (complete HPT + class_label): ", nrow_keep, "\n", sep = "")
+    "Rows kept (complete HPT + class_label + school_id): ", nrow_keep, "\n", sep = "")
 ```
 
 # Step 1 — Descriptives and scale construction
 
 **Why:** Simple summaries catch obvious data problems and help readers develop intuition.
 
-* We compute subscale **means** for POP, ROA, CONT (each ranges 1-4).
-* We also compute a grand **HPT_total** (mean of the three subscales).
-* Then we print summaries and a quick correlation overview.
-
 ```{r,descriptives}
 hpt_items <- analysis_df %>% select(all_of(hpt_cols))  # 9 HPT items
 
+# Subscales and composites with POP reversed for composites
 hpt_scores <- hpt_items %>%
   mutate(
-    POP  = rowMeans(select(., starts_with("POP")),  na.rm = TRUE),
-    ROA  = rowMeans(select(., starts_with("ROA")),  na.rm = TRUE),
-    CONT = rowMeans(select(., starts_with("CONT")), na.rm = TRUE),
-    HPT_total = rowMeans(across(c(POP, ROA, CONT)), na.rm = TRUE)
+    POP_raw = rowMeans(select(., starts_with("POP")),  na.rm = TRUE),
+    ROA     = rowMeans(select(., starts_with("ROA")),  na.rm = TRUE),
+    CONT    = rowMeans(select(., starts_with("CONT")), na.rm = TRUE)
+  ) %>%
+  mutate(
+    POP_rev   = 5 - POP_raw,
+    HPT_CTX6  = rowMeans(cbind(POP_rev, CONT), na.rm = TRUE),
+    HPT_TOT9  = rowMeans(cbind(POP_rev, CONT, ROA), na.rm = TRUE)
   )
 
-summary(select(hpt_scores, POP, ROA, CONT, HPT_total))
-cor(select(hpt_scores, POP, ROA, CONT), use = "pairwise.complete.obs")
+summary(select(hpt_scores, POP_raw, POP_rev, ROA, CONT, HPT_CTX6, HPT_TOT9))
+cor(select(hpt_scores, POP_raw, ROA, CONT, HPT_CTX6, HPT_TOT9), use = "pairwise.complete.obs")
 ```
 
-# Step 2 — Reliability: $\alpha$ and $\omega$ for POP-ROA-CONT
-
-**Why:** Reliability indicates whether items that are supposed to measure the same thing **hang together**.
-We report:
-
-* **$\alpha$ (alpha)** on raw item data (common baseline), and
-* **$\alpha$ and $\omega$** from **polychoric** correlations (better for ordinal 1-4 items).
-
-Interpretation tip for readers: **$\omega_{\text{total}} \gtrsim .70$** is often seen as acceptable; **$\omega_{\text{hier}}$** indicates strength of a general factor (useful if items might reflect a dominant common trait).
+# Step 2 — Reliability: \(\alpha\) and \(\omega\) for POP–ROA–CONT
 
 ```{r,reliability,warning=FALSE}
 alpha_poly <- function(x) {
@@ -192,25 +205,10 @@ rel_table <- purrr::imap_dfr(subsets, function(df, nm){
 print_tbl(rel_table, digits = 3, caption = "Reliability of HPT subscales (alpha and omega).")
 ```
 
-**How to read this table:** Higher values mean items within a subscale are consistent. If a subscale shows **low $\alpha$ and $\omega$**, consider revisiting items or treating the subscale cautiously in later analyses.
-
 # Step 3 — Dimensionality (CFA/EFA)
 
-**Goal:** Check whether our data reproduce the **structure** reported in prior HPT work (often: **POP+CONT** vs **ROA**, or a **three-factor** model with POP, CONT, ROA as correlated factors).
-
-We fit three **confirmatory factor models** using **ordered** items (WLSMV):
-
-* **M1 (two factors):**
-  *F1* loads on `POP1-3` and `CONT1-3`; *F2* loads on `ROA1-3`.
-* **M2 (three factors):**
-  *POP*, *CONT*, *ROA* as separate but correlated.
-* **M3 (one factor):**
-  Everything loads on a single general factor.
-
-We then compare model fit and inspect loadings.
-
 ```{r,cfa-setup,warning=FALSE}
-hpt_ord <- hpt_items  # same data; we explicitly treat items as ordered
+hpt_ord <- hpt_items  # treat items as ordered
 
 m1_2factor <- '
 F1 =~ POP1 + POP2 + POP3 + CONT1 + CONT2 + CONT3
@@ -232,11 +230,9 @@ fit_2 <- cfa(m1_2factor, data = hpt_ord, ordered = hpt_cols, estimator = "WLSMV"
 fit_3 <- cfa(m2_3factor, data = hpt_ord, ordered = hpt_cols, estimator = "WLSMV")
 fit_1 <- cfa(m3_1factor, data = hpt_ord, ordered = hpt_cols, estimator = "WLSMV")
 
-# Compare fits side-by-side
+# Compare fits
 semTools::compareFit(fit_2, fit_3, fit_1)
 ```
-
-Now we print key indices and standardized loadings for each model.
 
 ```{r,cfa-details}
 report_fit <- function(fit) {
@@ -249,10 +245,9 @@ report_fit <- function(fit) {
 cfa_summary <- list(
   `2-factor (POP+CONT vs ROA)` = report_fit(fit_2),
   `3-factor (POP/CONT/ROA)`    = report_fit(fit_3),
-  `1-factor (general)`          = report_fit(fit_1)
+  `1-factor (general)`         = report_fit(fit_1)
 )
 
-# Print nicely
 purrr::iwalk(cfa_summary, function(x, nm){
   cat("\n###", nm, "\n")
   print(x$indices)
@@ -260,11 +255,7 @@ purrr::iwalk(cfa_summary, function(x, nm){
 })
 ```
 
-**How to interpret:** Prefer models with **CFI/TLI $\gtrsim .95$**, **RMSEA $\lesssim .06$-$.08$**, **SRMR $\lesssim .08$** (rules of thumb). If the 2- or 3-factor model clearly outperforms 1-factor and loadings align with expectations (POP & CONT together; ROA separate—or all three distinct), the data support the theorized structure.
-
-### Optional: Data-driven EFA (polychoric)
-
-**Why:** As a sensitivity check, we can inspect **exploratory** factor analysis using polychoric correlations.
+### Optional: EFA (polychoric)
 
 ```{r,efa}
 pc <- psych::polychoric(hpt_ord)$rho
@@ -278,115 +269,86 @@ cat("\nEFA (3 factors):\n")
 print(efa3$loadings, cutoff = 0.25)
 ```
 
-# Step 4 — Presentism-contextualization contrast (POP vs CONT)
-
-**Idea:** Prior work suggests **presentist** choices (POP) and **contextualized** reasoning (CONT) should **pull in opposite directions**. Here we check whether the **Czech data** replicate that **contrast**: (a) compare means; (b) inspect the POP-CONT correlation.
+# Step 4 — Presentism–contextualization contrast (POP vs CONT)
 
 ```{r,pop-cont-contrast}
-# Rebuild subscale scores locally to avoid scope/version issues
-hpt_scores_local <- hpt_items %>%
-  mutate(
-    POP  = rowMeans(select(., starts_with("POP")),  na.rm = TRUE),
-    ROA  = rowMeans(select(., starts_with("ROA")),  na.rm = TRUE),
-    CONT = rowMeans(select(., starts_with("CONT")), na.rm = TRUE),
-    HPT_total = rowMeans(across(c(POP, ROA, CONT)), na.rm = TRUE)
-  )
-
-# Sanity check: make sure the columns exist
-stopifnot(all(c("POP","ROA","CONT","HPT_total") %in% names(hpt_scores_local)))
-
-contrast_tbl <- hpt_scores_local %>%
+contrast_tbl <- hpt_scores %>%
   summarise(
-    mean_POP   = mean(POP,  na.rm = TRUE),  sd_POP   = sd(POP,  na.rm = TRUE),
-    mean_CONT  = mean(CONT, na.rm = TRUE),  sd_CONT  = sd(CONT, na.rm = TRUE),
-    r_POP_CONT = cor(POP, CONT, use = "pairwise.complete.obs")
+    mean_POP   = mean(POP_raw,  na.rm = TRUE),  sd_POP   = sd(POP_raw,  na.rm = TRUE),
+    mean_CONT  = mean(CONT,     na.rm = TRUE),  sd_CONT  = sd(CONT,     na.rm = TRUE),
+    r_POP_CONT = cor(POP_raw, CONT, use = "pairwise.complete.obs")
   )
 
-print_tbl(contrast_tbl, digits = 3, caption = "POP vs CONT: means, SDs, and correlation.")
+print_tbl(contrast_tbl, digits = 3, caption = "POP (raw) vs CONT: means, SDs, and correlation.")
 
-# Simple paired comparison (descriptive; not a preregistered test)
-t_test <- t.test(hpt_scores_local$POP, hpt_scores_local$CONT, paired = TRUE)
+t_test <- t.test(hpt_scores$POP_raw, hpt_scores$CONT, paired = TRUE)
 t_test
-
 ```
-
-**Reading the results:**
-
-* If **mean_CONT $>$ mean_POP** and/or **$r_{\text{POP,CONT}} < 0$**, that supports the expected contrast.
-* If they move **together** (positive correlation and similar means), interpretation of the HPT construct may require caution.
 
 # Step 5 — Distribution checks
 
-**Why:** Skewed or piled-up scores can cause model or inference issues. We look at item-level and scale-level histograms.
-
 ```{r,distributions}
+# Item distributions
 long_items <- hpt_items %>%
   pivot_longer(cols = everything(), names_to = "item", values_to = "score")
 
-# Item distributions
 ggplot(long_items, aes(score)) +
   geom_histogram(binwidth = 0.5, boundary = 0, closed = "left") +
   facet_wrap(~ item, ncol = 3) +
   labs(title = "HPT item score distributions", x = "Score (1-4)", y = "Count")
 
-# Scale distributions
-ggplot(hpt_scores %>% pivot_longer(c(POP, ROA, CONT, HPT_total), names_to = "scale", values_to = "score"),
-       aes(x = score)) +
+# Scale/composite distributions
+long_scales <- hpt_scores %>%
+  select(POP_raw, ROA, CONT, HPT_CTX6, HPT_TOT9) %>%
+  pivot_longer(everything(), names_to = "scale", values_to = "score")
+
+ggplot(long_scales, aes(x = score)) +
   geom_histogram(binwidth = 0.25) +
   facet_wrap(~ scale, scales = "free") +
-  labs(title = "Subscale/total score distributions", x = "Mean score (1-4)", y = "Count")
+  labs(title = "Subscales and composites", x = "Mean score", y = "Count")
 ```
 
-# Step 6 — Class-level ICCs (is a multilevel model warranted?)
-
-**Why:** Students are nested in **classes**; scores may be more similar within a class. The **Intraclass Correlation Coefficient (ICC)** estimates the fraction of variance at the class level. If ICC $\gtrsim .05$, multilevel modeling is usually advisable.
-
-We fit **null (random-intercept)** models for **HPT_total**, **POP**, **ROA**, **CONT** and extract ICCs.
+# Step 6 — Class-level ICCs (multilevel warranted?)
 
 ```{r,icc}
-# analysis_df and hpt_scores already exist and are aligned
+# Build the DV frame from analysis_df (items) and compute subscales/composites here
 icc_data <- analysis_df %>%
-  transmute(class_label) %>%
-  bind_cols(hpt_scores %>% select(POP, ROA, CONT, HPT_total))
+  mutate(
+    POP_raw = rowMeans(select(., starts_with("POP")),  na.rm = TRUE),
+    ROA     = rowMeans(select(., starts_with("ROA")),  na.rm = TRUE),
+    CONT    = rowMeans(select(., starts_with("CONT")), na.rm = TRUE)
+  ) %>%
+  mutate(
+    POP_rev  = 5 - POP_raw,
+    HPT_CTX6 = rowMeans(cbind(POP_rev, CONT), na.rm = TRUE),
+    HPT_TOT9 = rowMeans(cbind(POP_rev, CONT, ROA), na.rm = TRUE)
+  ) %>%
+  select(school_id, class_label, class_id, POP_raw, ROA, CONT, HPT_CTX6, HPT_TOT9)
 
-mk_icc <- function(dv){
-  f <- reformulate("1 + (1|class_label)", response = dv)
+mk_icc_3 <- function(dv){
+  f <- reformulate("1 + (1|school_id) + (1|school_id:class_label)", response = dv)
   fit <- lmer(f, data = icc_data, REML = TRUE)
 
-  # Extract variance components
   vc <- as.data.frame(VarCorr(fit))
-  var_class <- vc$vcov[vc$grp == "class_label"][1]
-  var_resid <- vc$vcov[vc$grp == "Residual"][1]
-
-  icc <- var_class / (var_class + var_resid)
+  v_school <- vc$vcov[vc$grp == "school_id"];             v_school <- if (length(v_school)) v_school[1] else 0
+  v_classW <- vc$vcov[vc$grp == "school_id:class_label"]; v_classW <- if (length(v_classW)) v_classW[1] else 0
+  v_resid  <- vc$vcov[vc$grp == "Residual"][1]
+  v_tot    <- v_school + v_classW + v_resid
 
   tibble(
     DV = dv,
-    ICC = icc,
-    var_class = var_class,
-    var_resid = var_resid,
+    ICC_school = v_school / v_tot,
+    ICC_class_within_school = v_classW / v_tot,
+    ICC_total_cluster = (v_school + v_classW) / v_tot,
     singular = isSingular(fit)
   )
 }
 
-icc_tbl <- purrr::map_dfr(c("HPT_total","POP","ROA","CONT"), mk_icc)
-
-print_tbl(icc_tbl, digits = 3, caption = "Null-model ICCs by outcome (computed from variance components).")
-
+icc_tbl <- purrr::map_dfr(c("HPT_CTX6","HPT_TOT9","POP_raw","ROA","CONT"), mk_icc_3)
+print_tbl(icc_tbl, digits = 3, caption = "ICCs: school and class-within-school (HPT composites and subscales).")
 ```
 
-**Interpretation:**
-
-* **Higher ICC** $\Rightarrow$ more clustering by class.
-* Non-trivial ICCs motivate **multilevel** models for confirmatory analyses.
-
 # Step 7 — Knowledge mini-test (KN1–KN6)
-
-Why: The KN items are dichotomous (0/1). We report:
-
-- KR-20 (equivalent to alpha for dichotomous items)
-- Item difficulty (p = proportion correct)
-- Point-biserial discrimination (w.r.t. total score)
 
 ```{r,kn-items,warning=FALSE}
 kn_cols <- paste0("KN", 1:6)
@@ -423,10 +385,6 @@ if (!has_kn) {
 ```
 
 # Step 8 — Ideology batteries (FR-LF mini, KSA-3) and Social Desirability (SDR-5)
-Why:
-
-- We need reliable predictors and controls before hypothesis tests.
-- We report $\alpha$/$\omega$ (polychoric), optional CFA fits, and descriptive summaries.
 
 ```{r,ideology-batteries-helpers,warning=FALSE}
 # Helper: reliability table for Likert batteries (polychoric + omega total)
@@ -441,7 +399,7 @@ omega_total_poly_likert <- function(x) {
 }
 ```
 
-## FR-LF mini (RD1-RD3, NS1-NS3) 
+## FR-LF mini (RD1–RD3, NS1–NS3)
 
 ```{r,fr-lf-mini,warning=FALSE}
 fr_cols <- c(paste0("RD", 1:3), paste0("NS", 1:3))
@@ -489,7 +447,7 @@ if (!has_fr) {
 }
 ```
 
-## KSA-3 (A1-A3, U1-U3, K1-K3)
+## KSA-3 (A1–A3, U1–U3, K1–K3)
 
 ```{r,ksa-3,warning=FALSE}
 ksa_cols <- c(paste0("A",1:3), paste0("U",1:3), paste0("K",1:3))
@@ -545,7 +503,7 @@ if (!has_ksa) {
 }
 ```
 
-## SDR-5 (SDR1-SDR5)
+## SDR-5 (SDR1–SDR5)
 
 ```{r,sdr-5,warning=FALSE}
 sdr_cols <- paste0("SDR", 1:5)
@@ -555,8 +513,6 @@ if (!has_sdr) {
   cat("\n**SDR-5 section skipped:** SDR1–SDR5 not found.\n")
 } else {
   sdr_df <- dat[keep, sdr_cols] %>% as_tibble()
-  # NOTE: Your data reportedly already has SDR2–SDR4 reversed. If unsure, you can
-  # check symmetry and optionally reverse here before reliability.
   a_sdr  <- psych::alpha(sdr_df)
   ap_sdr <- alpha_poly_likert(sdr_df)
   wt_sdr <- omega_total_poly_likert(sdr_df)
@@ -580,20 +536,23 @@ if (!has_sdr) {
 }
 ```
 
-
 # Step 9 — Cross-construct correlations (HPT, KN, FR-LF, KSA-3, SDR-5)
-
-Why:
-Useful overview to see how constructs relate before multilevel models.
 
 ```{r,cross-construct-correlations}
 # Build scale scores that exist in your data (gracefully skipping any missing block)
 scales_list <- list(
-  HPT_total = hpt_scores$HPT_total,
-  HPT_POP   = hpt_scores$POP,
+  HPT_CTX6  = hpt_scores$HPT_CTX6,
+  HPT_TOT9  = hpt_scores$HPT_TOT9,
+  HPT_POP   = hpt_scores$POP_raw,  # presentism foil (higher = worse)
   HPT_ROA   = hpt_scores$ROA,
   HPT_CONT  = hpt_scores$CONT
 )
+
+# optional blocks
+kn_cols <- paste0("KN", 1:6); has_kn <- all(kn_cols %in% names(dat))
+fr_cols <- c(paste0("RD", 1:3), paste0("NS", 1:3)); has_fr <- all(fr_cols %in% names(dat))
+ksa_cols <- c(paste0("A",1:3), paste0("U",1:3), paste0("K",1:3)); has_ksa <- all(ksa_cols %in% names(dat))
+sdr_cols <- paste0("SDR", 1:5); has_sdr <- all(sdr_cols %in% names(dat))
 
 if (has_kn) {
   scales_list$KN_total <- rowSums(dat[keep, kn_cols], na.rm = TRUE)

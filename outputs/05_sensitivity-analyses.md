@@ -9,9 +9,9 @@ survive reasonable perturbations---**not** to hunt for significance.
 HPT scoring follows the Hartmann--Hasselhorn / Huijgen instrument logic;
 note earlier reports that ROA items can behave inconsistently across
 samples, motivating ROA-free alternatives here. We also leverage the
-FR-LF dimensions RD and NS for ideology variants, aligned with the
-codebook of our dataset. These analyses correspond to the
-"contamination" checks pre-registered in the project snapshot.
+FR-LF dimensions RD and NS for ideology variants. All results explicitly
+use **reversed POP items** so that higher scores mean **more
+contextualised/agent-aware** reasoning.
 
 ## Setup
 
@@ -23,8 +23,8 @@ library(lmerTest)
 library(broom)
 library(broom.mixed)
 library(performance)
-library(gt)
 library(glue)
+library(gt)
 
 # Nice printing
 theme_set(theme_bw())
@@ -37,62 +37,88 @@ theme_set(theme_bw())
 load("normalised_responses.RData")
 stopifnot(exists("normalised_responses"))
 dat_raw <- normalised_responses
-```
 
-**How to read variables.** Variable names and coding (KN, POP/ROA/CONT,
-RD/NS, KSA facets, SDR) are defined in the project codebook and used
-verbatim here.
-
-# 1. Scoring variants for HPT
-
-**Why:** In prior literature, POP and CONT often form one factor, while
-ROA can be unstable (e.g., ROA1 cross-loads in some samples). We
-therefore compare the **original 9-item average** with **ROA-free** and
-**problem-item-free** scores.
-
-``` r
-dat <- dat_raw %>%
+# Cluster identifiers
+dat_raw <- dat_raw %>%
   mutate(
-    # Per codebook, POP/ROA/CONT are coded 1–4 (higher = better fit). :contentReference[oaicite:5]{index=5}
-    HPT_total_9   = rowMeans(across(c(POP1:POP3, ROA1:ROA3, CONT1:CONT3)), na.rm = TRUE),
-    HPT_total_6   = rowMeans(across(c(POP1:POP3, CONT1:CONT3)), na.rm = TRUE),           # exclude all ROA
-    HPT_total_8   = rowMeans(across(c(POP1:POP3, ROA2:ROA3, CONT1:CONT3)), na.rm = TRUE) # drop ROA1 only
+    school_id   = as.factor(school_id),
+    class_label = as.factor(class_label),
+    class_id    = interaction(school_id, class_label, drop = TRUE)
+  )
+
+# Reverse POP (1-4) so higher = more contextualised
+POP_rev_items <- paste0("POP", 1:3)
+dat_raw <- dat_raw %>%
+  mutate(across(all_of(POP_rev_items), ~ 5 - as.numeric(.), .names = "{.col}_rev")) %>%
+  mutate(
+    HPT_POP_rev = rowMeans(across(paste0(POP_rev_items, "_rev")), na.rm = TRUE),
+    HPT_CONT    = rowMeans(across(CONT1:CONT3), na.rm = TRUE),
+    HPT_ROA     = rowMeans(across(ROA1:ROA3),   na.rm = TRUE),
+    # Canonical composites
+    HPT_CTX6    = rowMeans(cbind(HPT_POP_rev, HPT_CONT), na.rm = TRUE),
+    HPT_TOT9    = rowMeans(cbind(HPT_POP_rev, HPT_CONT, HPT_ROA), na.rm = TRUE)
   )
 ```
 
-### Descriptives
+**Variable dictionary.** KN, POP/ROA/CONT, RD/NS, KSA facets, SDR as per
+codebook.
+
+# 1. Scoring variants for HPT (with POP reversed)
 
 ``` r
+# IMPORTANT: use reversed POP columns in all totals
+
+dat <- dat_raw %>%
+  mutate(
+    HPT_total_9 = rowMeans(across(c(paste0("POP",1:3, "_rev"), ROA1:ROA3, CONT1:CONT3)), na.rm = TRUE),
+    HPT_total_8 = rowMeans(across(c(paste0("POP",1:3, "_rev"), ROA2:ROA3, CONT1:CONT3)), na.rm = TRUE), # drop ROA1
+    HPT_total_6 = rowMeans(across(c(paste0("POP",1:3, "_rev"), CONT1:CONT3)), na.rm = TRUE)             # no ROA
+  )
+
+# Means & SDs so the reader sees scale location and spread
 hpt_desc <- dat %>%
   summarise(
-    `9-item (POP+ROA+CONT)` = mean(HPT_total_9,  na.rm=TRUE),
-    `8-item (drop ROA1)`     = mean(HPT_total_8,  na.rm=TRUE),
-    `6-item (drop all ROA)`  = mean(HPT_total_6,  na.rm=TRUE)
-  ) %>% pivot_longer(everything(), names_to="Score", values_to="Mean")
+    `9-item (POP_rev + ROA + CONT)` := mean(HPT_total_9,  na.rm=TRUE),
+    `8-item (drop ROA1)`            := mean(HPT_total_8,  na.rm=TRUE),
+    `6-item (no ROA)`               := mean(HPT_total_6,  na.rm=TRUE),
+    .groups = "drop"
+  ) %>%
+  pivot_longer(everything(), names_to = "Score", values_to = "Mean")
 
-gt(hpt_desc) %>%
-  fmt_number(columns=Mean, decimals=2) %>%
-  tab_header(title="HPT scoring variants — means (higher = better)")
+hpt_sd <- dat %>%
+  summarise(
+    `9-item (POP_rev + ROA + CONT)` := sd(HPT_total_9,  na.rm=TRUE),
+    `8-item (drop ROA1)`            := sd(HPT_total_8,  na.rm=TRUE),
+    `6-item (no ROA)`               := sd(HPT_total_6,  na.rm=TRUE)
+  ) %>%
+  pivot_longer(everything(), names_to = "Score", values_to = "SD")
+
+hpt_desc_tbl <- left_join(hpt_desc, hpt_sd, by = "Score")
+
+hpt_desc_tbl %>%
+  gt() %>%
+  fmt_number(columns = c(Mean, SD), decimals = 2) %>%
+  tab_header(title = "HPT scoring variants (POP reversed): means and SDs")
 ```
 
 ```{=html}
-<div id="xmvnndvejr" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#xmvnndvejr table {
+<div id="dipdzmhbmc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#dipdzmhbmc table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#xmvnndvejr thead, #xmvnndvejr tbody, #xmvnndvejr tfoot, #xmvnndvejr tr, #xmvnndvejr td, #xmvnndvejr th {
+#dipdzmhbmc thead, #dipdzmhbmc tbody, #dipdzmhbmc tfoot, #dipdzmhbmc tr, #dipdzmhbmc td, #dipdzmhbmc th {
   border-style: none;
 }
 
-#xmvnndvejr p {
+#dipdzmhbmc p {
   margin: 0;
   padding: 0;
 }
 
-#xmvnndvejr .gt_table {
+#dipdzmhbmc .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -118,12 +144,12 @@ gt(hpt_desc) %>%
   border-left-color: #D3D3D3;
 }
 
-#xmvnndvejr .gt_caption {
+#dipdzmhbmc .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#xmvnndvejr .gt_title {
+#dipdzmhbmc .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -135,7 +161,7 @@ gt(hpt_desc) %>%
   border-bottom-width: 0;
 }
 
-#xmvnndvejr .gt_subtitle {
+#dipdzmhbmc .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -147,7 +173,7 @@ gt(hpt_desc) %>%
   border-top-width: 0;
 }
 
-#xmvnndvejr .gt_heading {
+#dipdzmhbmc .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -159,13 +185,13 @@ gt(hpt_desc) %>%
   border-right-color: #D3D3D3;
 }
 
-#xmvnndvejr .gt_bottom_border {
+#dipdzmhbmc .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#xmvnndvejr .gt_col_headings {
+#dipdzmhbmc .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -180,7 +206,7 @@ gt(hpt_desc) %>%
   border-right-color: #D3D3D3;
 }
 
-#xmvnndvejr .gt_col_heading {
+#dipdzmhbmc .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -200,7 +226,7 @@ gt(hpt_desc) %>%
   overflow-x: hidden;
 }
 
-#xmvnndvejr .gt_column_spanner_outer {
+#dipdzmhbmc .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -212,15 +238,15 @@ gt(hpt_desc) %>%
   padding-right: 4px;
 }
 
-#xmvnndvejr .gt_column_spanner_outer:first-child {
+#dipdzmhbmc .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#xmvnndvejr .gt_column_spanner_outer:last-child {
+#dipdzmhbmc .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#xmvnndvejr .gt_column_spanner {
+#dipdzmhbmc .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -232,11 +258,11 @@ gt(hpt_desc) %>%
   width: 100%;
 }
 
-#xmvnndvejr .gt_spanner_row {
+#dipdzmhbmc .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#xmvnndvejr .gt_group_heading {
+#dipdzmhbmc .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -262,7 +288,7 @@ gt(hpt_desc) %>%
   text-align: left;
 }
 
-#xmvnndvejr .gt_empty_group_heading {
+#dipdzmhbmc .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -277,15 +303,15 @@ gt(hpt_desc) %>%
   vertical-align: middle;
 }
 
-#xmvnndvejr .gt_from_md > :first-child {
+#dipdzmhbmc .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#xmvnndvejr .gt_from_md > :last-child {
+#dipdzmhbmc .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#xmvnndvejr .gt_row {
+#dipdzmhbmc .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -304,7 +330,7 @@ gt(hpt_desc) %>%
   overflow-x: hidden;
 }
 
-#xmvnndvejr .gt_stub {
+#dipdzmhbmc .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -317,7 +343,7 @@ gt(hpt_desc) %>%
   padding-right: 5px;
 }
 
-#xmvnndvejr .gt_stub_row_group {
+#dipdzmhbmc .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -331,15 +357,15 @@ gt(hpt_desc) %>%
   vertical-align: top;
 }
 
-#xmvnndvejr .gt_row_group_first td {
+#dipdzmhbmc .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#xmvnndvejr .gt_row_group_first th {
+#dipdzmhbmc .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#xmvnndvejr .gt_summary_row {
+#dipdzmhbmc .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -349,16 +375,16 @@ gt(hpt_desc) %>%
   padding-right: 5px;
 }
 
-#xmvnndvejr .gt_first_summary_row {
+#dipdzmhbmc .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#xmvnndvejr .gt_first_summary_row.thick {
+#dipdzmhbmc .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#xmvnndvejr .gt_last_summary_row {
+#dipdzmhbmc .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -368,7 +394,7 @@ gt(hpt_desc) %>%
   border-bottom-color: #D3D3D3;
 }
 
-#xmvnndvejr .gt_grand_summary_row {
+#dipdzmhbmc .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -378,7 +404,7 @@ gt(hpt_desc) %>%
   padding-right: 5px;
 }
 
-#xmvnndvejr .gt_first_grand_summary_row {
+#dipdzmhbmc .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -388,7 +414,7 @@ gt(hpt_desc) %>%
   border-top-color: #D3D3D3;
 }
 
-#xmvnndvejr .gt_last_grand_summary_row_top {
+#dipdzmhbmc .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -398,11 +424,11 @@ gt(hpt_desc) %>%
   border-bottom-color: #D3D3D3;
 }
 
-#xmvnndvejr .gt_striped {
+#dipdzmhbmc .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#xmvnndvejr .gt_table_body {
+#dipdzmhbmc .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -411,7 +437,7 @@ gt(hpt_desc) %>%
   border-bottom-color: #D3D3D3;
 }
 
-#xmvnndvejr .gt_footnotes {
+#dipdzmhbmc .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -425,7 +451,7 @@ gt(hpt_desc) %>%
   border-right-color: #D3D3D3;
 }
 
-#xmvnndvejr .gt_footnote {
+#dipdzmhbmc .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -434,7 +460,7 @@ gt(hpt_desc) %>%
   padding-right: 5px;
 }
 
-#xmvnndvejr .gt_sourcenotes {
+#dipdzmhbmc .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -448,7 +474,7 @@ gt(hpt_desc) %>%
   border-right-color: #D3D3D3;
 }
 
-#xmvnndvejr .gt_sourcenote {
+#dipdzmhbmc .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -456,147 +482,619 @@ gt(hpt_desc) %>%
   padding-right: 5px;
 }
 
-#xmvnndvejr .gt_left {
+#dipdzmhbmc .gt_left {
   text-align: left;
 }
 
-#xmvnndvejr .gt_center {
+#dipdzmhbmc .gt_center {
   text-align: center;
 }
 
-#xmvnndvejr .gt_right {
+#dipdzmhbmc .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#xmvnndvejr .gt_font_normal {
+#dipdzmhbmc .gt_font_normal {
   font-weight: normal;
 }
 
-#xmvnndvejr .gt_font_bold {
+#dipdzmhbmc .gt_font_bold {
   font-weight: bold;
 }
 
-#xmvnndvejr .gt_font_italic {
+#dipdzmhbmc .gt_font_italic {
   font-style: italic;
 }
 
-#xmvnndvejr .gt_super {
+#dipdzmhbmc .gt_super {
   font-size: 65%;
 }
 
-#xmvnndvejr .gt_footnote_marks {
+#dipdzmhbmc .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#xmvnndvejr .gt_asterisk {
+#dipdzmhbmc .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#xmvnndvejr .gt_indent_1 {
+#dipdzmhbmc .gt_indent_1 {
   text-indent: 5px;
 }
 
-#xmvnndvejr .gt_indent_2 {
+#dipdzmhbmc .gt_indent_2 {
   text-indent: 10px;
 }
 
-#xmvnndvejr .gt_indent_3 {
+#dipdzmhbmc .gt_indent_3 {
   text-indent: 15px;
 }
 
-#xmvnndvejr .gt_indent_4 {
+#dipdzmhbmc .gt_indent_4 {
   text-indent: 20px;
 }
 
-#xmvnndvejr .gt_indent_5 {
+#dipdzmhbmc .gt_indent_5 {
   text-indent: 25px;
 }
 
-#xmvnndvejr .katex-display {
+#dipdzmhbmc .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#xmvnndvejr div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#dipdzmhbmc div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
 <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
   <thead>
     <tr class="gt_heading">
-      <td colspan="2" class="gt_heading gt_title gt_font_normal gt_bottom_border" style>HPT scoring variants — means (higher = better)</td>
+      <td colspan="3" class="gt_heading gt_title gt_font_normal gt_bottom_border" style>HPT scoring variants (POP reversed): means and SDs</td>
     </tr>
     
     <tr class="gt_col_headings">
       <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="Score">Score</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Mean">Mean</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="SD">SD</th>
     </tr>
   </thead>
   <tbody class="gt_table_body">
-    <tr><td headers="Score" class="gt_row gt_left">9-item (POP+ROA+CONT)</td>
-<td headers="Mean" class="gt_row gt_right">2.51</td></tr>
+    <tr><td headers="Score" class="gt_row gt_left">9-item (POP_rev + ROA + CONT)</td>
+<td headers="Mean" class="gt_row gt_right">2.84</td>
+<td headers="SD" class="gt_row gt_right">0.49</td></tr>
     <tr><td headers="Score" class="gt_row gt_left">8-item (drop ROA1)</td>
-<td headers="Mean" class="gt_row gt_right">2.47</td></tr>
-    <tr><td headers="Score" class="gt_row gt_left">6-item (drop all ROA)</td>
-<td headers="Mean" class="gt_row gt_right">2.35</td></tr>
+<td headers="Mean" class="gt_row gt_right">2.84</td>
+<td headers="SD" class="gt_row gt_right">0.50</td></tr>
+    <tr><td headers="Score" class="gt_row gt_left">6-item (no ROA)</td>
+<td headers="Mean" class="gt_row gt_right">2.86</td>
+<td headers="SD" class="gt_row gt_right">0.57</td></tr>
   </tbody>
   
 </table>
 </div>
 ```
-**Interpretation.** If the **rankings of groups/effects** are stable
-across these scores, conclusions do not hinge on ROA behaviour. If
-results flip only when ROA is included, they are **fragile** and likely
-influenced by ROA idiosyncrasies noted in earlier work.
-
-------------------------------------------------------------------------
-
 # 2. Ideology operationalisations
-
-**Why:** FR-LF defines six dimensions; we focus on **RD
-(right-authoritarian rule)** and **NS (Nazi relativisation)**. We test
-(a) **NS-only**, (b) **RD+NS combined** (FR-LF mini), and (c) **KSA-3**
-authoritarianism (total and facets).
 
 ``` r
 dat <- dat %>%
   mutate(
-    KN_total   = rowSums(across(KN1:KN6), na.rm = TRUE),        # knowledge mini-test
+    KN_total   = rowSums(across(KN1:KN6), na.rm = TRUE),
     SDR_total  = rowSums(across(starts_with("SDR")), na.rm = TRUE),
     NS_sum     = rowSums(across(NS1:NS3), na.rm = TRUE),
     RD_sum     = rowSums(across(RD1:RD3), na.rm = TRUE),
-    FRLF_mini  = NS_sum + RD_sum,                               # FR-LF logic (NS + RD)
+    FRLF_mini  = NS_sum + RD_sum,
     KSA_A      = rowSums(across(A1:A3), na.rm = TRUE),
     KSA_U      = rowSums(across(U1:U3), na.rm = TRUE),
     KSA_K      = rowSums(across(K1:K3), na.rm = TRUE),
     KSA_total  = KSA_A + KSA_U + KSA_K
   ) %>%
-  # z-standardize predictors for comparability of β
-  mutate(across(c(NS_sum, FRLF_mini, KSA_total, KN_total, SDR_total), scale, .names="{.col}_z"))
+  mutate(across(c(NS_sum, RD_sum, FRLF_mini, KSA_total, KN_total, SDR_total), scale, .names = "{.col}_z"))
+
+# Show quick reliables for predictors (descriptive only)
+ideo_desc <- dat %>% summarise(
+  KN_mean = mean(KN_total, na.rm=TRUE), KN_sd = sd(KN_total, na.rm=TRUE),
+  SDR_mean = mean(SDR_total, na.rm=TRUE), SDR_sd = sd(SDR_total, na.rm=TRUE),
+  NS_mean = mean(NS_sum, na.rm=TRUE), NS_sd = sd(NS_sum, na.rm=TRUE),
+  RD_mean = mean(RD_sum, na.rm=TRUE), RD_sd = sd(RD_sum, na.rm=TRUE),
+  KSA_mean = mean(KSA_total, na.rm=TRUE), KSA_sd = sd(KSA_total, na.rm=TRUE)
+)
+ideo_desc %>% gt() %>% tab_header(title = "Predictor summaries (raw scale units)")
 ```
 
-**Interpretation.** If **NS-only** predicts HPT similarly to (or more
-strongly than) broad authoritarianism (KSA-3), the HPT score may be
-**ideologically contaminated** by Nazi-congruent attitudes, consistent
-with our preregistered concern.
+```{=html}
+<div id="bgzewzhqre" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#bgzewzhqre table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
-------------------------------------------------------------------------
+#bgzewzhqre thead, #bgzewzhqre tbody, #bgzewzhqre tfoot, #bgzewzhqre tr, #bgzewzhqre td, #bgzewzhqre th {
+  border-style: none;
+}
 
+#bgzewzhqre p {
+  margin: 0;
+  padding: 0;
+}
+
+#bgzewzhqre .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#bgzewzhqre .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#bgzewzhqre .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#bgzewzhqre .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#bgzewzhqre .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#bgzewzhqre .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#bgzewzhqre .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#bgzewzhqre .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#bgzewzhqre .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#bgzewzhqre .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#bgzewzhqre .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#bgzewzhqre .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#bgzewzhqre .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#bgzewzhqre .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#bgzewzhqre .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#bgzewzhqre .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#bgzewzhqre .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#bgzewzhqre .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#bgzewzhqre .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#bgzewzhqre .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#bgzewzhqre .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#bgzewzhqre .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#bgzewzhqre .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#bgzewzhqre .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#bgzewzhqre .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#bgzewzhqre .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#bgzewzhqre .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#bgzewzhqre .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#bgzewzhqre .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#bgzewzhqre .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#bgzewzhqre .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#bgzewzhqre .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#bgzewzhqre .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#bgzewzhqre .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#bgzewzhqre .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#bgzewzhqre .gt_left {
+  text-align: left;
+}
+
+#bgzewzhqre .gt_center {
+  text-align: center;
+}
+
+#bgzewzhqre .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#bgzewzhqre .gt_font_normal {
+  font-weight: normal;
+}
+
+#bgzewzhqre .gt_font_bold {
+  font-weight: bold;
+}
+
+#bgzewzhqre .gt_font_italic {
+  font-style: italic;
+}
+
+#bgzewzhqre .gt_super {
+  font-size: 65%;
+}
+
+#bgzewzhqre .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#bgzewzhqre .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#bgzewzhqre .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#bgzewzhqre .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#bgzewzhqre .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#bgzewzhqre .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#bgzewzhqre .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#bgzewzhqre .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#bgzewzhqre div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    <tr class="gt_heading">
+      <td colspan="10" class="gt_heading gt_title gt_font_normal gt_bottom_border" style>Predictor summaries (raw scale units)</td>
+    </tr>
+    
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="KN_mean">KN_mean</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="KN_sd">KN_sd</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="SDR_mean">SDR_mean</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="SDR_sd">SDR_sd</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="NS_mean">NS_mean</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="NS_sd">NS_sd</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="RD_mean">RD_mean</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="RD_sd">RD_sd</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="KSA_mean">KSA_mean</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="KSA_sd">KSA_sd</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="KN_mean" class="gt_row gt_right">3.153846</td>
+<td headers="KN_sd" class="gt_row gt_right">1.657939</td>
+<td headers="SDR_mean" class="gt_row gt_right">14.61111</td>
+<td headers="SDR_sd" class="gt_row gt_right">3.828743</td>
+<td headers="NS_mean" class="gt_row gt_right">7.136752</td>
+<td headers="NS_sd" class="gt_row gt_right">2.923652</td>
+<td headers="RD_mean" class="gt_row gt_right">7.34188</td>
+<td headers="RD_sd" class="gt_row gt_right">2.939044</td>
+<td headers="KSA_mean" class="gt_row gt_right">25.13248</td>
+<td headers="KSA_sd" class="gt_row gt_right">6.821102</td></tr>
+  </tbody>
+  
+</table>
+</div>
+```
 # 3. Exclusions: knowledge outliers & extreme SDR
 
-**Rules (predefined here for sensitivity only):**
-
--   **Knowledge outliers:** drop KN totals outside the Tukey fence
-    (\[Q_1-1.5,IQR,;Q_3+1.5,IQR\]).
--   **Extreme SDR:** drop the **top 10%** of SDR totals (possible
-    "faking good"). Codebook notes SDR2--SDR4 are reversed already.
-
 ``` r
-# Compute fences
+# Tukey fence for KN; top 10% for SDR
 kn_q <- quantile(dat$KN_total, probs = c(.25, .75), na.rm = TRUE)
 kn_iqr <- kn_q[2]-kn_q[1]
 kn_low <- kn_q[1] - 1.5*kn_iqr
@@ -612,36 +1110,33 @@ dat <- dat %>%
     keep_excl= !(excl_KN | excl_SDR)
   )
 
-table_excl <- tibble(
+excl_tbl <- tibble(
   Criterion = c("Total N", "Drop KN outliers", "Drop top-10% SDR", "Kept (both rules)"),
-  N = c(nrow(dat),
-        sum(dat$excl_KN, na.rm=TRUE),
-        sum(dat$excl_SDR, na.rm=TRUE),
-        sum(dat$keep_excl, na.rm=TRUE))
-)
+  N = c(nrow(dat), sum(dat$excl_KN, na.rm=TRUE), sum(dat$excl_SDR, na.rm=TRUE), sum(dat$keep_excl, na.rm=TRUE))
+) %>%
+  mutate(Percent = scales::percent(N / first(N)))
 
-gt(table_excl) %>%
-  tab_header(title="Exclusion counts (for sensitivity runs)")
+excl_tbl %>% gt() %>% tab_header(title = "Exclusion counts and percentages")
 ```
 
 ```{=html}
-<div id="ndluvlolev" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#ndluvlolev table {
+<div id="sonondxqas" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#sonondxqas table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#ndluvlolev thead, #ndluvlolev tbody, #ndluvlolev tfoot, #ndluvlolev tr, #ndluvlolev td, #ndluvlolev th {
+#sonondxqas thead, #sonondxqas tbody, #sonondxqas tfoot, #sonondxqas tr, #sonondxqas td, #sonondxqas th {
   border-style: none;
 }
 
-#ndluvlolev p {
+#sonondxqas p {
   margin: 0;
   padding: 0;
 }
 
-#ndluvlolev .gt_table {
+#sonondxqas .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -667,12 +1162,12 @@ gt(table_excl) %>%
   border-left-color: #D3D3D3;
 }
 
-#ndluvlolev .gt_caption {
+#sonondxqas .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#ndluvlolev .gt_title {
+#sonondxqas .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -684,7 +1179,7 @@ gt(table_excl) %>%
   border-bottom-width: 0;
 }
 
-#ndluvlolev .gt_subtitle {
+#sonondxqas .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -696,7 +1191,7 @@ gt(table_excl) %>%
   border-top-width: 0;
 }
 
-#ndluvlolev .gt_heading {
+#sonondxqas .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -708,13 +1203,13 @@ gt(table_excl) %>%
   border-right-color: #D3D3D3;
 }
 
-#ndluvlolev .gt_bottom_border {
+#sonondxqas .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#ndluvlolev .gt_col_headings {
+#sonondxqas .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -729,7 +1224,7 @@ gt(table_excl) %>%
   border-right-color: #D3D3D3;
 }
 
-#ndluvlolev .gt_col_heading {
+#sonondxqas .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -749,7 +1244,7 @@ gt(table_excl) %>%
   overflow-x: hidden;
 }
 
-#ndluvlolev .gt_column_spanner_outer {
+#sonondxqas .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -761,15 +1256,15 @@ gt(table_excl) %>%
   padding-right: 4px;
 }
 
-#ndluvlolev .gt_column_spanner_outer:first-child {
+#sonondxqas .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#ndluvlolev .gt_column_spanner_outer:last-child {
+#sonondxqas .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#ndluvlolev .gt_column_spanner {
+#sonondxqas .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -781,11 +1276,11 @@ gt(table_excl) %>%
   width: 100%;
 }
 
-#ndluvlolev .gt_spanner_row {
+#sonondxqas .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#ndluvlolev .gt_group_heading {
+#sonondxqas .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -811,7 +1306,7 @@ gt(table_excl) %>%
   text-align: left;
 }
 
-#ndluvlolev .gt_empty_group_heading {
+#sonondxqas .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -826,15 +1321,15 @@ gt(table_excl) %>%
   vertical-align: middle;
 }
 
-#ndluvlolev .gt_from_md > :first-child {
+#sonondxqas .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ndluvlolev .gt_from_md > :last-child {
+#sonondxqas .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ndluvlolev .gt_row {
+#sonondxqas .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -853,7 +1348,7 @@ gt(table_excl) %>%
   overflow-x: hidden;
 }
 
-#ndluvlolev .gt_stub {
+#sonondxqas .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -866,7 +1361,7 @@ gt(table_excl) %>%
   padding-right: 5px;
 }
 
-#ndluvlolev .gt_stub_row_group {
+#sonondxqas .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -880,15 +1375,15 @@ gt(table_excl) %>%
   vertical-align: top;
 }
 
-#ndluvlolev .gt_row_group_first td {
+#sonondxqas .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#ndluvlolev .gt_row_group_first th {
+#sonondxqas .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#ndluvlolev .gt_summary_row {
+#sonondxqas .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -898,16 +1393,16 @@ gt(table_excl) %>%
   padding-right: 5px;
 }
 
-#ndluvlolev .gt_first_summary_row {
+#sonondxqas .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#ndluvlolev .gt_first_summary_row.thick {
+#sonondxqas .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#ndluvlolev .gt_last_summary_row {
+#sonondxqas .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -917,7 +1412,7 @@ gt(table_excl) %>%
   border-bottom-color: #D3D3D3;
 }
 
-#ndluvlolev .gt_grand_summary_row {
+#sonondxqas .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -927,7 +1422,7 @@ gt(table_excl) %>%
   padding-right: 5px;
 }
 
-#ndluvlolev .gt_first_grand_summary_row {
+#sonondxqas .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -937,7 +1432,7 @@ gt(table_excl) %>%
   border-top-color: #D3D3D3;
 }
 
-#ndluvlolev .gt_last_grand_summary_row_top {
+#sonondxqas .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -947,11 +1442,11 @@ gt(table_excl) %>%
   border-bottom-color: #D3D3D3;
 }
 
-#ndluvlolev .gt_striped {
+#sonondxqas .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#ndluvlolev .gt_table_body {
+#sonondxqas .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -960,7 +1455,7 @@ gt(table_excl) %>%
   border-bottom-color: #D3D3D3;
 }
 
-#ndluvlolev .gt_footnotes {
+#sonondxqas .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -974,7 +1469,7 @@ gt(table_excl) %>%
   border-right-color: #D3D3D3;
 }
 
-#ndluvlolev .gt_footnote {
+#sonondxqas .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -983,7 +1478,7 @@ gt(table_excl) %>%
   padding-right: 5px;
 }
 
-#ndluvlolev .gt_sourcenotes {
+#sonondxqas .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -997,7 +1492,7 @@ gt(table_excl) %>%
   border-right-color: #D3D3D3;
 }
 
-#ndluvlolev .gt_sourcenote {
+#sonondxqas .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1005,180 +1500,153 @@ gt(table_excl) %>%
   padding-right: 5px;
 }
 
-#ndluvlolev .gt_left {
+#sonondxqas .gt_left {
   text-align: left;
 }
 
-#ndluvlolev .gt_center {
+#sonondxqas .gt_center {
   text-align: center;
 }
 
-#ndluvlolev .gt_right {
+#sonondxqas .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ndluvlolev .gt_font_normal {
+#sonondxqas .gt_font_normal {
   font-weight: normal;
 }
 
-#ndluvlolev .gt_font_bold {
+#sonondxqas .gt_font_bold {
   font-weight: bold;
 }
 
-#ndluvlolev .gt_font_italic {
+#sonondxqas .gt_font_italic {
   font-style: italic;
 }
 
-#ndluvlolev .gt_super {
+#sonondxqas .gt_super {
   font-size: 65%;
 }
 
-#ndluvlolev .gt_footnote_marks {
+#sonondxqas .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#ndluvlolev .gt_asterisk {
+#sonondxqas .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#ndluvlolev .gt_indent_1 {
+#sonondxqas .gt_indent_1 {
   text-indent: 5px;
 }
 
-#ndluvlolev .gt_indent_2 {
+#sonondxqas .gt_indent_2 {
   text-indent: 10px;
 }
 
-#ndluvlolev .gt_indent_3 {
+#sonondxqas .gt_indent_3 {
   text-indent: 15px;
 }
 
-#ndluvlolev .gt_indent_4 {
+#sonondxqas .gt_indent_4 {
   text-indent: 20px;
 }
 
-#ndluvlolev .gt_indent_5 {
+#sonondxqas .gt_indent_5 {
   text-indent: 25px;
 }
 
-#ndluvlolev .katex-display {
+#sonondxqas .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#ndluvlolev div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#sonondxqas div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
 <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
   <thead>
     <tr class="gt_heading">
-      <td colspan="2" class="gt_heading gt_title gt_font_normal gt_bottom_border" style>Exclusion counts (for sensitivity runs)</td>
+      <td colspan="3" class="gt_heading gt_title gt_font_normal gt_bottom_border" style>Exclusion counts and percentages</td>
     </tr>
     
     <tr class="gt_col_headings">
       <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="Criterion">Criterion</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="N">N</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Percent">Percent</th>
     </tr>
   </thead>
   <tbody class="gt_table_body">
     <tr><td headers="Criterion" class="gt_row gt_left">Total N</td>
-<td headers="N" class="gt_row gt_right">184</td></tr>
+<td headers="N" class="gt_row gt_right">234</td>
+<td headers="Percent" class="gt_row gt_right">100%</td></tr>
     <tr><td headers="Criterion" class="gt_row gt_left">Drop KN outliers</td>
-<td headers="N" class="gt_row gt_right">0</td></tr>
+<td headers="N" class="gt_row gt_right">0</td>
+<td headers="Percent" class="gt_row gt_right">0%</td></tr>
     <tr><td headers="Criterion" class="gt_row gt_left">Drop top-10% SDR</td>
-<td headers="N" class="gt_row gt_right">22</td></tr>
+<td headers="N" class="gt_row gt_right">25</td>
+<td headers="Percent" class="gt_row gt_right">11%</td></tr>
     <tr><td headers="Criterion" class="gt_row gt_left">Kept (both rules)</td>
-<td headers="N" class="gt_row gt_right">162</td></tr>
+<td headers="N" class="gt_row gt_right">209</td>
+<td headers="Percent" class="gt_row gt_right">89%</td></tr>
   </tbody>
   
 </table>
 </div>
 ```
-**Interpretation.** If effects persist after dropping **low-knowledge**
-and **high-SDR** respondents, results are less likely to be artefacts of
-misunderstanding or impression management.
-
-------------------------------------------------------------------------
-
-# 4. Mixed models with class clustering & random slopes
-
-We estimate multilevel models (students nested in classes), starting
-with random intercepts and then allowing the **ideology effect to vary
-by class**. We fit the models for each **HPT scoring** and **ideology**
-variant.
+# 4. Mixed models with clustering & random slopes
 
 ``` r
 fit_models <- function(data, hpt_var, ideol_var){
-  form0 <- as.formula(glue("{hpt_var} ~ {ideol_var} + KN_total_z + SDR_total_z + (1 | class_label)"))
-  form1 <- as.formula(glue("{hpt_var} ~ {ideol_var} + KN_total_z + SDR_total_z + (1 + {ideol_var} | class_label)"))
+  form0 <- as.formula(glue(
+    "{hpt_var} ~ {ideol_var} + KN_total_z + SDR_total_z + (1 | school_id) + (1 | class_id)"
+  ))
+  form1 <- as.formula(glue(
+    "{hpt_var} ~ {ideol_var} + KN_total_z + SDR_total_z + (1 | school_id) + (1 + {ideol_var} | class_id)"
+  ))
   m0 <- lmer(form0, data = data)
-  # Try random slope; if singular, fall back to intercept-only
   m1 <- try(lmer(form1, data = data), silent = TRUE)
-  if(inherits(m1,"try-error") || isTRUE(isSingular(m1))) m1 <- NULL
-  list(m0=m0, m1=m1)
+  if (inherits(m1, "try-error") || isTRUE(isSingular(m1))) m1 <- NULL
+  list(m0 = m0, m1 = m1)
 }
 
-tidy_model <- function(m){
-  tibble(
-    term   = broom.mixed::tidy(m, effects="fixed")$term,
-    estimate = broom.mixed::tidy(m, effects="fixed")$estimate,
-    conf.low = confint(m, method="Wald")[names(fixef(m)),1],
-    conf.high= confint(m, method="Wald")[names(fixef(m)),2],
-    p.value  = broom.mixed::tidy(m, effects="fixed")$p.value,
-    R2_marg  = performance::r2_nakagawa(m)$R2_marginal,
-    R2_cond  = performance::r2_nakagawa(m)$R2_conditional
-  )
+summarise_model <- function(m){
+  fx <- broom.mixed::tidy(m, effects = "fixed", conf.int = TRUE)
+  r2 <- performance::r2_nakagawa(m)
+  fx %>% mutate(R2_marg = r2$R2_marginal, R2_cond = r2$R2_conditional)
 }
 ```
-
-### Run model grid
 
 ``` r
 hpt_vars   <- c("HPT_total_9","HPT_total_8","HPT_total_6")
 ideol_vars <- c("NS_sum_z","FRLF_mini_z","KSA_total_z")
 
 # Full sample
-grid_full <- expand_grid(hpt=hpt_vars, ideol=ideol_vars) %>%
+full_grid <- tidyr::expand_grid(hpt = hpt_vars, ideol = ideol_vars) %>%
   mutate(fits = map2(hpt, ideol, ~fit_models(dat %>% filter(keep_all), .x, .y)),
          m0   = map(fits, "m0"),
          m1   = map(fits, "m1"))
 
-# Exclusion sample (drop KN outliers & top-10% SDR)
-grid_excl <- expand_grid(hpt=hpt_vars, ideol=ideol_vars) %>%
+# Exclusion sample
+excl_grid <- tidyr::expand_grid(hpt = hpt_vars, ideol = ideol_vars) %>%
   mutate(fits = map2(hpt, ideol, ~fit_models(dat %>% filter(keep_excl), .x, .y)),
          m0   = map(fits, "m0"),
          m1   = map(fits, "m1"))
 ```
 
-### Summaries (key coefficient = ideology)
-
 ``` r
-summarise_grid <- function(grid, label){
-  out0 <- grid %>%
-    mutate(tidy0 = map(m0, tidy_model)) %>%
-    unnest(tidy0) %>%
-    filter(term == "(Intercept)" | str_detect(term, "NS_sum_z|FRLF_mini_z|KSA_total_z")) %>%
-    select(hpt, ideol, term, estimate, conf.low, conf.high, p.value, R2_marg, R2_cond) %>%
-    mutate(model = "RI") # random intercept
-
-  out1 <- grid %>%
-    filter(!map_lgl(m1, is.null)) %>%
-    mutate(tidy1 = map(m1, tidy_model)) %>%
-    unnest(tidy1) %>%
-    filter(term == "(Intercept)" | str_detect(term, "NS_sum_z|FRLF_mini_z|KSA_total_z")) %>%
-    select(hpt, ideol, term, estimate, conf.low, conf.high, p.value, R2_marg, R2_cond) %>%
-    mutate(model = "RS") # random slope (ideology)
-
+collect_table <- function(grid, label){
+  out0 <- grid %>% mutate(t0 = map(m0, summarise_model)) %>% unnest(t0) %>% mutate(model = "RI")
+  out1 <- grid %>% filter(!map_lgl(m1, is.null)) %>% mutate(t1 = map(m1, summarise_model)) %>% unnest(t1) %>% mutate(model = "RS")
   bind_rows(out0, out1) %>% mutate(sample = label)
 }
 
-tab_full <- summarise_grid(grid_full, "Full")
-tab_excl <- summarise_grid(grid_excl, "Exclusions applied")
+tab_full <- collect_table(full_grid, "Full")
 ```
 
     ## Random effect variances not available. Returned R2 does not account for random effects.
@@ -1190,15 +1658,10 @@ tab_excl <- summarise_grid(grid_excl, "Exclusions applied")
     ## Random effect variances not available. Returned R2 does not account for random effects.
     ## Random effect variances not available. Returned R2 does not account for random effects.
     ## Random effect variances not available. Returned R2 does not account for random effects.
-    ## Random effect variances not available. Returned R2 does not account for random effects.
-    ## Random effect variances not available. Returned R2 does not account for random effects.
-    ## Random effect variances not available. Returned R2 does not account for random effects.
-    ## Random effect variances not available. Returned R2 does not account for random effects.
-    ## Random effect variances not available. Returned R2 does not account for random effects.
 
-    ## Warning: There were 14 warnings in `mutate()`.
+    ## Warning: There were 9 warnings in `mutate()`.
     ## The first warning was:
-    ## ℹ In argument: `tidy0 = map(m0, tidy_model)`.
+    ## ℹ In argument: `t0 = map(m0, summarise_model)`.
     ## Caused by warning:
     ## ! Can't compute random effect variances. Some variance components equal
     ##   zero. Your model may suffer from singularity (see `?lme4::isSingular`
@@ -1206,14 +1669,12 @@ tab_excl <- summarise_grid(grid_excl, "Exclusions applied")
     ##   Decrease the `tolerance` level to force the calculation of random effect
     ##   variances, or impose priors on your random effects parameters (using
     ##   packages like `brms` or `glmmTMB`).
-    ## ℹ Run `dplyr::last_dplyr_warnings()` to see the 13 remaining warnings.
+    ## ℹ Run `dplyr::last_dplyr_warnings()` to see the 8 remaining warnings.
 
     ## Random effect variances not available. Returned R2 does not account for random effects.
-    ## Random effect variances not available. Returned R2 does not account for random effects.
 
-    ## Warning: There were 2 warnings in `mutate()`.
-    ## The first warning was:
-    ## ℹ In argument: `tidy1 = map(m1, tidy_model)`.
+    ## Warning: There was 1 warning in `mutate()`.
+    ## ℹ In argument: `t1 = map(m1, summarise_model)`.
     ## Caused by warning:
     ## ! Can't compute random effect variances. Some variance components equal
     ##   zero. Your model may suffer from singularity (see `?lme4::isSingular`
@@ -1221,48 +1682,94 @@ tab_excl <- summarise_grid(grid_excl, "Exclusions applied")
     ##   Decrease the `tolerance` level to force the calculation of random effect
     ##   variances, or impose priors on your random effects parameters (using
     ##   packages like `brms` or `glmmTMB`).
-    ## ℹ Run `dplyr::last_dplyr_warnings()` to see the 1 remaining warning.
 
 ``` r
+tab_excl <- collect_table(excl_grid, "Exclusions applied")
+```
+
+    ## Random effect variances not available. Returned R2 does not account for random effects.
+    ## Random effect variances not available. Returned R2 does not account for random effects.
+    ## Random effect variances not available. Returned R2 does not account for random effects.
+    ## Random effect variances not available. Returned R2 does not account for random effects.
+    ## Random effect variances not available. Returned R2 does not account for random effects.
+    ## Random effect variances not available. Returned R2 does not account for random effects.
+    ## Random effect variances not available. Returned R2 does not account for random effects.
+    ## Random effect variances not available. Returned R2 does not account for random effects.
+    ## Random effect variances not available. Returned R2 does not account for random effects.
+
+    ## Warning: There were 9 warnings in `mutate()`.
+    ## The first warning was:
+    ## ℹ In argument: `t0 = map(m0, summarise_model)`.
+    ## Caused by warning:
+    ## ! Can't compute random effect variances. Some variance components equal
+    ##   zero. Your model may suffer from singularity (see `?lme4::isSingular`
+    ##   and `?performance::check_singularity`).
+    ##   Decrease the `tolerance` level to force the calculation of random effect
+    ##   variances, or impose priors on your random effects parameters (using
+    ##   packages like `brms` or `glmmTMB`).
+    ## ℹ Run `dplyr::last_dplyr_warnings()` to see the 8 remaining warnings.
+
+    ## Random effect variances not available. Returned R2 does not account for random effects.
+    ## Random effect variances not available. Returned R2 does not account for random effects.
+    ## Random effect variances not available. Returned R2 does not account for random effects.
+
+    ## Warning: There were 3 warnings in `mutate()`.
+    ## The first warning was:
+    ## ℹ In argument: `t1 = map(m1, summarise_model)`.
+    ## Caused by warning:
+    ## ! Can't compute random effect variances. Some variance components equal
+    ##   zero. Your model may suffer from singularity (see `?lme4::isSingular`
+    ##   and `?performance::check_singularity`).
+    ##   Decrease the `tolerance` level to force the calculation of random effect
+    ##   variances, or impose priors on your random effects parameters (using
+    ##   packages like `brms` or `glmmTMB`).
+    ## ℹ Run `dplyr::last_dplyr_warnings()` to see the 2 remaining warnings.
+
+``` r
+# Keep only ideology terms + intercept
 tab_models <- bind_rows(tab_full, tab_excl) %>%
-  mutate(ideol = recode(ideol,
-                        NS_sum_z="NS (z)", FRLF_mini_z="FR-LF: RD+NS (z)", KSA_total_z="KSA-3 total (z)"),
-         hpt   = recode(hpt,
-                        HPT_total_9="HPT 9-item", HPT_total_8="HPT 8-item (drop ROA1)",
-                        HPT_total_6="HPT 6-item (no ROA)")) %>%
+  filter(term %in% c("(Intercept)", "NS_sum_z", "FRLF_mini_z", "KSA_total_z")) %>%
+  mutate(
+    ideol = recode(term, NS_sum_z = "NS (z)", FRLF_mini_z = "FR-LF: RD+NS (z)", KSA_total_z = "KSA-3 total (z)", `(Intercept)` = "(Intercept)"),
+    hpt = recode(hpt,
+      HPT_total_9 = "HPT 9-item (POP_rev + ROA + CONT)",
+      HPT_total_8 = "HPT 8-item (drop ROA1)",
+      HPT_total_6 = "HPT 6-item (no ROA)"
+    )
+  ) %>%
+  select(sample, hpt, model, ideol, estimate, conf.low, conf.high, p.value, R2_marg, R2_cond) %>%
   arrange(sample, hpt, ideol, model)
-```
 
-``` r
-tab_models %>%
+# Display as a compact table
+(tab_models %>%
   mutate(across(c(estimate, conf.low, conf.high, R2_marg, R2_cond), ~round(., 3)),
          p.value = signif(p.value, 3)) %>%
   gt() %>%
-  tab_header(title="Multilevel models: ideology → HPT (controls: KN, SDR; class clustered)") %>%
+  tab_header(title = "Multilevel models: ideology → HPT (POP reversed; controls: KN, SDR; school + class clustering)") %>%
   tab_spanner(label = "Effect (β and 95% CI)", columns = c(estimate, conf.low, conf.high)) %>%
-  cols_label(sample="Sample", hpt="HPT score", ideol="Ideology", model="Model",
-             estimate="β", conf.low="CI low", conf.high="CI high",
-             p.value="p", R2_marg="R² (marg.)", R2_cond="R² (cond.)")
+  cols_label(sample="Sample", hpt="HPT score", model="Model", ideol="Predictor",
+             estimate="β", conf.low="CI low", conf.high="CI high", p.value="p",
+             R2_marg="R² (marg.)", R2_cond="R² (cond.)"))
 ```
 
 ```{=html}
-<div id="iwifwlkfba" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#iwifwlkfba table {
+<div id="nimheosvqu" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#nimheosvqu table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#iwifwlkfba thead, #iwifwlkfba tbody, #iwifwlkfba tfoot, #iwifwlkfba tr, #iwifwlkfba td, #iwifwlkfba th {
+#nimheosvqu thead, #nimheosvqu tbody, #nimheosvqu tfoot, #nimheosvqu tr, #nimheosvqu td, #nimheosvqu th {
   border-style: none;
 }
 
-#iwifwlkfba p {
+#nimheosvqu p {
   margin: 0;
   padding: 0;
 }
 
-#iwifwlkfba .gt_table {
+#nimheosvqu .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1288,12 +1795,12 @@ tab_models %>%
   border-left-color: #D3D3D3;
 }
 
-#iwifwlkfba .gt_caption {
+#nimheosvqu .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#iwifwlkfba .gt_title {
+#nimheosvqu .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1305,7 +1812,7 @@ tab_models %>%
   border-bottom-width: 0;
 }
 
-#iwifwlkfba .gt_subtitle {
+#nimheosvqu .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1317,7 +1824,7 @@ tab_models %>%
   border-top-width: 0;
 }
 
-#iwifwlkfba .gt_heading {
+#nimheosvqu .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1329,13 +1836,13 @@ tab_models %>%
   border-right-color: #D3D3D3;
 }
 
-#iwifwlkfba .gt_bottom_border {
+#nimheosvqu .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#iwifwlkfba .gt_col_headings {
+#nimheosvqu .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1350,7 +1857,7 @@ tab_models %>%
   border-right-color: #D3D3D3;
 }
 
-#iwifwlkfba .gt_col_heading {
+#nimheosvqu .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1370,7 +1877,7 @@ tab_models %>%
   overflow-x: hidden;
 }
 
-#iwifwlkfba .gt_column_spanner_outer {
+#nimheosvqu .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1382,15 +1889,15 @@ tab_models %>%
   padding-right: 4px;
 }
 
-#iwifwlkfba .gt_column_spanner_outer:first-child {
+#nimheosvqu .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#iwifwlkfba .gt_column_spanner_outer:last-child {
+#nimheosvqu .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#iwifwlkfba .gt_column_spanner {
+#nimheosvqu .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1402,11 +1909,11 @@ tab_models %>%
   width: 100%;
 }
 
-#iwifwlkfba .gt_spanner_row {
+#nimheosvqu .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#iwifwlkfba .gt_group_heading {
+#nimheosvqu .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1432,7 +1939,7 @@ tab_models %>%
   text-align: left;
 }
 
-#iwifwlkfba .gt_empty_group_heading {
+#nimheosvqu .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1447,15 +1954,15 @@ tab_models %>%
   vertical-align: middle;
 }
 
-#iwifwlkfba .gt_from_md > :first-child {
+#nimheosvqu .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#iwifwlkfba .gt_from_md > :last-child {
+#nimheosvqu .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#iwifwlkfba .gt_row {
+#nimheosvqu .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1474,7 +1981,7 @@ tab_models %>%
   overflow-x: hidden;
 }
 
-#iwifwlkfba .gt_stub {
+#nimheosvqu .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1487,7 +1994,7 @@ tab_models %>%
   padding-right: 5px;
 }
 
-#iwifwlkfba .gt_stub_row_group {
+#nimheosvqu .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1501,15 +2008,15 @@ tab_models %>%
   vertical-align: top;
 }
 
-#iwifwlkfba .gt_row_group_first td {
+#nimheosvqu .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#iwifwlkfba .gt_row_group_first th {
+#nimheosvqu .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#iwifwlkfba .gt_summary_row {
+#nimheosvqu .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1519,16 +2026,16 @@ tab_models %>%
   padding-right: 5px;
 }
 
-#iwifwlkfba .gt_first_summary_row {
+#nimheosvqu .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#iwifwlkfba .gt_first_summary_row.thick {
+#nimheosvqu .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#iwifwlkfba .gt_last_summary_row {
+#nimheosvqu .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1538,7 +2045,7 @@ tab_models %>%
   border-bottom-color: #D3D3D3;
 }
 
-#iwifwlkfba .gt_grand_summary_row {
+#nimheosvqu .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1548,7 +2055,7 @@ tab_models %>%
   padding-right: 5px;
 }
 
-#iwifwlkfba .gt_first_grand_summary_row {
+#nimheosvqu .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1558,7 +2065,7 @@ tab_models %>%
   border-top-color: #D3D3D3;
 }
 
-#iwifwlkfba .gt_last_grand_summary_row_top {
+#nimheosvqu .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1568,11 +2075,11 @@ tab_models %>%
   border-bottom-color: #D3D3D3;
 }
 
-#iwifwlkfba .gt_striped {
+#nimheosvqu .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#iwifwlkfba .gt_table_body {
+#nimheosvqu .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1581,7 +2088,7 @@ tab_models %>%
   border-bottom-color: #D3D3D3;
 }
 
-#iwifwlkfba .gt_footnotes {
+#nimheosvqu .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1595,7 +2102,7 @@ tab_models %>%
   border-right-color: #D3D3D3;
 }
 
-#iwifwlkfba .gt_footnote {
+#nimheosvqu .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1604,7 +2111,7 @@ tab_models %>%
   padding-right: 5px;
 }
 
-#iwifwlkfba .gt_sourcenotes {
+#nimheosvqu .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1618,7 +2125,7 @@ tab_models %>%
   border-right-color: #D3D3D3;
 }
 
-#iwifwlkfba .gt_sourcenote {
+#nimheosvqu .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1626,93 +2133,92 @@ tab_models %>%
   padding-right: 5px;
 }
 
-#iwifwlkfba .gt_left {
+#nimheosvqu .gt_left {
   text-align: left;
 }
 
-#iwifwlkfba .gt_center {
+#nimheosvqu .gt_center {
   text-align: center;
 }
 
-#iwifwlkfba .gt_right {
+#nimheosvqu .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#iwifwlkfba .gt_font_normal {
+#nimheosvqu .gt_font_normal {
   font-weight: normal;
 }
 
-#iwifwlkfba .gt_font_bold {
+#nimheosvqu .gt_font_bold {
   font-weight: bold;
 }
 
-#iwifwlkfba .gt_font_italic {
+#nimheosvqu .gt_font_italic {
   font-style: italic;
 }
 
-#iwifwlkfba .gt_super {
+#nimheosvqu .gt_super {
   font-size: 65%;
 }
 
-#iwifwlkfba .gt_footnote_marks {
+#nimheosvqu .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#iwifwlkfba .gt_asterisk {
+#nimheosvqu .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#iwifwlkfba .gt_indent_1 {
+#nimheosvqu .gt_indent_1 {
   text-indent: 5px;
 }
 
-#iwifwlkfba .gt_indent_2 {
+#nimheosvqu .gt_indent_2 {
   text-indent: 10px;
 }
 
-#iwifwlkfba .gt_indent_3 {
+#nimheosvqu .gt_indent_3 {
   text-indent: 15px;
 }
 
-#iwifwlkfba .gt_indent_4 {
+#nimheosvqu .gt_indent_4 {
   text-indent: 20px;
 }
 
-#iwifwlkfba .gt_indent_5 {
+#nimheosvqu .gt_indent_5 {
   text-indent: 25px;
 }
 
-#iwifwlkfba .katex-display {
+#nimheosvqu .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#iwifwlkfba div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#nimheosvqu div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
 <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
   <thead>
     <tr class="gt_heading">
-      <td colspan="11" class="gt_heading gt_title gt_font_normal gt_bottom_border" style>Multilevel models: ideology → HPT (controls: KN, SDR; class clustered)</td>
+      <td colspan="10" class="gt_heading gt_title gt_font_normal gt_bottom_border" style>Multilevel models: ideology → HPT (POP reversed; controls: KN, SDR; school + class clustering)</td>
     </tr>
     
     <tr class="gt_col_headings gt_spanner_row">
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" scope="col" id="sample">Sample</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" scope="col" id="hpt">HPT score</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" scope="col" id="ideol">Ideology</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" scope="col" id="term">term</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" scope="col" id="model">Model</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" scope="col" id="ideol">Predictor</th>
       <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="3" scope="colgroup" id="Effect (β and 95% CI)">
         <div class="gt_column_spanner">Effect (β and 95% CI)</div>
       </th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="2" colspan="1" scope="col" id="p.value">p</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="2" colspan="1" scope="col" id="R2_marg">R² (marg.)</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="2" colspan="1" scope="col" id="R2_cond">R² (cond.)</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" scope="col" id="model">Model</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" scope="col" id="sample">Sample</th>
     </tr>
     <tr class="gt_col_headings">
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="estimate">β</th>
@@ -1721,565 +2227,482 @@ tab_models %>%
     </tr>
   </thead>
   <tbody class="gt_table_body">
-    <tr><td headers="hpt" class="gt_row gt_left">HPT 6-item (no ROA)</td>
-<td headers="ideol" class="gt_row gt_left">FR-LF: RD+NS (z)</td>
-<td headers="term" class="gt_row gt_left">(Intercept)</td>
-<td headers="estimate" class="gt_row gt_right">2.339</td>
-<td headers="conf.low" class="gt_row gt_right">2.272</td>
-<td headers="conf.high" class="gt_row gt_right">2.407</td>
-<td headers="p.value" class="gt_row gt_right">4.71e-14</td>
-<td headers="R2_marg" class="gt_row gt_right">0.008</td>
-<td headers="R2_cond" class="gt_row gt_right">0.012</td>
+    <tr><td headers="sample" class="gt_row gt_left">Exclusions applied</td>
+<td headers="hpt" class="gt_row gt_left">HPT 6-item (no ROA)</td>
 <td headers="model" class="gt_row gt_left">RI</td>
-<td headers="sample" class="gt_row gt_left">Exclusions applied</td></tr>
-    <tr><td headers="hpt" class="gt_row gt_left">HPT 6-item (no ROA)</td>
-<td headers="ideol" class="gt_row gt_left">FR-LF: RD+NS (z)</td>
-<td headers="term" class="gt_row gt_left">FRLF_mini_z</td>
-<td headers="estimate" class="gt_row gt_right">0.012</td>
-<td headers="conf.low" class="gt_row gt_right">-0.056</td>
-<td headers="conf.high" class="gt_row gt_right">0.081</td>
-<td headers="p.value" class="gt_row gt_right">7.24e-01</td>
-<td headers="R2_marg" class="gt_row gt_right">0.008</td>
-<td headers="R2_cond" class="gt_row gt_right">0.012</td>
+<td headers="ideol" class="gt_row gt_left">(Intercept)</td>
+<td headers="estimate" class="gt_row gt_right">2.840</td>
+<td headers="conf.low" class="gt_row gt_right">2.688</td>
+<td headers="conf.high" class="gt_row gt_right">2.991</td>
+<td headers="p.value" class="gt_row gt_right">1.47e-07</td>
+<td headers="R2_marg" class="gt_row gt_right">0.106</td>
+<td headers="R2_cond" class="gt_row gt_right">NA</td></tr>
+    <tr><td headers="sample" class="gt_row gt_left">Exclusions applied</td>
+<td headers="hpt" class="gt_row gt_left">HPT 6-item (no ROA)</td>
 <td headers="model" class="gt_row gt_left">RI</td>
-<td headers="sample" class="gt_row gt_left">Exclusions applied</td></tr>
-    <tr><td headers="hpt" class="gt_row gt_left">HPT 6-item (no ROA)</td>
-<td headers="ideol" class="gt_row gt_left">FR-LF: RD+NS (z)</td>
-<td headers="term" class="gt_row gt_left">(Intercept)</td>
-<td headers="estimate" class="gt_row gt_right">2.335</td>
-<td headers="conf.low" class="gt_row gt_right">2.270</td>
-<td headers="conf.high" class="gt_row gt_right">2.401</td>
-<td headers="p.value" class="gt_row gt_right">2.56e-117</td>
-<td headers="R2_marg" class="gt_row gt_right">0.009</td>
-<td headers="R2_cond" class="gt_row gt_right">NA</td>
+<td headers="ideol" class="gt_row gt_left">(Intercept)</td>
+<td headers="estimate" class="gt_row gt_right">2.840</td>
+<td headers="conf.low" class="gt_row gt_right">2.691</td>
+<td headers="conf.high" class="gt_row gt_right">2.990</td>
+<td headers="p.value" class="gt_row gt_right">1.69e-07</td>
+<td headers="R2_marg" class="gt_row gt_right">0.105</td>
+<td headers="R2_cond" class="gt_row gt_right">NA</td></tr>
+    <tr><td headers="sample" class="gt_row gt_left">Exclusions applied</td>
+<td headers="hpt" class="gt_row gt_left">HPT 6-item (no ROA)</td>
+<td headers="model" class="gt_row gt_left">RI</td>
+<td headers="ideol" class="gt_row gt_left">(Intercept)</td>
+<td headers="estimate" class="gt_row gt_right">2.842</td>
+<td headers="conf.low" class="gt_row gt_right">2.694</td>
+<td headers="conf.high" class="gt_row gt_right">2.989</td>
+<td headers="p.value" class="gt_row gt_right">1.18e-07</td>
+<td headers="R2_marg" class="gt_row gt_right">0.108</td>
+<td headers="R2_cond" class="gt_row gt_right">NA</td></tr>
+    <tr><td headers="sample" class="gt_row gt_left">Exclusions applied</td>
+<td headers="hpt" class="gt_row gt_left">HPT 6-item (no ROA)</td>
 <td headers="model" class="gt_row gt_left">RS</td>
-<td headers="sample" class="gt_row gt_left">Exclusions applied</td></tr>
-    <tr><td headers="hpt" class="gt_row gt_left">HPT 6-item (no ROA)</td>
-<td headers="ideol" class="gt_row gt_left">FR-LF: RD+NS (z)</td>
-<td headers="term" class="gt_row gt_left">FRLF_mini_z</td>
-<td headers="estimate" class="gt_row gt_right">0.005</td>
-<td headers="conf.low" class="gt_row gt_right">-0.086</td>
-<td headers="conf.high" class="gt_row gt_right">0.096</td>
-<td headers="p.value" class="gt_row gt_right">9.22e-01</td>
-<td headers="R2_marg" class="gt_row gt_right">0.009</td>
-<td headers="R2_cond" class="gt_row gt_right">NA</td>
+<td headers="ideol" class="gt_row gt_left">(Intercept)</td>
+<td headers="estimate" class="gt_row gt_right">2.835</td>
+<td headers="conf.low" class="gt_row gt_right">2.682</td>
+<td headers="conf.high" class="gt_row gt_right">2.989</td>
+<td headers="p.value" class="gt_row gt_right">9.91e-08</td>
+<td headers="R2_marg" class="gt_row gt_right">0.108</td>
+<td headers="R2_cond" class="gt_row gt_right">NA</td></tr>
+    <tr><td headers="sample" class="gt_row gt_left">Exclusions applied</td>
+<td headers="hpt" class="gt_row gt_left">HPT 6-item (no ROA)</td>
 <td headers="model" class="gt_row gt_left">RS</td>
-<td headers="sample" class="gt_row gt_left">Exclusions applied</td></tr>
-    <tr><td headers="hpt" class="gt_row gt_left">HPT 6-item (no ROA)</td>
-<td headers="ideol" class="gt_row gt_left">KSA-3 total (z)</td>
-<td headers="term" class="gt_row gt_left">(Intercept)</td>
-<td headers="estimate" class="gt_row gt_right">2.335</td>
-<td headers="conf.low" class="gt_row gt_right">2.271</td>
-<td headers="conf.high" class="gt_row gt_right">2.400</td>
-<td headers="p.value" class="gt_row gt_right">3.04e-120</td>
-<td headers="R2_marg" class="gt_row gt_right">0.034</td>
-<td headers="R2_cond" class="gt_row gt_right">NA</td>
+<td headers="ideol" class="gt_row gt_left">(Intercept)</td>
+<td headers="estimate" class="gt_row gt_right">2.824</td>
+<td headers="conf.low" class="gt_row gt_right">2.666</td>
+<td headers="conf.high" class="gt_row gt_right">2.982</td>
+<td headers="p.value" class="gt_row gt_right">9.66e-08</td>
+<td headers="R2_marg" class="gt_row gt_right">0.105</td>
+<td headers="R2_cond" class="gt_row gt_right">NA</td></tr>
+    <tr><td headers="sample" class="gt_row gt_left">Exclusions applied</td>
+<td headers="hpt" class="gt_row gt_left">HPT 6-item (no ROA)</td>
 <td headers="model" class="gt_row gt_left">RI</td>
-<td headers="sample" class="gt_row gt_left">Exclusions applied</td></tr>
-    <tr><td headers="hpt" class="gt_row gt_left">HPT 6-item (no ROA)</td>
-<td headers="ideol" class="gt_row gt_left">KSA-3 total (z)</td>
-<td headers="term" class="gt_row gt_left">KSA_total_z</td>
-<td headers="estimate" class="gt_row gt_right">0.073</td>
-<td headers="conf.low" class="gt_row gt_right">0.004</td>
-<td headers="conf.high" class="gt_row gt_right">0.142</td>
-<td headers="p.value" class="gt_row gt_right">3.92e-02</td>
-<td headers="R2_marg" class="gt_row gt_right">0.034</td>
-<td headers="R2_cond" class="gt_row gt_right">NA</td>
-<td headers="model" class="gt_row gt_left">RI</td>
-<td headers="sample" class="gt_row gt_left">Exclusions applied</td></tr>
-    <tr><td headers="hpt" class="gt_row gt_left">HPT 6-item (no ROA)</td>
-<td headers="ideol" class="gt_row gt_left">NS (z)</td>
-<td headers="term" class="gt_row gt_left">(Intercept)</td>
-<td headers="estimate" class="gt_row gt_right">2.339</td>
-<td headers="conf.low" class="gt_row gt_right">2.273</td>
-<td headers="conf.high" class="gt_row gt_right">2.404</td>
-<td headers="p.value" class="gt_row gt_right">6.89e-15</td>
-<td headers="R2_marg" class="gt_row gt_right">0.013</td>
-<td headers="R2_cond" class="gt_row gt_right">0.013</td>
-<td headers="model" class="gt_row gt_left">RI</td>
-<td headers="sample" class="gt_row gt_left">Exclusions applied</td></tr>
-    <tr><td headers="hpt" class="gt_row gt_left">HPT 6-item (no ROA)</td>
-<td headers="ideol" class="gt_row gt_left">NS (z)</td>
-<td headers="term" class="gt_row gt_left">NS_sum_z</td>
-<td headers="estimate" class="gt_row gt_right">0.033</td>
-<td headers="conf.low" class="gt_row gt_right">-0.036</td>
-<td headers="conf.high" class="gt_row gt_right">0.101</td>
-<td headers="p.value" class="gt_row gt_right">3.52e-01</td>
-<td headers="R2_marg" class="gt_row gt_right">0.013</td>
-<td headers="R2_cond" class="gt_row gt_right">0.013</td>
-<td headers="model" class="gt_row gt_left">RI</td>
-<td headers="sample" class="gt_row gt_left">Exclusions applied</td></tr>
-    <tr><td headers="hpt" class="gt_row gt_left">HPT 8-item (drop ROA1)</td>
 <td headers="ideol" class="gt_row gt_left">FR-LF: RD+NS (z)</td>
-<td headers="term" class="gt_row gt_left">(Intercept)</td>
-<td headers="estimate" class="gt_row gt_right">2.457</td>
-<td headers="conf.low" class="gt_row gt_right">2.394</td>
-<td headers="conf.high" class="gt_row gt_right">2.520</td>
-<td headers="p.value" class="gt_row gt_right">4.91e-125</td>
-<td headers="R2_marg" class="gt_row gt_right">0.001</td>
-<td headers="R2_cond" class="gt_row gt_right">NA</td>
-<td headers="model" class="gt_row gt_left">RI</td>
-<td headers="sample" class="gt_row gt_left">Exclusions applied</td></tr>
-    <tr><td headers="hpt" class="gt_row gt_left">HPT 8-item (drop ROA1)</td>
-<td headers="ideol" class="gt_row gt_left">FR-LF: RD+NS (z)</td>
-<td headers="term" class="gt_row gt_left">FRLF_mini_z</td>
-<td headers="estimate" class="gt_row gt_right">-0.004</td>
-<td headers="conf.low" class="gt_row gt_right">-0.070</td>
-<td headers="conf.high" class="gt_row gt_right">0.062</td>
-<td headers="p.value" class="gt_row gt_right">9.02e-01</td>
-<td headers="R2_marg" class="gt_row gt_right">0.001</td>
-<td headers="R2_cond" class="gt_row gt_right">NA</td>
-<td headers="model" class="gt_row gt_left">RI</td>
-<td headers="sample" class="gt_row gt_left">Exclusions applied</td></tr>
-    <tr><td headers="hpt" class="gt_row gt_left">HPT 8-item (drop ROA1)</td>
-<td headers="ideol" class="gt_row gt_left">KSA-3 total (z)</td>
-<td headers="term" class="gt_row gt_left">(Intercept)</td>
-<td headers="estimate" class="gt_row gt_right">2.454</td>
-<td headers="conf.low" class="gt_row gt_right">2.391</td>
-<td headers="conf.high" class="gt_row gt_right">2.516</td>
-<td headers="p.value" class="gt_row gt_right">2.19e-125</td>
-<td headers="R2_marg" class="gt_row gt_right">0.015</td>
-<td headers="R2_cond" class="gt_row gt_right">NA</td>
-<td headers="model" class="gt_row gt_left">RI</td>
-<td headers="sample" class="gt_row gt_left">Exclusions applied</td></tr>
-    <tr><td headers="hpt" class="gt_row gt_left">HPT 8-item (drop ROA1)</td>
-<td headers="ideol" class="gt_row gt_left">KSA-3 total (z)</td>
-<td headers="term" class="gt_row gt_left">KSA_total_z</td>
-<td headers="estimate" class="gt_row gt_right">0.052</td>
-<td headers="conf.low" class="gt_row gt_right">-0.015</td>
-<td headers="conf.high" class="gt_row gt_right">0.119</td>
-<td headers="p.value" class="gt_row gt_right">1.31e-01</td>
-<td headers="R2_marg" class="gt_row gt_right">0.015</td>
-<td headers="R2_cond" class="gt_row gt_right">NA</td>
-<td headers="model" class="gt_row gt_left">RI</td>
-<td headers="sample" class="gt_row gt_left">Exclusions applied</td></tr>
-    <tr><td headers="hpt" class="gt_row gt_left">HPT 8-item (drop ROA1)</td>
-<td headers="ideol" class="gt_row gt_left">NS (z)</td>
-<td headers="term" class="gt_row gt_left">(Intercept)</td>
-<td headers="estimate" class="gt_row gt_right">2.457</td>
-<td headers="conf.low" class="gt_row gt_right">2.394</td>
-<td headers="conf.high" class="gt_row gt_right">2.520</td>
-<td headers="p.value" class="gt_row gt_right">4.47e-125</td>
-<td headers="R2_marg" class="gt_row gt_right">0.001</td>
-<td headers="R2_cond" class="gt_row gt_right">NA</td>
-<td headers="model" class="gt_row gt_left">RI</td>
-<td headers="sample" class="gt_row gt_left">Exclusions applied</td></tr>
-    <tr><td headers="hpt" class="gt_row gt_left">HPT 8-item (drop ROA1)</td>
-<td headers="ideol" class="gt_row gt_left">NS (z)</td>
-<td headers="term" class="gt_row gt_left">NS_sum_z</td>
-<td headers="estimate" class="gt_row gt_right">0.008</td>
-<td headers="conf.low" class="gt_row gt_right">-0.058</td>
-<td headers="conf.high" class="gt_row gt_right">0.075</td>
-<td headers="p.value" class="gt_row gt_right">8.09e-01</td>
-<td headers="R2_marg" class="gt_row gt_right">0.001</td>
-<td headers="R2_cond" class="gt_row gt_right">NA</td>
-<td headers="model" class="gt_row gt_left">RI</td>
-<td headers="sample" class="gt_row gt_left">Exclusions applied</td></tr>
-    <tr><td headers="hpt" class="gt_row gt_left">HPT 9-item</td>
-<td headers="ideol" class="gt_row gt_left">FR-LF: RD+NS (z)</td>
-<td headers="term" class="gt_row gt_left">(Intercept)</td>
-<td headers="estimate" class="gt_row gt_right">2.492</td>
-<td headers="conf.low" class="gt_row gt_right">2.428</td>
-<td headers="conf.high" class="gt_row gt_right">2.556</td>
-<td headers="p.value" class="gt_row gt_right">4.00e-125</td>
-<td headers="R2_marg" class="gt_row gt_right">0.007</td>
-<td headers="R2_cond" class="gt_row gt_right">NA</td>
-<td headers="model" class="gt_row gt_left">RI</td>
-<td headers="sample" class="gt_row gt_left">Exclusions applied</td></tr>
-    <tr><td headers="hpt" class="gt_row gt_left">HPT 9-item</td>
-<td headers="ideol" class="gt_row gt_left">FR-LF: RD+NS (z)</td>
-<td headers="term" class="gt_row gt_left">FRLF_mini_z</td>
-<td headers="estimate" class="gt_row gt_right">-0.006</td>
-<td headers="conf.low" class="gt_row gt_right">-0.073</td>
-<td headers="conf.high" class="gt_row gt_right">0.060</td>
-<td headers="p.value" class="gt_row gt_right">8.53e-01</td>
-<td headers="R2_marg" class="gt_row gt_right">0.007</td>
-<td headers="R2_cond" class="gt_row gt_right">NA</td>
-<td headers="model" class="gt_row gt_left">RI</td>
-<td headers="sample" class="gt_row gt_left">Exclusions applied</td></tr>
-    <tr><td headers="hpt" class="gt_row gt_left">HPT 9-item</td>
-<td headers="ideol" class="gt_row gt_left">KSA-3 total (z)</td>
-<td headers="term" class="gt_row gt_left">(Intercept)</td>
-<td headers="estimate" class="gt_row gt_right">2.488</td>
-<td headers="conf.low" class="gt_row gt_right">2.425</td>
-<td headers="conf.high" class="gt_row gt_right">2.551</td>
-<td headers="p.value" class="gt_row gt_right">1.52e-125</td>
-<td headers="R2_marg" class="gt_row gt_right">0.024</td>
-<td headers="R2_cond" class="gt_row gt_right">NA</td>
-<td headers="model" class="gt_row gt_left">RI</td>
-<td headers="sample" class="gt_row gt_left">Exclusions applied</td></tr>
-    <tr><td headers="hpt" class="gt_row gt_left">HPT 9-item</td>
-<td headers="ideol" class="gt_row gt_left">KSA-3 total (z)</td>
-<td headers="term" class="gt_row gt_left">KSA_total_z</td>
-<td headers="estimate" class="gt_row gt_right">0.057</td>
-<td headers="conf.low" class="gt_row gt_right">-0.011</td>
-<td headers="conf.high" class="gt_row gt_right">0.124</td>
-<td headers="p.value" class="gt_row gt_right">1.02e-01</td>
-<td headers="R2_marg" class="gt_row gt_right">0.024</td>
-<td headers="R2_cond" class="gt_row gt_right">NA</td>
-<td headers="model" class="gt_row gt_left">RI</td>
-<td headers="sample" class="gt_row gt_left">Exclusions applied</td></tr>
-    <tr><td headers="hpt" class="gt_row gt_left">HPT 9-item</td>
-<td headers="ideol" class="gt_row gt_left">NS (z)</td>
-<td headers="term" class="gt_row gt_left">(Intercept)</td>
-<td headers="estimate" class="gt_row gt_right">2.491</td>
-<td headers="conf.low" class="gt_row gt_right">2.428</td>
-<td headers="conf.high" class="gt_row gt_right">2.555</td>
-<td headers="p.value" class="gt_row gt_right">3.69e-125</td>
-<td headers="R2_marg" class="gt_row gt_right">0.007</td>
-<td headers="R2_cond" class="gt_row gt_right">NA</td>
-<td headers="model" class="gt_row gt_left">RI</td>
-<td headers="sample" class="gt_row gt_left">Exclusions applied</td></tr>
-    <tr><td headers="hpt" class="gt_row gt_left">HPT 9-item</td>
-<td headers="ideol" class="gt_row gt_left">NS (z)</td>
-<td headers="term" class="gt_row gt_left">NS_sum_z</td>
-<td headers="estimate" class="gt_row gt_right">0.009</td>
-<td headers="conf.low" class="gt_row gt_right">-0.059</td>
-<td headers="conf.high" class="gt_row gt_right">0.076</td>
-<td headers="p.value" class="gt_row gt_right">8.02e-01</td>
-<td headers="R2_marg" class="gt_row gt_right">0.007</td>
-<td headers="R2_cond" class="gt_row gt_right">NA</td>
-<td headers="model" class="gt_row gt_left">RI</td>
-<td headers="sample" class="gt_row gt_left">Exclusions applied</td></tr>
-    <tr><td headers="hpt" class="gt_row gt_left">HPT 6-item (no ROA)</td>
-<td headers="ideol" class="gt_row gt_left">FR-LF: RD+NS (z)</td>
-<td headers="term" class="gt_row gt_left">(Intercept)</td>
-<td headers="estimate" class="gt_row gt_right">2.354</td>
-<td headers="conf.low" class="gt_row gt_right">2.283</td>
-<td headers="conf.high" class="gt_row gt_right">2.426</td>
-<td headers="p.value" class="gt_row gt_right">8.29e-16</td>
-<td headers="R2_marg" class="gt_row gt_right">0.009</td>
-<td headers="R2_cond" class="gt_row gt_right">0.035</td>
-<td headers="model" class="gt_row gt_left">RI</td>
-<td headers="sample" class="gt_row gt_left">Full</td></tr>
-    <tr><td headers="hpt" class="gt_row gt_left">HPT 6-item (no ROA)</td>
-<td headers="ideol" class="gt_row gt_left">FR-LF: RD+NS (z)</td>
-<td headers="term" class="gt_row gt_left">FRLF_mini_z</td>
-<td headers="estimate" class="gt_row gt_right">-0.005</td>
-<td headers="conf.low" class="gt_row gt_right">-0.069</td>
-<td headers="conf.high" class="gt_row gt_right">0.058</td>
-<td headers="p.value" class="gt_row gt_right">8.68e-01</td>
-<td headers="R2_marg" class="gt_row gt_right">0.009</td>
-<td headers="R2_cond" class="gt_row gt_right">0.035</td>
-<td headers="model" class="gt_row gt_left">RI</td>
-<td headers="sample" class="gt_row gt_left">Full</td></tr>
-    <tr><td headers="hpt" class="gt_row gt_left">HPT 6-item (no ROA)</td>
-<td headers="ideol" class="gt_row gt_left">FR-LF: RD+NS (z)</td>
-<td headers="term" class="gt_row gt_left">(Intercept)</td>
-<td headers="estimate" class="gt_row gt_right">2.356</td>
-<td headers="conf.low" class="gt_row gt_right">2.284</td>
-<td headers="conf.high" class="gt_row gt_right">2.428</td>
-<td headers="p.value" class="gt_row gt_right">1.89e-15</td>
-<td headers="R2_marg" class="gt_row gt_right">0.010</td>
-<td headers="R2_cond" class="gt_row gt_right">0.055</td>
-<td headers="model" class="gt_row gt_left">RS</td>
-<td headers="sample" class="gt_row gt_left">Full</td></tr>
-    <tr><td headers="hpt" class="gt_row gt_left">HPT 6-item (no ROA)</td>
-<td headers="ideol" class="gt_row gt_left">FR-LF: RD+NS (z)</td>
-<td headers="term" class="gt_row gt_left">FRLF_mini_z</td>
-<td headers="estimate" class="gt_row gt_right">-0.009</td>
+<td headers="estimate" class="gt_row gt_right">-0.002</td>
 <td headers="conf.low" class="gt_row gt_right">-0.083</td>
-<td headers="conf.high" class="gt_row gt_right">0.066</td>
-<td headers="p.value" class="gt_row gt_right">8.18e-01</td>
-<td headers="R2_marg" class="gt_row gt_right">0.010</td>
-<td headers="R2_cond" class="gt_row gt_right">0.055</td>
+<td headers="conf.high" class="gt_row gt_right">0.079</td>
+<td headers="p.value" class="gt_row gt_right">9.60e-01</td>
+<td headers="R2_marg" class="gt_row gt_right">0.105</td>
+<td headers="R2_cond" class="gt_row gt_right">NA</td></tr>
+    <tr><td headers="sample" class="gt_row gt_left">Exclusions applied</td>
+<td headers="hpt" class="gt_row gt_left">HPT 6-item (no ROA)</td>
 <td headers="model" class="gt_row gt_left">RS</td>
-<td headers="sample" class="gt_row gt_left">Full</td></tr>
-    <tr><td headers="hpt" class="gt_row gt_left">HPT 6-item (no ROA)</td>
-<td headers="ideol" class="gt_row gt_left">KSA-3 total (z)</td>
-<td headers="term" class="gt_row gt_left">(Intercept)</td>
-<td headers="estimate" class="gt_row gt_right">2.351</td>
-<td headers="conf.low" class="gt_row gt_right">2.285</td>
-<td headers="conf.high" class="gt_row gt_right">2.418</td>
-<td headers="p.value" class="gt_row gt_right">1.35e-15</td>
-<td headers="R2_marg" class="gt_row gt_right">0.022</td>
-<td headers="R2_cond" class="gt_row gt_right">0.036</td>
-<td headers="model" class="gt_row gt_left">RI</td>
-<td headers="sample" class="gt_row gt_left">Full</td></tr>
-    <tr><td headers="hpt" class="gt_row gt_left">HPT 6-item (no ROA)</td>
-<td headers="ideol" class="gt_row gt_left">KSA-3 total (z)</td>
-<td headers="term" class="gt_row gt_left">KSA_total_z</td>
-<td headers="estimate" class="gt_row gt_right">0.049</td>
-<td headers="conf.low" class="gt_row gt_right">-0.016</td>
-<td headers="conf.high" class="gt_row gt_right">0.114</td>
-<td headers="p.value" class="gt_row gt_right">1.42e-01</td>
-<td headers="R2_marg" class="gt_row gt_right">0.022</td>
-<td headers="R2_cond" class="gt_row gt_right">0.036</td>
-<td headers="model" class="gt_row gt_left">RI</td>
-<td headers="sample" class="gt_row gt_left">Full</td></tr>
-    <tr><td headers="hpt" class="gt_row gt_left">HPT 6-item (no ROA)</td>
-<td headers="ideol" class="gt_row gt_left">KSA-3 total (z)</td>
-<td headers="term" class="gt_row gt_left">(Intercept)</td>
-<td headers="estimate" class="gt_row gt_right">2.349</td>
-<td headers="conf.low" class="gt_row gt_right">2.283</td>
-<td headers="conf.high" class="gt_row gt_right">2.414</td>
-<td headers="p.value" class="gt_row gt_right">3.74e-15</td>
-<td headers="R2_marg" class="gt_row gt_right">0.022</td>
-<td headers="R2_cond" class="gt_row gt_right">0.059</td>
-<td headers="model" class="gt_row gt_left">RS</td>
-<td headers="sample" class="gt_row gt_left">Full</td></tr>
-    <tr><td headers="hpt" class="gt_row gt_left">HPT 6-item (no ROA)</td>
-<td headers="ideol" class="gt_row gt_left">KSA-3 total (z)</td>
-<td headers="term" class="gt_row gt_left">KSA_total_z</td>
-<td headers="estimate" class="gt_row gt_right">0.047</td>
-<td headers="conf.low" class="gt_row gt_right">-0.033</td>
-<td headers="conf.high" class="gt_row gt_right">0.126</td>
-<td headers="p.value" class="gt_row gt_right">2.85e-01</td>
-<td headers="R2_marg" class="gt_row gt_right">0.022</td>
-<td headers="R2_cond" class="gt_row gt_right">0.059</td>
-<td headers="model" class="gt_row gt_left">RS</td>
-<td headers="sample" class="gt_row gt_left">Full</td></tr>
-    <tr><td headers="hpt" class="gt_row gt_left">HPT 6-item (no ROA)</td>
-<td headers="ideol" class="gt_row gt_left">NS (z)</td>
-<td headers="term" class="gt_row gt_left">(Intercept)</td>
-<td headers="estimate" class="gt_row gt_right">2.354</td>
-<td headers="conf.low" class="gt_row gt_right">2.283</td>
-<td headers="conf.high" class="gt_row gt_right">2.424</td>
-<td headers="p.value" class="gt_row gt_right">3.85e-16</td>
-<td headers="R2_marg" class="gt_row gt_right">0.009</td>
-<td headers="R2_cond" class="gt_row gt_right">0.032</td>
-<td headers="model" class="gt_row gt_left">RI</td>
-<td headers="sample" class="gt_row gt_left">Full</td></tr>
-    <tr><td headers="hpt" class="gt_row gt_left">HPT 6-item (no ROA)</td>
-<td headers="ideol" class="gt_row gt_left">NS (z)</td>
-<td headers="term" class="gt_row gt_left">NS_sum_z</td>
-<td headers="estimate" class="gt_row gt_right">0.009</td>
-<td headers="conf.low" class="gt_row gt_right">-0.053</td>
-<td headers="conf.high" class="gt_row gt_right">0.072</td>
-<td headers="p.value" class="gt_row gt_right">7.70e-01</td>
-<td headers="R2_marg" class="gt_row gt_right">0.009</td>
-<td headers="R2_cond" class="gt_row gt_right">0.032</td>
-<td headers="model" class="gt_row gt_left">RI</td>
-<td headers="sample" class="gt_row gt_left">Full</td></tr>
-    <tr><td headers="hpt" class="gt_row gt_left">HPT 6-item (no ROA)</td>
-<td headers="ideol" class="gt_row gt_left">NS (z)</td>
-<td headers="term" class="gt_row gt_left">(Intercept)</td>
-<td headers="estimate" class="gt_row gt_right">2.353</td>
-<td headers="conf.low" class="gt_row gt_right">2.283</td>
-<td headers="conf.high" class="gt_row gt_right">2.423</td>
-<td headers="p.value" class="gt_row gt_right">7.05e-16</td>
-<td headers="R2_marg" class="gt_row gt_right">0.010</td>
-<td headers="R2_cond" class="gt_row gt_right">0.038</td>
-<td headers="model" class="gt_row gt_left">RS</td>
-<td headers="sample" class="gt_row gt_left">Full</td></tr>
-    <tr><td headers="hpt" class="gt_row gt_left">HPT 6-item (no ROA)</td>
-<td headers="ideol" class="gt_row gt_left">NS (z)</td>
-<td headers="term" class="gt_row gt_left">NS_sum_z</td>
-<td headers="estimate" class="gt_row gt_right">0.008</td>
-<td headers="conf.low" class="gt_row gt_right">-0.058</td>
-<td headers="conf.high" class="gt_row gt_right">0.074</td>
-<td headers="p.value" class="gt_row gt_right">8.23e-01</td>
-<td headers="R2_marg" class="gt_row gt_right">0.010</td>
-<td headers="R2_cond" class="gt_row gt_right">0.038</td>
-<td headers="model" class="gt_row gt_left">RS</td>
-<td headers="sample" class="gt_row gt_left">Full</td></tr>
-    <tr><td headers="hpt" class="gt_row gt_left">HPT 8-item (drop ROA1)</td>
 <td headers="ideol" class="gt_row gt_left">FR-LF: RD+NS (z)</td>
-<td headers="term" class="gt_row gt_left">(Intercept)</td>
-<td headers="estimate" class="gt_row gt_right">2.470</td>
-<td headers="conf.low" class="gt_row gt_right">2.408</td>
-<td headers="conf.high" class="gt_row gt_right">2.532</td>
-<td headers="p.value" class="gt_row gt_right">1.25e-15</td>
-<td headers="R2_marg" class="gt_row gt_right">0.006</td>
-<td headers="R2_cond" class="gt_row gt_right">0.016</td>
+<td headers="estimate" class="gt_row gt_right">-0.002</td>
+<td headers="conf.low" class="gt_row gt_right">-0.129</td>
+<td headers="conf.high" class="gt_row gt_right">0.125</td>
+<td headers="p.value" class="gt_row gt_right">9.76e-01</td>
+<td headers="R2_marg" class="gt_row gt_right">0.105</td>
+<td headers="R2_cond" class="gt_row gt_right">NA</td></tr>
+    <tr><td headers="sample" class="gt_row gt_left">Exclusions applied</td>
+<td headers="hpt" class="gt_row gt_left">HPT 6-item (no ROA)</td>
 <td headers="model" class="gt_row gt_left">RI</td>
-<td headers="sample" class="gt_row gt_left">Full</td></tr>
-    <tr><td headers="hpt" class="gt_row gt_left">HPT 8-item (drop ROA1)</td>
-<td headers="ideol" class="gt_row gt_left">FR-LF: RD+NS (z)</td>
-<td headers="term" class="gt_row gt_left">FRLF_mini_z</td>
-<td headers="estimate" class="gt_row gt_right">-0.008</td>
-<td headers="conf.low" class="gt_row gt_right">-0.069</td>
-<td headers="conf.high" class="gt_row gt_right">0.053</td>
-<td headers="p.value" class="gt_row gt_right">7.97e-01</td>
-<td headers="R2_marg" class="gt_row gt_right">0.006</td>
-<td headers="R2_cond" class="gt_row gt_right">0.016</td>
-<td headers="model" class="gt_row gt_left">RI</td>
-<td headers="sample" class="gt_row gt_left">Full</td></tr>
-    <tr><td headers="hpt" class="gt_row gt_left">HPT 8-item (drop ROA1)</td>
 <td headers="ideol" class="gt_row gt_left">KSA-3 total (z)</td>
-<td headers="term" class="gt_row gt_left">(Intercept)</td>
-<td headers="estimate" class="gt_row gt_right">2.467</td>
-<td headers="conf.low" class="gt_row gt_right">2.408</td>
-<td headers="conf.high" class="gt_row gt_right">2.526</td>
-<td headers="p.value" class="gt_row gt_right">3.18e-15</td>
-<td headers="R2_marg" class="gt_row gt_right">0.012</td>
-<td headers="R2_cond" class="gt_row gt_right">0.016</td>
+<td headers="estimate" class="gt_row gt_right">-0.033</td>
+<td headers="conf.low" class="gt_row gt_right">-0.118</td>
+<td headers="conf.high" class="gt_row gt_right">0.052</td>
+<td headers="p.value" class="gt_row gt_right">4.44e-01</td>
+<td headers="R2_marg" class="gt_row gt_right">0.108</td>
+<td headers="R2_cond" class="gt_row gt_right">NA</td></tr>
+    <tr><td headers="sample" class="gt_row gt_left">Exclusions applied</td>
+<td headers="hpt" class="gt_row gt_left">HPT 6-item (no ROA)</td>
 <td headers="model" class="gt_row gt_left">RI</td>
-<td headers="sample" class="gt_row gt_left">Full</td></tr>
-    <tr><td headers="hpt" class="gt_row gt_left">HPT 8-item (drop ROA1)</td>
-<td headers="ideol" class="gt_row gt_left">KSA-3 total (z)</td>
-<td headers="term" class="gt_row gt_left">KSA_total_z</td>
-<td headers="estimate" class="gt_row gt_right">0.034</td>
-<td headers="conf.low" class="gt_row gt_right">-0.029</td>
-<td headers="conf.high" class="gt_row gt_right">0.096</td>
-<td headers="p.value" class="gt_row gt_right">2.93e-01</td>
-<td headers="R2_marg" class="gt_row gt_right">0.012</td>
-<td headers="R2_cond" class="gt_row gt_right">0.016</td>
-<td headers="model" class="gt_row gt_left">RI</td>
-<td headers="sample" class="gt_row gt_left">Full</td></tr>
-    <tr><td headers="hpt" class="gt_row gt_left">HPT 8-item (drop ROA1)</td>
 <td headers="ideol" class="gt_row gt_left">NS (z)</td>
-<td headers="term" class="gt_row gt_left">(Intercept)</td>
-<td headers="estimate" class="gt_row gt_right">2.469</td>
-<td headers="conf.low" class="gt_row gt_right">2.408</td>
-<td headers="conf.high" class="gt_row gt_right">2.531</td>
-<td headers="p.value" class="gt_row gt_right">6.07e-16</td>
-<td headers="R2_marg" class="gt_row gt_right">0.006</td>
-<td headers="R2_cond" class="gt_row gt_right">0.015</td>
-<td headers="model" class="gt_row gt_left">RI</td>
-<td headers="sample" class="gt_row gt_left">Full</td></tr>
-    <tr><td headers="hpt" class="gt_row gt_left">HPT 8-item (drop ROA1)</td>
-<td headers="ideol" class="gt_row gt_left">NS (z)</td>
-<td headers="term" class="gt_row gt_left">NS_sum_z</td>
-<td headers="estimate" class="gt_row gt_right">-0.001</td>
-<td headers="conf.low" class="gt_row gt_right">-0.062</td>
-<td headers="conf.high" class="gt_row gt_right">0.059</td>
-<td headers="p.value" class="gt_row gt_right">9.67e-01</td>
-<td headers="R2_marg" class="gt_row gt_right">0.006</td>
-<td headers="R2_cond" class="gt_row gt_right">0.015</td>
-<td headers="model" class="gt_row gt_left">RI</td>
-<td headers="sample" class="gt_row gt_left">Full</td></tr>
-    <tr><td headers="hpt" class="gt_row gt_left">HPT 9-item</td>
-<td headers="ideol" class="gt_row gt_left">FR-LF: RD+NS (z)</td>
-<td headers="term" class="gt_row gt_left">(Intercept)</td>
-<td headers="estimate" class="gt_row gt_right">2.507</td>
-<td headers="conf.low" class="gt_row gt_right">2.446</td>
-<td headers="conf.high" class="gt_row gt_right">2.568</td>
-<td headers="p.value" class="gt_row gt_right">5.76e-18</td>
-<td headers="R2_marg" class="gt_row gt_right">0.013</td>
-<td headers="R2_cond" class="gt_row gt_right">0.019</td>
-<td headers="model" class="gt_row gt_left">RI</td>
-<td headers="sample" class="gt_row gt_left">Full</td></tr>
-    <tr><td headers="hpt" class="gt_row gt_left">HPT 9-item</td>
-<td headers="ideol" class="gt_row gt_left">FR-LF: RD+NS (z)</td>
-<td headers="term" class="gt_row gt_left">FRLF_mini_z</td>
-<td headers="estimate" class="gt_row gt_right">-0.003</td>
-<td headers="conf.low" class="gt_row gt_right">-0.064</td>
-<td headers="conf.high" class="gt_row gt_right">0.059</td>
-<td headers="p.value" class="gt_row gt_right">9.31e-01</td>
-<td headers="R2_marg" class="gt_row gt_right">0.013</td>
-<td headers="R2_cond" class="gt_row gt_right">0.019</td>
-<td headers="model" class="gt_row gt_left">RI</td>
-<td headers="sample" class="gt_row gt_left">Full</td></tr>
-    <tr><td headers="hpt" class="gt_row gt_left">HPT 9-item</td>
-<td headers="ideol" class="gt_row gt_left">KSA-3 total (z)</td>
-<td headers="term" class="gt_row gt_left">(Intercept)</td>
-<td headers="estimate" class="gt_row gt_right">2.504</td>
-<td headers="conf.low" class="gt_row gt_right">2.445</td>
-<td headers="conf.high" class="gt_row gt_right">2.562</td>
-<td headers="p.value" class="gt_row gt_right">2.34e-17</td>
-<td headers="R2_marg" class="gt_row gt_right">0.024</td>
-<td headers="R2_cond" class="gt_row gt_right">0.026</td>
-<td headers="model" class="gt_row gt_left">RI</td>
-<td headers="sample" class="gt_row gt_left">Full</td></tr>
-    <tr><td headers="hpt" class="gt_row gt_left">HPT 9-item</td>
-<td headers="ideol" class="gt_row gt_left">KSA-3 total (z)</td>
-<td headers="term" class="gt_row gt_left">KSA_total_z</td>
-<td headers="estimate" class="gt_row gt_right">0.046</td>
-<td headers="conf.low" class="gt_row gt_right">-0.017</td>
-<td headers="conf.high" class="gt_row gt_right">0.109</td>
-<td headers="p.value" class="gt_row gt_right">1.58e-01</td>
-<td headers="R2_marg" class="gt_row gt_right">0.024</td>
-<td headers="R2_cond" class="gt_row gt_right">0.026</td>
-<td headers="model" class="gt_row gt_left">RI</td>
-<td headers="sample" class="gt_row gt_left">Full</td></tr>
-    <tr><td headers="hpt" class="gt_row gt_left">HPT 9-item</td>
-<td headers="ideol" class="gt_row gt_left">NS (z)</td>
-<td headers="term" class="gt_row gt_left">(Intercept)</td>
-<td headers="estimate" class="gt_row gt_right">2.507</td>
-<td headers="conf.low" class="gt_row gt_right">2.446</td>
-<td headers="conf.high" class="gt_row gt_right">2.567</td>
-<td headers="p.value" class="gt_row gt_right">3.08e-18</td>
-<td headers="R2_marg" class="gt_row gt_right">0.013</td>
-<td headers="R2_cond" class="gt_row gt_right">0.018</td>
-<td headers="model" class="gt_row gt_left">RI</td>
-<td headers="sample" class="gt_row gt_left">Full</td></tr>
-    <tr><td headers="hpt" class="gt_row gt_left">HPT 9-item</td>
-<td headers="ideol" class="gt_row gt_left">NS (z)</td>
-<td headers="term" class="gt_row gt_left">NS_sum_z</td>
-<td headers="estimate" class="gt_row gt_right">0.007</td>
+<td headers="estimate" class="gt_row gt_right">0.027</td>
 <td headers="conf.low" class="gt_row gt_right">-0.054</td>
-<td headers="conf.high" class="gt_row gt_right">0.068</td>
-<td headers="p.value" class="gt_row gt_right">8.25e-01</td>
-<td headers="R2_marg" class="gt_row gt_right">0.013</td>
-<td headers="R2_cond" class="gt_row gt_right">0.018</td>
+<td headers="conf.high" class="gt_row gt_right">0.107</td>
+<td headers="p.value" class="gt_row gt_right">5.16e-01</td>
+<td headers="R2_marg" class="gt_row gt_right">0.106</td>
+<td headers="R2_cond" class="gt_row gt_right">NA</td></tr>
+    <tr><td headers="sample" class="gt_row gt_left">Exclusions applied</td>
+<td headers="hpt" class="gt_row gt_left">HPT 6-item (no ROA)</td>
+<td headers="model" class="gt_row gt_left">RS</td>
+<td headers="ideol" class="gt_row gt_left">NS (z)</td>
+<td headers="estimate" class="gt_row gt_right">0.036</td>
+<td headers="conf.low" class="gt_row gt_right">-0.094</td>
+<td headers="conf.high" class="gt_row gt_right">0.165</td>
+<td headers="p.value" class="gt_row gt_right">5.45e-01</td>
+<td headers="R2_marg" class="gt_row gt_right">0.108</td>
+<td headers="R2_cond" class="gt_row gt_right">NA</td></tr>
+    <tr><td headers="sample" class="gt_row gt_left">Exclusions applied</td>
+<td headers="hpt" class="gt_row gt_left">HPT 8-item (drop ROA1)</td>
 <td headers="model" class="gt_row gt_left">RI</td>
-<td headers="sample" class="gt_row gt_left">Full</td></tr>
+<td headers="ideol" class="gt_row gt_left">(Intercept)</td>
+<td headers="estimate" class="gt_row gt_right">2.826</td>
+<td headers="conf.low" class="gt_row gt_right">2.686</td>
+<td headers="conf.high" class="gt_row gt_right">2.967</td>
+<td headers="p.value" class="gt_row gt_right">1.40e-07</td>
+<td headers="R2_marg" class="gt_row gt_right">0.125</td>
+<td headers="R2_cond" class="gt_row gt_right">NA</td></tr>
+    <tr><td headers="sample" class="gt_row gt_left">Exclusions applied</td>
+<td headers="hpt" class="gt_row gt_left">HPT 8-item (drop ROA1)</td>
+<td headers="model" class="gt_row gt_left">RI</td>
+<td headers="ideol" class="gt_row gt_left">(Intercept)</td>
+<td headers="estimate" class="gt_row gt_right">2.827</td>
+<td headers="conf.low" class="gt_row gt_right">2.688</td>
+<td headers="conf.high" class="gt_row gt_right">2.966</td>
+<td headers="p.value" class="gt_row gt_right">1.39e-07</td>
+<td headers="R2_marg" class="gt_row gt_right">0.126</td>
+<td headers="R2_cond" class="gt_row gt_right">NA</td></tr>
+    <tr><td headers="sample" class="gt_row gt_left">Exclusions applied</td>
+<td headers="hpt" class="gt_row gt_left">HPT 8-item (drop ROA1)</td>
+<td headers="model" class="gt_row gt_left">RI</td>
+<td headers="ideol" class="gt_row gt_left">(Intercept)</td>
+<td headers="estimate" class="gt_row gt_right">2.828</td>
+<td headers="conf.low" class="gt_row gt_right">2.690</td>
+<td headers="conf.high" class="gt_row gt_right">2.966</td>
+<td headers="p.value" class="gt_row gt_right">9.32e-08</td>
+<td headers="R2_marg" class="gt_row gt_right">0.129</td>
+<td headers="R2_cond" class="gt_row gt_right">NA</td></tr>
+    <tr><td headers="sample" class="gt_row gt_left">Exclusions applied</td>
+<td headers="hpt" class="gt_row gt_left">HPT 8-item (drop ROA1)</td>
+<td headers="model" class="gt_row gt_left">RI</td>
+<td headers="ideol" class="gt_row gt_left">FR-LF: RD+NS (z)</td>
+<td headers="estimate" class="gt_row gt_right">-0.013</td>
+<td headers="conf.low" class="gt_row gt_right">-0.083</td>
+<td headers="conf.high" class="gt_row gt_right">0.058</td>
+<td headers="p.value" class="gt_row gt_right">7.25e-01</td>
+<td headers="R2_marg" class="gt_row gt_right">0.126</td>
+<td headers="R2_cond" class="gt_row gt_right">NA</td></tr>
+    <tr><td headers="sample" class="gt_row gt_left">Exclusions applied</td>
+<td headers="hpt" class="gt_row gt_left">HPT 8-item (drop ROA1)</td>
+<td headers="model" class="gt_row gt_left">RI</td>
+<td headers="ideol" class="gt_row gt_left">KSA-3 total (z)</td>
+<td headers="estimate" class="gt_row gt_right">-0.032</td>
+<td headers="conf.low" class="gt_row gt_right">-0.105</td>
+<td headers="conf.high" class="gt_row gt_right">0.042</td>
+<td headers="p.value" class="gt_row gt_right">3.93e-01</td>
+<td headers="R2_marg" class="gt_row gt_right">0.129</td>
+<td headers="R2_cond" class="gt_row gt_right">NA</td></tr>
+    <tr><td headers="sample" class="gt_row gt_left">Exclusions applied</td>
+<td headers="hpt" class="gt_row gt_left">HPT 8-item (drop ROA1)</td>
+<td headers="model" class="gt_row gt_left">RI</td>
+<td headers="ideol" class="gt_row gt_left">NS (z)</td>
+<td headers="estimate" class="gt_row gt_right">0.007</td>
+<td headers="conf.low" class="gt_row gt_right">-0.063</td>
+<td headers="conf.high" class="gt_row gt_right">0.077</td>
+<td headers="p.value" class="gt_row gt_right">8.47e-01</td>
+<td headers="R2_marg" class="gt_row gt_right">0.125</td>
+<td headers="R2_cond" class="gt_row gt_right">NA</td></tr>
+    <tr><td headers="sample" class="gt_row gt_left">Exclusions applied</td>
+<td headers="hpt" class="gt_row gt_left">HPT 9-item (POP_rev + ROA + CONT)</td>
+<td headers="model" class="gt_row gt_left">RI</td>
+<td headers="ideol" class="gt_row gt_left">(Intercept)</td>
+<td headers="estimate" class="gt_row gt_right">2.819</td>
+<td headers="conf.low" class="gt_row gt_right">2.668</td>
+<td headers="conf.high" class="gt_row gt_right">2.970</td>
+<td headers="p.value" class="gt_row gt_right">7.81e-08</td>
+<td headers="R2_marg" class="gt_row gt_right">0.131</td>
+<td headers="R2_cond" class="gt_row gt_right">NA</td></tr>
+    <tr><td headers="sample" class="gt_row gt_left">Exclusions applied</td>
+<td headers="hpt" class="gt_row gt_left">HPT 9-item (POP_rev + ROA + CONT)</td>
+<td headers="model" class="gt_row gt_left">RI</td>
+<td headers="ideol" class="gt_row gt_left">(Intercept)</td>
+<td headers="estimate" class="gt_row gt_right">2.820</td>
+<td headers="conf.low" class="gt_row gt_right">2.671</td>
+<td headers="conf.high" class="gt_row gt_right">2.968</td>
+<td headers="p.value" class="gt_row gt_right">8.91e-08</td>
+<td headers="R2_marg" class="gt_row gt_right">0.132</td>
+<td headers="R2_cond" class="gt_row gt_right">NA</td></tr>
+    <tr><td headers="sample" class="gt_row gt_left">Exclusions applied</td>
+<td headers="hpt" class="gt_row gt_left">HPT 9-item (POP_rev + ROA + CONT)</td>
+<td headers="model" class="gt_row gt_left">RI</td>
+<td headers="ideol" class="gt_row gt_left">(Intercept)</td>
+<td headers="estimate" class="gt_row gt_right">2.820</td>
+<td headers="conf.low" class="gt_row gt_right">2.672</td>
+<td headers="conf.high" class="gt_row gt_right">2.968</td>
+<td headers="p.value" class="gt_row gt_right">7.27e-08</td>
+<td headers="R2_marg" class="gt_row gt_right">0.133</td>
+<td headers="R2_cond" class="gt_row gt_right">NA</td></tr>
+    <tr><td headers="sample" class="gt_row gt_left">Exclusions applied</td>
+<td headers="hpt" class="gt_row gt_left">HPT 9-item (POP_rev + ROA + CONT)</td>
+<td headers="model" class="gt_row gt_left">RS</td>
+<td headers="ideol" class="gt_row gt_left">(Intercept)</td>
+<td headers="estimate" class="gt_row gt_right">2.820</td>
+<td headers="conf.low" class="gt_row gt_right">2.660</td>
+<td headers="conf.high" class="gt_row gt_right">2.979</td>
+<td headers="p.value" class="gt_row gt_right">1.67e-07</td>
+<td headers="R2_marg" class="gt_row gt_right">0.131</td>
+<td headers="R2_cond" class="gt_row gt_right">NA</td></tr>
+    <tr><td headers="sample" class="gt_row gt_left">Exclusions applied</td>
+<td headers="hpt" class="gt_row gt_left">HPT 9-item (POP_rev + ROA + CONT)</td>
+<td headers="model" class="gt_row gt_left">RI</td>
+<td headers="ideol" class="gt_row gt_left">FR-LF: RD+NS (z)</td>
+<td headers="estimate" class="gt_row gt_right">-0.007</td>
+<td headers="conf.low" class="gt_row gt_right">-0.076</td>
+<td headers="conf.high" class="gt_row gt_right">0.062</td>
+<td headers="p.value" class="gt_row gt_right">8.47e-01</td>
+<td headers="R2_marg" class="gt_row gt_right">0.132</td>
+<td headers="R2_cond" class="gt_row gt_right">NA</td></tr>
+    <tr><td headers="sample" class="gt_row gt_left">Exclusions applied</td>
+<td headers="hpt" class="gt_row gt_left">HPT 9-item (POP_rev + ROA + CONT)</td>
+<td headers="model" class="gt_row gt_left">RI</td>
+<td headers="ideol" class="gt_row gt_left">KSA-3 total (z)</td>
+<td headers="estimate" class="gt_row gt_right">-0.018</td>
+<td headers="conf.low" class="gt_row gt_right">-0.090</td>
+<td headers="conf.high" class="gt_row gt_right">0.054</td>
+<td headers="p.value" class="gt_row gt_right">6.24e-01</td>
+<td headers="R2_marg" class="gt_row gt_right">0.133</td>
+<td headers="R2_cond" class="gt_row gt_right">NA</td></tr>
+    <tr><td headers="sample" class="gt_row gt_left">Exclusions applied</td>
+<td headers="hpt" class="gt_row gt_left">HPT 9-item (POP_rev + ROA + CONT)</td>
+<td headers="model" class="gt_row gt_left">RI</td>
+<td headers="ideol" class="gt_row gt_left">NS (z)</td>
+<td headers="estimate" class="gt_row gt_right">0.016</td>
+<td headers="conf.low" class="gt_row gt_right">-0.052</td>
+<td headers="conf.high" class="gt_row gt_right">0.085</td>
+<td headers="p.value" class="gt_row gt_right">6.42e-01</td>
+<td headers="R2_marg" class="gt_row gt_right">0.131</td>
+<td headers="R2_cond" class="gt_row gt_right">NA</td></tr>
+    <tr><td headers="sample" class="gt_row gt_left">Exclusions applied</td>
+<td headers="hpt" class="gt_row gt_left">HPT 9-item (POP_rev + ROA + CONT)</td>
+<td headers="model" class="gt_row gt_left">RS</td>
+<td headers="ideol" class="gt_row gt_left">NS (z)</td>
+<td headers="estimate" class="gt_row gt_right">0.032</td>
+<td headers="conf.low" class="gt_row gt_right">-0.081</td>
+<td headers="conf.high" class="gt_row gt_right">0.144</td>
+<td headers="p.value" class="gt_row gt_right">5.41e-01</td>
+<td headers="R2_marg" class="gt_row gt_right">0.131</td>
+<td headers="R2_cond" class="gt_row gt_right">NA</td></tr>
+    <tr><td headers="sample" class="gt_row gt_left">Full</td>
+<td headers="hpt" class="gt_row gt_left">HPT 6-item (no ROA)</td>
+<td headers="model" class="gt_row gt_left">RI</td>
+<td headers="ideol" class="gt_row gt_left">(Intercept)</td>
+<td headers="estimate" class="gt_row gt_right">2.842</td>
+<td headers="conf.low" class="gt_row gt_right">2.703</td>
+<td headers="conf.high" class="gt_row gt_right">2.981</td>
+<td headers="p.value" class="gt_row gt_right">1.04e-07</td>
+<td headers="R2_marg" class="gt_row gt_right">0.096</td>
+<td headers="R2_cond" class="gt_row gt_right">NA</td></tr>
+    <tr><td headers="sample" class="gt_row gt_left">Full</td>
+<td headers="hpt" class="gt_row gt_left">HPT 6-item (no ROA)</td>
+<td headers="model" class="gt_row gt_left">RI</td>
+<td headers="ideol" class="gt_row gt_left">(Intercept)</td>
+<td headers="estimate" class="gt_row gt_right">2.843</td>
+<td headers="conf.low" class="gt_row gt_right">2.706</td>
+<td headers="conf.high" class="gt_row gt_right">2.981</td>
+<td headers="p.value" class="gt_row gt_right">1.33e-07</td>
+<td headers="R2_marg" class="gt_row gt_right">0.095</td>
+<td headers="R2_cond" class="gt_row gt_right">NA</td></tr>
+    <tr><td headers="sample" class="gt_row gt_left">Full</td>
+<td headers="hpt" class="gt_row gt_left">HPT 6-item (no ROA)</td>
+<td headers="model" class="gt_row gt_left">RI</td>
+<td headers="ideol" class="gt_row gt_left">(Intercept)</td>
+<td headers="estimate" class="gt_row gt_right">2.846</td>
+<td headers="conf.low" class="gt_row gt_right">2.712</td>
+<td headers="conf.high" class="gt_row gt_right">2.980</td>
+<td headers="p.value" class="gt_row gt_right">1.67e-07</td>
+<td headers="R2_marg" class="gt_row gt_right">0.097</td>
+<td headers="R2_cond" class="gt_row gt_right">NA</td></tr>
+    <tr><td headers="sample" class="gt_row gt_left">Full</td>
+<td headers="hpt" class="gt_row gt_left">HPT 6-item (no ROA)</td>
+<td headers="model" class="gt_row gt_left">RI</td>
+<td headers="ideol" class="gt_row gt_left">FR-LF: RD+NS (z)</td>
+<td headers="estimate" class="gt_row gt_right">0.017</td>
+<td headers="conf.low" class="gt_row gt_right">-0.060</td>
+<td headers="conf.high" class="gt_row gt_right">0.094</td>
+<td headers="p.value" class="gt_row gt_right">6.71e-01</td>
+<td headers="R2_marg" class="gt_row gt_right">0.095</td>
+<td headers="R2_cond" class="gt_row gt_right">NA</td></tr>
+    <tr><td headers="sample" class="gt_row gt_left">Full</td>
+<td headers="hpt" class="gt_row gt_left">HPT 6-item (no ROA)</td>
+<td headers="model" class="gt_row gt_left">RI</td>
+<td headers="ideol" class="gt_row gt_left">KSA-3 total (z)</td>
+<td headers="estimate" class="gt_row gt_right">-0.026</td>
+<td headers="conf.low" class="gt_row gt_right">-0.107</td>
+<td headers="conf.high" class="gt_row gt_right">0.054</td>
+<td headers="p.value" class="gt_row gt_right">5.22e-01</td>
+<td headers="R2_marg" class="gt_row gt_right">0.097</td>
+<td headers="R2_cond" class="gt_row gt_right">NA</td></tr>
+    <tr><td headers="sample" class="gt_row gt_left">Full</td>
+<td headers="hpt" class="gt_row gt_left">HPT 6-item (no ROA)</td>
+<td headers="model" class="gt_row gt_left">RI</td>
+<td headers="ideol" class="gt_row gt_left">NS (z)</td>
+<td headers="estimate" class="gt_row gt_right">0.032</td>
+<td headers="conf.low" class="gt_row gt_right">-0.044</td>
+<td headers="conf.high" class="gt_row gt_right">0.107</td>
+<td headers="p.value" class="gt_row gt_right">4.12e-01</td>
+<td headers="R2_marg" class="gt_row gt_right">0.096</td>
+<td headers="R2_cond" class="gt_row gt_right">NA</td></tr>
+    <tr><td headers="sample" class="gt_row gt_left">Full</td>
+<td headers="hpt" class="gt_row gt_left">HPT 8-item (drop ROA1)</td>
+<td headers="model" class="gt_row gt_left">RI</td>
+<td headers="ideol" class="gt_row gt_left">(Intercept)</td>
+<td headers="estimate" class="gt_row gt_right">2.826</td>
+<td headers="conf.low" class="gt_row gt_right">2.698</td>
+<td headers="conf.high" class="gt_row gt_right">2.954</td>
+<td headers="p.value" class="gt_row gt_right">9.96e-08</td>
+<td headers="R2_marg" class="gt_row gt_right">0.123</td>
+<td headers="R2_cond" class="gt_row gt_right">NA</td></tr>
+    <tr><td headers="sample" class="gt_row gt_left">Full</td>
+<td headers="hpt" class="gt_row gt_left">HPT 8-item (drop ROA1)</td>
+<td headers="model" class="gt_row gt_left">RI</td>
+<td headers="ideol" class="gt_row gt_left">(Intercept)</td>
+<td headers="estimate" class="gt_row gt_right">2.826</td>
+<td headers="conf.low" class="gt_row gt_right">2.700</td>
+<td headers="conf.high" class="gt_row gt_right">2.953</td>
+<td headers="p.value" class="gt_row gt_right">1.09e-07</td>
+<td headers="R2_marg" class="gt_row gt_right">0.123</td>
+<td headers="R2_cond" class="gt_row gt_right">NA</td></tr>
+    <tr><td headers="sample" class="gt_row gt_left">Full</td>
+<td headers="hpt" class="gt_row gt_left">HPT 8-item (drop ROA1)</td>
+<td headers="model" class="gt_row gt_left">RI</td>
+<td headers="ideol" class="gt_row gt_left">(Intercept)</td>
+<td headers="estimate" class="gt_row gt_right">2.829</td>
+<td headers="conf.low" class="gt_row gt_right">2.705</td>
+<td headers="conf.high" class="gt_row gt_right">2.952</td>
+<td headers="p.value" class="gt_row gt_right">9.66e-08</td>
+<td headers="R2_marg" class="gt_row gt_right">0.126</td>
+<td headers="R2_cond" class="gt_row gt_right">NA</td></tr>
+    <tr><td headers="sample" class="gt_row gt_left">Full</td>
+<td headers="hpt" class="gt_row gt_left">HPT 8-item (drop ROA1)</td>
+<td headers="model" class="gt_row gt_left">RS</td>
+<td headers="ideol" class="gt_row gt_left">(Intercept)</td>
+<td headers="estimate" class="gt_row gt_right">2.822</td>
+<td headers="conf.low" class="gt_row gt_right">2.687</td>
+<td headers="conf.high" class="gt_row gt_right">2.958</td>
+<td headers="p.value" class="gt_row gt_right">1.66e-07</td>
+<td headers="R2_marg" class="gt_row gt_right">0.126</td>
+<td headers="R2_cond" class="gt_row gt_right">NA</td></tr>
+    <tr><td headers="sample" class="gt_row gt_left">Full</td>
+<td headers="hpt" class="gt_row gt_left">HPT 8-item (drop ROA1)</td>
+<td headers="model" class="gt_row gt_left">RI</td>
+<td headers="ideol" class="gt_row gt_left">FR-LF: RD+NS (z)</td>
+<td headers="estimate" class="gt_row gt_right">0.008</td>
+<td headers="conf.low" class="gt_row gt_right">-0.059</td>
+<td headers="conf.high" class="gt_row gt_right">0.075</td>
+<td headers="p.value" class="gt_row gt_right">8.11e-01</td>
+<td headers="R2_marg" class="gt_row gt_right">0.123</td>
+<td headers="R2_cond" class="gt_row gt_right">NA</td></tr>
+    <tr><td headers="sample" class="gt_row gt_left">Full</td>
+<td headers="hpt" class="gt_row gt_left">HPT 8-item (drop ROA1)</td>
+<td headers="model" class="gt_row gt_left">RI</td>
+<td headers="ideol" class="gt_row gt_left">KSA-3 total (z)</td>
+<td headers="estimate" class="gt_row gt_right">-0.027</td>
+<td headers="conf.low" class="gt_row gt_right">-0.097</td>
+<td headers="conf.high" class="gt_row gt_right">0.043</td>
+<td headers="p.value" class="gt_row gt_right">4.45e-01</td>
+<td headers="R2_marg" class="gt_row gt_right">0.126</td>
+<td headers="R2_cond" class="gt_row gt_right">NA</td></tr>
+    <tr><td headers="sample" class="gt_row gt_left">Full</td>
+<td headers="hpt" class="gt_row gt_left">HPT 8-item (drop ROA1)</td>
+<td headers="model" class="gt_row gt_left">RI</td>
+<td headers="ideol" class="gt_row gt_left">NS (z)</td>
+<td headers="estimate" class="gt_row gt_right">0.015</td>
+<td headers="conf.low" class="gt_row gt_right">-0.050</td>
+<td headers="conf.high" class="gt_row gt_right">0.081</td>
+<td headers="p.value" class="gt_row gt_right">6.43e-01</td>
+<td headers="R2_marg" class="gt_row gt_right">0.123</td>
+<td headers="R2_cond" class="gt_row gt_right">NA</td></tr>
+    <tr><td headers="sample" class="gt_row gt_left">Full</td>
+<td headers="hpt" class="gt_row gt_left">HPT 8-item (drop ROA1)</td>
+<td headers="model" class="gt_row gt_left">RS</td>
+<td headers="ideol" class="gt_row gt_left">NS (z)</td>
+<td headers="estimate" class="gt_row gt_right">0.029</td>
+<td headers="conf.low" class="gt_row gt_right">-0.075</td>
+<td headers="conf.high" class="gt_row gt_right">0.132</td>
+<td headers="p.value" class="gt_row gt_right">5.57e-01</td>
+<td headers="R2_marg" class="gt_row gt_right">0.126</td>
+<td headers="R2_cond" class="gt_row gt_right">NA</td></tr>
+    <tr><td headers="sample" class="gt_row gt_left">Full</td>
+<td headers="hpt" class="gt_row gt_left">HPT 9-item (POP_rev + ROA + CONT)</td>
+<td headers="model" class="gt_row gt_left">RI</td>
+<td headers="ideol" class="gt_row gt_left">(Intercept)</td>
+<td headers="estimate" class="gt_row gt_right">2.822</td>
+<td headers="conf.low" class="gt_row gt_right">2.689</td>
+<td headers="conf.high" class="gt_row gt_right">2.956</td>
+<td headers="p.value" class="gt_row gt_right">1.95e-08</td>
+<td headers="R2_marg" class="gt_row gt_right">0.128</td>
+<td headers="R2_cond" class="gt_row gt_right">NA</td></tr>
+    <tr><td headers="sample" class="gt_row gt_left">Full</td>
+<td headers="hpt" class="gt_row gt_left">HPT 9-item (POP_rev + ROA + CONT)</td>
+<td headers="model" class="gt_row gt_left">RI</td>
+<td headers="ideol" class="gt_row gt_left">(Intercept)</td>
+<td headers="estimate" class="gt_row gt_right">2.823</td>
+<td headers="conf.low" class="gt_row gt_right">2.691</td>
+<td headers="conf.high" class="gt_row gt_right">2.955</td>
+<td headers="p.value" class="gt_row gt_right">2.20e-08</td>
+<td headers="R2_marg" class="gt_row gt_right">0.126</td>
+<td headers="R2_cond" class="gt_row gt_right">NA</td></tr>
+    <tr><td headers="sample" class="gt_row gt_left">Full</td>
+<td headers="hpt" class="gt_row gt_left">HPT 9-item (POP_rev + ROA + CONT)</td>
+<td headers="model" class="gt_row gt_left">RI</td>
+<td headers="ideol" class="gt_row gt_left">(Intercept)</td>
+<td headers="estimate" class="gt_row gt_right">2.824</td>
+<td headers="conf.low" class="gt_row gt_right">2.695</td>
+<td headers="conf.high" class="gt_row gt_right">2.953</td>
+<td headers="p.value" class="gt_row gt_right">2.17e-08</td>
+<td headers="R2_marg" class="gt_row gt_right">0.127</td>
+<td headers="R2_cond" class="gt_row gt_right">NA</td></tr>
+    <tr><td headers="sample" class="gt_row gt_left">Full</td>
+<td headers="hpt" class="gt_row gt_left">HPT 9-item (POP_rev + ROA + CONT)</td>
+<td headers="model" class="gt_row gt_left">RI</td>
+<td headers="ideol" class="gt_row gt_left">FR-LF: RD+NS (z)</td>
+<td headers="estimate" class="gt_row gt_right">0.016</td>
+<td headers="conf.low" class="gt_row gt_right">-0.050</td>
+<td headers="conf.high" class="gt_row gt_right">0.081</td>
+<td headers="p.value" class="gt_row gt_right">6.40e-01</td>
+<td headers="R2_marg" class="gt_row gt_right">0.126</td>
+<td headers="R2_cond" class="gt_row gt_right">NA</td></tr>
+    <tr><td headers="sample" class="gt_row gt_left">Full</td>
+<td headers="hpt" class="gt_row gt_left">HPT 9-item (POP_rev + ROA + CONT)</td>
+<td headers="model" class="gt_row gt_left">RI</td>
+<td headers="ideol" class="gt_row gt_left">KSA-3 total (z)</td>
+<td headers="estimate" class="gt_row gt_right">-0.009</td>
+<td headers="conf.low" class="gt_row gt_right">-0.078</td>
+<td headers="conf.high" class="gt_row gt_right">0.060</td>
+<td headers="p.value" class="gt_row gt_right">7.90e-01</td>
+<td headers="R2_marg" class="gt_row gt_right">0.127</td>
+<td headers="R2_cond" class="gt_row gt_right">NA</td></tr>
+    <tr><td headers="sample" class="gt_row gt_left">Full</td>
+<td headers="hpt" class="gt_row gt_left">HPT 9-item (POP_rev + ROA + CONT)</td>
+<td headers="model" class="gt_row gt_left">RI</td>
+<td headers="ideol" class="gt_row gt_left">NS (z)</td>
+<td headers="estimate" class="gt_row gt_right">0.028</td>
+<td headers="conf.low" class="gt_row gt_right">-0.037</td>
+<td headers="conf.high" class="gt_row gt_right">0.092</td>
+<td headers="p.value" class="gt_row gt_right">3.99e-01</td>
+<td headers="R2_marg" class="gt_row gt_right">0.128</td>
+<td headers="R2_cond" class="gt_row gt_right">NA</td></tr>
   </tbody>
   
 </table>
 </div>
 ```
-**How to read the table.**
-
--   **Rows** = combinations of HPT scoring (9/8/6 items), ideology
-    metric (NS only; FR-LF RD+NS; KSA-3), and model type: **RI** =
-    random-intercept by class; **RS** = also random **slope** of
-    ideology by class (shown only when not singular).
--   **Key cell** = the **β for ideology** (standardised), with **95%
-    CI**.
--   **R² (marg./cond.)** give variance explained by fixed effects and by
-    full model.
-
-**Interpretation guide.**
-
--   If **NS (z)** predicts HPT strongly while KSA-3 does not, HPT may be
-    **aligned with Nazi-congruent content** rather than general
-    authoritarianism---i.e., content **congruence** instead of better
-    historical reasoning. This is the contamination mechanism we
-    flagged.
--   If effects are **stable across 9/8/6-item** HPT scores, conclusions
-    are **robust** to ROA decisions. If they require ROA to appear,
-    caution is warranted given prior ROA instability.
--   If **random slopes** improve fit (higher R²_cond; non-singular), the
-    ideology--HPT link **varies by class**. That suggests classroom
-    climate/teaching may moderate how ideology maps onto HPT.
-
-------------------------------------------------------------------------
-
-# 5. Sanity checks & clarity plots (optional quick look)
+# 5. Sanity plots
 
 ``` r
 dat %>%
   ggplot(aes(NS_sum, HPT_total_9)) +
-  geom_point(alpha=.3) + geom_smooth(method="lm", se=TRUE) +
-  labs(x="NS (sum)", y="HPT total (9-item)",
-       title="Bivariate check (unadjusted): NS vs. HPT") +
+  geom_point(alpha=.25) + geom_smooth(method="lm", se=TRUE) +
+  labs(x="NS (sum)", y="HPT total (9-item, POP_rev)",
+       title="Bivariate check (unadjusted): NS vs. HPT total (POP reversed)") +
   theme(plot.title.position="plot")
 ```
 
     ## `geom_smooth()` using formula = 'y ~ x'
 
-    ## Warning: Removed 4 rows containing non-finite outside the scale range
+    ## Warning: Removed 5 rows containing non-finite outside the scale range
     ## (`stat_smooth()`).
 
-    ## Warning: Removed 4 rows containing missing values or values outside the scale
+    ## Warning: Removed 5 rows containing missing values or values outside the scale
     ## range (`geom_point()`).
 
 ![](/home/yetty/Projects/phd-029-hpt-and-extremism/outputs/05_sensitivity-analyses_files/figure-markdown/quick-plots-1.png)
 
-**Interpretation.** These quick plots are only to **visualise
-direction**; final inferences come from the multilevel models with
-controls.
-
-------------------------------------------------------------------------
-
-# 6. Read-outs you can cite in prose
+# 6. Read-outs for prose
 
 -   **Stable conclusions** across HPT **9/8/6** scoring → results **do
-    not depend** on ROA items. (ROA instability has been noted
-    previously.)
--   **NS-only** predicting as much/more than **KSA-3** → supports the
-    **ideological contamination** concern in our PCI RR snapshot.
+    not depend** on ROA items.
+-   **NS-only** ≳ **KSA-3** → supports the **ideological contamination**
+    concern.
 -   Survives **knowledge/SDR exclusions** → less likely driven by
-    misunderstanding or impression management; SDR handling follows our
-    codebook.
--   **Random slopes needed** → ideology effects differ **by class**,
-    implying a pedagogical moderation worth exploring (teaching of
-    context vs. presentism etc.), in line with the HPT literature's
-    emphasis on contextual frames.
-
-------------------------------------------------------------------------
+    misunderstanding or impression management.
+-   **Random slopes needed** → ideology effects differ **by class**
+    (pedagogical moderation hypothesis).
 
 # Reproducibility appendix
 
@@ -2310,7 +2733,7 @@ sessionInfo()
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     
     ## 
     ## other attached packages:
-    ##  [1] glue_1.8.0          gt_1.1.0            performance_0.15.1 
+    ##  [1] gt_1.1.0            glue_1.8.0          performance_0.15.1 
     ##  [4] broom.mixed_0.2.9.6 broom_1.0.7         lmerTest_3.1-3     
     ##  [7] lme4_1.1-38         Matrix_1.7-1        lubridate_1.9.4    
     ## [10] forcats_1.0.0       stringr_1.5.1       dplyr_1.1.4        

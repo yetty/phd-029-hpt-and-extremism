@@ -14,6 +14,20 @@ PDFS = $(RMDS:.Rmd=.pdf)
 
 all: $(PDFS)
 
+teacher:
+	# Convert TEACHER_NAME to a safe filename (spaces → underscores)
+	@SAFE_NAME=$$(echo "$(TEACHER_NAME)" | tr ' ' '_'); \
+	OUTPUT="report_$${SAFE_NAME}_$(SCHOOL_ID)_CONFIDENTIAL.pdf"; \
+	$(R) -e "rmarkdown::render('teacher_report.Rmd', \
+		output_format = 'pdf_document', \
+		output_dir = 'outputs', \
+		output_file = '$${OUTPUT}', \
+		params = list( \
+			school_id = '$(SCHOOL_ID)', \
+			teacher_name = '$(TEACHER_NAME)' \
+		) \
+	)"
+
 # Generic rule: any .Rmd -> .pdf
 %.pdf: %.Rmd
 	$(R) -e "rmarkdown::render('$<', output_format='all', output_dir='outputs')"

@@ -1,0 +1,275 @@
+---
+title: "Diagnostický report: Historické myšlení a postoje"
+author: "`r params$teacher_name` (Škola: `r params$school_id`)"
+date: "`r format(Sys.Date(), '%d. %m. %Y')`"
+params:
+  school_id: "S08"
+  teacher_name: "Mgr. Jan Novák"
+output:
+  pdf_document:
+    latex_engine: xelatex
+    keep_tex: true
+classoption: landscape, twocolumn
+geometry: margin=1cm, top=1.5cm, bottom=1.5cm
+fontsize: 10pt
+header-includes:
+  - \usepackage{titling}
+  - \setlength{\droptitle}{-2cm} # Lift title significantly
+  - \pretitle{\begin{center}\Large\bfseries} # Compact title font
+  - \posttitle{\end{center}\vspace{-0.5em}}
+  - \preauthor{\begin{center}\large}
+  - \postauthor{\end{center}\vspace{-0.5em}}
+  - \predate{\begin{center}\small}
+  - \postdate{\end{center}\vspace{-1.5em}} # Remove space after date
+  - \usepackage{sectsty}
+  - \sectionfont{\fontsize{11}{13}\selectfont\bfseries} # Compact section headers
+  - \subsectionfont{\fontsize{10}{12}\selectfont\bfseries}
+  - \usepackage{enumitem}
+  - \setlist{nosep} # Remove spacing in lists
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE, 
+  warning = FALSE, 
+  message = FALSE, 
+  fig.width = 5.5, # Optimized for single column width in landscape
+  fig.height = 3,  # Shortened height for density
+  fig.align = 'center',
+  fig.showtext = TRUE
+)
+
+library(tidyverse)
+library(showtext)
+library(patchwork)
+
+# Fonts
+font_add_google("Roboto", "roboto")
+showtext_auto()
+```
+
+```{r load-process, results='hide'}
+# --- MOCK DATA & PROCESSING ---
+if(file.exists("normalised_responses.RData")) {
+  load("normalised_responses.RData")
+} else {
+  set.seed(42)
+  n <- 300
+  normalised_responses <- data.frame(
+    school_id = factor(sample(c("S01", "S02", "S03", "S04"), n, replace=T)),
+    class_label = factor(sample(c("9.A", "9.B", "Kvarta", "Sexta"), n, replace=T)),
+    KN1=sample(0:1, n, replace=T), KN2=sample(0:1, n, replace=T), KN3=sample(0:1, n, replace=T),
+    KN4=sample(0:1, n, replace=T), KN5=sample(0:1, n, replace=T), KN6=sample(0:1, n, replace=T),
+    POP1=sample(1:4, n, replace=T), POP2=sample(1:4, n, replace=T), POP3=sample(1:4, n, replace=T),
+    ROA1=sample(1:4, n, replace=T), ROA2=sample(1:4, n, replace=T), ROA3=sample(1:4, n, replace=T),
+    CONT1=sample(1:4, n, replace=T), CONT2=sample(1:4, n, replace=T), CONT3=sample(1:4, n, replace=T),
+    RD1=sample(1:5, n, replace=T), RD2=sample(1:5, n, replace=T), RD3=sample(1:5, n, replace=T),
+    NS1=sample(1:5, n, replace=T), NS2=sample(1:5, n, replace=T), NS3=sample(1:5, n, replace=T)
+  )
+}
+
+dat_raw <- normalised_responses
+
+# Variables
+POP_rev_items <- paste0("POP", 1:3)
+dat_raw <- dat_raw %>%
+  mutate(across(all_of(POP_rev_items), ~ 5 - as.numeric(.), .names = "{.col}_rev")) %>%
+  mutate(
+    HPT_POP_rev = rowMeans(across(paste0(POP_rev_items, "_rev")), na.rm = TRUE),
+    HPT_CONT    = rowMeans(across(CONT1:CONT3), na.rm = TRUE),
+    HPT_ROA     = rowMeans(across(ROA1:ROA3),   na.rm = TRUE),
+    KN_Total    = rowSums(across(starts_with("KN")), na.rm = TRUE),
+    Att_Global  = (rowMeans(across(starts_with("RD"))) + rowMeans(across(starts_with("NS")))) / 2
+  )
+
+# Aggregation Logic
+target_school <- params$school_id
+dat_analysis <- dat_raw %>%
+  mutate(
+    is_teacher_school = school_id == target_school,
+    plot_group = ifelse(is_teacher_school, as.character(class_label), "Ostatní"),
+    plot_group = factor(plot_group, levels = c("Ostatní", unique(as.character(class_label[is_teacher_school]))))
+  )
+
+class_stats <- dat_analysis %>%
+  group_by(school_id, class_label, plot_group, is_teacher_school) %>%
+  summarise(
+    N = n(),
+    Mean_CONT = mean(HPT_CONT, na.rm=T),
+    Mean_POP_rev = mean(HPT_POP_rev, na.rm=T),
+    Mean_ROA = mean(HPT_ROA, na.rm=T),
+    Mean_KN = mean(KN_Total, na.rm=T),
+    Mean_Att = mean(Att_Global, na.rm=T),
+    .groups = "drop"
+  )
+
+my_classes <- class_stats %>% filter(is_teacher_school)
+others <- class_stats %>% filter(!is_teacher_school)
+background_pts <- dat_analysis %>% filter(!is_teacher_school)
+
+# Colors
+classes_n <- levels(droplevels(my_classes$plot_group))
+cols <- setNames(c("#E41A1C", "#377EB8", "#4DAF4A", "#984EA3", "#FF7F00")[1:length(classes_n)], classes_n)
+
+# Common Theme for Compactness
+theme_compact <- theme_minimal(base_family = "roboto", base_size = 9) +
+  theme(
+    legend.position = "right", 
+    legend.margin = margin(0,0,0,0),
+    legend.box.spacing = unit(0, "pt"),
+    plot.title = element_text(face="bold", size=10),
+    plot.subtitle = element_text(size=8, color="grey30"),
+    axis.title = element_text(size=8),
+    panel.grid.minor = element_blank()
+  )
+```
+
+**Manažerské shrnutí (TL;DR)**
+
+```{r summary-calc}
+best_class <- my_classes$class_label[which.max(my_classes$Mean_CONT)]
+avg_diff <- mean(my_classes$Mean_CONT) - mean(others$Mean_CONT)
+txt_diff <- ifelse(avg_diff > 0, "vyšší (+)", "nižší (-)")
+```
+
+  * **Výkon:** Vaše třídy mají v průměru **`r txt_diff`** úroveň kontextualizace než vzorek (`r round(avg_diff, 2)`).
+  * **Lídr:** Nejlépe historicky uvažuje třída **`r best_class`**.
+  * **Klima:** Průměrný index autoritářství ve vašich třídách je `r round(mean(my_classes$Mean_Att), 1)` (škála 1–5).
+
+-----
+
+# 1\. Mapa historického myšlení
+
+Graf ukazuje pozici průměrů vašich tříd. **Cíl:** Pravý horní roh (vysoká kontextualizace, nízký populismus). Šedé vrstevnice značí rozložení ostatních škol.
+
+```{r plot-map}
+ggplot() +
+  # 1. Contours (Vrstevnice) of other classes
+  stat_density_2d(data = others, aes(x = Mean_POP_rev, y = Mean_CONT), 
+                  color = "grey80", size = 0.4) +
+  # 2. Gray Points (Other classes)
+  geom_point(data = others, aes(x = Mean_POP_rev, y = Mean_CONT), 
+             color = "grey85", size = 2, alpha = 0.5) +
+  # 3. Teacher Classes (Colored)
+  geom_point(data = my_classes, aes(x = Mean_POP_rev, y = Mean_CONT, color = plot_group), size = 4) +
+  geom_text(data = my_classes, aes(x = Mean_POP_rev, y = Mean_CONT, label = class_label), 
+            vjust = -1.4, size = 3, fontface = "bold", family = "roboto") +
+  # # Scales (Start at 0)
+  # scale_x_continuous(limits = c(0, 4), breaks = 0:4) +
+  # scale_y_continuous(limits = c(0, 4), breaks = 0:4) +
+  scale_color_manual(values = cols) +
+  labs(x = "Absence populismu (Mean)", y = "Kontextualizace (Mean)", color=NULL) +
+  theme_compact + theme(legend.position="none")
+```
+
+# 2\. Profil složek myšlení
+
+Srovnání průměrného výkonu tříd v dílčích škálách.
+
+  * **CONT:** Porozumění kontextu.
+  * **POP rev:** Schopnost vidět komplexitu (ne černobíle).
+  * **ROA:** Důraz na roli jednotlivce v dějinách.
+
+<!-- end list -->
+
+```{r plot-bars}
+long_s <- my_classes %>%
+  select(plot_group, Mean_CONT, Mean_POP_rev, Mean_ROA) %>%
+  pivot_longer(cols = starts_with("Mean"), names_to = "Comp", values_to = "Val") %>%
+  mutate(Comp = recode(Comp, "Mean_CONT"="CONT", "Mean_POP_rev"="No-POP", "Mean_ROA"="ROA"))
+
+ggplot(long_s, aes(x = Comp, y = Val, fill = plot_group)) +
+  geom_col(position = position_dodge(width=0.8), width=0.7) +
+  scale_fill_manual(values = cols) +
+  coord_cartesian(ylim = c(1, 4)) +
+  labs(x = NULL, y = "Skóre (1-4)", fill=NULL) +
+  theme_compact
+```
+
+# 3\. Znalosti vs. Interpretace
+
+Podporují faktické znalosti (test 1918–1929) schopnost vysvětlovat?
+
+  * **Rostoucí trend** = Znalosti pomáhají.
+  * **Plochý trend** = Žáci znalosti mají, ale neumí je použít.
+
+<!-- end list -->
+
+```{r plot-kn}
+ggplot() +
+  # 1. Background Trend & Points
+  geom_smooth(data = class_stats, aes(x = Mean_KN, y = Mean_CONT), 
+              method = "lm", se = FALSE, color = "grey90", fullrange = TRUE) +
+  geom_point(data = others, aes(x = Mean_KN, y = Mean_CONT), 
+             color = "grey85", size = 2, alpha = 0.6) +
+
+  # 2. Foreground: Teacher's classes
+  geom_point(data = my_classes, aes(x = Mean_KN, y = Mean_CONT, color = plot_group), size = 4) +
+  geom_text(data = my_classes, aes(x = Mean_KN, y = Mean_CONT, label = class_label), 
+            vjust = -1.5, size = 2.5, fontface = "bold") +
+  
+  # 3. Scales & Theme
+  scale_color_manual(values = cols) +
+  scale_x_continuous(limits = c(0, 6), breaks = 0:6) +
+  scale_y_continuous(limits = c(0, 4), breaks = 0:4) +
+  labs(x = "Znalosti (0-6 bodů)", y = "Kontextualizace (CONT)", color=NULL) +
+  theme_compact + theme(legend.position="none")
+```
+
+# 4\. Vliv postojů (Autoritářství)
+
+Vztah mezi tíhnutím k autoritářství/diktatuře (osa X) a historickým myšlením.
+
+  * **Klesající trend** naznačuje, že silné postoje blokují analytické myšlení.
+
+<!-- end list -->
+
+```{r plot-att}
+ggplot() +
+  # 1. Background Trend & Points
+  geom_smooth(data = class_stats, aes(x = Mean_Att, y = Mean_CONT), 
+              method = "lm", se = FALSE, color = "grey90", fullrange = TRUE, linetype = "dashed") +
+  geom_point(data = others, aes(x = Mean_Att, y = Mean_CONT), 
+             color = "grey85", size = 2, alpha = 0.6) +
+
+  # 2. Foreground: Teacher's classes
+  geom_point(data = my_classes, aes(x = Mean_Att, y = Mean_CONT, color = plot_group), size = 4) +
+  geom_text(data = my_classes, aes(x = Mean_Att, y = Mean_CONT, label = class_label), 
+            vjust = -1.5, size = 2.5, fontface = "bold") +
+  
+  # 3. Scales & Theme
+  scale_color_manual(values = cols) +
+  scale_x_continuous(limits = c(0, 5), breaks = 0:5) +
+  scale_y_continuous(limits = c(0, 4), breaks = 0:4) +
+  labs(x = "Autoritářství (1-5)", y = "Kontextualizace (CONT)", color=NULL) +
+  theme_compact + theme(legend.position="none")
+```
+
+# 5\. Detail položek (CONT)
+
+Které konkrétní otázky dělaly třídám problémy?
+(Vyšší hodnota = lepší odpověď).
+
+```{r plot-items}
+item_prof <- dat_analysis %>%
+  filter(is_teacher_school) %>%
+  group_by(class_label) %>%
+  summarise(across(c(CONT1, CONT2, CONT3), mean, na.rm=T)) %>%
+  pivot_longer(-class_label, names_to="Item", values_to="Sc")
+
+ggplot(item_prof, aes(x=Item, y=Sc, color=class_label, group=class_label)) +
+  geom_line() + geom_point(size=2) +
+  scale_color_manual(values = cols) +
+  ylim(1, 4) +
+  labs(x=NULL, y="Průměr", color=NULL) +
+  theme_compact
+```
+
+\vspace{1em}
+\noindent\footnotesize\textit{Poznámka: Body v grafech 1, 3 a 4 představují průměry celých tříd. Šedé prvky na pozadí reprezentují celkový vzorek škol pro srovnání.}
+
+TODO: doporuceni - pomuze vice znalosti nebo ne? jak zlepsit historicke mysleni ve tride.
+
+pridat nejake prehledy rozvrstveni jednotlivych trid (jak moc je tam variabilita?)
+jeste vice kondenzovat
+pridat jasne zavery a doporuceni

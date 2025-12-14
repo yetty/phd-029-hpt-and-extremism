@@ -10,7 +10,6 @@ the HPT items **even at equal underlying HPT competence**. Concretely:
 -   **Interpretation:** If we find pervasive DIF and/or scalar
     non-invariance, this supports the PCI RR H1 that HPT scores can be
     ideologically contaminated.
--   Background on HPT instrument and typical factor solutions:
 
 # Setup
 
@@ -25,7 +24,7 @@ library(stringr)
 library(janitor)
 library(difR)        # DIF for ordinal items
 library(lavaan)      # CFA / invariance
-library(semTools)    # measurementInvariance, fitMeasures helpers
+library(semTools)    # helpers
 library(car)         # recode
 library(mirt)
 ```
@@ -37,6 +36,33 @@ library(mirt)
 load("normalised_responses.RData")
 stopifnot(exists("normalised_responses"))
 dat_raw <- normalised_responses
+
+# Cluster vars
+dat_raw <- dat_raw %>%
+  mutate(
+    school_id   = as.factor(school_id),
+    class_label = as.factor(class_label),
+    class_id    = interaction(school_id, class_label, drop = TRUE)
+  )
+
+# Coerce HPT items to numeric early (1-4 expected in codebook)
+hpt_items <- c(paste0("POP",1:3), paste0("ROA",1:3), paste0("CONT",1:3))
+dat_raw <- dat_raw %>% mutate(across(all_of(hpt_items), ~ suppressWarnings(as.numeric(.))))
+
+# Reverse POP item-wise (so higher = more contextualised)
+POP_rev_items <- paste0("POP", 1:3)
+dat_raw <- dat_raw %>%
+  mutate(across(all_of(POP_rev_items), ~ 5 - ., .names = "{.col}_rev")) %>%
+  mutate(
+    HPT_POP_raw = rowMeans(across(POP1:POP3), na.rm = TRUE),           # presentism, higher = worse
+    HPT_POP_rev = rowMeans(across(paste0(POP_rev_items, "_rev")), na.rm = TRUE),  # higher = better
+    HPT_CONT    = rowMeans(across(CONT1:CONT3), na.rm = TRUE),
+    HPT_ROA     = rowMeans(across(ROA1:ROA3),   na.rm = TRUE),
+
+    # Canonical composites (CTX6 is our stable default)
+    HPT_CTX6 = rowMeans(cbind(HPT_POP_rev, HPT_CONT), na.rm = TRUE),
+    HPT_TOT9 = rowMeans(cbind(HPT_POP_rev, HPT_CONT, HPT_ROA), na.rm = TRUE)
+  )
 ```
 
 We use variables as defined in the **codebook** (metadata; KN1-KN6;
@@ -45,34 +71,30 @@ A1-A3, U1-U3, K1-K3; SDR1-SDR5).
 
 ## Scoring & grouping
 
--   **HPT items** are 1-4. To align a single "more HPT-competent"
-    direction, we reverse only the *presentism* items (`POP1-POP3`):
-    `POP*_rev = 5 - POP*`. CONT and ROA are used as-is (higher = better
-    contextual/agent-aware reasoning per instrument notes).
+-   **HPT items** are 1-4. We reverse only *presentism* items
+    (`POP1-POP3`: `5 - POP*`) so that a single higher-is-better
+    direction is used for scale construction and MG-CFA. DIF uses
+    original item codings (reversal is not required for DIF detection).
 -   **Ideology composite**: FR-LF-mini (RD1-3 + NS1-3) and KSA-3 (9
     items). We z-score the two scale means and average them →
     **IDEO_Z**. *Low* = bottom 33%, *High* = top 33% (middle third
-    excluded to sharpen contrasts). FR-LF dimensions/logic per Leipzig
-    scale.
+    excluded to sharpen contrasts).
 -   **Controls**: prior knowledge (sum KN1-KN6), social desirability
-    (SDR1-SDR5; note SDR2-SDR4 already reversed in your file).
+    (SDR1-SDR5; note SDR2--SDR4 are already reversed upstream per
+    codebook).
 
 ``` r
-# Select item blocks
-hpt_items <- c(paste0("POP",1:3), paste0("ROA",1:3), paste0("CONT",1:3))
+# Select blocks
 frlf_items <- c(paste0("RD",1:3), paste0("NS",1:3))
 ksa_items  <- c(paste0("A",1:3), paste0("U",1:3), paste0("K",1:3))
 kn_items   <- paste0("KN",1:6)
 sdr_items  <- paste0("SDR",1:5)
 
+# Coerce predictors to numeric
+num_blocks <- c(frlf_items, ksa_items, kn_items, sdr_items)
+
 dat <- dat_raw %>%
-  mutate(across(all_of(hpt_items), as.numeric),
-         across(all_of(frlf_items), as.numeric),
-         across(all_of(ksa_items), as.numeric),
-         across(all_of(kn_items), as.numeric),
-         across(all_of(sdr_items), as.numeric)) %>%
-  # Reverse presentism items so higher = better HPT
-  mutate(across(all_of(paste0("POP",1:3)), ~ 5 - .x, .names = "{.col}_rev")) %>%
+  mutate(across(all_of(num_blocks), ~ suppressWarnings(as.numeric(.)))) %>%
   # Scale scores
   rowwise() %>%
   mutate(
@@ -81,9 +103,9 @@ dat <- dat_raw %>%
     HPT_ROA   = mean(c_across(ROA1:ROA3), na.rm = TRUE),
     HPT_POPR  = mean(c_across(paste0("POP",1:3,"_rev")), na.rm = TRUE),
     FRLF_mean = mean(c_across(all_of(frlf_items)), na.rm = TRUE),
-    KSA_mean  = mean(c_across(all_of(ksa_items)), na.rm = TRUE),
-    KN_sum    = sum(c_across(all_of(kn_items)), na.rm = TRUE),
-    SDR_mean  = mean(c_across(all_of(sdr_items)), na.rm = TRUE)
+    KSA_mean  = mean(c_across(all_of(ksa_items)),  na.rm = TRUE),
+    KN_sum    = sum(c_across(all_of(kn_items)),    na.rm = TRUE),
+    SDR_mean  = mean(c_across(all_of(sdr_items)),  na.rm = TRUE)
   ) %>%
   ungroup() %>%
   mutate(
@@ -92,7 +114,7 @@ dat <- dat_raw %>%
     IDEO_Z = (FRLF_z + KSA_z) / 2
   )
 
-# define groups by tertiles
+# Define tertile groups
 qs <- quantile(dat$IDEO_Z, probs = c(.3334, .6666), na.rm = TRUE)
 dat <- dat %>%
   mutate(
@@ -103,22 +125,19 @@ dat <- dat %>%
     )
   )
 
-tab <- dat %>% count(ideology_group)
-kable(tab, caption = "Group sizes (Low/High ideology; Mid excluded from group-wise tests)")
+kable(dat %>% count(ideology_group), caption = "Group sizes (Low/High ideology; Mid excluded from group-wise tests)")
 ```
 
   ideology_group      n
   ---------------- ----
-  High               61
-  Low                62
-  Mid                61
+  High               77
+  Low                77
+  Mid                80
 
   : Group sizes (Low/High ideology; Mid excluded from group-wise tests)
 
-> **Interpretation note.** We focus on *Low* vs *High* ideology to
-> maximize contrast and statistical power for DIF/MG-CFA. The *Mid*
-> group is retained for descriptive context but excluded from two-group
-> invariance tests.
+> **Note.** We focus on *Low* vs *High* to maximise contrast for
+> DIF/MG-CFA. *Mid* is retained for descriptives only.
 
 # Descriptives (checks)
 
@@ -127,67 +146,57 @@ desc_tbl <- dat %>%
   group_by(ideology_group) %>%
   summarise(n = n(),
             HPT_total = mean(HPT_total, na.rm = TRUE),
-            KN_sum    = mean(KN_sum, na.rm = TRUE),
-            SDR_mean  = mean(SDR_mean, na.rm = TRUE)) %>%
+            KN_sum    = mean(KN_sum,    na.rm = TRUE),
+            SDR_mean  = mean(SDR_mean,  na.rm = TRUE)) %>%
   arrange(match(ideology_group, c("Low","Mid","High")))
 kable(desc_tbl, digits = 2, caption = "Descriptives by ideology group (means)")
 ```
 
   ideology_group      n   HPT_total   KN_sum   SDR_mean
   ---------------- ---- ----------- -------- ----------
-  Low                62        2.89     3.65       3.15
-  Mid                61        2.94     3.26       3.06
-  High               61        2.69     3.05       2.86
+  Low                77        2.92     3.47       3.16
+  Mid                80        2.86     2.98       3.03
+  High               77        2.75     3.03       2.83
 
   : Descriptives by ideology group (means)
 
-# DIF analysis (ordinal logistic, item-by-item)
+# DIF analysis (ordinal, item-by-item)
 
 **Goal.** At *equal HPT ability*, do Low/High ideology groups respond
-differently to specific items? We use *matching on total HPT
-(item-rest)* and test both uniform and non-uniform DIF per item (α =
-.01, Bonferroni adjusted). This targets the *"same trait, different item
-functioning"* mechanism of ideological contamination.
+differently to specific items? We match on total HPT (item-rest) and
+test both uniform and non-uniform DIF per item (α = .01, Bonferroni
+adjusted).
 
 ``` r
 ## Keep only Low/High groups
 anal <- dat[dat$ideology_group %in% c("Low","High"), , drop = FALSE]
 
-## Ensure the HPT item list exists in the exact order we need
+## HPT item list in original coding
 hpt_items <- c("POP1","POP2","POP3","ROA1","ROA2","ROA3","CONT1","CONT2","CONT3")
-
-## Build item matrix with base subsetting (no tidy-eval)
 stopifnot(all(hpt_items %in% names(anal)))
+
+## Build item matrix
 hpt_mat <- anal[, hpt_items, drop = FALSE]
+for (j in seq_along(hpt_items)) hpt_mat[[j]] <- suppressWarnings(as.numeric(hpt_mat[[j]]))
 
-## Coerce to numeric safely
-for (j in seq_along(hpt_items)) {
-  hpt_mat[[j]] <- suppressWarnings(as.numeric(hpt_mat[[j]]))
-}
-
-## Clean group factor
+## Group factor
 grp <- factor(anal$ideology_group, levels = c("Low","High"))
 
-## Drop rows with < 2 non-missing item responses (mirt can’t estimate for all-NA)
+## Drop rows with <2 answered items
 keep <- rowSums(!is.na(hpt_mat)) >= 2
 hpt_mat <- hpt_mat[keep, , drop = FALSE]
 grp     <- droplevels(grp[keep])
 
-## Sanity checks
-stopifnot(nrow(hpt_mat) == length(grp))
-stopifnot(nlevels(grp) == 2)
+stopifnot(nrow(hpt_mat) == length(grp), nlevels(grp) == 2)
 print(table(grp))
 ```
 
     ## grp
     ##  Low High 
-    ##   62   61
+    ##   76   77
 
 ``` r
-library(mirt)
-
-# 1. Fit the Base Model (Configural: constrained slopes & intercepts across groups)
-#    We start with a constrained model because scheme="drop" will try to FREE parameters to see if fit improves.
+# Constrained multi-group graded model, then DIF with scheme="drop"
 mod_base <- multipleGroup(
   data       = hpt_mat,
   model      = 1,
@@ -198,26 +207,14 @@ mod_base <- multipleGroup(
 ```
 
 ``` r
-# 2. Robust Parameter Detection
-#    Instead of guessing "d" or "a1", we ask the model what parameters exist.
-#    graded models usually have 'a1' (slope) and 'd1', 'd2', 'd3'... (thresholds).
 params_all <- mirt::mod2values(mod_base)$name
 unique_pars <- unique(params_all)
-
-# Identify Slopes: usually start with 'a' (e.g., a1)
 pars_slope <- grep("^a", unique_pars, value = TRUE)
-
-# Identify Thresholds: usually start with 'd' (e.g., d1, d2, d3)
-# Note: We ensure we don't pick up 'group' or other metadata parameters
-pars_thr <- grep("^d\\d+$", unique_pars, value = TRUE)
-
-if (length(pars_slope) == 0 || length(pars_thr) == 0) {
-  stop("Could not auto-detect parameter names. Please check mod2values(mod_base).")
-}
+pars_thr   <- grep("^d\\d+$", unique_pars, value = TRUE)
+stopifnot(length(pars_slope) > 0, length(pars_thr) > 0)
 
 pars_to_test <- c(pars_slope, pars_thr)
 
-# 3. Run DIF
 dif_out <- DIF(
   mod_base,
   which.par   = pars_to_test,
@@ -227,18 +224,12 @@ dif_out <- DIF(
   verbose     = FALSE
 )
 
-# 4. Tidy Output (Dynamic Aggregation)
-#    DIF() returns columns like p.a1, p.d1, p.d2. We need to aggregate them.
 res_tbl <- as.data.frame(dif_out)
 res_tbl$Item <- rownames(res_tbl)
 
-# Helper to get min p-value across a set of columns (e.g., all d-parameters)
 get_min_p <- function(df, prefix_list) {
-  # Find columns in df matching p.prefix (e.g., p.d1, p.d2)
   cols <- unlist(lapply(prefix_list, function(p) grep(paste0("^p\\.", p, "$"), names(df), value=TRUE)))
   if (length(cols) == 0) return(rep(NA, nrow(df)))
-  
-  # Return min p-value across these columns for each row
   apply(df[, cols, drop=FALSE], 1, min, na.rm = TRUE)
 }
 
@@ -246,20 +237,15 @@ alpha <- 0.01
 
 res_tbl <- res_tbl %>%
   mutate(
-    # Aggregate specific params into broad categories
-    p_nonuniform = get_min_p(cur_data(), pars_slope), # Min p of a1...
-    p_uniform    = get_min_p(cur_data(), pars_thr),   # Min p of d1, d2...
-    
-    # Flagging logic
+    p_nonuniform = get_min_p(cur_data(), pars_slope),
+    p_uniform    = get_min_p(cur_data(), pars_thr),
     Flag_nonuniform = ifelse(!is.na(p_nonuniform) & p_nonuniform < alpha, "YES", "no"),
     Flag_uniform    = ifelse(!is.na(p_uniform)    & p_uniform    < alpha, "YES", "no")
   ) %>%
   select(Item, p_nonuniform, p_uniform, Flag_nonuniform, Flag_uniform)
 
-knitr::kable(
-  res_tbl, digits = 4,
-  caption = "DIF per item (mirt; graded). Non-uniform = Slope (a1); Uniform = Any Threshold (d1-dK). Bonferroni α = 0.01."
-)
+kable(res_tbl, digits = 4,
+      caption = "DIF per item (mirt; graded). Non-uniform = Slope (a1); Uniform = Any Threshold (d1-dK). Bonferroni alpha = 0.01.")
 ```
 
           Item    p_nonuniform   p_uniform   Flag_nonuniform   Flag_uniform
@@ -275,14 +261,7 @@ knitr::kable(
   CONT3   CONT3   NA             NA          no                no
 
   : DIF per item (mirt; graded). Non-uniform = Slope (a1); Uniform = Any
-  Threshold (d1-dK). Bonferroni α = 0.01.
-
-**How to read it (unchanged conceptually):**
-
--   **Uniform DIF (thresholds/`d`)** → one group consistently picks
-    higher/lower categories across the ability range.
--   **Non-uniform DIF (slopes/`a1`)** → the group difference changes
-    with latent ability (interaction).
+  Threshold (d1-dK). Bonferroni alpha = 0.01.
 
 ``` r
 flagged <- with(res_tbl, Item[Flag_uniform == "YES" | Flag_nonuniform == "YES"])
@@ -291,7 +270,6 @@ if (length(flagged) > 0) {
   plot(mod_base, type = "trace", which.items = which_item,
        facet_items = FALSE, groups = levels(grp))
 } else {
-  # CHANGED: "α" to "alpha" to prevent LaTeX encoding error
   plot.new(); text(0.5, 0.5, "No DIF-flagged item at alpha = 0.01.")
 }
 ```
@@ -300,9 +278,7 @@ if (length(flagged) > 0) {
 
 # Multi-group CFA (configural → metric → scalar)
 
-**Model.** Prior studies often find POP and CONT forming one factor and
-ROA another. To remain conservative and close to your codebook
-structure, we specify a **three-factor model** (POP_rev, ROA, CONT) with
+**Model.** We specify a **three-factor model** (POP_rev, ROA, CONT) with
 POP items reversed so that all loadings point to *more HPT-congruent*
 responses. We then test invariance across Low vs High ideology groups.
 
@@ -311,13 +287,24 @@ responses. We then test invariance across Low vs High ideology groups.
 cfad <- dat %>%
   filter(ideology_group %in% c("Low","High")) %>%
   transmute(
-    ideology_group,
-    POP1 = 5 - !!sym("POP1"),
-    POP2 = 5 - !!sym("POP2"),
-    POP3 = 5 - !!sym("POP3"),
+    ideology_group, class_id,         # keep cluster id for reference (not used by lavaan here)
+    POP1 = 5 - POP1,
+    POP2 = 5 - POP2,
+    POP3 = 5 - POP3,
     ROA1, ROA2, ROA3,
     CONT1, CONT2, CONT3
   )
+
+# Coerce all item columns to numeric and enforce ordinal 1:4 range; replace out-of-range with NA
+ord_items <- setdiff(names(cfad), c("ideology_group", "class_id"))
+cfad <- cfad %>% mutate(across(all_of(ord_items), ~ suppressWarnings(as.numeric(.))))
+cfad <- cfad %>% mutate(across(all_of(ord_items), ~ ifelse(. %in% 1:4, ., NA_real_)))
+
+# If any columns had non 1-4 values, warn instead of stopping
+bad_cols <- vapply(cfad[ord_items], function(x) any(!is.na(x) & !(x %in% 1:4)), logical(1))
+if (any(bad_cols)) {
+  warning(sprintf("Non-1:4 values were set to NA in: %s", paste(names(bad_cols)[bad_cols], collapse=", ")))
+}
 ```
 
 ``` r
@@ -325,38 +312,27 @@ model_3f <- '
   POP =~ POP1 + POP2 + POP3
   ROA =~ ROA1 + ROA2 + ROA3
   CONT =~ CONT1 + CONT2 + CONT3
-  # Allow the three reasoning modes to correlate
 '
 ```
 
 ``` r
-# We use standard lavaan syntax to run the 3 steps explicitly.
-# This avoids the "lavTestLRT" error caused by the deprecated semTools wrapper.
-
-ord_items <- colnames(cfad)[colnames(cfad) != "ideology_group"]
-
-# 1. Configural: Same factor structure, no constraints
+# Run invariance ladder with WLSMV on ordered items; DO NOT pass cluster (not supported with ordered)
 fit_conf <- cfa(model_3f, data = cfad, group = "ideology_group",
                 ordered = ord_items, estimator = "WLSMV")
 
-# 2. Metric (Weak): Constrain loadings
 fit_metr <- cfa(model_3f, data = cfad, group = "ideology_group",
                 ordered = ord_items, estimator = "WLSMV",
                 group.equal = c("loadings"))
 
-# 3. Scalar (Strong): Constrain loadings and thresholds
 fit_scal <- cfa(model_3f, data = cfad, group = "ideology_group",
                 ordered = ord_items, estimator = "WLSMV",
                 group.equal = c("loadings", "thresholds"))
 
-# Extract Fit Measures
 get_fit <- function(fit) {
-  fm <- fitMeasures(fit, c("chisq.scaled", "df.scaled", "pvalue.scaled", 
-                           "cfi.scaled", "rmsea.scaled", "srmr"))
-  return(fm)
+  fitMeasures(fit, c("chisq.scaled", "df.scaled", "pvalue.scaled",
+                    "cfi.scaled", "rmsea.scaled", "srmr"))
 }
 
-# Combine into a table
 fits <- bind_rows(
   Configural = get_fit(fit_conf),
   Metric     = get_fit(fit_metr),
@@ -365,67 +341,45 @@ fits <- bind_rows(
   mutate(Model = c("Configural", "Metric", "Scalar")) %>%
   select(Model, everything())
 
-# Display Table
-fits %>%
-  mutate(across(where(is.numeric), round, 3)) %>%
+fits %>% mutate(across(where(is.numeric), round, 3)) %>%
   kable(caption = "MG-CFA fit indices by invariance level (WLSMV).")
 ```
 
   -------------------------------------------------------------------------------------------
   Model          chisq.scaled   df.scaled   pvalue.scaled   cfi.scaled   rmsea.scaled    srmr
   ------------ -------------- ----------- --------------- ------------ -------------- -------
-  Configural           61.343          48           0.093        0.940          0.070   0.098
+  Configural           64.608          48           0.055        0.950          0.070   0.089
 
-  Metric               76.352          54           0.024        0.899          0.085   0.113
+  Metric               79.964          54           0.012        0.921          0.082   0.103
 
-  Scalar               76.592          63           0.117        0.939          0.061   0.102
+  Scalar               78.986          63           0.084        0.952          0.060   0.092
   -------------------------------------------------------------------------------------------
 
   : MG-CFA fit indices by invariance level (WLSMV).
 
 ``` r
-# Calculate Deltas manually based on the table above
-# Practical decision rules (Chen, 2007): ΔCFI ≤ -.010 and ΔRMSEA ≤ .015 support invariance.
-
 deltas <- tibble(
-  step = c("Configural -> Metric", "Metric -> Scalar"),
-  
-  # Note: CFI usually goes DOWN as constraints are added (so we look at change)
-  dCFI = c(fits$cfi.scaled[2] - fits$cfi.scaled[1], 
-           fits$cfi.scaled[3] - fits$cfi.scaled[2]),
-  
-  # RMSEA usually goes UP (or stays same)
-  dRMSEA = c(fits$rmsea.scaled[2] - fits$rmsea.scaled[1], 
-             fits$rmsea.scaled[3] - fits$rmsea.scaled[2])
+  step  = c("Configural -> Metric", "Metric -> Scalar"),
+  dCFI  = c(fits$cfi.scaled[2] - fits$cfi.scaled[1], fits$cfi.scaled[3] - fits$cfi.scaled[2]),
+  dRMSEA= c(fits$rmsea.scaled[2] - fits$rmsea.scaled[1], fits$rmsea.scaled[3] - fits$rmsea.scaled[2])
 )
 
-# FIX: Use mutate + across to round only numeric columns
-deltas %>%
-  mutate(across(where(is.numeric), round, 3)) %>%
+deltas %>% mutate(across(where(is.numeric), round, 3)) %>%
   kable(caption = "Delta fit (CFI, RMSEA) across steps.")
 ```
 
   step                        dCFI   dRMSEA
   ----------------------- -------- --------
-  Configural -\> Metric     -0.041    0.015
-  Metric -\> Scalar          0.040   -0.024
+  Configural -\> Metric     -0.028    0.012
+  Metric -\> Scalar          0.030   -0.022
 
   : Delta fit (CFI, RMSEA) across steps.
 
-> **How to read this.**
->
-> -   If **metric holds** (small ΔCFI/ΔRMSEA), the *loadings* are
->     equivalent across Low/High: the latent traits have the same
->     meaning.
-> -   If **scalar fails** (large deltas), *thresholds/intercepts* differ
->     → **latent means are not comparable**, consistent with item-level
->     bias. This would **support H1** (ideological contamination).
+> **How to read this.** If **metric holds** (small ΔCFI/ΔRMSEA),
+> loadings are equivalent. If **scalar fails**, thresholds differ →
+> **biased group mean comparisons**, supporting H1.
 
 # (Optional) Two-factor robustness check
-
-Some studies merge POP & CONT into one factor and keep ROA separate; if
-desired, run the same invariance ladder for a 2-factor model and compare
-conclusions.
 
 ``` r
 model_2f <- '
@@ -434,15 +388,15 @@ model_2f <- '
 '
 measurementInvariance(model_2f, data = cfad, group = "ideology_group",
                       estimator = "WLSMV",
-                      ordered = colnames(cfad)[colnames(cfad)!="ideology_group"])
+                      ordered = ord_items)
 ```
 
 # Interpretation & reporting
 
-## DIF summary (per-item bias)
+## DIF summary
 
 ``` r
-kable(res_tbl, caption = "Repeat: DIF results to reference in text.")
+kable(res_tbl, caption = "DIF results (for reference in text).")
 ```
 
           Item    p_nonuniform   p_uniform   Flag_nonuniform   Flag_uniform
@@ -457,64 +411,38 @@ kable(res_tbl, caption = "Repeat: DIF results to reference in text.")
   CONT2   CONT2   NA             NA          no                no
   CONT3   CONT3   NA             NA          no                no
 
-  : Repeat: DIF results to reference in text.
+  : DIF results (for reference in text).
 
--   **If several POP or CONT items show DIF** (esp. uniform DIF favoring
-    *High* ideology), this indicates that **at the same overall HPT
-    ability** the High-ideology group tends to endorse "context-fitting"
-    options more strongly → **measurement bias** consistent with H1.
--   **If DIF is absent or rare**, the items function similarly across
-    ideology groups → **weak evidence for ideological contamination** at
-    the item level.
-
-## MG-CFA summary (scale-level bias)
+## MG-CFA summary
 
 ``` r
 kable(fits %>% mutate(across(where(is.numeric), round, 3)),
-      caption = "Repeat: MG-CFA fit to reference in text.")
+      caption = "MG-CFA fit to reference in text.")
 ```
 
   -------------------------------------------------------------------------------------------
   Model          chisq.scaled   df.scaled   pvalue.scaled   cfi.scaled   rmsea.scaled    srmr
   ------------ -------------- ----------- --------------- ------------ -------------- -------
-  Configural           61.343          48           0.093        0.940          0.070   0.098
+  Configural           64.608          48           0.055        0.950          0.070   0.089
 
-  Metric               76.352          54           0.024        0.899          0.085   0.113
+  Metric               79.964          54           0.012        0.921          0.082   0.103
 
-  Scalar               76.592          63           0.117        0.939          0.061   0.102
+  Scalar               78.986          63           0.084        0.952          0.060   0.092
   -------------------------------------------------------------------------------------------
 
-  : Repeat: MG-CFA fit to reference in text.
+  : MG-CFA fit to reference in text.
 
 ``` r
 kable(deltas %>% mutate(across(where(is.numeric), round, 3)), 
-      caption = "Repeat: Delta fit (CFI, RMSEA) thresholds.")
+      caption = "Delta fit (CFI, RMSEA) thresholds.")
 ```
 
   step                        dCFI   dRMSEA
   ----------------------- -------- --------
-  Configural -\> Metric     -0.041    0.015
-  Metric -\> Scalar          0.040   -0.024
+  Configural -\> Metric     -0.028    0.012
+  Metric -\> Scalar          0.030   -0.022
 
-  : Repeat: Delta fit (CFI, RMSEA) thresholds.
-
--   **Configural fit acceptable** + **metric holds** but **scalar
-    fails** → the construct is similar but item thresholds differ →
-    **comparisons of group means are biased**, supporting H1.
--   **Scalar holds** → the full measurement is invariant → **no
-    scale-level contamination**; HPT score comparisons across ideology
-    are tenable.
-
-# What this means for H1 (PCI RR)
-
--   **Supports H1 (contamination)** if (a) multiple items show DIF
-    and/or (b) scalar invariance fails. This means HPT performance may
-    be **inflated when students' ideology aligns with the vignette's
-    decisions/justifications** (the mechanism articulated in the PCI RR
-    plan).
--   **Weakens H1** if DIF is negligible and scalar invariance holds,
-    i.e., **items and scale behave equivalently** across ideology
-    groups.
+  : Delta fit (CFI, RMSEA) thresholds.
 
 # Reproducibility appendix
 

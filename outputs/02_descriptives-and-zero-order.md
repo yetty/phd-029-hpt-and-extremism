@@ -3,9 +3,10 @@
 This file establishes transparent baseline patterns---distributions,
 scale descriptives, zero-order correlations, and between-group
 variation---before any modeling. It follows the HPT framework
-(POP/ROA/CONT) and scoring conventions used in prior work, so higher HPT
-scores reflect better contextualization/agent-sensitive reasoning; FR-LF
-and KSA reflect ideological/authoritarian agreement; SDR reflects
+(POP/ROA/CONT) and scoring conventions used in prior work, but with an
+explicit **presentism reversal** so that **higher HPT scores reflect
+better contextualization/agent-sensitive reasoning**. FR-LF and KSA
+reflect ideological/authoritarian agreement; SDR reflects
 social-desirability responding. These descriptives document the
 empirical landscape your hypotheses build on. *Interpretation cheatsheet
 appears under each table/figure.*
@@ -18,9 +19,9 @@ library(dplyr); library(stringr); library(tidyr); library(purrr); library(readxl
 # Tables & plots
 library(knitr); library(kableExtra); library(ggplot2); library(scales)
 # Correlations
-library(psych);           # corr.test
+library(psych)           # corr.test
 # Multilevel & ICC
-library(lme4);            # lmer
+library(lme4)            # lmer
 suppressPackageStartupMessages(library(performance)) # icc()
 
 theme_set(theme_minimal(base_size = 11))
@@ -33,7 +34,23 @@ stopifnot(exists("normalised_responses"))
 
 all_data <- normalised_responses
 
-# Ensure factors as in codebook
+# --- Presentism reversal & canonical composites ---
+POP_rev_items <- paste0("POP", 1:3)
+stopifnot(all(POP_rev_items %in% names(all_data)))
+
+all_data <- all_data %>%
+  mutate(
+    across(all_of(POP_rev_items), ~ 5 - suppressWarnings(as.numeric(.)), .names = "{.col}_rev"),
+    HPT_POP_raw = rowMeans(across(all_of(POP_rev_items)), na.rm = TRUE),             # presentism, higher = worse
+    HPT_POP_rev = rowMeans(across(all_of(paste0(POP_rev_items, "_rev"))), na.rm = TRUE),  # higher = better
+    HPT_CONT    = rowMeans(across(CONT1:CONT3), na.rm = TRUE),
+    HPT_ROA     = rowMeans(across(ROA1:ROA3),   na.rm = TRUE),
+    # Canonical composites (report BOTH; use CTX6 as primary)
+    HPT_CTX6 = rowMeans(cbind(HPT_POP_rev, HPT_CONT), na.rm = TRUE),                 # no ROA (stable default)
+    HPT_TOT9 = rowMeans(cbind(HPT_POP_rev, HPT_CONT, HPT_ROA), na.rm = TRUE)         # includes ROA
+  )
+
+# Ensure factors as in codebook and build unique class_id
 all_data <- all_data %>%
   mutate(
     school_id    = as.factor(school_id),
@@ -41,7 +58,8 @@ all_data <- all_data %>%
     school_level = as.factor(school_level),
     school_type  = as.factor(school_type),
     region       = as.factor(region),
-    gender       = as.factor(gender)
+    gender       = as.factor(gender),
+    class_id     = interaction(school_id, class_label, drop = TRUE)
   )
 ```
 
@@ -57,10 +75,10 @@ scale_mean <- function(df, items, min_n = ceiling(length(items)/2), na.rm = TRUE
   out
 }
 
-# HPT (1-4): subscores and total (average so all stay on 1-4)
-hpt_pop_items  <- c("POP1","POP2","POP3")
-hpt_roa_items  <- c("ROA1","ROA2","ROA3")
-hpt_cont_items <- c("CONT1","CONT2","CONT3")
+# HPT (1-4): subscores and totals (explicitly using REVERSED POP)
+hpt_pop_items_rev  <- paste0("POP", 1:3, "_rev")   # reversed presentism
+hpt_roa_items      <- c("ROA1","ROA2","ROA3")
+hpt_cont_items     <- c("CONT1","CONT2","CONT3")
 
 # Knowledge (0-6 correct)
 kn_items <- paste0("KN", 1:6)
@@ -75,29 +93,30 @@ ksa_items <- c(paste0("A",1:3), paste0("U",1:3), paste0("K",1:3))
 # SDR-5 (1-5 Likert): SDR2-SDR4 already reversed in the dataset per codebook
 sdr_items <- paste0("SDR", 1:5)
 
+# Build scores (HPT_TOTAL := CTX6 as primary; also keep HPT_TOT9 for reference)
 dat <- all_data %>%
   mutate(
-    HPT_POP  = scale_mean(., hpt_pop_items,  min_n = 2),
-    HPT_ROA  = scale_mean(., hpt_roa_items,  min_n = 2),
-    HPT_CONT = scale_mean(., hpt_cont_items, min_n = 2),
-    HPT_TOTAL = scale_mean(., c(hpt_pop_items, hpt_roa_items, hpt_cont_items), min_n = 5),
-    KN_TOTAL  = rowSums(select(., all_of(kn_items)), na.rm = TRUE),
-    FRLF_RD   = scale_mean(., frlf_rd, min_n = 2),
-    FRLF_NS   = scale_mean(., frlf_ns, min_n = 2),
-    FRLF_MINI = scale_mean(., c(frlf_rd, frlf_ns), min_n = 4),
-    KSA_TOTAL = scale_mean(., ksa_items, min_n = 7),
-    SDR_TOTAL = scale_mean(., sdr_items, min_n = 4)
+    HPT_POP    = scale_mean(., hpt_pop_items_rev,  min_n = 2),        # already reversed
+    HPT_ROA    = scale_mean(., hpt_roa_items,      min_n = 2),
+    HPT_CONT   = scale_mean(., hpt_cont_items,     min_n = 2),
+    HPT_TOTAL  = scale_mean(., c(hpt_pop_items_rev, hpt_roa_items, hpt_cont_items), min_n = 5),
+    # Also expose explicit composites computed above
+    HPT_CTX6   = HPT_CTX6,
+    HPT_TOT9   = HPT_TOT9,
+    KN_TOTAL   = rowSums(dplyr::select(., all_of(kn_items)), na.rm = TRUE),
+    FRLF_RD    = scale_mean(., frlf_rd, min_n = 2),
+    FRLF_NS    = scale_mean(., frlf_ns, min_n = 2),
+    FRLF_MINI  = scale_mean(., c(frlf_rd, frlf_ns), min_n = 4),
+    KSA_TOTAL  = scale_mean(., ksa_items, min_n = 7),
+    SDR_TOTAL  = scale_mean(., sdr_items, min_n = 4)
   )
 ```
 
-> **How to read:** • **HPT**: 1-4, higher = better fit of reasoning to
-> historical context/agent constraints (POP/ROA/CONT per instrument). •
-> **Knowledge (KN_TOTAL)**: 0-6 correct. • **FR-LF mini (FRLF_MINI; plus
-> RD, NS)**: 1-5, higher = stronger endorsement (e.g., leader/one-party;
-> NS relativization). • **KSA-3 (KSA_TOTAL)**: 1-5, higher = stronger
-> authoritarianism. • **SDR_TOTAL**: 1-5, higher = stronger social
-> desirability response tendency. Variable names and coding follow the
-> project codebook.
+> **How to read:** • **HPT (HPT_TOTAL)** uses **reversed POP** by
+> construction; higher = better contextualization. • **HPT_CTX6**
+> (POP_rev + CONT) is our **primary descriptive score**; **HPT_TOT9**
+> (adds ROA) is reported for reference. • **Knowledge (KN_TOTAL)**: 0--6
+> correct. **FR-LF/KSA/SDR** follow codebook.
 
 ## 3) Sample overview
 
@@ -108,10 +127,9 @@ n_raw <- nrow(all_data); n_anal <- nrow(dat)
 kable(data.frame(
   N_raw = n_raw,
   N_after_scoring = n_anal,
-  classes = dplyr::n_distinct(dat$class_label),
-  schools = dplyr::n_distinct(dat$school_id)
-), caption = "Sample counters (after loading and scoring).") %>%
-  kable_styling(full_width = FALSE)
+  classes = dplyr::n_distinct(all_data$class_id),
+  schools = dplyr::n_distinct(all_data$school_id)
+), caption = "Sample counters (after loading and scoring).") %>% kable_styling(full_width = FALSE)
 ```
 
 ```{=html}
@@ -173,21 +191,21 @@ schools
 ```{=html}
 <td style="text-align:right;">
 ```
-184
+234
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-184
+234
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-12
+16
 ```{=html}
 </td>
 ```
@@ -210,7 +228,8 @@ schools
 ## 4) Descriptives (means, SDs, n, range)
 
 ``` r
-desc_vars <- c("HPT_POP","HPT_ROA","HPT_CONT","HPT_TOTAL",
+# Report both totals explicitly
+desc_vars <- c("HPT_POP","HPT_ROA","HPT_CONT","HPT_CTX6","HPT_TOT9",
                "KN_TOTAL","FRLF_RD","FRLF_NS","FRLF_MINI",
                "KSA_TOTAL","SDR_TOTAL")
 
@@ -313,14 +332,14 @@ HPT_POP
 ```{=html}
 <td style="text-align:right;">
 ```
-180
+229
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-2.00
+2.99
 ```{=html}
 </td>
 ```
@@ -334,14 +353,14 @@ HPT_POP
 ```{=html}
 <td style="text-align:right;">
 ```
-1
+1.33
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-3.67
+4.00
 ```{=html}
 </td>
 ```
@@ -361,7 +380,7 @@ HPT_ROA
 ```{=html}
 <td style="text-align:right;">
 ```
-180
+229
 ```{=html}
 </td>
 ```
@@ -375,14 +394,14 @@ HPT_ROA
 ```{=html}
 <td style="text-align:right;">
 ```
-0.68
+0.65
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-1
+1.00
 ```{=html}
 </td>
 ```
@@ -409,14 +428,14 @@ HPT_CONT
 ```{=html}
 <td style="text-align:right;">
 ```
-180
+229
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-2.71
+2.73
 ```{=html}
 </td>
 ```
@@ -430,7 +449,7 @@ HPT_CONT
 ```{=html}
 <td style="text-align:right;">
 ```
-1
+1.00
 ```{=html}
 </td>
 ```
@@ -450,42 +469,90 @@ HPT_CONT
 ```{=html}
 <td style="text-align:left;">
 ```
-HPT_TOTAL
+HPT_CTX6
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-180
+229
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-2.51
+2.86
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.39
+0.57
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-1
+1.33
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-3.33
+4.00
+```{=html}
+</td>
+```
+```{=html}
+</tr>
+```
+```{=html}
+<tr>
+```
+```{=html}
+<td style="text-align:left;">
+```
+HPT_TOT9
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+229
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+2.84
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.49
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+1.67
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+3.89
 ```{=html}
 </td>
 ```
@@ -505,28 +572,28 @@ KN_TOTAL
 ```{=html}
 <td style="text-align:right;">
 ```
-184
+234
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-3.32
+3.15
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-1.62
+1.66
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0
+0.00
 ```{=html}
 </td>
 ```
@@ -553,28 +620,28 @@ FRLF_RD
 ```{=html}
 <td style="text-align:right;">
 ```
-179
+228
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-2.46
+2.53
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.92
+0.91
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-1
+1.00
 ```{=html}
 </td>
 ```
@@ -601,28 +668,28 @@ FRLF_NS
 ```{=html}
 <td style="text-align:right;">
 ```
-180
+229
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-2.37
+2.44
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.90
+0.93
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-1
+1.00
 ```{=html}
 </td>
 ```
@@ -649,28 +716,28 @@ FRLF_MINI
 ```{=html}
 <td style="text-align:right;">
 ```
-178
+227
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-2.42
+2.49
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.77
+0.78
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-1
+1.00
 ```{=html}
 </td>
 ```
@@ -697,28 +764,28 @@ KSA_TOTAL
 ```{=html}
 <td style="text-align:right;">
 ```
-178
+227
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-2.87
+2.89
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.67
+0.64
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-1
+1.00
 ```{=html}
 </td>
 ```
@@ -745,28 +812,28 @@ SDR_TOTAL
 ```{=html}
 <td style="text-align:right;">
 ```
-178
+227
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-3.03
+3.01
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.63
+0.62
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-1
+1.00
 ```{=html}
 </td>
 ```
@@ -818,28 +885,30 @@ ct <- psych::corr.test(corr_df, use = "pairwise")
 round(ct$r, 2)
 ```
 
-    ##           HPT_POP HPT_ROA HPT_CONT HPT_TOTAL KN_TOTAL FRLF_RD FRLF_NS FRLF_MINI
-    ## HPT_POP      1.00   -0.14    -0.33      0.26    -0.32    0.09    0.11      0.12
-    ## HPT_ROA     -0.14    1.00     0.41      0.75     0.27   -0.05   -0.07     -0.07
-    ## HPT_CONT    -0.33    0.41     1.00      0.68     0.20   -0.07   -0.03     -0.07
-    ## HPT_TOTAL    0.26    0.75     0.68      1.00     0.10   -0.02   -0.01     -0.02
-    ## KN_TOTAL    -0.32    0.27     0.20      0.10     1.00   -0.09   -0.18     -0.16
-    ## FRLF_RD      0.09   -0.05    -0.07     -0.02    -0.09    1.00    0.42      0.84
-    ## FRLF_NS      0.11   -0.07    -0.03     -0.01    -0.18    0.42    1.00      0.84
-    ## FRLF_MINI    0.12   -0.07    -0.07     -0.02    -0.16    0.84    0.84      1.00
-    ## KSA_TOTAL    0.16    0.03     0.04      0.13     0.01    0.47    0.40      0.52
-    ## SDR_TOTAL    0.02    0.04     0.07      0.09     0.03   -0.05   -0.24     -0.17
-    ##           KSA_TOTAL SDR_TOTAL
-    ## HPT_POP        0.16      0.02
-    ## HPT_ROA        0.03      0.04
-    ## HPT_CONT       0.04      0.07
-    ## HPT_TOTAL      0.13      0.09
-    ## KN_TOTAL       0.01      0.03
-    ## FRLF_RD        0.47     -0.05
-    ## FRLF_NS        0.40     -0.24
-    ## FRLF_MINI      0.52     -0.17
-    ## KSA_TOTAL      1.00     -0.16
-    ## SDR_TOTAL     -0.16      1.00
+    ##           HPT_POP HPT_ROA HPT_CONT HPT_CTX6 HPT_TOT9 KN_TOTAL FRLF_RD FRLF_NS
+    ## HPT_POP      1.00    0.15     0.33     0.79     0.67     0.33   -0.09   -0.10
+    ## HPT_ROA      0.15    1.00     0.38     0.33     0.69     0.29   -0.05   -0.06
+    ## HPT_CONT     0.33    0.38     1.00     0.84     0.81     0.20    0.00    0.06
+    ## HPT_CTX6     0.79    0.33     0.84     1.00     0.91     0.32   -0.05   -0.02
+    ## HPT_TOT9     0.67    0.69     0.81     0.91     1.00     0.37   -0.06   -0.04
+    ## KN_TOTAL     0.33    0.29     0.20     0.32     0.37     1.00   -0.07   -0.15
+    ## FRLF_RD     -0.09   -0.05     0.00    -0.05    -0.06    -0.07    1.00    0.43
+    ## FRLF_NS     -0.10   -0.06     0.06    -0.02    -0.04    -0.15    0.43    1.00
+    ## FRLF_MINI   -0.11   -0.06     0.03    -0.04    -0.06    -0.13    0.84    0.85
+    ## KSA_TOTAL   -0.15    0.01     0.06    -0.05    -0.03     0.03    0.47    0.39
+    ## SDR_TOTAL   -0.02    0.05    -0.02    -0.02     0.00     0.03   -0.06   -0.28
+    ##           FRLF_MINI KSA_TOTAL SDR_TOTAL
+    ## HPT_POP       -0.11     -0.15     -0.02
+    ## HPT_ROA       -0.06      0.01      0.05
+    ## HPT_CONT       0.03      0.06     -0.02
+    ## HPT_CTX6      -0.04     -0.05     -0.02
+    ## HPT_TOT9      -0.06     -0.03      0.00
+    ## KN_TOTAL      -0.13      0.03      0.03
+    ## FRLF_RD        0.84      0.47     -0.06
+    ## FRLF_NS        0.85      0.39     -0.28
+    ## FRLF_MINI      1.00      0.51     -0.20
+    ## KSA_TOTAL      0.51      1.00     -0.18
+    ## SDR_TOTAL     -0.20     -0.18      1.00
 
 ``` r
 corr_tab <- as.data.frame(round(ct$r, 2))
@@ -903,7 +972,14 @@ HPT_CONT
 ```{=html}
 <th style="text-align:right;">
 ```
-HPT_TOTAL
+HPT_CTX6
+```{=html}
+</th>
+```
+```{=html}
+<th style="text-align:right;">
+```
+HPT_TOT9
 ```{=html}
 </th>
 ```
@@ -985,388 +1061,35 @@ HPT_POP
 ```{=html}
 <td style="text-align:right;">
 ```
--0.14
+0.15
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.33
+0.33
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.26
+0.79
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.32
+0.67
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.09
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.11
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.12
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.16
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.02
-```{=html}
-</td>
-```
-```{=html}
-</tr>
-```
-```{=html}
-<tr>
-```
-```{=html}
-<td style="text-align:left;">
-```
-HPT_ROA
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:left;">
-```
-HPT_ROA
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
--0.14
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-1.00
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.41
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.75
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.27
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
--0.05
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
--0.07
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
--0.07
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.03
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.04
-```{=html}
-</td>
-```
-```{=html}
-</tr>
-```
-```{=html}
-<tr>
-```
-```{=html}
-<td style="text-align:left;">
-```
-HPT_CONT
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:left;">
-```
-HPT_CONT
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
--0.33
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.41
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-1.00
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.68
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.20
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
--0.07
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
--0.03
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
--0.07
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.04
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.07
-```{=html}
-</td>
-```
-```{=html}
-</tr>
-```
-```{=html}
-<tr>
-```
-```{=html}
-<td style="text-align:left;">
-```
-HPT_TOTAL
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:left;">
-```
-HPT_TOTAL
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.26
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.75
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.68
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-1.00
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.10
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
--0.02
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
--0.01
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
--0.02
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.13
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.09
-```{=html}
-</td>
-```
-```{=html}
-</tr>
-```
-```{=html}
-<tr>
-```
-```{=html}
-<td style="text-align:left;">
-```
-KN_TOTAL
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:left;">
-```
-KN_TOTAL
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
--0.32
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.27
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.20
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.10
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-1.00
+0.33
 ```{=html}
 </td>
 ```
@@ -1380,14 +1103,111 @@ KN_TOTAL
 ```{=html}
 <td style="text-align:right;">
 ```
--0.18
+-0.10
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.16
+-0.11
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+-0.15
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+-0.02
+```{=html}
+</td>
+```
+```{=html}
+</tr>
+```
+```{=html}
+<tr>
+```
+```{=html}
+<td style="text-align:left;">
+```
+HPT_ROA
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:left;">
+```
+HPT_ROA
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.15
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+1.00
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.38
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.33
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.69
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.29
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+-0.05
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+-0.06
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+-0.06
 ```{=html}
 </td>
 ```
@@ -1395,6 +1215,394 @@ KN_TOTAL
 <td style="text-align:right;">
 ```
 0.01
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.05
+```{=html}
+</td>
+```
+```{=html}
+</tr>
+```
+```{=html}
+<tr>
+```
+```{=html}
+<td style="text-align:left;">
+```
+HPT_CONT
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:left;">
+```
+HPT_CONT
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.33
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.38
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+1.00
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.84
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.81
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.20
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.00
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.06
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.03
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.06
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+-0.02
+```{=html}
+</td>
+```
+```{=html}
+</tr>
+```
+```{=html}
+<tr>
+```
+```{=html}
+<td style="text-align:left;">
+```
+HPT_CTX6
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:left;">
+```
+HPT_CTX6
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.79
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.33
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.84
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+1.00
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.91
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.32
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+-0.05
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+-0.02
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+-0.04
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+-0.05
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+-0.02
+```{=html}
+</td>
+```
+```{=html}
+</tr>
+```
+```{=html}
+<tr>
+```
+```{=html}
+<td style="text-align:left;">
+```
+HPT_TOT9
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:left;">
+```
+HPT_TOT9
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.67
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.69
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.81
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.91
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+1.00
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.37
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+-0.06
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+-0.04
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+-0.06
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+-0.03
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.00
+```{=html}
+</td>
+```
+```{=html}
+</tr>
+```
+```{=html}
+<tr>
+```
+```{=html}
+<td style="text-align:left;">
+```
+KN_TOTAL
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:left;">
+```
+KN_TOTAL
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.33
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.29
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.20
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.32
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.37
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+1.00
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+-0.07
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+-0.15
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+-0.13
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.03
 ```{=html}
 </td>
 ```
@@ -1428,7 +1636,7 @@ FRLF_RD
 ```{=html}
 <td style="text-align:right;">
 ```
-0.09
+-0.09
 ```{=html}
 </td>
 ```
@@ -1442,21 +1650,28 @@ FRLF_RD
 ```{=html}
 <td style="text-align:right;">
 ```
+0.00
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+-0.05
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+-0.06
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
 -0.07
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
--0.02
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
--0.09
 ```{=html}
 </td>
 ```
@@ -1470,7 +1685,7 @@ FRLF_RD
 ```{=html}
 <td style="text-align:right;">
 ```
-0.42
+0.43
 ```{=html}
 </td>
 ```
@@ -1491,7 +1706,7 @@ FRLF_RD
 ```{=html}
 <td style="text-align:right;">
 ```
--0.05
+-0.06
 ```{=html}
 </td>
 ```
@@ -1518,111 +1733,21 @@ FRLF_NS
 ```{=html}
 <td style="text-align:right;">
 ```
-0.11
+-0.10
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.07
+-0.06
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.03
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
--0.01
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
--0.18
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.42
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-1.00
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.84
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.40
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
--0.24
-```{=html}
-</td>
-```
-```{=html}
-</tr>
-```
-```{=html}
-<tr>
-```
-```{=html}
-<td style="text-align:left;">
-```
-FRLF_MINI
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:left;">
-```
-FRLF_MINI
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.12
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
--0.07
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
--0.07
+0.06
 ```{=html}
 </td>
 ```
@@ -1636,21 +1761,21 @@ FRLF_MINI
 ```{=html}
 <td style="text-align:right;">
 ```
--0.16
+-0.04
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.84
+-0.15
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.84
+0.43
 ```{=html}
 </td>
 ```
@@ -1664,14 +1789,118 @@ FRLF_MINI
 ```{=html}
 <td style="text-align:right;">
 ```
-0.52
+0.85
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.17
+0.39
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+-0.28
+```{=html}
+</td>
+```
+```{=html}
+</tr>
+```
+```{=html}
+<tr>
+```
+```{=html}
+<td style="text-align:left;">
+```
+FRLF_MINI
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:left;">
+```
+FRLF_MINI
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+-0.11
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+-0.06
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.03
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+-0.04
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+-0.06
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+-0.13
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.84
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.85
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+1.00
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.51
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+-0.20
 ```{=html}
 </td>
 ```
@@ -1698,28 +1927,7 @@ KSA_TOTAL
 ```{=html}
 <td style="text-align:right;">
 ```
-0.16
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.03
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.04
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.13
+-0.15
 ```{=html}
 </td>
 ```
@@ -1733,6 +1941,34 @@ KSA_TOTAL
 ```{=html}
 <td style="text-align:right;">
 ```
+0.06
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+-0.05
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+-0.03
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.03
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
 0.47
 ```{=html}
 </td>
@@ -1740,14 +1976,14 @@ KSA_TOTAL
 ```{=html}
 <td style="text-align:right;">
 ```
-0.40
+0.39
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.52
+0.51
 ```{=html}
 </td>
 ```
@@ -1761,7 +1997,7 @@ KSA_TOTAL
 ```{=html}
 <td style="text-align:right;">
 ```
--0.16
+-0.18
 ```{=html}
 </td>
 ```
@@ -1788,28 +2024,35 @@ SDR_TOTAL
 ```{=html}
 <td style="text-align:right;">
 ```
-0.02
+-0.02
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.04
+0.05
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.07
+-0.02
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.09
+-0.02
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.00
 ```{=html}
 </td>
 ```
@@ -1823,28 +2066,28 @@ SDR_TOTAL
 ```{=html}
 <td style="text-align:right;">
 ```
--0.05
+-0.06
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.24
+-0.28
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.17
+-0.20
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.16
+-0.18
 ```{=html}
 </td>
 ```
@@ -1866,7 +2109,7 @@ SDR_TOTAL
 ```
 > **Interpretation:** Correlations locate broad relationships your
 > hypotheses rely on. For example, if **FRLF_MINI** correlates
-> positively with **HPT_CONT**/**HPT_TOTAL**, this suggests possible
+> positively with **HPT_CTX6/HPT_TOT9**, this suggests possible
 > ideological alignment inflating contextualization---an effect to test
 > with controls in models (knowledge, SDR) and with item-level checks
 > later.
@@ -1878,17 +2121,12 @@ random-intercept models. ICC ≈ proportion of total variance that is
 between clusters.
 
 ``` r
-# --- Robust ICC helpers (replace previous version) ---
-
-# Safely pull ICC_adjusted (fallback to ICC or first numeric) for different object types
+# --- Robust ICC helpers ---
 get_icc_value <- function(ic) {
-  # ic can be data.frame/tibble, list, or numeric
   if (is.null(ic)) return(NA_real_)
   if (is.data.frame(ic)) {
-    # new performance::icc often returns a data.frame with ICC and ICC_adjusted
     if ("ICC_adjusted" %in% names(ic)) return(suppressWarnings(as.numeric(ic$ICC_adjusted[1])))
     if ("ICC" %in% names(ic))          return(suppressWarnings(as.numeric(ic$ICC[1])))
-    # else, first numeric column
     num_cols <- which(vapply(ic, is.numeric, logical(1)))
     if (length(num_cols)) return(as.numeric(ic[[ num_cols[1] ]][1]))
     return(NA_real_)
@@ -1896,7 +2134,6 @@ get_icc_value <- function(ic) {
   if (is.list(ic)) {
     if (!is.null(ic$ICC_adjusted)) return(suppressWarnings(as.numeric(ic$ICC_adjusted)))
     if (!is.null(ic$ICC))          return(suppressWarnings(as.numeric(ic$ICC)))
-    # first numeric element
     nums <- unlist(ic[ vapply(ic, is.numeric, logical(1)) ], use.names = FALSE)
     if (length(nums)) return(as.numeric(nums[1]))
     return(NA_real_)
@@ -1906,9 +2143,8 @@ get_icc_value <- function(ic) {
 }
 
 fit_icc <- function(v) {
-  # guard: need some variance and at least 2 clusters
   if (!v %in% names(dat)) return(NULL)
-  f_cls <- as.formula(paste0(v, " ~ 1 + (1|school_id/class_label)"))
+  f_cls <- as.formula(paste0(v, " ~ 1 + (1|school_id) + (1|class_id)"))
   f_sch <- as.formula(paste0(v, " ~ 1 + (1|school_id)"))
   list(
     class_in_school = tryCatch(lme4::lmer(f_cls, data = dat, REML = TRUE, na.action = na.omit),
@@ -1920,12 +2156,9 @@ fit_icc <- function(v) {
 
 extract_icc <- function(fm) {
   if (is.null(fm)) return(list(ICC = NA_real_, N = NA_integer_, clusters = NA_integer_))
-  # Try ICC; handle different output types
   ic <- tryCatch(performance::icc(fm), error = function(e) NULL)
   icc_val <- get_icc_value(ic)
-  # Sample size and cluster count
   N <- tryCatch(nobs(fm), error = function(e) NA_integer_)
-  # Number of levels of the *first* grouping factor in the model
   clusters <- tryCatch({
     fl <- lme4::getME(fm, "flist")
     length(levels(fl[[1]]))
@@ -1933,12 +2166,11 @@ extract_icc <- function(fm) {
   list(ICC = icc_val, N = N, clusters = clusters)
 }
 
-targets <- c("HPT_TOTAL","HPT_POP","HPT_ROA","HPT_CONT",
+targets <- c("HPT_CTX6","HPT_TOT9","HPT_POP","HPT_ROA","HPT_CONT",
              "FRLF_MINI","KSA_TOTAL","KN_TOTAL","SDR_TOTAL")
 
 icc_rows <- purrr::map(targets, function(sc) {
   mods <- fit_icc(sc)
-  # extract once per model
   cls <- extract_icc(mods$class_in_school)
   sch <- extract_icc(mods$school_only)
   data.frame(
@@ -2040,7 +2272,7 @@ clusters_schools
 ```{=html}
 <td style="text-align:left;">
 ```
-HPT_TOTAL
+HPT_CTX6
 ```{=html}
 </td>
 ```
@@ -2054,28 +2286,83 @@ NA
 ```{=html}
 <td style="text-align:right;">
 ```
-180
+229
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-14
+16
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.024
+0.049
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-180
+229
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+8
+```{=html}
+</td>
+```
+```{=html}
+</tr>
+```
+```{=html}
+<tr>
+```
+```{=html}
+<td style="text-align:left;">
+```
+HPT_TOT9
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+NA
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+229
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+16
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.076
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+229
 ```{=html}
 </td>
 ```
@@ -2109,28 +2396,28 @@ NA
 ```{=html}
 <td style="text-align:right;">
 ```
-180
+229
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-14
+16
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.033
+0.031
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-180
+229
 ```{=html}
 </td>
 ```
@@ -2157,21 +2444,21 @@ HPT_ROA
 ```{=html}
 <td style="text-align:right;">
 ```
-NA
+0.038
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-180
+229
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-14
+16
 ```{=html}
 </td>
 ```
@@ -2185,7 +2472,7 @@ NA
 ```{=html}
 <td style="text-align:right;">
 ```
-180
+229
 ```{=html}
 </td>
 ```
@@ -2212,27 +2499,6 @@ HPT_CONT
 ```{=html}
 <td style="text-align:right;">
 ```
-0.056
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-180
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-14
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
 0.047
 ```{=html}
 </td>
@@ -2240,7 +2506,28 @@ HPT_CONT
 ```{=html}
 <td style="text-align:right;">
 ```
-180
+229
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+16
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.044
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+229
 ```{=html}
 </td>
 ```
@@ -2267,35 +2554,35 @@ FRLF_MINI
 ```{=html}
 <td style="text-align:right;">
 ```
-0.059
+0.086
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-178
+227
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-14
+16
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.043
+0.074
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-178
+227
 ```{=html}
 </td>
 ```
@@ -2322,21 +2609,21 @@ KSA_TOTAL
 ```{=html}
 <td style="text-align:right;">
 ```
-0.121
+0.112
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-178
+227
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-14
+16
 ```{=html}
 </td>
 ```
@@ -2350,7 +2637,7 @@ KSA_TOTAL
 ```{=html}
 <td style="text-align:right;">
 ```
-178
+227
 ```{=html}
 </td>
 ```
@@ -2384,28 +2671,28 @@ NA
 ```{=html}
 <td style="text-align:right;">
 ```
-184
+234
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-14
+16
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.015
+0.035
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-184
+234
 ```{=html}
 </td>
 ```
@@ -2439,14 +2726,14 @@ NA
 ```{=html}
 <td style="text-align:right;">
 ```
-178
+227
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-14
+16
 ```{=html}
 </td>
 ```
@@ -2460,7 +2747,7 @@ NA
 ```{=html}
 <td style="text-align:right;">
 ```
-178
+227
 ```{=html}
 </td>
 ```
@@ -2491,17 +2778,18 @@ NA
 
 ``` r
 p1 <- dat %>%
-  group_by(school_id, class_label) %>%
+  group_by(school_id, class_id, class_label) %>%
   summarise(n = n(),
-            HPT_TOTAL = mean(HPT_TOTAL, na.rm=TRUE),
+            HPT_CTX6 = mean(HPT_CTX6, na.rm=TRUE),
             FRLF_MINI = mean(FRLF_MINI, na.rm=TRUE),
             .groups = "drop") %>%
-  pivot_longer(c(HPT_TOTAL, FRLF_MINI), names_to="scale", values_to="mean") %>%
+  pivot_longer(c(HPT_CTX6, FRLF_MINI), names_to="scale", values_to="mean") %>%
   ggplot(aes(x = reorder(class_label, mean), y = mean)) +
   geom_point() +
   facet_wrap(scale ~ school_id, scales = "free_y") +
   coord_flip() +
-  labs(x = "Class", y = "Class mean", title = "Class means within schools (HPT vs FR-LF)")
+  labs(x = "Class (label within school)", y = "Class mean",
+       title = "Class means within schools (HPT vs FR-LF)")
 
 p1
 ```
@@ -2566,11 +2854,9 @@ sessionInfo()
 ### Notes & interpretation pointers
 
 -   **HPT scales (1-4):** Higher indicates better
-    contextualization/agent-sensitive reasoning---consistent with the
-    three-part structure (POP/ROA/CONT) used in prior validation work.
-    Consider that ideological alignment can mimic contextualization;
-    correlations here are descriptive only and motivate the multilevel
-    models planned in the main analysis.
+    contextualization/agent-sensitive reasoning---**after POP
+    reversal**; we report CTX6 (primary) and TOT9 (with ROA)
+    side-by-side.
 -   **FR-LF mini (1-5):** Short right-wing authoritarian/Nazi
     relativization composite; higher = stronger endorsement. Use
     primarily as a predictor/covariate and for DIF checks later.

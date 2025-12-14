@@ -160,7 +160,7 @@
 \makeatother
 \subtitle{Multilevel models for H1--H2}
 \author{HPT and Extremism project}
-\date{2025-12-11}
+\date{2025-12-12}
 
 \begin{document}
 \maketitle
@@ -191,17 +191,14 @@ Notes on constructs and scoring:
 \begin{itemize}
 \tightlist
 \item
-  HPT instrument and subscores (POP, ROA, CONT) follow Hartmann \&
-  Hasselhorn / Huijgen et al.~For this file we use \textbf{HPT total,
-  CONT, POP} as DVs. (In our dataset, higher is coded as ``fits Hannes's
-  situation better'' across items; thus \textbf{higher CONT} means more
-  contextualized alignment; \textbf{higher POP} reflects stronger
-  endorsement of the presentism-trigger statements after our recoding.)
+  HPT subscores (POP, ROA, CONT) follow Hartmann \& Hasselhorn / Huijgen
+  et al.~We treat \textbf{POP items as presentist} and therefore
+  \textbf{reverse-score POP} so that \textbf{higher = more
+  contextualised reasoning}. DVs used here are \textbf{HPT total (CTX6:
+  POP\_rev+CONT)}, \textbf{CONT}, and \textbf{POP\_rev}.
 \item
-  FR-LF-mini uses \textbf{RD1--RD3} (right-dictatorship) and
-  \textbf{NS1--NS3} (Nazi relativization) with robust reliability and a
-  validated 6-dimension parent scale. We analyze \textbf{total} and the
-  \textbf{RD/NS facets}.
+  FR-LF-mini uses \textbf{RD1--RD3} and \textbf{NS1--NS3}; we analyse
+  \textbf{total} and \textbf{RD/NS facets}.
 \item
   KSA-3 (9 items; aggression, submission, conventionalism) is included
   as a convergent authoritarian predictor. (Registered.)
@@ -211,16 +208,13 @@ Notes on constructs and scoring:
 \section{2. Data, variables, and
 preprocessing}\label{data-variables-and-preprocessing}}
 
-We expect either
-\texttt{normalised\_responses\_\textless{}DATE\textgreater{}.RData} or
-\texttt{.xlsx} in the project root. Variable names match the codebook.
-
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\# Core}
 \FunctionTok{library}\NormalTok{(tidyverse)}
 \FunctionTok{library}\NormalTok{(readxl)}
 \FunctionTok{library}\NormalTok{(janitor)}
+
 \CommentTok{\# Models + tables}
 \FunctionTok{library}\NormalTok{(lme4)}
 \FunctionTok{library}\NormalTok{(lmerTest)}
@@ -232,8 +226,8 @@ We expect either
 
 \FunctionTok{library}\NormalTok{(kableExtra)}
 \FunctionTok{options}\NormalTok{(}
-    \AttributeTok{modelsummary\_format =} \StringTok{"latex"}\NormalTok{,}
-    \AttributeTok{modelsummary\_factory\_latex =} \StringTok{"kableExtra"}
+  \AttributeTok{modelsummary\_format =} \StringTok{"latex"}\NormalTok{,}
+  \AttributeTok{modelsummary\_factory\_latex =} \StringTok{"kableExtra"}
 \NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -244,9 +238,42 @@ We expect either
 \FunctionTok{load}\NormalTok{(}\StringTok{"normalised\_responses.RData"}\NormalTok{)}
 \FunctionTok{stopifnot}\NormalTok{(}\FunctionTok{exists}\NormalTok{(}\StringTok{"normalised\_responses"}\NormalTok{))}
 
-\NormalTok{dat\_raw }\OtherTok{\textless{}{-}}\NormalTok{ normalised\_responses}
+\CommentTok{\# Clean names to lower\_snake so items are pop1/roa1/cont1 etc.}
+\NormalTok{dat\_raw }\OtherTok{\textless{}{-}}\NormalTok{ normalised\_responses }\SpecialCharTok{|\textgreater{}}\NormalTok{ janitor}\SpecialCharTok{::}\FunctionTok{clean\_names}\NormalTok{()}
 
-\NormalTok{dat\_raw }\OtherTok{\textless{}{-}}\NormalTok{ janitor}\SpecialCharTok{::}\FunctionTok{clean\_names}\NormalTok{(dat\_raw)}
+\CommentTok{\# {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\CommentTok{\# Build a UNIQUE class identifier = school\_id x class label}
+\CommentTok{\# We support multiple plausible column names from the codebook.}
+\CommentTok{\# {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\CommentTok{\# Detect school id column}
+\NormalTok{school\_var }\OtherTok{\textless{}{-}} \FunctionTok{names}\NormalTok{(dat\_raw)[}\FunctionTok{names}\NormalTok{(dat\_raw) }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"school\_id"}\NormalTok{,}\StringTok{"school"}\NormalTok{)]}
+\CommentTok{\# Detect class label column (human{-}readable class label)}
+\NormalTok{class\_label\_var }\OtherTok{\textless{}{-}} \FunctionTok{names}\NormalTok{(dat\_raw)[}\FunctionTok{names}\NormalTok{(dat\_raw) }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"classroom\_label"}\NormalTok{,}\StringTok{"class\_label"}\NormalTok{,}\StringTok{"class"}\NormalTok{)]}
+
+\ControlFlowTok{if}\NormalTok{ (}\FunctionTok{length}\NormalTok{(school\_var) }\SpecialCharTok{==} \DecValTok{0}\NormalTok{) }\FunctionTok{stop}\NormalTok{(}\StringTok{"No school id column found (tried: school\_id, school)."}\NormalTok{)}
+\ControlFlowTok{if}\NormalTok{ (}\FunctionTok{length}\NormalTok{(class\_label\_var) }\SpecialCharTok{==} \DecValTok{0}\NormalTok{) }\FunctionTok{stop}\NormalTok{(}\StringTok{"No class label column found (tried: classroom\_label, class\_label, class)."}\NormalTok{)}
+
+\NormalTok{school\_var }\OtherTok{\textless{}{-}}\NormalTok{ school\_var[}\DecValTok{1}\NormalTok{]}
+\NormalTok{class\_label\_var }\OtherTok{\textless{}{-}}\NormalTok{ class\_label\_var[}\DecValTok{1}\NormalTok{]}
+
+\CommentTok{\# Force factors and create class\_id}
+\NormalTok{dat\_raw }\OtherTok{\textless{}{-}}\NormalTok{ dat\_raw }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{mutate}\NormalTok{(}
+    \SpecialCharTok{!!}\AttributeTok{school\_var :=} \FunctionTok{as.factor}\NormalTok{(.data[[school\_var]]),}
+    \SpecialCharTok{!!}\AttributeTok{class\_label\_var :=} \FunctionTok{as.factor}\NormalTok{(.data[[class\_label\_var]]),}
+    \AttributeTok{class\_id =} \FunctionTok{interaction}\NormalTok{(.data[[school\_var]], .data[[class\_label\_var]], }\AttributeTok{drop =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{  )}
+
+\CommentTok{\# {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\CommentTok{\# HPT item vectors (lowercase after clean\_names())}
+\CommentTok{\# {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\NormalTok{pop\_items  }\OtherTok{\textless{}{-}} \FunctionTok{paste0}\NormalTok{(}\StringTok{"pop"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{)}
+\NormalTok{roa\_items  }\OtherTok{\textless{}{-}} \FunctionTok{paste0}\NormalTok{(}\StringTok{"roa"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{)}
+\NormalTok{cont\_items }\OtherTok{\textless{}{-}} \FunctionTok{paste0}\NormalTok{(}\StringTok{"cont"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{)}
+
+\CommentTok{\# Reverse POP items so higher = more contextualised (1{-}4 scale assumed)}
+\NormalTok{dat\_raw }\OtherTok{\textless{}{-}}\NormalTok{ dat\_raw }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{all\_of}\NormalTok{(pop\_items), }\SpecialCharTok{\textasciitilde{}} \DecValTok{5} \SpecialCharTok{{-}} \FunctionTok{as.numeric}\NormalTok{(.), }\AttributeTok{.names =} \StringTok{"\{.col\}\_rev"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -257,21 +284,18 @@ We expect either
 
 \NormalTok{dat }\OtherTok{\textless{}{-}}\NormalTok{ dat\_raw }\SpecialCharTok{|\textgreater{}}
   \FunctionTok{mutate}\NormalTok{(}
-    \CommentTok{\# across() returns a data frame of the selected columns; rowSums works on that}
     \AttributeTok{kn\_total =} \FunctionTok{rowSums}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{all\_of}\NormalTok{(kn\_items)), }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
 \NormalTok{  )}
 
-\CommentTok{\# {-}{-}{-}{-} HPT {-}{-}{-}{-}}
-\NormalTok{pop\_items   }\OtherTok{\textless{}{-}} \FunctionTok{paste0}\NormalTok{(}\StringTok{"pop"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{)}
-\NormalTok{cont\_items  }\OtherTok{\textless{}{-}} \FunctionTok{paste0}\NormalTok{(}\StringTok{"cont"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{)}
-\NormalTok{roa\_items   }\OtherTok{\textless{}{-}} \FunctionTok{paste0}\NormalTok{(}\StringTok{"roa"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{)}
-
+\CommentTok{\# {-}{-}{-}{-} HPT (use reversed POP) {-}{-}{-}{-}}
 \NormalTok{dat }\OtherTok{\textless{}{-}}\NormalTok{ dat }\SpecialCharTok{|\textgreater{}}
   \FunctionTok{mutate}\NormalTok{(}
-    \AttributeTok{hpt\_pop   =} \FunctionTok{rowMeans}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{all\_of}\NormalTok{(pop\_items)),  }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
-    \AttributeTok{hpt\_cont  =} \FunctionTok{rowMeans}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{all\_of}\NormalTok{(cont\_items)), }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
-    \AttributeTok{hpt\_roa   =} \FunctionTok{rowMeans}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{all\_of}\NormalTok{(roa\_items)),  }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
-    \AttributeTok{hpt\_total =} \FunctionTok{rowMeans}\NormalTok{(}\FunctionTok{cbind}\NormalTok{(hpt\_pop, hpt\_cont, hpt\_roa), }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+    \AttributeTok{hpt\_pop\_rev =} \FunctionTok{rowMeans}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(pop\_items, }\StringTok{"\_rev"}\NormalTok{)), }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{hpt\_cont    =} \FunctionTok{rowMeans}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{all\_of}\NormalTok{(cont\_items)),       }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{hpt\_roa     =} \FunctionTok{rowMeans}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{all\_of}\NormalTok{(roa\_items)),        }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+    \CommentTok{\# Primary total (CTX6 = POP\_rev + CONT); keep 9{-}item as sensitivity if needed}
+    \AttributeTok{hpt\_total   =} \FunctionTok{rowMeans}\NormalTok{(}\FunctionTok{cbind}\NormalTok{(hpt\_pop\_rev, hpt\_cont), }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{hpt\_total9  =} \FunctionTok{rowMeans}\NormalTok{(}\FunctionTok{cbind}\NormalTok{(hpt\_pop\_rev, hpt\_cont, hpt\_roa), }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
 \NormalTok{  )}
 
 \CommentTok{\# {-}{-}{-}{-} FR{-}LF mini {-}{-}{-}{-}}
@@ -300,35 +324,27 @@ We expect either
 \NormalTok{  )}
 
 \CommentTok{\# {-}{-}{-}{-} SDR{-}5 {-}{-}{-}{-}}
-\CommentTok{\# (SDR2–SDR4 already reversed upstream)}
 \NormalTok{sdr\_items }\OtherTok{\textless{}{-}} \FunctionTok{paste0}\NormalTok{(}\StringTok{"sdr"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{)}
 
 \NormalTok{dat }\OtherTok{\textless{}{-}}\NormalTok{ dat }\SpecialCharTok{|\textgreater{}}
   \FunctionTok{mutate}\NormalTok{(}
     \AttributeTok{sdr5\_tot =} \FunctionTok{rowMeans}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{all\_of}\NormalTok{(sdr\_items)), }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
 \NormalTok{  )}
-
-\CommentTok{\# {-}{-}{-}{-} Clustering factor {-}{-}{-}{-}}
-\NormalTok{cluster\_var }\OtherTok{\textless{}{-}}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{case\_when}\NormalTok{(}
-  \StringTok{"class\_label"} \SpecialCharTok{\%in\%} \FunctionTok{names}\NormalTok{(dat) }\SpecialCharTok{\textasciitilde{}} \StringTok{"class\_label"}\NormalTok{,}
-  \StringTok{"class"}       \SpecialCharTok{\%in\%} \FunctionTok{names}\NormalTok{(dat) }\SpecialCharTok{\textasciitilde{}} \StringTok{"class"}\NormalTok{,}
-  \ConstantTok{TRUE} \SpecialCharTok{\textasciitilde{}} \ConstantTok{NA\_character\_}
-\NormalTok{)}
-\ControlFlowTok{if}\NormalTok{ (}\FunctionTok{is.na}\NormalTok{(cluster\_var)) }\FunctionTok{stop}\NormalTok{(}\StringTok{"No class cluster variable found (expected \textasciigrave{}class\_label\textasciigrave{} or \textasciigrave{}class\textasciigrave{})."}\NormalTok{)}
-\NormalTok{dat[[cluster\_var]] }\OtherTok{\textless{}{-}} \FunctionTok{as.factor}\NormalTok{(dat[[cluster\_var]])}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# Z{-}standardise continuous predictors (for comparability) and outcomes (optional)}
+\CommentTok{\# Z{-}standardise continuous predictors (for comparability)}
 \NormalTok{z }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{as.numeric}\NormalTok{(}\FunctionTok{scale}\NormalTok{(x))}
+
+\CommentTok{\# Ensure clustering vars present for every analysed row}
 
 \NormalTok{dat }\OtherTok{\textless{}{-}}\NormalTok{ dat }\SpecialCharTok{|\textgreater{}}
   \FunctionTok{mutate}\NormalTok{(}
     \AttributeTok{z\_hpt\_total =} \FunctionTok{z}\NormalTok{(hpt\_total),}
     \AttributeTok{z\_hpt\_cont  =} \FunctionTok{z}\NormalTok{(hpt\_cont),}
-    \AttributeTok{z\_hpt\_pop   =} \FunctionTok{z}\NormalTok{(hpt\_pop),}
+    \AttributeTok{z\_hpt\_pop   =} \FunctionTok{z}\NormalTok{(hpt\_pop\_rev),}
 
     \AttributeTok{z\_frlf\_tot =} \FunctionTok{z}\NormalTok{(frlf\_tot),}
     \AttributeTok{z\_frlf\_rd  =} \FunctionTok{z}\NormalTok{(frlf\_rd),}
@@ -339,36 +355,31 @@ We expect either
     \AttributeTok{z\_kn\_total =} \FunctionTok{z}\NormalTok{(kn\_total),}
     \AttributeTok{z\_sdr5\_tot =} \FunctionTok{z}\NormalTok{(sdr5\_tot)}
 \NormalTok{  ) }\SpecialCharTok{|\textgreater{}}
-  \FunctionTok{drop\_na}\NormalTok{(}\SpecialCharTok{!!}\FunctionTok{sym}\NormalTok{(cluster\_var))   }\CommentTok{\# must have cluster id}
+  \FunctionTok{drop\_na}\NormalTok{(}\FunctionTok{all\_of}\NormalTok{(}\FunctionTok{c}\NormalTok{(school\_var, }\StringTok{"class\_id"}\NormalTok{)))}
 \end{Highlighting}
 \end{Shaded}
 
 \hypertarget{model-plan}{%
 \section{3. Model plan}\label{model-plan}}
 
-We estimate \textbf{random‐intercept multilevel models} (students nested
-in classes). For each DV:
+We estimate \textbf{random‐intercept multilevel models} with \textbf{two
+clustering terms} (students nested in classes within schools):
 
 \begin{itemize}
 \tightlist
 \item
-  \textbf{Base (FR-LF total):}
-  \texttt{DV\ \textasciitilde{}\ z\_frlf\_tot\ +\ z\_ksa3\_tot\ +\ z\_kn\_total\ +\ z\_sdr5\_tot\ +\ (1\ \textbar{}\ class)}
+  Base (FR-LF total):
+  \texttt{DV\ \textasciitilde{}\ z\_frlf\_tot\ +\ z\_ksa3\_tot\ +\ z\_kn\_total\ +\ z\_sdr5\_tot\ +\ (1\ \textbar{}\ school\_id)\ +\ (1\ \textbar{}\ class\_id)}
 \item
-  \textbf{Facet (RD/NS):}
-  \texttt{DV\ \textasciitilde{}\ z\_frlf\_rd\ +\ z\_frlf\_ns\ +\ z\_ksa3\_tot\ +\ z\_kn\_total\ +\ z\_sdr5\_tot\ +\ (1\ \textbar{}\ class)}
+  Facet (RD/NS):
+  \texttt{DV\ \textasciitilde{}\ z\_frlf\_rd\ +\ z\_frlf\_ns\ +\ z\_ksa3\_tot\ +\ z\_kn\_total\ +\ z\_sdr5\_tot\ +\ (1\ \textbar{}\ school\_id)\ +\ (1\ \textbar{}\ class\_id)}
 \item
-  \textbf{Interaction (if preregistered):}
-  \texttt{DV\ \textasciitilde{}\ z\_frlf\_tot\ *\ z\_kn\_total\ +\ z\_ksa3\_tot\ +\ z\_sdr5\_tot\ +\ (1\ \textbar{}\ class)}
+  Interaction (if preregistered):
+  \texttt{DV\ \textasciitilde{}\ z\_frlf\_tot\ *\ z\_kn\_total\ +\ z\_ksa3\_tot\ +\ z\_sdr5\_tot\ +\ (1\ \textbar{}\ school\_id)\ +\ (1\ \textbar{}\ class\_id)}
 \end{itemize}
 
-DVs: \texttt{z\_hpt\_total}, \texttt{z\_hpt\_cont},
-\texttt{z\_hpt\_pop}.
-
-Interpretation (fixed effects): positive \(\beta\) means \textbf{higher
-predictor → higher DV} (in SD units). For \textbf{H1--H2}, the key test
-is \textbf{FR-LF coefficients} (or RD/NS) remaining positive and
-significant \textbf{after controls}.
+DVs: \texttt{z\_hpt\_total} (CTX6), \texttt{z\_hpt\_cont},
+\texttt{z\_hpt\_pop} (POP\_rev).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -377,42 +388,32 @@ significant \textbf{after controls}.
 \NormalTok{fits }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{()}
 
 \ControlFlowTok{for}\NormalTok{ (dv }\ControlFlowTok{in}\NormalTok{ dv\_list) \{}
-
-  \CommentTok{\# Build formulas INSIDE the loop (so \{dv\} exists when glue runs)}
 \NormalTok{  form\_base  }\OtherTok{\textless{}{-}} \FunctionTok{as.formula}\NormalTok{(}
-    \FunctionTok{glue}\NormalTok{(}\StringTok{"\{dv\} \textasciitilde{} z\_frlf\_tot + z\_ksa3\_tot + z\_kn\_total + z\_sdr5\_tot + (1 | \{cluster\_var\})"}\NormalTok{)}
+    \FunctionTok{glue}\NormalTok{(}\StringTok{"\{dv\} \textasciitilde{} z\_frlf\_tot + z\_ksa3\_tot + z\_kn\_total + z\_sdr5\_tot + (1 | \{school\_var\}) + (1 | class\_id)"}\NormalTok{)}
 \NormalTok{  )}
-
 \NormalTok{  form\_facet }\OtherTok{\textless{}{-}} \FunctionTok{as.formula}\NormalTok{(}
-    \FunctionTok{glue}\NormalTok{(}\StringTok{"\{dv\} \textasciitilde{} z\_frlf\_rd + z\_frlf\_ns + z\_ksa3\_tot + z\_kn\_total + z\_sdr5\_tot + (1 | \{cluster\_var\})"}\NormalTok{)}
+    \FunctionTok{glue}\NormalTok{(}\StringTok{"\{dv\} \textasciitilde{} z\_frlf\_rd + z\_frlf\_ns + z\_ksa3\_tot + z\_kn\_total + z\_sdr5\_tot + (1 | \{school\_var\}) + (1 | class\_id)"}\NormalTok{)}
 \NormalTok{  )}
-
 \NormalTok{  form\_int   }\OtherTok{\textless{}{-}} \FunctionTok{as.formula}\NormalTok{(}
-    \FunctionTok{glue}\NormalTok{(}\StringTok{"\{dv\} \textasciitilde{} z\_frlf\_tot * z\_kn\_total + z\_ksa3\_tot + z\_sdr5\_tot + (1 | \{cluster\_var\})"}\NormalTok{)}
+    \FunctionTok{glue}\NormalTok{(}\StringTok{"\{dv\} \textasciitilde{} z\_frlf\_tot * z\_kn\_total + z\_ksa3\_tot + z\_sdr5\_tot + (1 | \{school\_var\}) + (1 | class\_id)"}\NormalTok{)}
 \NormalTok{  )}
 
-  \CommentTok{\# Fit models}
 \NormalTok{  m\_base  }\OtherTok{\textless{}{-}} \FunctionTok{lmer}\NormalTok{(form\_base,  }\AttributeTok{data =}\NormalTok{ dat)}
 \NormalTok{  m\_facet }\OtherTok{\textless{}{-}} \FunctionTok{lmer}\NormalTok{(form\_facet, }\AttributeTok{data =}\NormalTok{ dat)}
 \NormalTok{  m\_int   }\OtherTok{\textless{}{-}} \FunctionTok{lmer}\NormalTok{(form\_int,   }\AttributeTok{data =}\NormalTok{ dat)}
 
-\NormalTok{  fits[[dv]] }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}
-    \AttributeTok{base  =}\NormalTok{ m\_base,}
-    \AttributeTok{facet =}\NormalTok{ m\_facet,}
-    \AttributeTok{int   =}\NormalTok{ m\_int}
-\NormalTok{  )}
+\NormalTok{  fits[[dv]] }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}\AttributeTok{base=}\NormalTok{m\_base, }\AttributeTok{facet=}\NormalTok{m\_facet, }\AttributeTok{int=}\NormalTok{m\_int)}
 \NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# Show standard errors in parentheses; alternatives include \{t\}, \{p.value\}, etc.}
 \FunctionTok{msummary}\NormalTok{(}
   \FunctionTok{list}\NormalTok{(}
-    \StringTok{"HPT total — Base"}  \OtherTok{=}\NormalTok{ fits}\SpecialCharTok{$}\NormalTok{z\_hpt\_total}\SpecialCharTok{$}\NormalTok{base,}
-    \StringTok{"HPT total — Facet"} \OtherTok{=}\NormalTok{ fits}\SpecialCharTok{$}\NormalTok{z\_hpt\_total}\SpecialCharTok{$}\NormalTok{facet,}
-    \StringTok{"HPT total — Int."}  \OtherTok{=}\NormalTok{ fits}\SpecialCharTok{$}\NormalTok{z\_hpt\_total}\SpecialCharTok{$}\NormalTok{int}
+    \StringTok{"HPT total (CTX6) — Base"}  \OtherTok{=}\NormalTok{ fits}\SpecialCharTok{$}\NormalTok{z\_hpt\_total}\SpecialCharTok{$}\NormalTok{base,}
+    \StringTok{"HPT total (CTX6) — Facet"} \OtherTok{=}\NormalTok{ fits}\SpecialCharTok{$}\NormalTok{z\_hpt\_total}\SpecialCharTok{$}\NormalTok{facet,}
+    \StringTok{"HPT total (CTX6) — Int."}  \OtherTok{=}\NormalTok{ fits}\SpecialCharTok{$}\NormalTok{z\_hpt\_total}\SpecialCharTok{$}\NormalTok{int}
 \NormalTok{  ),}
   \AttributeTok{statistic =} \StringTok{"(\{std.error\})"}\NormalTok{,}
   \AttributeTok{gof\_omit =} \StringTok{"IC|Log|AIC|BIC"}\NormalTok{,}
@@ -425,31 +426,31 @@ significant \textbf{after controls}.
 \centering
 \begin{tabular}[t]{lccc}
 \toprule
-  & HPT total — Base & HPT total — Facet & HPT total — Int.\\
+  & HPT total (CTX6) — Base & HPT total (CTX6) — Facet & HPT total (CTX6) — Int.\\
 \midrule
-(Intercept) & \num{0.003} & \num{0.001} & \num{-0.023}\\
- & (\num{0.076}) & (\num{0.077}) & (\num{0.075})\\
-z\_frlf\_tot & \num{-0.083} &  & \num{-0.084}\\
- & (\num{0.089}) &  & (\num{0.088})\\
-z\_ksa3\_tot & \num{0.184}* & \num{0.188}* & \num{0.194}*\\
- & (\num{0.088}) & (\num{0.089}) & (\num{0.088})\\
-z\_kn\_total & \num{0.077} & \num{0.080} & \num{0.061}\\
- & (\num{0.075}) & (\num{0.076}) & (\num{0.075})\\
-z\_sdr5\_tot & \num{0.087} & \num{0.100} & \num{0.096}\\
- & (\num{0.076}) & (\num{0.078}) & (\num{0.076})\\
-z\_frlf\_rd &  & \num{-0.104} & \\
- &  & (\num{0.089}) & \\
-z\_frlf\_ns &  & \num{0.007} & \\
- &  & (\num{0.088}) & \\
-z\_frlf\_tot × z\_kn\_total &  &  & \num{-0.157}+\\
- &  &  & (\num{0.080})\\
-SD (Intercept class\_label) & \num{0.042} & \num{0.052} & \num{0.000}\\
-SD (Observations) & \num{0.993} & \num{0.997} & \num{0.986}\\
+(Intercept) & \num{-0.027} & \num{-0.031} & \num{-0.029}\\
+ & (\num{0.090}) & (\num{0.088}) & (\num{0.090})\\
+z\_frlf\_tot & \num{0.036} &  & \num{0.037}\\
+ & (\num{0.075}) &  & (\num{0.075})\\
+z\_ksa3\_tot & \num{-0.081} & \num{-0.079} & \num{-0.080}\\
+ & (\num{0.075}) & (\num{0.075}) & (\num{0.075})\\
+z\_kn\_total & \num{0.320}*** & \num{0.322}*** & \num{0.318}***\\
+ & (\num{0.064}) & (\num{0.064}) & (\num{0.065})\\
+z\_sdr5\_tot & \num{-0.048} & \num{-0.034} & \num{-0.047}\\
+ & (\num{0.065}) & (\num{0.067}) & (\num{0.065})\\
+z\_frlf\_rd &  & \num{-0.019} & \\
+ &  & (\num{0.075}) & \\
+z\_frlf\_ns &  & \num{0.066} & \\
+ &  & (\num{0.074}) & \\
+z\_frlf\_tot × z\_kn\_total &  &  & \num{-0.019}\\
+ &  &  & (\num{0.068})\\
+SD (Intercept class\_id) & \num{0.000} & \num{0.000} & \num{0.000}\\
+SD (Intercept school\_id) & \num{0.158} & \num{0.150} & \num{0.155}\\
+SD (Observations) & \num{0.943} & \num{0.943} & \num{0.945}\\
 \midrule
-Num.Obs. & \num{179} & \num{178} & \num{179}\\
-R2 Marg. & \num{0.038} & \num{0.041} & \num{0.058}\\
-R2 Cond. & \num{0.040} & \num{0.043} & \\
-RMSE & \num{0.98} & \num{0.98} & \num{0.97}\\
+Num.Obs. & \num{228} & \num{227} & \num{228}\\
+R2 Marg. & \num{0.105} & \num{0.106} & \num{0.105}\\
+RMSE & \num{0.93} & \num{0.93} & \num{0.93}\\
 \bottomrule
 \multicolumn{4}{l}{\rule{0pt}{1em}+ p $<$ 0.1, * p $<$ 0.05, ** p $<$ 0.01, *** p $<$ 0.001}\\
 \end{tabular}
@@ -476,29 +477,30 @@ RMSE & \num{0.98} & \num{0.98} & \num{0.97}\\
 \toprule
   & CONT — Base & CONT — Facet & CONT — Int.\\
 \midrule
-(Intercept) & \num{0.005} & \num{-0.001} & \num{-0.022}\\
- & (\num{0.097}) & (\num{0.097}) & (\num{0.099})\\
-z\_frlf\_tot & \num{-0.066} &  & \num{-0.068}\\
- & (\num{0.088}) &  & (\num{0.087})\\
-z\_ksa3\_tot & \num{0.070} & \num{0.073} & \num{0.079}\\
- & (\num{0.088}) & (\num{0.088}) & (\num{0.088})\\
-z\_kn\_total & \num{0.165}* & \num{0.169}* & \num{0.151}*\\
- & (\num{0.074}) & (\num{0.074}) & (\num{0.074})\\
-z\_sdr5\_tot & \num{0.061} & \num{0.080} & \num{0.068}\\
- & (\num{0.075}) & (\num{0.077}) & (\num{0.075})\\
-z\_frlf\_rd &  & \num{-0.111} & \\
- &  & (\num{0.087}) & \\
-z\_frlf\_ns &  & \num{0.038} & \\
- &  & (\num{0.086}) & \\
-z\_frlf\_tot × z\_kn\_total &  &  & \num{-0.137}+\\
- &  &  & (\num{0.079})\\
-SD (Intercept class\_label) & \num{0.203} & \num{0.202} & \num{0.206}\\
-SD (Observations) & \num{0.969} & \num{0.967} & \num{0.963}\\
+(Intercept) & \num{-0.048} & \num{-0.052} & \num{-0.062}\\
+ & (\num{0.099}) & (\num{0.098}) & (\num{0.098})\\
+z\_frlf\_tot & \num{0.044} &  & \num{0.046}\\
+ & (\num{0.078}) &  & (\num{0.077})\\
+z\_ksa3\_tot & \num{0.025} & \num{0.032} & \num{0.031}\\
+ & (\num{0.078}) & (\num{0.078}) & (\num{0.077})\\
+z\_kn\_total & \num{0.199}** & \num{0.202}** & \num{0.184}**\\
+ & (\num{0.066}) & (\num{0.066}) & (\num{0.066})\\
+z\_sdr5\_tot & \num{-0.015} & \num{0.005} & \num{-0.007}\\
+ & (\num{0.067}) & (\num{0.069}) & (\num{0.067})\\
+z\_frlf\_rd &  & \num{-0.045} & \\
+ &  & (\num{0.078}) & \\
+z\_frlf\_ns &  & \num{0.099} & \\
+ &  & (\num{0.077}) & \\
+z\_frlf\_tot × z\_kn\_total &  &  & \num{-0.119}+\\
+ &  &  & (\num{0.070})\\
+SD (Intercept class\_id) & \num{0.092} & \num{0.101} & \num{0.107}\\
+SD (Intercept school\_id) & \num{0.176} & \num{0.168} & \num{0.165}\\
+SD (Observations) & \num{0.972} & \num{0.970} & \num{0.967}\\
 \midrule
-Num.Obs. & \num{179} & \num{178} & \num{179}\\
-R2 Marg. & \num{0.040} & \num{0.045} & \num{0.055}\\
-R2 Cond. & \num{0.080} & \num{0.085} & \num{0.097}\\
-RMSE & \num{0.94} & \num{0.94} & \num{0.94}\\
+Num.Obs. & \num{228} & \num{227} & \num{228}\\
+R2 Marg. & \num{0.041} & \num{0.046} & \num{0.053}\\
+R2 Cond. & \num{0.079} & \num{0.084} & \num{0.090}\\
+RMSE & \num{0.95} & \num{0.95} & \num{0.95}\\
 \bottomrule
 \multicolumn{4}{l}{\rule{0pt}{1em}+ p $<$ 0.1, * p $<$ 0.05, ** p $<$ 0.01, *** p $<$ 0.001}\\
 \end{tabular}
@@ -508,9 +510,9 @@ RMSE & \num{0.94} & \num{0.94} & \num{0.94}\\
 \begin{Highlighting}[]
 \FunctionTok{msummary}\NormalTok{(}
   \FunctionTok{list}\NormalTok{(}
-    \StringTok{"POP — Base"}  \OtherTok{=}\NormalTok{ fits}\SpecialCharTok{$}\NormalTok{z\_hpt\_pop}\SpecialCharTok{$}\NormalTok{base,}
-    \StringTok{"POP — Facet"} \OtherTok{=}\NormalTok{ fits}\SpecialCharTok{$}\NormalTok{z\_hpt\_pop}\SpecialCharTok{$}\NormalTok{facet,}
-    \StringTok{"POP — Int."}  \OtherTok{=}\NormalTok{ fits}\SpecialCharTok{$}\NormalTok{z\_hpt\_pop}\SpecialCharTok{$}\NormalTok{int}
+    \StringTok{"POP\_rev — Base"}  \OtherTok{=}\NormalTok{ fits}\SpecialCharTok{$}\NormalTok{z\_hpt\_pop}\SpecialCharTok{$}\NormalTok{base,}
+    \StringTok{"POP\_rev — Facet"} \OtherTok{=}\NormalTok{ fits}\SpecialCharTok{$}\NormalTok{z\_hpt\_pop}\SpecialCharTok{$}\NormalTok{facet,}
+    \StringTok{"POP\_rev — Int."}  \OtherTok{=}\NormalTok{ fits}\SpecialCharTok{$}\NormalTok{z\_hpt\_pop}\SpecialCharTok{$}\NormalTok{int}
 \NormalTok{  ),}
   \AttributeTok{statistic =} \StringTok{"(\{std.error\})"}\NormalTok{,}
   \AttributeTok{gof\_omit =} \StringTok{"IC|Log|AIC|BIC"}\NormalTok{,}
@@ -523,30 +525,31 @@ RMSE & \num{0.94} & \num{0.94} & \num{0.94}\\
 \centering
 \begin{tabular}[t]{lccc}
 \toprule
-  & POP — Base & POP — Facet & POP — Int.\\
+  & POP\_rev — Base & POP\_rev — Facet & POP\_rev — Int.\\
 \midrule
-(Intercept) & \num{-0.005} & \num{-0.000} & \num{-0.011}\\
- & (\num{0.070}) & (\num{0.071}) & (\num{0.072})\\
-z\_frlf\_tot & \num{-0.012} &  & \num{-0.013}\\
- & (\num{0.084}) &  & (\num{0.084})\\
-z\_ksa3\_tot & \num{0.175}* & \num{0.178}* & \num{0.177}*\\
- & (\num{0.083}) & (\num{0.084}) & (\num{0.084})\\
-z\_kn\_total & \num{-0.332}*** & \num{-0.330}*** & \num{-0.335}***\\
- & (\num{0.071}) & (\num{0.072}) & (\num{0.072})\\
-z\_sdr5\_tot & \num{0.057} & \num{0.054} & \num{0.059}\\
- & (\num{0.072}) & (\num{0.074}) & (\num{0.072})\\
-z\_frlf\_rd &  & \num{-0.016} & \\
- &  & (\num{0.084}) & \\
+(Intercept) & \num{0.004} & \num{0.000} & \num{0.016}\\
+ & (\num{0.062}) & (\num{0.062}) & (\num{0.062})\\
+z\_frlf\_tot & \num{0.003} &  & \num{-0.000}\\
+ & (\num{0.073}) &  & (\num{0.073})\\
+z\_ksa3\_tot & \num{-0.176}* & \num{-0.179}* & \num{-0.181}*\\
+ & (\num{0.073}) & (\num{0.074}) & (\num{0.073})\\
+z\_kn\_total & \num{0.340}*** & \num{0.338}*** & \num{0.352}***\\
+ & (\num{0.063}) & (\num{0.063}) & (\num{0.063})\\
+z\_sdr5\_tot & \num{-0.068} & \num{-0.066} & \num{-0.074}\\
+ & (\num{0.064}) & (\num{0.066}) & (\num{0.064})\\
+z\_frlf\_rd &  & \num{0.012} & \\
+ &  & (\num{0.075}) & \\
 z\_frlf\_ns &  & \num{-0.004} & \\
- &  & (\num{0.083}) & \\
-z\_frlf\_tot × z\_kn\_total &  &  & \num{-0.035}\\
- &  &  & (\num{0.076})\\
-SD (Intercept class\_label) & \num{0.000} & \num{0.000} & \num{0.000}\\
-SD (Observations) & \num{0.940} & \num{0.943} & \num{0.942}\\
+ &  & (\num{0.074}) & \\
+z\_frlf\_tot × z\_kn\_total &  &  & \num{0.093}\\
+ &  &  & (\num{0.067})\\
+SD (Intercept class\_id) & \num{0.000} & \num{0.000} & \num{0.000}\\
+SD (Intercept school\_id) & \num{0.000} & \num{0.000} & \num{0.000}\\
+SD (Observations) & \num{0.935} & \num{0.937} & \num{0.933}\\
 \midrule
-Num.Obs. & \num{179} & \num{178} & \num{179}\\
-R2 Marg. & \num{0.134} & \num{0.132} & \num{0.134}\\
-RMSE & \num{0.93} & \num{0.93} & \num{0.93}\\
+Num.Obs. & \num{228} & \num{227} & \num{228}\\
+R2 Marg. & \num{0.140} & \num{0.138} & \num{0.146}\\
+RMSE & \num{0.92} & \num{0.92} & \num{0.92}\\
 \bottomrule
 \multicolumn{4}{l}{\rule{0pt}{1em}+ p $<$ 0.1, * p $<$ 0.05, ** p $<$ 0.01, *** p $<$ 0.001}\\
 \end{tabular}
@@ -554,19 +557,14 @@ RMSE & \num{0.93} & \num{0.93} & \num{0.93}\\
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# Robust extractors so we ALWAYS return a single{-}row data.frame}
 \StringTok{\textasciigrave{}}\AttributeTok{\%||\%}\StringTok{\textasciigrave{}} \OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(a, b) }\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{is.null}\NormalTok{(a) }\SpecialCharTok{\&\&} \FunctionTok{length}\NormalTok{(a) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) a }\ControlFlowTok{else}\NormalTok{ b}
 
 \NormalTok{collect\_metrics }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(m) \{}
-  \CommentTok{\# ICC (allow for API differences)}
 \NormalTok{  icc\_val }\OtherTok{\textless{}{-}} \FunctionTok{tryCatch}\NormalTok{(\{}
 \NormalTok{    ic }\OtherTok{\textless{}{-}}\NormalTok{ performance}\SpecialCharTok{::}\FunctionTok{icc}\NormalTok{(m)}
-    \FunctionTok{as.numeric}\NormalTok{(}
-\NormalTok{      ic}\SpecialCharTok{$}\NormalTok{ICC\_adjusted }\SpecialCharTok{\%||\%}\NormalTok{ ic}\SpecialCharTok{$}\NormalTok{ICC }\SpecialCharTok{\%||\%}\NormalTok{ ic}\SpecialCharTok{$}\NormalTok{ICC\_conditional }\SpecialCharTok{\%||\%} \ConstantTok{NA\_real\_}
-\NormalTok{    )}
+    \FunctionTok{as.numeric}\NormalTok{(ic}\SpecialCharTok{$}\NormalTok{ICC\_adjusted }\SpecialCharTok{\%||\%}\NormalTok{ ic}\SpecialCharTok{$}\NormalTok{ICC }\SpecialCharTok{\%||\%}\NormalTok{ ic}\SpecialCharTok{$}\NormalTok{ICC\_conditional }\SpecialCharTok{\%||\%} \ConstantTok{NA\_real\_}\NormalTok{)}
 \NormalTok{  \}, }\AttributeTok{error =} \ControlFlowTok{function}\NormalTok{(e) }\ConstantTok{NA\_real\_}\NormalTok{)}
 
-  \CommentTok{\# R2 (prefer Nakagawa; fallbacks to older names)}
 \NormalTok{  r2m }\OtherTok{\textless{}{-}}\NormalTok{ r2c }\OtherTok{\textless{}{-}} \ConstantTok{NA\_real\_}
   \FunctionTok{try}\NormalTok{(\{}
 \NormalTok{    r2o }\OtherTok{\textless{}{-}}\NormalTok{ performance}\SpecialCharTok{::}\FunctionTok{r2\_nakagawa}\NormalTok{(m)}
@@ -579,20 +577,28 @@ RMSE & \num{0.93} & \num{0.93} & \num{0.93}\\
 
 \NormalTok{metrics }\OtherTok{\textless{}{-}}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{bind\_rows}\NormalTok{(}
   \FunctionTok{list}\NormalTok{(}
-    \StringTok{\textasciigrave{}}\AttributeTok{HPT total — Base}\StringTok{\textasciigrave{}}  \OtherTok{=} \FunctionTok{collect\_metrics}\NormalTok{(fits}\SpecialCharTok{$}\NormalTok{z\_hpt\_total}\SpecialCharTok{$}\NormalTok{base),}
-    \StringTok{\textasciigrave{}}\AttributeTok{HPT total — Facet}\StringTok{\textasciigrave{}} \OtherTok{=} \FunctionTok{collect\_metrics}\NormalTok{(fits}\SpecialCharTok{$}\NormalTok{z\_hpt\_total}\SpecialCharTok{$}\NormalTok{facet),}
-    \StringTok{\textasciigrave{}}\AttributeTok{HPT total — Int.}\StringTok{\textasciigrave{}}  \OtherTok{=} \FunctionTok{collect\_metrics}\NormalTok{(fits}\SpecialCharTok{$}\NormalTok{z\_hpt\_total}\SpecialCharTok{$}\NormalTok{int),}
-    \StringTok{\textasciigrave{}}\AttributeTok{CONT — Base}\StringTok{\textasciigrave{}}       \OtherTok{=} \FunctionTok{collect\_metrics}\NormalTok{(fits}\SpecialCharTok{$}\NormalTok{z\_hpt\_cont}\SpecialCharTok{$}\NormalTok{base),}
-    \StringTok{\textasciigrave{}}\AttributeTok{CONT — Facet}\StringTok{\textasciigrave{}}      \OtherTok{=} \FunctionTok{collect\_metrics}\NormalTok{(fits}\SpecialCharTok{$}\NormalTok{z\_hpt\_cont}\SpecialCharTok{$}\NormalTok{facet),}
-    \StringTok{\textasciigrave{}}\AttributeTok{CONT — Int.}\StringTok{\textasciigrave{}}       \OtherTok{=} \FunctionTok{collect\_metrics}\NormalTok{(fits}\SpecialCharTok{$}\NormalTok{z\_hpt\_cont}\SpecialCharTok{$}\NormalTok{int),}
-    \StringTok{\textasciigrave{}}\AttributeTok{POP — Base}\StringTok{\textasciigrave{}}        \OtherTok{=} \FunctionTok{collect\_metrics}\NormalTok{(fits}\SpecialCharTok{$}\NormalTok{z\_hpt\_pop}\SpecialCharTok{$}\NormalTok{base),}
-    \StringTok{\textasciigrave{}}\AttributeTok{POP — Facet}\StringTok{\textasciigrave{}}       \OtherTok{=} \FunctionTok{collect\_metrics}\NormalTok{(fits}\SpecialCharTok{$}\NormalTok{z\_hpt\_pop}\SpecialCharTok{$}\NormalTok{facet),}
-    \StringTok{\textasciigrave{}}\AttributeTok{POP — Int.}\StringTok{\textasciigrave{}}        \OtherTok{=} \FunctionTok{collect\_metrics}\NormalTok{(fits}\SpecialCharTok{$}\NormalTok{z\_hpt\_pop}\SpecialCharTok{$}\NormalTok{int)}
+    \StringTok{\textasciigrave{}}\AttributeTok{HPT total (CTX6) — Base}\StringTok{\textasciigrave{}}  \OtherTok{=} \FunctionTok{collect\_metrics}\NormalTok{(fits}\SpecialCharTok{$}\NormalTok{z\_hpt\_total}\SpecialCharTok{$}\NormalTok{base),}
+    \StringTok{\textasciigrave{}}\AttributeTok{HPT total (CTX6) — Facet}\StringTok{\textasciigrave{}} \OtherTok{=} \FunctionTok{collect\_metrics}\NormalTok{(fits}\SpecialCharTok{$}\NormalTok{z\_hpt\_total}\SpecialCharTok{$}\NormalTok{facet),}
+    \StringTok{\textasciigrave{}}\AttributeTok{HPT total (CTX6) — Int.}\StringTok{\textasciigrave{}}  \OtherTok{=} \FunctionTok{collect\_metrics}\NormalTok{(fits}\SpecialCharTok{$}\NormalTok{z\_hpt\_total}\SpecialCharTok{$}\NormalTok{int),}
+    \StringTok{\textasciigrave{}}\AttributeTok{CONT — Base}\StringTok{\textasciigrave{}}               \OtherTok{=} \FunctionTok{collect\_metrics}\NormalTok{(fits}\SpecialCharTok{$}\NormalTok{z\_hpt\_cont}\SpecialCharTok{$}\NormalTok{base),}
+    \StringTok{\textasciigrave{}}\AttributeTok{CONT — Facet}\StringTok{\textasciigrave{}}              \OtherTok{=} \FunctionTok{collect\_metrics}\NormalTok{(fits}\SpecialCharTok{$}\NormalTok{z\_hpt\_cont}\SpecialCharTok{$}\NormalTok{facet),}
+    \StringTok{\textasciigrave{}}\AttributeTok{CONT — Int.}\StringTok{\textasciigrave{}}               \OtherTok{=} \FunctionTok{collect\_metrics}\NormalTok{(fits}\SpecialCharTok{$}\NormalTok{z\_hpt\_cont}\SpecialCharTok{$}\NormalTok{int),}
+    \StringTok{\textasciigrave{}}\AttributeTok{POP\_rev — Base}\StringTok{\textasciigrave{}}            \OtherTok{=} \FunctionTok{collect\_metrics}\NormalTok{(fits}\SpecialCharTok{$}\NormalTok{z\_hpt\_pop}\SpecialCharTok{$}\NormalTok{base),}
+    \StringTok{\textasciigrave{}}\AttributeTok{POP\_rev — Facet}\StringTok{\textasciigrave{}}           \OtherTok{=} \FunctionTok{collect\_metrics}\NormalTok{(fits}\SpecialCharTok{$}\NormalTok{z\_hpt\_pop}\SpecialCharTok{$}\NormalTok{facet),}
+    \StringTok{\textasciigrave{}}\AttributeTok{POP\_rev — Int.}\StringTok{\textasciigrave{}}            \OtherTok{=} \FunctionTok{collect\_metrics}\NormalTok{(fits}\SpecialCharTok{$}\NormalTok{z\_hpt\_pop}\SpecialCharTok{$}\NormalTok{int)}
 \NormalTok{  ),}
   \AttributeTok{.id =} \StringTok{"Model"}
 \NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+## Random effect variances not available. Returned R2 does not account for random effects.
+\end{verbatim}
+
+\begin{verbatim}
+## Random effect variances not available. Returned R2 does not account for random effects.
+\end{verbatim}
 
 \begin{verbatim}
 ## Random effect variances not available. Returned R2 does not account for random effects.
@@ -628,20 +634,19 @@ Model & ICC & R2\_m & R2\_c \\
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-HPT total --- Base & 0.002 & 0.038 & 0.040 \\
-HPT total --- Facet & 0.003 & 0.041 & 0.043 \\
-HPT total --- Int. & NA & 0.058 & NA \\
-CONT --- Base & 0.042 & 0.040 & 0.080 \\
-CONT --- Facet & 0.042 & 0.045 & 0.085 \\
-CONT --- Int. & 0.044 & 0.055 & 0.097 \\
-POP --- Base & NA & 0.134 & NA \\
-POP --- Facet & NA & 0.132 & NA \\
-POP --- Int. & NA & 0.134 & NA \\
+HPT total (CTX6) --- Base & NA & 0.105 & NA \\
+HPT total (CTX6) --- Facet & NA & 0.106 & NA \\
+HPT total (CTX6) --- Int. & NA & 0.105 & NA \\
+CONT --- Base & 0.040 & 0.041 & 0.079 \\
+CONT --- Facet & 0.039 & 0.046 & 0.084 \\
+CONT --- Int. & 0.040 & 0.053 & 0.090 \\
+POP\_rev --- Base & NA & 0.140 & NA \\
+POP\_rev --- Facet & NA & 0.138 & NA \\
+POP\_rev --- Int. & NA & 0.146 & NA \\
 \end{longtable}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# Extract tidy tables for inference and interpretation sections}
 \NormalTok{tidy\_all }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(lst, label) \{}
   \FunctionTok{bind\_rows}\NormalTok{(}
 \NormalTok{    broom.mixed}\SpecialCharTok{::}\FunctionTok{tidy}\NormalTok{(lst}\SpecialCharTok{$}\NormalTok{base,  }\AttributeTok{effects=}\StringTok{"fixed"}\NormalTok{, }\AttributeTok{conf.int=}\ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{|\textgreater{}} \FunctionTok{mutate}\NormalTok{(}\AttributeTok{spec=}\StringTok{"Base"}\NormalTok{),}
@@ -653,9 +658,9 @@ POP --- Int. & NA & 0.134 & NA \\
 \NormalTok{\}}
 
 \NormalTok{tidy\_tbl }\OtherTok{\textless{}{-}} \FunctionTok{bind\_rows}\NormalTok{(}
-  \FunctionTok{tidy\_all}\NormalTok{(fits}\SpecialCharTok{$}\NormalTok{z\_hpt\_total, }\StringTok{"HPT total"}\NormalTok{),}
+  \FunctionTok{tidy\_all}\NormalTok{(fits}\SpecialCharTok{$}\NormalTok{z\_hpt\_total, }\StringTok{"HPT total (CTX6)"}\NormalTok{),}
   \FunctionTok{tidy\_all}\NormalTok{(fits}\SpecialCharTok{$}\NormalTok{z\_hpt\_cont,  }\StringTok{"CONT"}\NormalTok{),}
-  \FunctionTok{tidy\_all}\NormalTok{(fits}\SpecialCharTok{$}\NormalTok{z\_hpt\_pop,   }\StringTok{"POP"}\NormalTok{)}
+  \FunctionTok{tidy\_all}\NormalTok{(fits}\SpecialCharTok{$}\NormalTok{z\_hpt\_pop,   }\StringTok{"POP\_rev"}\NormalTok{)}
 \NormalTok{)}
 
 \NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(}
@@ -667,13 +672,13 @@ POP --- Int. & NA & 0.134 & NA \\
 \end{Shaded}
 
 \begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1250}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1500}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.2750}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1125}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1125}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1250}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1000}}@{}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1954}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1379}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.2529}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1034}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1034}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1149}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.0920}}@{}}
 \caption{Fixed effects (standardized coefficients).}\tabularnewline
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
@@ -713,55 +718,67 @@ p.value
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-HPT total & Base & z\_frlf\_tot & -0.083 & -0.259 & 0.092 & 0.350 \\
-HPT total & Base & z\_ksa3\_tot & 0.184 & 0.009 & 0.358 & 0.039 \\
-HPT total & Base & z\_kn\_total & 0.077 & -0.072 & 0.226 & 0.309 \\
-HPT total & Base & z\_sdr5\_tot & 0.087 & -0.063 & 0.237 & 0.256 \\
-HPT total & Facet & z\_frlf\_rd & -0.104 & -0.279 & 0.072 & 0.245 \\
-HPT total & Facet & z\_frlf\_ns & 0.007 & -0.167 & 0.181 & 0.939 \\
-HPT total & Facet & z\_ksa3\_tot & 0.188 & 0.012 & 0.364 & 0.036 \\
-HPT total & Facet & z\_kn\_total & 0.080 & -0.069 & 0.230 & 0.291 \\
-HPT total & Facet & z\_sdr5\_tot & 0.100 & -0.054 & 0.253 & 0.203 \\
-HPT total & Interaction & z\_frlf\_tot & -0.084 & -0.258 & 0.091 &
-0.345 \\
-HPT total & Interaction & z\_kn\_total & 0.061 & -0.088 & 0.210 &
-0.420 \\
-HPT total & Interaction & z\_ksa3\_tot & 0.194 & 0.021 & 0.367 &
-0.028 \\
-HPT total & Interaction & z\_sdr5\_tot & 0.096 & -0.053 & 0.245 &
-0.206 \\
-HPT total & Interaction & z\_frlf\_tot:z\_kn\_total & -0.157 & -0.315 &
-0.001 & 0.051 \\
-CONT & Base & z\_frlf\_tot & -0.066 & -0.239 & 0.107 & 0.451 \\
-CONT & Base & z\_ksa3\_tot & 0.070 & -0.104 & 0.244 & 0.429 \\
-CONT & Base & z\_kn\_total & 0.165 & 0.018 & 0.312 & 0.028 \\
-CONT & Base & z\_sdr5\_tot & 0.061 & -0.088 & 0.209 & 0.422 \\
-CONT & Facet & z\_frlf\_rd & -0.111 & -0.283 & 0.061 & 0.204 \\
-CONT & Facet & z\_frlf\_ns & 0.038 & -0.132 & 0.207 & 0.661 \\
-CONT & Facet & z\_ksa3\_tot & 0.073 & -0.101 & 0.248 & 0.408 \\
-CONT & Facet & z\_kn\_total & 0.169 & 0.022 & 0.316 & 0.024 \\
-CONT & Facet & z\_sdr5\_tot & 0.080 & -0.071 & 0.231 & 0.296 \\
-CONT & Interaction & z\_frlf\_tot & -0.068 & -0.240 & 0.105 & 0.440 \\
-CONT & Interaction & z\_kn\_total & 0.151 & 0.004 & 0.298 & 0.045 \\
-CONT & Interaction & z\_ksa3\_tot & 0.079 & -0.094 & 0.252 & 0.370 \\
-CONT & Interaction & z\_sdr5\_tot & 0.068 & -0.079 & 0.216 & 0.362 \\
-CONT & Interaction & z\_frlf\_tot:z\_kn\_total & -0.137 & -0.293 & 0.019
-& 0.085 \\
-POP & Base & z\_frlf\_tot & -0.012 & -0.179 & 0.154 & 0.883 \\
-POP & Base & z\_ksa3\_tot & 0.175 & 0.011 & 0.339 & 0.037 \\
-POP & Base & z\_kn\_total & -0.332 & -0.472 & -0.191 & 0.000 \\
-POP & Base & z\_sdr5\_tot & 0.057 & -0.085 & 0.199 & 0.429 \\
-POP & Facet & z\_frlf\_rd & -0.016 & -0.182 & 0.150 & 0.851 \\
-POP & Facet & z\_frlf\_ns & -0.004 & -0.169 & 0.160 & 0.958 \\
-POP & Facet & z\_ksa3\_tot & 0.178 & 0.013 & 0.344 & 0.035 \\
-POP & Facet & z\_kn\_total & -0.330 & -0.472 & -0.188 & 0.000 \\
-POP & Facet & z\_sdr5\_tot & 0.054 & -0.092 & 0.199 & 0.468 \\
-POP & Interaction & z\_frlf\_tot & -0.013 & -0.179 & 0.154 & 0.882 \\
-POP & Interaction & z\_kn\_total & -0.335 & -0.478 & -0.193 & 0.000 \\
-POP & Interaction & z\_ksa3\_tot & 0.177 & 0.012 & 0.342 & 0.036 \\
-POP & Interaction & z\_sdr5\_tot & 0.059 & -0.084 & 0.201 & 0.415 \\
-POP & Interaction & z\_frlf\_tot:z\_kn\_total & -0.035 & -0.186 & 0.115
-& 0.643 \\
+HPT total (CTX6) & Base & z\_frlf\_tot & 0.036 & -0.111 & 0.184 &
+0.628 \\
+HPT total (CTX6) & Base & z\_ksa3\_tot & -0.081 & -0.229 & 0.066 &
+0.279 \\
+HPT total (CTX6) & Base & z\_kn\_total & 0.320 & 0.194 & 0.446 &
+0.000 \\
+HPT total (CTX6) & Base & z\_sdr5\_tot & -0.048 & -0.176 & 0.080 &
+0.463 \\
+HPT total (CTX6) & Facet & z\_frlf\_rd & -0.019 & -0.168 & 0.129 &
+0.799 \\
+HPT total (CTX6) & Facet & z\_frlf\_ns & 0.066 & -0.081 & 0.213 &
+0.378 \\
+HPT total (CTX6) & Facet & z\_ksa3\_tot & -0.079 & -0.228 & 0.070 &
+0.297 \\
+HPT total (CTX6) & Facet & z\_kn\_total & 0.322 & 0.196 & 0.448 &
+0.000 \\
+HPT total (CTX6) & Facet & z\_sdr5\_tot & -0.034 & -0.165 & 0.098 &
+0.613 \\
+HPT total (CTX6) & Interaction & z\_frlf\_tot & 0.037 & -0.111 & 0.185 &
+0.626 \\
+HPT total (CTX6) & Interaction & z\_kn\_total & 0.318 & 0.190 & 0.445 &
+0.000 \\
+HPT total (CTX6) & Interaction & z\_ksa3\_tot & -0.080 & -0.228 & 0.068
+& 0.286 \\
+HPT total (CTX6) & Interaction & z\_sdr5\_tot & -0.047 & -0.175 & 0.082
+& 0.476 \\
+HPT total (CTX6) & Interaction & z\_frlf\_tot:z\_kn\_total & -0.019 &
+-0.153 & 0.115 & 0.779 \\
+CONT & Base & z\_frlf\_tot & 0.044 & -0.109 & 0.197 & 0.571 \\
+CONT & Base & z\_ksa3\_tot & 0.025 & -0.128 & 0.178 & 0.744 \\
+CONT & Base & z\_kn\_total & 0.199 & 0.068 & 0.329 & 0.003 \\
+CONT & Base & z\_sdr5\_tot & -0.015 & -0.148 & 0.117 & 0.818 \\
+CONT & Facet & z\_frlf\_rd & -0.045 & -0.199 & 0.108 & 0.561 \\
+CONT & Facet & z\_frlf\_ns & 0.099 & -0.052 & 0.250 & 0.198 \\
+CONT & Facet & z\_ksa3\_tot & 0.032 & -0.122 & 0.186 & 0.681 \\
+CONT & Facet & z\_kn\_total & 0.202 & 0.072 & 0.333 & 0.002 \\
+CONT & Facet & z\_sdr5\_tot & 0.005 & -0.130 & 0.141 & 0.937 \\
+CONT & Interaction & z\_frlf\_tot & 0.046 & -0.106 & 0.198 & 0.554 \\
+CONT & Interaction & z\_kn\_total & 0.184 & 0.053 & 0.314 & 0.006 \\
+CONT & Interaction & z\_ksa3\_tot & 0.031 & -0.121 & 0.184 & 0.687 \\
+CONT & Interaction & z\_sdr5\_tot & -0.007 & -0.139 & 0.125 & 0.914 \\
+CONT & Interaction & z\_frlf\_tot:z\_kn\_total & -0.119 & -0.256 & 0.019
+& 0.091 \\
+POP\_rev & Base & z\_frlf\_tot & 0.003 & -0.142 & 0.148 & 0.969 \\
+POP\_rev & Base & z\_ksa3\_tot & -0.176 & -0.320 & -0.032 & 0.017 \\
+POP\_rev & Base & z\_kn\_total & 0.340 & 0.216 & 0.463 & 0.000 \\
+POP\_rev & Base & z\_sdr5\_tot & -0.068 & -0.193 & 0.058 & 0.289 \\
+POP\_rev & Facet & z\_frlf\_rd & 0.012 & -0.135 & 0.159 & 0.869 \\
+POP\_rev & Facet & z\_frlf\_ns & -0.004 & -0.149 & 0.141 & 0.955 \\
+POP\_rev & Facet & z\_ksa3\_tot & -0.179 & -0.324 & -0.034 & 0.016 \\
+POP\_rev & Facet & z\_kn\_total & 0.338 & 0.214 & 0.462 & 0.000 \\
+POP\_rev & Facet & z\_sdr5\_tot & -0.066 & -0.195 & 0.063 & 0.314 \\
+POP\_rev & Interaction & z\_frlf\_tot & 0.000 & -0.145 & 0.144 &
+0.998 \\
+POP\_rev & Interaction & z\_kn\_total & 0.352 & 0.228 & 0.477 & 0.000 \\
+POP\_rev & Interaction & z\_ksa3\_tot & -0.181 & -0.325 & -0.038 &
+0.014 \\
+POP\_rev & Interaction & z\_sdr5\_tot & -0.074 & -0.200 & 0.051 &
+0.245 \\
+POP\_rev & Interaction & z\_frlf\_tot:z\_kn\_total & 0.093 & -0.039 &
+0.225 & 0.166 \\
 \end{longtable}
 
 \hypertarget{results-decision-rules}{%
@@ -774,22 +791,21 @@ Interpret \textbf{only the preregistered tests}:
 \item
   \textbf{H1 supported} if the coefficient for \textbf{FR-LF} (either
   \texttt{z\_frlf\_tot} in Base/Int. or
-  \texttt{z\_frlf\_rd}/\texttt{z\_frlf\_ns} in Facet) is \textbf{\(>\) 0
-  and \(p < .05\)} for \textbf{HPT total} and/or \textbf{CONT}.
+  \texttt{z\_frlf\_rd}/\texttt{z\_frlf\_ns} in Facet) is
+  \textbf{\textgreater{} 0 and p \textless{} .05} for \textbf{HPT total
+  (CTX6)} and/or \textbf{CONT}.
 \item
   \textbf{H2 supported} if the same holds \textbf{after} adding controls
   (\textbf{KN}, \textbf{SDR-5}) and \textbf{KSA-3} (already included),
   and --- if preregistered --- the \textbf{FR-LF × KN} interaction is
   \textbf{not necessary} for the main effect to persist (or, if
-  hypothesized, is significant in the expected direction).
+  hypothesised, is significant in the expected direction).
 \end{itemize}
 
-\textbf{Reading POP.} Given our recoding (1--4 ``fit''), higher
-\textbf{POP} here reflects stronger agreement that the
-presentism-trigger statements ``fit'' Hannes. In the original
-instrument, POP and CONT came out as a single factor vs.~ROA in CFA, and
-item wording can trip respondents; interpret POP cautiously and
-triangulate with CONT.
+\textbf{Reading POP\_rev.} Because POP is reversed, higher
+\textbf{POP\_rev} means \textbf{less presentism / more contextualised
+fit} on items that originally cued presentist endorsements. Interpret
+alongside \textbf{CONT}.
 
 \hypertarget{brief-interpretation-guide-for-the-write-up}{%
 \section{5. Brief interpretation guide (for the
@@ -798,20 +814,19 @@ write-up)}\label{brief-interpretation-guide-for-the-write-up}}
 \begin{itemize}
 \tightlist
 \item
-  \textbf{Effect size:} Coefficients are \textbf{standardized}
-  (\(\beta\)). Values around 0.10 are small, 0.20--0.30 moderate for
-  individual-level predictors in multilevel models; report 95\% CIs.
+  \textbf{Effect size:} Coefficients are \textbf{standardised} (β).
+  Values around 0.10 are small, 0.20--0.30 moderate for individual-level
+  predictors in multilevel models; report 95\% CIs.
 \item
   \textbf{Clustering:} Report \textbf{ICC} to show class-level variance.
 \item
-  \textbf{Model fit:} Report marginal and conditional \(R^2\) and
-  compare Base vs.~Facet vs.~Interaction.
+  \textbf{Model fit:} Report marginal and conditional R² and compare
+  Base vs.~Facet vs.~Interaction.
 \item
   \textbf{Substantive meaning:} A \textbf{positive FR-LF} effect on
   \textbf{HPT total / CONT} suggests that ideological affinity
-  \textbf{elevates apparent contextualization}, consistent with the
-  contamination concern. Cite the HPT literature and the FR-LF
-  validation when interpreting.
+  \textbf{elevates apparent contextualisation}, consistent with the
+  contamination concern.
 \item
   \textbf{Controls:} If FR-LF remains significant after \textbf{KN} and
   \textbf{SDR-5}, state that results are \textbf{not explained} by prior
@@ -825,21 +840,14 @@ provenance}\label{transparency-and-provenance}}
 \begin{itemize}
 \tightlist
 \item
-  \textbf{Instrument provenance.} HPT instrument and subscale logic
-  follow Hartmann \& Hasselhorn / Huijgen et al.~(contextualization
-  vs.~presentism; known POP/CONT factor behavior; potential item-level
-  ambiguities).
+  HPT structure and reversal logic follow Hartmann \& Hasselhorn /
+  Huijgen et al.
 \item
-  \textbf{FR-LF-mini.} Items RD1--3 and NS1--3 originate from the
-  Leipzig FR-LF, which shows a stable 6-factor structure and excellent
-  internal consistency in representative samples.
+  FR-LF-mini originates from the Leipzig FR-LF.
 \item
-  \textbf{Analysis plan.} This file implements the Stage 1 snapshot plan
-  (multilevel regressions; DVs: HPT total, CONT, POP; predictors: FR-LF,
-  KSA-3; controls: KN, SDR-5; class clustering).
-\item
-  \textbf{Variable names and coding} are taken from the project codebook
-  to ensure reproducibility.
+  Analysis plan: random-intercept LMMs; DVs: HPT total (CTX6), CONT,
+  POP\_rev; predictors: FR-LF (total; RD/NS facets), KSA-3; controls:
+  KN, SDR-5; clustering: school + class\_id.
 \end{itemize}
 
 \hypertarget{session-info}{%
@@ -912,32 +920,5 @@ provenance}\label{transparency-and-provenance}}
 ## [76] nlme_3.1-166        xfun_0.54           zoo_1.8-14         
 ## [79] pkgconfig_2.0.3
 \end{verbatim}
-
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
-
-\hypertarget{minimal-reporting-template-paste-into-manuscript}{%
-\subsubsection{Minimal reporting template (paste into
-manuscript)}\label{minimal-reporting-template-paste-into-manuscript}}
-
-\begin{itemize}
-\tightlist
-\item
-  \textbf{Model:} Random-intercept LMM (classes).
-\item
-  \textbf{DV:} HPT total (z); robustness for CONT (z) and POP (z).
-\item
-  \textbf{Predictors:} FR-LF total (z) or RD/NS facets (z); KSA-3 total
-  (z); controls KN (z), SDR-5 (z).
-\item
-  \textbf{Key result:} \(\beta_{\text{FR-LF}}=\ldots\), 95\% CI
-  \([\ldots,\ldots]\), \(p=\ldots\); ICC = \(\ldots\); \(R^2_m=\ldots\),
-  \(R^2_c=\ldots\).
-\item
-  \textbf{Decision:} H1 \ldots{} / H2 \ldots{} (per criteria above).
-\end{itemize}
-
-\emph{References for context}: Huijgen et al.~on HPT structure and
-presentism risks; FR-LF validation and dimensionality; Stage 1 snapshot
-for analytic plan; project codebook for variables.
 
 \end{document}
