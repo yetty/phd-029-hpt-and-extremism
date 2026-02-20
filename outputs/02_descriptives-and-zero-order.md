@@ -191,28 +191,28 @@ schools
 ```{=html}
 <td style="text-align:right;">
 ```
-234
+293
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-234
+293
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-16
+20
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-8
+10
 ```{=html}
 </td>
 ```
@@ -332,21 +332,21 @@ HPT_POP
 ```{=html}
 <td style="text-align:right;">
 ```
-229
+287
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-2.99
+2.97
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.65
+0.64
 ```{=html}
 </td>
 ```
@@ -380,21 +380,21 @@ HPT_ROA
 ```{=html}
 <td style="text-align:right;">
 ```
-229
+287
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-2.81
+2.80
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.65
+0.68
 ```{=html}
 </td>
 ```
@@ -428,14 +428,14 @@ HPT_CONT
 ```{=html}
 <td style="text-align:right;">
 ```
-229
+287
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-2.73
+2.71
 ```{=html}
 </td>
 ```
@@ -476,21 +476,21 @@ HPT_CTX6
 ```{=html}
 <td style="text-align:right;">
 ```
-229
+287
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-2.86
+2.84
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.57
+0.55
 ```{=html}
 </td>
 ```
@@ -524,14 +524,14 @@ HPT_TOT9
 ```{=html}
 <td style="text-align:right;">
 ```
-229
+287
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-2.84
+2.83
 ```{=html}
 </td>
 ```
@@ -572,21 +572,21 @@ KN_TOTAL
 ```{=html}
 <td style="text-align:right;">
 ```
-234
+293
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-3.15
+3.04
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-1.66
+1.62
 ```{=html}
 </td>
 ```
@@ -620,21 +620,21 @@ FRLF_RD
 ```{=html}
 <td style="text-align:right;">
 ```
-228
+285
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-2.53
+2.54
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.91
+0.88
 ```{=html}
 </td>
 ```
@@ -668,21 +668,21 @@ FRLF_NS
 ```{=html}
 <td style="text-align:right;">
 ```
-229
+286
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-2.44
+2.43
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.93
+0.89
 ```{=html}
 </td>
 ```
@@ -716,21 +716,21 @@ FRLF_MINI
 ```{=html}
 <td style="text-align:right;">
 ```
-227
+284
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-2.49
+2.48
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.78
+0.75
 ```{=html}
 </td>
 ```
@@ -764,21 +764,21 @@ KSA_TOTAL
 ```{=html}
 <td style="text-align:right;">
 ```
-227
+283
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-2.89
+2.86
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.64
+0.62
 ```{=html}
 </td>
 ```
@@ -812,21 +812,21 @@ SDR_TOTAL
 ```{=html}
 <td style="text-align:right;">
 ```
-227
+283
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-3.01
+3.02
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.62
+0.63
 ```{=html}
 </td>
 ```
@@ -840,7 +840,7 @@ SDR_TOTAL
 ```{=html}
 <td style="text-align:right;">
 ```
-4.40
+4.60
 ```{=html}
 </td>
 ```
@@ -886,29 +886,29 @@ round(ct$r, 2)
 ```
 
     ##           HPT_POP HPT_ROA HPT_CONT HPT_CTX6 HPT_TOT9 KN_TOTAL FRLF_RD FRLF_NS
-    ## HPT_POP      1.00    0.15     0.33     0.79     0.67     0.33   -0.09   -0.10
-    ## HPT_ROA      0.15    1.00     0.38     0.33     0.69     0.29   -0.05   -0.06
-    ## HPT_CONT     0.33    0.38     1.00     0.84     0.81     0.20    0.00    0.06
-    ## HPT_CTX6     0.79    0.33     0.84     1.00     0.91     0.32   -0.05   -0.02
-    ## HPT_TOT9     0.67    0.69     0.81     0.91     1.00     0.37   -0.06   -0.04
-    ## KN_TOTAL     0.33    0.29     0.20     0.32     0.37     1.00   -0.07   -0.15
-    ## FRLF_RD     -0.09   -0.05     0.00    -0.05    -0.06    -0.07    1.00    0.43
-    ## FRLF_NS     -0.10   -0.06     0.06    -0.02    -0.04    -0.15    0.43    1.00
-    ## FRLF_MINI   -0.11   -0.06     0.03    -0.04    -0.06    -0.13    0.84    0.85
-    ## KSA_TOTAL   -0.15    0.01     0.06    -0.05    -0.03     0.03    0.47    0.39
-    ## SDR_TOTAL   -0.02    0.05    -0.02    -0.02     0.00     0.03   -0.06   -0.28
+    ## HPT_POP      1.00    0.16     0.26     0.76     0.64     0.32   -0.09   -0.07
+    ## HPT_ROA      0.16    1.00     0.37     0.34     0.72     0.27    0.02   -0.03
+    ## HPT_CONT     0.26    0.37     1.00     0.82     0.78     0.22   -0.02    0.05
+    ## HPT_CTX6     0.76    0.34     0.82     1.00     0.90     0.34   -0.07   -0.01
+    ## HPT_TOT9     0.64    0.72     0.78     0.90     1.00     0.37   -0.04   -0.02
+    ## KN_TOTAL     0.32    0.27     0.22     0.34     0.37     1.00   -0.06   -0.11
+    ## FRLF_RD     -0.09    0.02    -0.02    -0.07    -0.04    -0.06    1.00    0.41
+    ## FRLF_NS     -0.07   -0.03     0.05    -0.01    -0.02    -0.11    0.41    1.00
+    ## FRLF_MINI   -0.09    0.00     0.01    -0.05    -0.03    -0.10    0.84    0.84
+    ## KSA_TOTAL   -0.13    0.07     0.07    -0.03     0.01     0.05    0.47    0.40
+    ## SDR_TOTAL   -0.05    0.01     0.01    -0.02    -0.01     0.03   -0.07   -0.25
     ##           FRLF_MINI KSA_TOTAL SDR_TOTAL
-    ## HPT_POP       -0.11     -0.15     -0.02
-    ## HPT_ROA       -0.06      0.01      0.05
-    ## HPT_CONT       0.03      0.06     -0.02
-    ## HPT_CTX6      -0.04     -0.05     -0.02
-    ## HPT_TOT9      -0.06     -0.03      0.00
-    ## KN_TOTAL      -0.13      0.03      0.03
-    ## FRLF_RD        0.84      0.47     -0.06
-    ## FRLF_NS        0.85      0.39     -0.28
-    ## FRLF_MINI      1.00      0.51     -0.20
-    ## KSA_TOTAL      0.51      1.00     -0.18
-    ## SDR_TOTAL     -0.20     -0.18      1.00
+    ## HPT_POP       -0.09     -0.13     -0.05
+    ## HPT_ROA        0.00      0.07      0.01
+    ## HPT_CONT       0.01      0.07      0.01
+    ## HPT_CTX6      -0.05     -0.03     -0.02
+    ## HPT_TOT9      -0.03      0.01     -0.01
+    ## KN_TOTAL      -0.10      0.05      0.03
+    ## FRLF_RD        0.84      0.47     -0.07
+    ## FRLF_NS        0.84      0.40     -0.25
+    ## FRLF_MINI      1.00      0.52     -0.19
+    ## KSA_TOTAL      0.52      1.00     -0.15
+    ## SDR_TOTAL     -0.19     -0.15      1.00
 
 ``` r
 corr_tab <- as.data.frame(round(ct$r, 2))
@@ -1061,319 +1061,28 @@ HPT_POP
 ```{=html}
 <td style="text-align:right;">
 ```
-0.15
+0.16
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.33
+0.26
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.79
+0.76
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.67
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.33
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
--0.09
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
--0.10
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
--0.11
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
--0.15
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
--0.02
-```{=html}
-</td>
-```
-```{=html}
-</tr>
-```
-```{=html}
-<tr>
-```
-```{=html}
-<td style="text-align:left;">
-```
-HPT_ROA
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:left;">
-```
-HPT_ROA
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.15
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-1.00
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.38
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.33
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.69
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.29
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
--0.05
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
--0.06
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
--0.06
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.01
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.05
-```{=html}
-</td>
-```
-```{=html}
-</tr>
-```
-```{=html}
-<tr>
-```
-```{=html}
-<td style="text-align:left;">
-```
-HPT_CONT
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:left;">
-```
-HPT_CONT
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.33
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.38
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-1.00
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.84
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.81
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.20
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.00
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.06
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.03
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.06
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
--0.02
-```{=html}
-</td>
-```
-```{=html}
-</tr>
-```
-```{=html}
-<tr>
-```
-```{=html}
-<td style="text-align:left;">
-```
-HPT_CTX6
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:left;">
-```
-HPT_CTX6
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.79
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.33
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.84
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-1.00
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.91
+0.64
 ```{=html}
 </td>
 ```
@@ -1387,35 +1096,35 @@ HPT_CTX6
 ```{=html}
 <td style="text-align:right;">
 ```
+-0.09
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+-0.07
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+-0.09
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+-0.13
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
 -0.05
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
--0.02
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
--0.04
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
--0.05
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
--0.02
 ```{=html}
 </td>
 ```
@@ -1428,42 +1137,21 @@ HPT_CTX6
 ```{=html}
 <td style="text-align:left;">
 ```
-HPT_TOT9
+HPT_ROA
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:left;">
 ```
-HPT_TOT9
+HPT_ROA
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.67
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.69
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.81
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.91
+0.16
 ```{=html}
 </td>
 ```
@@ -1484,21 +1172,28 @@ HPT_TOT9
 ```{=html}
 <td style="text-align:right;">
 ```
--0.06
+0.34
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.04
+0.72
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.06
+0.27
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.02
 ```{=html}
 </td>
 ```
@@ -1517,6 +1212,311 @@ HPT_TOT9
 </td>
 ```
 ```{=html}
+<td style="text-align:right;">
+```
+0.07
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.01
+```{=html}
+</td>
+```
+```{=html}
+</tr>
+```
+```{=html}
+<tr>
+```
+```{=html}
+<td style="text-align:left;">
+```
+HPT_CONT
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:left;">
+```
+HPT_CONT
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.26
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.37
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+1.00
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.82
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.78
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.22
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+-0.02
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.05
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.01
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.07
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.01
+```{=html}
+</td>
+```
+```{=html}
+</tr>
+```
+```{=html}
+<tr>
+```
+```{=html}
+<td style="text-align:left;">
+```
+HPT_CTX6
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:left;">
+```
+HPT_CTX6
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.76
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.34
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.82
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+1.00
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.90
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.34
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+-0.07
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+-0.01
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+-0.05
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+-0.03
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+-0.02
+```{=html}
+</td>
+```
+```{=html}
+</tr>
+```
+```{=html}
+<tr>
+```
+```{=html}
+<td style="text-align:left;">
+```
+HPT_TOT9
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:left;">
+```
+HPT_TOT9
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.64
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.72
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.78
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.90
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+1.00
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.37
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+-0.04
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+-0.02
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+-0.03
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.01
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+-0.01
+```{=html}
+</td>
+```
+```{=html}
 </tr>
 ```
 ```{=html}
@@ -1539,28 +1539,28 @@ KN_TOTAL
 ```{=html}
 <td style="text-align:right;">
 ```
-0.33
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.29
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.20
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
 0.32
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.27
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.22
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.34
 ```{=html}
 </td>
 ```
@@ -1581,28 +1581,28 @@ KN_TOTAL
 ```{=html}
 <td style="text-align:right;">
 ```
--0.07
+-0.06
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.15
+-0.11
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.13
+-0.10
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.03
+0.05
 ```{=html}
 </td>
 ```
@@ -1643,28 +1643,14 @@ FRLF_RD
 ```{=html}
 <td style="text-align:right;">
 ```
--0.05
+0.02
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.00
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
--0.05
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
--0.06
+-0.02
 ```{=html}
 </td>
 ```
@@ -1678,6 +1664,20 @@ FRLF_RD
 ```{=html}
 <td style="text-align:right;">
 ```
+-0.04
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+-0.06
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
 1.00
 ```{=html}
 </td>
@@ -1685,7 +1685,7 @@ FRLF_RD
 ```{=html}
 <td style="text-align:right;">
 ```
-0.43
+0.41
 ```{=html}
 </td>
 ```
@@ -1706,7 +1706,7 @@ FRLF_RD
 ```{=html}
 <td style="text-align:right;">
 ```
--0.06
+-0.07
 ```{=html}
 </td>
 ```
@@ -1733,21 +1733,28 @@ FRLF_NS
 ```{=html}
 <td style="text-align:right;">
 ```
--0.10
+-0.07
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.06
+-0.03
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.06
+0.05
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+-0.01
 ```{=html}
 </td>
 ```
@@ -1761,75 +1768,6 @@ FRLF_NS
 ```{=html}
 <td style="text-align:right;">
 ```
--0.04
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
--0.15
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.43
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-1.00
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.85
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.39
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
--0.28
-```{=html}
-</td>
-```
-```{=html}
-</tr>
-```
-```{=html}
-<tr>
-```
-```{=html}
-<td style="text-align:left;">
-```
-FRLF_MINI
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:left;">
-```
-FRLF_MINI
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
 -0.11
 ```{=html}
 </td>
@@ -1837,35 +1775,14 @@ FRLF_MINI
 ```{=html}
 <td style="text-align:right;">
 ```
--0.06
+0.41
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.03
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
--0.04
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
--0.06
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
--0.13
+1.00
 ```{=html}
 </td>
 ```
@@ -1879,28 +1796,14 @@ FRLF_MINI
 ```{=html}
 <td style="text-align:right;">
 ```
-0.85
+0.40
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-1.00
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.51
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
--0.20
+-0.25
 ```{=html}
 </td>
 ```
@@ -1913,21 +1816,28 @@ FRLF_MINI
 ```{=html}
 <td style="text-align:left;">
 ```
-KSA_TOTAL
+FRLF_MINI
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:left;">
 ```
-KSA_TOTAL
+FRLF_MINI
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.15
+-0.09
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.00
 ```{=html}
 </td>
 ```
@@ -1935,13 +1845,6 @@ KSA_TOTAL
 <td style="text-align:right;">
 ```
 0.01
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.06
 ```{=html}
 </td>
 ```
@@ -1962,28 +1865,21 @@ KSA_TOTAL
 ```{=html}
 <td style="text-align:right;">
 ```
-0.03
+-0.10
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.47
+0.84
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.39
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.51
+0.84
 ```{=html}
 </td>
 ```
@@ -1997,7 +1893,111 @@ KSA_TOTAL
 ```{=html}
 <td style="text-align:right;">
 ```
--0.18
+0.52
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+-0.19
+```{=html}
+</td>
+```
+```{=html}
+</tr>
+```
+```{=html}
+<tr>
+```
+```{=html}
+<td style="text-align:left;">
+```
+KSA_TOTAL
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:left;">
+```
+KSA_TOTAL
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+-0.13
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.07
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.07
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+-0.03
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.01
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.05
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.47
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.40
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.52
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+1.00
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+-0.15
 ```{=html}
 </td>
 ```
@@ -2024,6 +2024,27 @@ SDR_TOTAL
 ```{=html}
 <td style="text-align:right;">
 ```
+-0.05
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.01
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.01
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
 -0.02
 ```{=html}
 </td>
@@ -2031,28 +2052,7 @@ SDR_TOTAL
 ```{=html}
 <td style="text-align:right;">
 ```
-0.05
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
--0.02
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
--0.02
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.00
+-0.01
 ```{=html}
 </td>
 ```
@@ -2066,28 +2066,28 @@ SDR_TOTAL
 ```{=html}
 <td style="text-align:right;">
 ```
--0.06
+-0.07
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.28
+-0.25
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.20
+-0.19
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.18
+-0.15
 ```{=html}
 </td>
 ```
@@ -2286,35 +2286,35 @@ NA
 ```{=html}
 <td style="text-align:right;">
 ```
-229
+287
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-16
+20
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.049
+0.041
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-229
+287
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-8
+10
 ```{=html}
 </td>
 ```
@@ -2341,35 +2341,35 @@ NA
 ```{=html}
 <td style="text-align:right;">
 ```
-229
+287
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-16
+20
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.076
+0.085
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-229
+287
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-8
+10
 ```{=html}
 </td>
 ```
@@ -2396,35 +2396,35 @@ NA
 ```{=html}
 <td style="text-align:right;">
 ```
-229
+287
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-16
+20
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.031
+0.025
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-229
+287
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-8
+10
 ```{=html}
 </td>
 ```
@@ -2444,42 +2444,42 @@ HPT_ROA
 ```{=html}
 <td style="text-align:right;">
 ```
-0.038
+0.104
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-229
+287
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-16
+20
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.033
+0.102
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-229
+287
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-8
+10
 ```{=html}
 </td>
 ```
@@ -2499,42 +2499,42 @@ HPT_CONT
 ```{=html}
 <td style="text-align:right;">
 ```
-0.047
+0.033
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-229
+287
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-16
+20
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.044
+0.030
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-229
+287
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-8
+10
 ```{=html}
 </td>
 ```
@@ -2554,42 +2554,42 @@ FRLF_MINI
 ```{=html}
 <td style="text-align:right;">
 ```
-0.086
+0.070
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-227
+284
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-16
+20
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.074
+0.062
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-227
+284
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-8
+10
 ```{=html}
 </td>
 ```
@@ -2609,42 +2609,42 @@ KSA_TOTAL
 ```{=html}
 <td style="text-align:right;">
 ```
-0.112
+0.099
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-227
+283
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-16
+20
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.088
+0.076
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-227
+283
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-8
+10
 ```{=html}
 </td>
 ```
@@ -2671,35 +2671,35 @@ NA
 ```{=html}
 <td style="text-align:right;">
 ```
-234
+293
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-16
+20
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.035
+0.053
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-234
+293
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-8
+10
 ```{=html}
 </td>
 ```
@@ -2726,14 +2726,14 @@ NA
 ```{=html}
 <td style="text-align:right;">
 ```
-227
+283
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-16
+20
 ```{=html}
 </td>
 ```
@@ -2747,14 +2747,14 @@ NA
 ```{=html}
 <td style="text-align:right;">
 ```
-227
+283
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-8
+10
 ```{=html}
 </td>
 ```

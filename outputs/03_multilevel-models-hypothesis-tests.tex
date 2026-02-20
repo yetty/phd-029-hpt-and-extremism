@@ -160,7 +160,7 @@
 \makeatother
 \subtitle{Multilevel models for H1--H2}
 \author{HPT and Extremism project}
-\date{2025-12-12}
+\date{2025-12-22}
 
 \begin{document}
 \maketitle
@@ -428,28 +428,28 @@ DVs: \texttt{z\_hpt\_total} (CTX6), \texttt{z\_hpt\_cont},
 \toprule
   & HPT total (CTX6) — Base & HPT total (CTX6) — Facet & HPT total (CTX6) — Int.\\
 \midrule
-(Intercept) & \num{-0.027} & \num{-0.031} & \num{-0.029}\\
- & (\num{0.090}) & (\num{0.088}) & (\num{0.090})\\
-z\_frlf\_tot & \num{0.036} &  & \num{0.037}\\
- & (\num{0.075}) &  & (\num{0.075})\\
-z\_ksa3\_tot & \num{-0.081} & \num{-0.079} & \num{-0.080}\\
- & (\num{0.075}) & (\num{0.075}) & (\num{0.075})\\
-z\_kn\_total & \num{0.320}*** & \num{0.322}*** & \num{0.318}***\\
- & (\num{0.064}) & (\num{0.064}) & (\num{0.065})\\
-z\_sdr5\_tot & \num{-0.048} & \num{-0.034} & \num{-0.047}\\
- & (\num{0.065}) & (\num{0.067}) & (\num{0.065})\\
-z\_frlf\_rd &  & \num{-0.019} & \\
- &  & (\num{0.075}) & \\
-z\_frlf\_ns &  & \num{0.066} & \\
- &  & (\num{0.074}) & \\
-z\_frlf\_tot × z\_kn\_total &  &  & \num{-0.019}\\
- &  &  & (\num{0.068})\\
+(Intercept) & \num{-0.017} & \num{-0.020} & \num{-0.018}\\
+ & (\num{0.072}) & (\num{0.070}) & (\num{0.071})\\
+z\_frlf\_tot & \num{0.012} &  & \num{0.013}\\
+ & (\num{0.067}) &  & (\num{0.067})\\
+z\_ksa3\_tot & \num{-0.052} & \num{-0.050} & \num{-0.052}\\
+ & (\num{0.066}) & (\num{0.067}) & (\num{0.067})\\
+z\_kn\_total & \num{0.336}*** & \num{0.337}*** & \num{0.333}***\\
+ & (\num{0.057}) & (\num{0.057}) & (\num{0.058})\\
+z\_sdr5\_tot & \num{-0.043} & \num{-0.029} & \num{-0.042}\\
+ & (\num{0.057}) & (\num{0.058}) & (\num{0.058})\\
+z\_frlf\_rd &  & \num{-0.047} & \\
+ &  & (\num{0.066}) & \\
+z\_frlf\_ns &  & \num{0.065} & \\
+ &  & (\num{0.065}) & \\
+z\_frlf\_tot × z\_kn\_total &  &  & \num{-0.020}\\
+ &  &  & (\num{0.059})\\
 SD (Intercept class\_id) & \num{0.000} & \num{0.000} & \num{0.000}\\
-SD (Intercept school\_id) & \num{0.158} & \num{0.150} & \num{0.155}\\
-SD (Observations) & \num{0.943} & \num{0.943} & \num{0.945}\\
+SD (Intercept school\_id) & \num{0.116} & \num{0.107} & \num{0.112}\\
+SD (Observations) & \num{0.941} & \num{0.941} & \num{0.943}\\
 \midrule
-Num.Obs. & \num{228} & \num{227} & \num{228}\\
-R2 Marg. & \num{0.105} & \num{0.106} & \num{0.105}\\
+Num.Obs. & \num{285} & \num{284} & \num{285}\\
+R2 Marg. & \num{0.113} & \num{0.116} & \num{0.114}\\
 RMSE & \num{0.93} & \num{0.93} & \num{0.93}\\
 \bottomrule
 \multicolumn{4}{l}{\rule{0pt}{1em}+ p $<$ 0.1, * p $<$ 0.05, ** p $<$ 0.01, *** p $<$ 0.001}\\
@@ -477,30 +477,30 @@ RMSE & \num{0.93} & \num{0.93} & \num{0.93}\\
 \toprule
   & CONT — Base & CONT — Facet & CONT — Int.\\
 \midrule
-(Intercept) & \num{-0.048} & \num{-0.052} & \num{-0.062}\\
- & (\num{0.099}) & (\num{0.098}) & (\num{0.098})\\
-z\_frlf\_tot & \num{0.044} &  & \num{0.046}\\
- & (\num{0.078}) &  & (\num{0.077})\\
-z\_ksa3\_tot & \num{0.025} & \num{0.032} & \num{0.031}\\
- & (\num{0.078}) & (\num{0.078}) & (\num{0.077})\\
-z\_kn\_total & \num{0.199}** & \num{0.202}** & \num{0.184}**\\
- & (\num{0.066}) & (\num{0.066}) & (\num{0.066})\\
-z\_sdr5\_tot & \num{-0.015} & \num{0.005} & \num{-0.007}\\
- & (\num{0.067}) & (\num{0.069}) & (\num{0.067})\\
-z\_frlf\_rd &  & \num{-0.045} & \\
- &  & (\num{0.078}) & \\
-z\_frlf\_ns &  & \num{0.099} & \\
- &  & (\num{0.077}) & \\
-z\_frlf\_tot × z\_kn\_total &  &  & \num{-0.119}+\\
- &  &  & (\num{0.070})\\
-SD (Intercept class\_id) & \num{0.092} & \num{0.101} & \num{0.107}\\
-SD (Intercept school\_id) & \num{0.176} & \num{0.168} & \num{0.165}\\
-SD (Observations) & \num{0.972} & \num{0.970} & \num{0.967}\\
+(Intercept) & \num{-0.018} & \num{-0.021} & \num{-0.024}\\
+ & (\num{0.075}) & (\num{0.074}) & (\num{0.073})\\
+z\_frlf\_tot & \num{0.004} &  & \num{0.010}\\
+ & (\num{0.069}) &  & (\num{0.069})\\
+z\_ksa3\_tot & \num{0.062} & \num{0.066} & \num{0.064}\\
+ & (\num{0.068}) & (\num{0.068}) & (\num{0.068})\\
+z\_kn\_total & \num{0.211}*** & \num{0.213}*** & \num{0.198}***\\
+ & (\num{0.059}) & (\num{0.059}) & (\num{0.059})\\
+z\_sdr5\_tot & \num{0.007} & \num{0.025} & \num{0.012}\\
+ & (\num{0.059}) & (\num{0.060}) & (\num{0.059})\\
+z\_frlf\_rd &  & \num{-0.075} & \\
+ &  & (\num{0.068}) & \\
+z\_frlf\_ns &  & \num{0.083} & \\
+ &  & (\num{0.067}) & \\
+z\_frlf\_tot × z\_kn\_total &  &  & \num{-0.100}+\\
+ &  &  & (\num{0.061})\\
+SD (Intercept class\_id) & \num{0.112} & \num{0.120} & \num{0.122}\\
+SD (Intercept school\_id) & \num{0.101} & \num{0.094} & \num{0.084}\\
+SD (Observations) & \num{0.964} & \num{0.961} & \num{0.961}\\
 \midrule
-Num.Obs. & \num{228} & \num{227} & \num{228}\\
-R2 Marg. & \num{0.041} & \num{0.046} & \num{0.053}\\
-R2 Cond. & \num{0.079} & \num{0.084} & \num{0.090}\\
-RMSE & \num{0.95} & \num{0.95} & \num{0.95}\\
+Num.Obs. & \num{285} & \num{284} & \num{285}\\
+R2 Marg. & \num{0.049} & \num{0.056} & \num{0.059}\\
+R2 Cond. & \num{0.072} & \num{0.079} & \num{0.080}\\
+RMSE & \num{0.95} & \num{0.94} & \num{0.94}\\
 \bottomrule
 \multicolumn{4}{l}{\rule{0pt}{1em}+ p $<$ 0.1, * p $<$ 0.05, ** p $<$ 0.01, *** p $<$ 0.001}\\
 \end{tabular}
@@ -527,29 +527,29 @@ RMSE & \num{0.95} & \num{0.95} & \num{0.95}\\
 \toprule
   & POP\_rev — Base & POP\_rev — Facet & POP\_rev — Int.\\
 \midrule
-(Intercept) & \num{0.004} & \num{0.000} & \num{0.016}\\
- & (\num{0.062}) & (\num{0.062}) & (\num{0.062})\\
-z\_frlf\_tot & \num{0.003} &  & \num{-0.000}\\
- & (\num{0.073}) &  & (\num{0.073})\\
-z\_ksa3\_tot & \num{-0.176}* & \num{-0.179}* & \num{-0.181}*\\
- & (\num{0.073}) & (\num{0.074}) & (\num{0.073})\\
-z\_kn\_total & \num{0.340}*** & \num{0.338}*** & \num{0.352}***\\
- & (\num{0.063}) & (\num{0.063}) & (\num{0.063})\\
-z\_sdr5\_tot & \num{-0.068} & \num{-0.066} & \num{-0.074}\\
- & (\num{0.064}) & (\num{0.066}) & (\num{0.064})\\
-z\_frlf\_rd &  & \num{0.012} & \\
- &  & (\num{0.075}) & \\
-z\_frlf\_ns &  & \num{-0.004} & \\
- &  & (\num{0.074}) & \\
-z\_frlf\_tot × z\_kn\_total &  &  & \num{0.093}\\
- &  &  & (\num{0.067})\\
+(Intercept) & \num{-0.004} & \num{-0.007} & \num{0.004}\\
+ & (\num{0.056}) & (\num{0.056}) & (\num{0.056})\\
+z\_frlf\_tot & \num{0.005} &  & \num{-0.000}\\
+ & (\num{0.066}) &  & (\num{0.066})\\
+z\_ksa3\_tot & \num{-0.159}* & \num{-0.161}* & \num{-0.161}*\\
+ & (\num{0.065}) & (\num{0.066}) & (\num{0.065})\\
+z\_kn\_total & \num{0.334}*** & \num{0.333}*** & \num{0.345}***\\
+ & (\num{0.056}) & (\num{0.056}) & (\num{0.057})\\
+z\_sdr5\_tot & \num{-0.082} & \num{-0.078} & \num{-0.085}\\
+ & (\num{0.057}) & (\num{0.058}) & (\num{0.057})\\
+z\_frlf\_rd &  & \num{-0.001} & \\
+ &  & (\num{0.066}) & \\
+z\_frlf\_ns &  & \num{0.011} & \\
+ &  & (\num{0.065}) & \\
+z\_frlf\_tot × z\_kn\_total &  &  & \num{0.074}\\
+ &  &  & (\num{0.059})\\
 SD (Intercept class\_id) & \num{0.000} & \num{0.000} & \num{0.000}\\
 SD (Intercept school\_id) & \num{0.000} & \num{0.000} & \num{0.000}\\
-SD (Observations) & \num{0.935} & \num{0.937} & \num{0.933}\\
+SD (Observations) & \num{0.937} & \num{0.939} & \num{0.936}\\
 \midrule
-Num.Obs. & \num{228} & \num{227} & \num{228}\\
-R2 Marg. & \num{0.140} & \num{0.138} & \num{0.146}\\
-RMSE & \num{0.92} & \num{0.92} & \num{0.92}\\
+Num.Obs. & \num{285} & \num{284} & \num{285}\\
+R2 Marg. & \num{0.132} & \num{0.131} & \num{0.137}\\
+RMSE & \num{0.93} & \num{0.93} & \num{0.93}\\
 \bottomrule
 \multicolumn{4}{l}{\rule{0pt}{1em}+ p $<$ 0.1, * p $<$ 0.05, ** p $<$ 0.01, *** p $<$ 0.001}\\
 \end{tabular}
@@ -634,15 +634,15 @@ Model & ICC & R2\_m & R2\_c \\
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-HPT total (CTX6) --- Base & NA & 0.105 & NA \\
-HPT total (CTX6) --- Facet & NA & 0.106 & NA \\
-HPT total (CTX6) --- Int. & NA & 0.105 & NA \\
-CONT --- Base & 0.040 & 0.041 & 0.079 \\
-CONT --- Facet & 0.039 & 0.046 & 0.084 \\
-CONT --- Int. & 0.040 & 0.053 & 0.090 \\
-POP\_rev --- Base & NA & 0.140 & NA \\
-POP\_rev --- Facet & NA & 0.138 & NA \\
-POP\_rev --- Int. & NA & 0.146 & NA \\
+HPT total (CTX6) --- Base & NA & 0.113 & NA \\
+HPT total (CTX6) --- Facet & NA & 0.116 & NA \\
+HPT total (CTX6) --- Int. & NA & 0.114 & NA \\
+CONT --- Base & 0.024 & 0.049 & 0.072 \\
+CONT --- Facet & 0.025 & 0.056 & 0.079 \\
+CONT --- Int. & 0.023 & 0.059 & 0.080 \\
+POP\_rev --- Base & NA & 0.132 & NA \\
+POP\_rev --- Facet & NA & 0.131 & NA \\
+POP\_rev --- Int. & NA & 0.137 & NA \\
 \end{longtable}
 
 \begin{Shaded}
@@ -718,67 +718,67 @@ p.value
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-HPT total (CTX6) & Base & z\_frlf\_tot & 0.036 & -0.111 & 0.184 &
-0.628 \\
-HPT total (CTX6) & Base & z\_ksa3\_tot & -0.081 & -0.229 & 0.066 &
-0.279 \\
-HPT total (CTX6) & Base & z\_kn\_total & 0.320 & 0.194 & 0.446 &
+HPT total (CTX6) & Base & z\_frlf\_tot & 0.012 & -0.120 & 0.143 &
+0.863 \\
+HPT total (CTX6) & Base & z\_ksa3\_tot & -0.052 & -0.183 & 0.079 &
+0.435 \\
+HPT total (CTX6) & Base & z\_kn\_total & 0.336 & 0.223 & 0.448 &
 0.000 \\
-HPT total (CTX6) & Base & z\_sdr5\_tot & -0.048 & -0.176 & 0.080 &
-0.463 \\
-HPT total (CTX6) & Facet & z\_frlf\_rd & -0.019 & -0.168 & 0.129 &
-0.799 \\
-HPT total (CTX6) & Facet & z\_frlf\_ns & 0.066 & -0.081 & 0.213 &
-0.378 \\
-HPT total (CTX6) & Facet & z\_ksa3\_tot & -0.079 & -0.228 & 0.070 &
-0.297 \\
-HPT total (CTX6) & Facet & z\_kn\_total & 0.322 & 0.196 & 0.448 &
+HPT total (CTX6) & Base & z\_sdr5\_tot & -0.043 & -0.156 & 0.070 &
+0.455 \\
+HPT total (CTX6) & Facet & z\_frlf\_rd & -0.047 & -0.178 & 0.083 &
+0.474 \\
+HPT total (CTX6) & Facet & z\_frlf\_ns & 0.065 & -0.064 & 0.194 &
+0.325 \\
+HPT total (CTX6) & Facet & z\_ksa3\_tot & -0.050 & -0.181 & 0.081 &
+0.454 \\
+HPT total (CTX6) & Facet & z\_kn\_total & 0.337 & 0.224 & 0.449 &
 0.000 \\
-HPT total (CTX6) & Facet & z\_sdr5\_tot & -0.034 & -0.165 & 0.098 &
-0.613 \\
-HPT total (CTX6) & Interaction & z\_frlf\_tot & 0.037 & -0.111 & 0.185 &
-0.626 \\
-HPT total (CTX6) & Interaction & z\_kn\_total & 0.318 & 0.190 & 0.445 &
+HPT total (CTX6) & Facet & z\_sdr5\_tot & -0.029 & -0.143 & 0.086 &
+0.622 \\
+HPT total (CTX6) & Interaction & z\_frlf\_tot & 0.013 & -0.119 & 0.145 &
+0.851 \\
+HPT total (CTX6) & Interaction & z\_kn\_total & 0.333 & 0.219 & 0.447 &
 0.000 \\
-HPT total (CTX6) & Interaction & z\_ksa3\_tot & -0.080 & -0.228 & 0.068
-& 0.286 \\
-HPT total (CTX6) & Interaction & z\_sdr5\_tot & -0.047 & -0.175 & 0.082
-& 0.476 \\
-HPT total (CTX6) & Interaction & z\_frlf\_tot:z\_kn\_total & -0.019 &
--0.153 & 0.115 & 0.779 \\
-CONT & Base & z\_frlf\_tot & 0.044 & -0.109 & 0.197 & 0.571 \\
-CONT & Base & z\_ksa3\_tot & 0.025 & -0.128 & 0.178 & 0.744 \\
-CONT & Base & z\_kn\_total & 0.199 & 0.068 & 0.329 & 0.003 \\
-CONT & Base & z\_sdr5\_tot & -0.015 & -0.148 & 0.117 & 0.818 \\
-CONT & Facet & z\_frlf\_rd & -0.045 & -0.199 & 0.108 & 0.561 \\
-CONT & Facet & z\_frlf\_ns & 0.099 & -0.052 & 0.250 & 0.198 \\
-CONT & Facet & z\_ksa3\_tot & 0.032 & -0.122 & 0.186 & 0.681 \\
-CONT & Facet & z\_kn\_total & 0.202 & 0.072 & 0.333 & 0.002 \\
-CONT & Facet & z\_sdr5\_tot & 0.005 & -0.130 & 0.141 & 0.937 \\
-CONT & Interaction & z\_frlf\_tot & 0.046 & -0.106 & 0.198 & 0.554 \\
-CONT & Interaction & z\_kn\_total & 0.184 & 0.053 & 0.314 & 0.006 \\
-CONT & Interaction & z\_ksa3\_tot & 0.031 & -0.121 & 0.184 & 0.687 \\
-CONT & Interaction & z\_sdr5\_tot & -0.007 & -0.139 & 0.125 & 0.914 \\
-CONT & Interaction & z\_frlf\_tot:z\_kn\_total & -0.119 & -0.256 & 0.019
-& 0.091 \\
-POP\_rev & Base & z\_frlf\_tot & 0.003 & -0.142 & 0.148 & 0.969 \\
-POP\_rev & Base & z\_ksa3\_tot & -0.176 & -0.320 & -0.032 & 0.017 \\
-POP\_rev & Base & z\_kn\_total & 0.340 & 0.216 & 0.463 & 0.000 \\
-POP\_rev & Base & z\_sdr5\_tot & -0.068 & -0.193 & 0.058 & 0.289 \\
-POP\_rev & Facet & z\_frlf\_rd & 0.012 & -0.135 & 0.159 & 0.869 \\
-POP\_rev & Facet & z\_frlf\_ns & -0.004 & -0.149 & 0.141 & 0.955 \\
-POP\_rev & Facet & z\_ksa3\_tot & -0.179 & -0.324 & -0.034 & 0.016 \\
-POP\_rev & Facet & z\_kn\_total & 0.338 & 0.214 & 0.462 & 0.000 \\
-POP\_rev & Facet & z\_sdr5\_tot & -0.066 & -0.195 & 0.063 & 0.314 \\
-POP\_rev & Interaction & z\_frlf\_tot & 0.000 & -0.145 & 0.144 &
-0.998 \\
-POP\_rev & Interaction & z\_kn\_total & 0.352 & 0.228 & 0.477 & 0.000 \\
-POP\_rev & Interaction & z\_ksa3\_tot & -0.181 & -0.325 & -0.038 &
-0.014 \\
-POP\_rev & Interaction & z\_sdr5\_tot & -0.074 & -0.200 & 0.051 &
-0.245 \\
-POP\_rev & Interaction & z\_frlf\_tot:z\_kn\_total & 0.093 & -0.039 &
-0.225 & 0.166 \\
+HPT total (CTX6) & Interaction & z\_ksa3\_tot & -0.052 & -0.183 & 0.079
+& 0.438 \\
+HPT total (CTX6) & Interaction & z\_sdr5\_tot & -0.042 & -0.155 & 0.071
+& 0.466 \\
+HPT total (CTX6) & Interaction & z\_frlf\_tot:z\_kn\_total & -0.020 &
+-0.137 & 0.096 & 0.732 \\
+CONT & Base & z\_frlf\_tot & 0.004 & -0.131 & 0.140 & 0.949 \\
+CONT & Base & z\_ksa3\_tot & 0.062 & -0.073 & 0.196 & 0.367 \\
+CONT & Base & z\_kn\_total & 0.211 & 0.096 & 0.327 & 0.000 \\
+CONT & Base & z\_sdr5\_tot & 0.007 & -0.109 & 0.123 & 0.904 \\
+CONT & Facet & z\_frlf\_rd & -0.075 & -0.209 & 0.058 & 0.267 \\
+CONT & Facet & z\_frlf\_ns & 0.083 & -0.049 & 0.215 & 0.217 \\
+CONT & Facet & z\_ksa3\_tot & 0.066 & -0.068 & 0.201 & 0.332 \\
+CONT & Facet & z\_kn\_total & 0.213 & 0.098 & 0.328 & 0.000 \\
+CONT & Facet & z\_sdr5\_tot & 0.025 & -0.092 & 0.143 & 0.674 \\
+CONT & Interaction & z\_frlf\_tot & 0.010 & -0.125 & 0.145 & 0.885 \\
+CONT & Interaction & z\_kn\_total & 0.198 & 0.082 & 0.314 & 0.001 \\
+CONT & Interaction & z\_ksa3\_tot & 0.064 & -0.070 & 0.198 & 0.348 \\
+CONT & Interaction & z\_sdr5\_tot & 0.012 & -0.104 & 0.128 & 0.840 \\
+CONT & Interaction & z\_frlf\_tot:z\_kn\_total & -0.100 & -0.220 & 0.019
+& 0.099 \\
+POP\_rev & Base & z\_frlf\_tot & 0.005 & -0.125 & 0.134 & 0.945 \\
+POP\_rev & Base & z\_ksa3\_tot & -0.159 & -0.288 & -0.031 & 0.016 \\
+POP\_rev & Base & z\_kn\_total & 0.334 & 0.224 & 0.445 & 0.000 \\
+POP\_rev & Base & z\_sdr5\_tot & -0.082 & -0.194 & 0.030 & 0.150 \\
+POP\_rev & Facet & z\_frlf\_rd & -0.001 & -0.131 & 0.128 & 0.984 \\
+POP\_rev & Facet & z\_frlf\_ns & 0.011 & -0.118 & 0.139 & 0.871 \\
+POP\_rev & Facet & z\_ksa3\_tot & -0.161 & -0.290 & -0.031 & 0.015 \\
+POP\_rev & Facet & z\_kn\_total & 0.333 & 0.222 & 0.444 & 0.000 \\
+POP\_rev & Facet & z\_sdr5\_tot & -0.078 & -0.192 & 0.036 & 0.178 \\
+POP\_rev & Interaction & z\_frlf\_tot & 0.000 & -0.130 & 0.130 &
+0.995 \\
+POP\_rev & Interaction & z\_kn\_total & 0.345 & 0.233 & 0.456 & 0.000 \\
+POP\_rev & Interaction & z\_ksa3\_tot & -0.161 & -0.290 & -0.032 &
+0.015 \\
+POP\_rev & Interaction & z\_sdr5\_tot & -0.085 & -0.197 & 0.026 &
+0.134 \\
+POP\_rev & Interaction & z\_frlf\_tot:z\_kn\_total & 0.074 & -0.042 &
+0.189 & 0.210 \\
 \end{longtable}
 
 \hypertarget{results-decision-rules}{%

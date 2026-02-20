@@ -128,11 +128,11 @@ dat <- dat %>%
 kable(dat %>% count(ideology_group), caption = "Group sizes (Low/High ideology; Mid excluded from group-wise tests)")
 ```
 
-  ideology_group      n
-  ---------------- ----
-  High               77
-  Low                77
-  Mid                80
+  ideology_group       n
+  ---------------- -----
+  High                96
+  Low                 96
+  Mid                101
 
   : Group sizes (Low/High ideology; Mid excluded from group-wise tests)
 
@@ -152,11 +152,11 @@ desc_tbl <- dat %>%
 kable(desc_tbl, digits = 2, caption = "Descriptives by ideology group (means)")
 ```
 
-  ideology_group      n   HPT_total   KN_sum   SDR_mean
-  ---------------- ---- ----------- -------- ----------
-  Low                77        2.92     3.47       3.16
-  Mid                80        2.86     2.98       3.03
-  High               77        2.75     3.03       2.83
+  ideology_group       n   HPT_total   KN_sum   SDR_mean
+  ---------------- ----- ----------- -------- ----------
+  Low                 96        2.89     3.33       3.16
+  Mid                101        2.83     2.85       2.99
+  High                96        2.76     2.94       2.88
 
   : Descriptives by ideology group (means)
 
@@ -193,7 +193,7 @@ print(table(grp))
 
     ## grp
     ##  Low High 
-    ##   76   77
+    ##   96   96
 
 ``` r
 # Constrained multi-group graded model, then DIF with scheme="drop"
@@ -348,11 +348,11 @@ fits %>% mutate(across(where(is.numeric), round, 3)) %>%
   -------------------------------------------------------------------------------------------
   Model          chisq.scaled   df.scaled   pvalue.scaled   cfi.scaled   rmsea.scaled    srmr
   ------------ -------------- ----------- --------------- ------------ -------------- -------
-  Configural           64.608          48           0.055        0.950          0.070   0.089
+  Configural           55.939          48           0.201        0.978          0.043   0.074
 
-  Metric               79.964          54           0.012        0.921          0.082   0.103
+  Metric               62.140          54           0.209        0.978          0.041   0.081
 
-  Scalar               78.986          63           0.084        0.952          0.060   0.092
+  Scalar               70.106          63           0.252        0.980          0.035   0.076
   -------------------------------------------------------------------------------------------
 
   : MG-CFA fit indices by invariance level (WLSMV).
@@ -370,8 +370,8 @@ deltas %>% mutate(across(where(is.numeric), round, 3)) %>%
 
   step                        dCFI   dRMSEA
   ----------------------- -------- --------
-  Configural -\> Metric     -0.028    0.012
-  Metric -\> Scalar          0.030   -0.022
+  Configural -\> Metric     -0.001   -0.002
+  Metric -\> Scalar          0.003   -0.006
 
   : Delta fit (CFI, RMSEA) across steps.
 
@@ -423,11 +423,11 @@ kable(fits %>% mutate(across(where(is.numeric), round, 3)),
   -------------------------------------------------------------------------------------------
   Model          chisq.scaled   df.scaled   pvalue.scaled   cfi.scaled   rmsea.scaled    srmr
   ------------ -------------- ----------- --------------- ------------ -------------- -------
-  Configural           64.608          48           0.055        0.950          0.070   0.089
+  Configural           55.939          48           0.201        0.978          0.043   0.074
 
-  Metric               79.964          54           0.012        0.921          0.082   0.103
+  Metric               62.140          54           0.209        0.978          0.041   0.081
 
-  Scalar               78.986          63           0.084        0.952          0.060   0.092
+  Scalar               70.106          63           0.252        0.980          0.035   0.076
   -------------------------------------------------------------------------------------------
 
   : MG-CFA fit to reference in text.
@@ -439,8 +439,8 @@ kable(deltas %>% mutate(across(where(is.numeric), round, 3)),
 
   step                        dCFI   dRMSEA
   ----------------------- -------- --------
-  Configural -\> Metric     -0.028    0.012
-  Metric -\> Scalar          0.030   -0.022
+  Configural -\> Metric     -0.001   -0.002
+  Metric -\> Scalar          0.003   -0.006
 
   : Delta fit (CFI, RMSEA) thresholds.
 

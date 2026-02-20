@@ -12,6 +12,9 @@ PDFS = $(RMDS:.Rmd=.pdf)
 
 .PHONY: all clean list
 
+codebook: normalised_responses_codebook.tex
+	latexmk -pdf -interaction=nonstopmode normalised_responses_codebook.tex
+
 all: $(PDFS)
 
 teacher:

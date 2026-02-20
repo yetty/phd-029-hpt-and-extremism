@@ -109,8 +109,8 @@ cat("Rows in full data: ", nrow_all,  "\n",
     "Rows kept (complete HPT + class_label + school_id): ", nrow_keep, "\n", sep = "")
 ```
 
-    ## Rows in full data: 234
-    ## Rows kept (complete HPT + class_label + school_id): 221
+    ## Rows in full data: 293
+    ## Rows kept (complete HPT + class_label + school_id): 276
 
 # Step 1 --- Descriptives and scale construction
 
@@ -138,10 +138,10 @@ summary(select(hpt_scores, POP_raw, POP_rev, ROA, CONT, HPT_CTX6, HPT_TOT9))
 
     ##     POP_raw         POP_rev           ROA             CONT          HPT_CTX6        HPT_TOT9    
     ##  Min.   :1.000   Min.   :1.333   Min.   :1.000   Min.   :1.000   Min.   :1.333   Min.   :1.667  
-    ##  1st Qu.:1.333   1st Qu.:2.333   1st Qu.:2.333   1st Qu.:2.333   1st Qu.:2.500   1st Qu.:2.444  
+    ##  1st Qu.:1.583   1st Qu.:2.333   1st Qu.:2.333   1st Qu.:2.333   1st Qu.:2.500   1st Qu.:2.444  
     ##  Median :2.000   Median :3.000   Median :3.000   Median :2.667   Median :2.833   Median :2.889  
-    ##  Mean   :2.017   Mean   :2.983   Mean   :2.804   Mean   :2.735   Mean   :2.859   Mean   :2.841  
-    ##  3rd Qu.:2.667   3rd Qu.:3.667   3rd Qu.:3.333   3rd Qu.:3.333   3rd Qu.:3.333   3rd Qu.:3.222  
+    ##  Mean   :2.029   Mean   :2.971   Mean   :2.793   Mean   :2.713   Mean   :2.842   Mean   :2.826  
+    ##  3rd Qu.:2.667   3rd Qu.:3.417   3rd Qu.:3.333   3rd Qu.:3.333   3rd Qu.:3.333   3rd Qu.:3.222  
     ##  Max.   :3.667   Max.   :4.000   Max.   :4.000   Max.   :4.000   Max.   :4.000   Max.   :3.889
 
 ``` r
@@ -149,11 +149,11 @@ cor(select(hpt_scores, POP_raw, ROA, CONT, HPT_CTX6, HPT_TOT9), use = "pairwise.
 ```
 
     ##             POP_raw        ROA       CONT   HPT_CTX6   HPT_TOT9
-    ## POP_raw   1.0000000 -0.1515670 -0.3568641 -0.8024568 -0.6851161
-    ## ROA      -0.1515670  1.0000000  0.3678874  0.3220708  0.6827642
-    ## CONT     -0.3568641  0.3678874  1.0000000  0.8437887  0.8109413
-    ## HPT_CTX6 -0.8024568  0.3220708  0.8437887  1.0000000  0.9116056
-    ## HPT_TOT9 -0.6851161  0.6827642  0.8109413  0.9116056  1.0000000
+    ## POP_raw   1.0000000 -0.1530998 -0.2763074 -0.7695631 -0.6452167
+    ## ROA      -0.1530998  1.0000000  0.3694237  0.3351715  0.7105332
+    ## CONT     -0.2763074  0.3694237  1.0000000  0.8263467  0.7871798
+    ## HPT_CTX6 -0.7695631  0.3351715  0.8263467  1.0000000  0.9011123
+    ## HPT_TOT9 -0.6452167  0.7105332  0.7871798  0.9011123  1.0000000
 
 # Step 2 --- Reliability: $\alpha$ and $\omega$ for POP--ROA--CONT
 
@@ -276,21 +276,21 @@ POP
 ```{=html}
 <td style="text-align:right;">
 ```
-0.479
+0.466
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.535
+0.525
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.560
+0.546
 ```{=html}
 </td>
 ```
@@ -317,21 +317,21 @@ ROA
 ```{=html}
 <td style="text-align:right;">
 ```
-0.432
+0.502
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.453
+0.525
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.538
+0.558
 ```{=html}
 </td>
 ```
@@ -358,21 +358,21 @@ CONT
 ```{=html}
 <td style="text-align:right;">
 ```
-0.635
+0.636
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.690
+0.689
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.691
+0.693
 ```{=html}
 </td>
 ```
@@ -444,54 +444,54 @@ purrr::iwalk(cfa_summary, function(x, nm){
     ## 
     ## ### 2-factor (POP+CONT vs ROA) 
     ##            cfi            tli          rmsea rmsea.ci.lower rmsea.ci.upper           srmr 
-    ##          0.971          0.960          0.048          0.004          0.077          0.066 
+    ##          0.956          0.940          0.057          0.032          0.081          0.066 
     ## 
     ## 
     ## |lhs |op |rhs   | est.std|    se|       z| pvalue| ci.lower| ci.upper|
     ## |:---|:--|:-----|-------:|-----:|-------:|------:|--------:|--------:|
-    ## |F1  |=~ |POP1  |   0.571| 0.069|   8.264|  0.000|    0.435|    0.706|
-    ## |F1  |=~ |POP2  |   0.230| 0.072|   3.186|  0.001|    0.089|    0.372|
-    ## |F1  |=~ |POP3  |   0.413| 0.062|   6.662|  0.000|    0.291|    0.534|
-    ## |F1  |=~ |CONT1 |  -0.687| 0.061| -11.290|  0.000|   -0.806|   -0.567|
-    ## |F1  |=~ |CONT2 |  -0.592| 0.064|  -9.218|  0.000|   -0.718|   -0.466|
-    ## |F1  |=~ |CONT3 |  -0.620| 0.060| -10.290|  0.000|   -0.738|   -0.502|
-    ## |F2  |=~ |ROA1  |   0.611| 0.088|   6.955|  0.000|    0.439|    0.783|
-    ## |F2  |=~ |ROA2  |   0.187| 0.089|   2.099|  0.036|    0.012|    0.361|
-    ## |F2  |=~ |ROA3  |   0.615| 0.084|   7.341|  0.000|    0.451|    0.780|
+    ## |F1  |=~ |POP1  |   0.489| 0.066|   7.385|  0.000|    0.359|    0.619|
+    ## |F1  |=~ |POP2  |   0.191| 0.068|   2.822|  0.005|    0.058|    0.324|
+    ## |F1  |=~ |POP3  |   0.358| 0.061|   5.907|  0.000|    0.239|    0.477|
+    ## |F1  |=~ |CONT1 |  -0.690| 0.055| -12.630|  0.000|   -0.797|   -0.583|
+    ## |F1  |=~ |CONT2 |  -0.595| 0.058| -10.258|  0.000|   -0.709|   -0.481|
+    ## |F1  |=~ |CONT3 |  -0.618| 0.054| -11.416|  0.000|   -0.724|   -0.512|
+    ## |F2  |=~ |ROA1  |   0.604| 0.072|   8.410|  0.000|    0.463|    0.745|
+    ## |F2  |=~ |ROA2  |   0.293| 0.075|   3.916|  0.000|    0.146|    0.439|
+    ## |F2  |=~ |ROA3  |   0.676| 0.075|   9.016|  0.000|    0.529|    0.822|
     ## 
     ## ### 3-factor (POP/CONT/ROA) 
     ##            cfi            tli          rmsea rmsea.ci.lower rmsea.ci.upper           srmr 
-    ##          0.997          0.995          0.016          0.000          0.058          0.054 
+    ##          0.999          0.998          0.011          0.000          0.051          0.048 
     ## 
     ## 
     ## |lhs  |op |rhs   | est.std|    se|      z| pvalue| ci.lower| ci.upper|
     ## |:----|:--|:-----|-------:|-----:|------:|------:|--------:|--------:|
-    ## |POP  |=~ |POP1  |   0.759| 0.094|  8.061|   0.00|    0.574|    0.943|
-    ## |POP  |=~ |POP2  |   0.297| 0.080|  3.711|   0.00|    0.140|    0.453|
-    ## |POP  |=~ |POP3  |   0.510| 0.066|  7.689|   0.00|    0.380|    0.640|
-    ## |CONT |=~ |CONT1 |   0.709| 0.062| 11.487|   0.00|    0.588|    0.830|
-    ## |CONT |=~ |CONT2 |   0.607| 0.065|  9.328|   0.00|    0.479|    0.734|
-    ## |CONT |=~ |CONT3 |   0.641| 0.061| 10.486|   0.00|    0.521|    0.761|
-    ## |ROA  |=~ |ROA1  |   0.613| 0.087|  7.072|   0.00|    0.443|    0.782|
-    ## |ROA  |=~ |ROA2  |   0.192| 0.089|  2.169|   0.03|    0.018|    0.366|
-    ## |ROA  |=~ |ROA3  |   0.612| 0.083|  7.399|   0.00|    0.450|    0.774|
+    ## |POP  |=~ |POP1  |   0.735| 0.099|  7.445|      0|    0.542|    0.929|
+    ## |POP  |=~ |POP2  |   0.295| 0.076|  3.865|      0|    0.145|    0.444|
+    ## |POP  |=~ |POP3  |   0.501| 0.068|  7.414|      0|    0.368|    0.633|
+    ## |CONT |=~ |CONT1 |   0.716| 0.055| 13.084|      0|    0.608|    0.823|
+    ## |CONT |=~ |CONT2 |   0.609| 0.059| 10.395|      0|    0.494|    0.724|
+    ## |CONT |=~ |CONT3 |   0.637| 0.054| 11.867|      0|    0.532|    0.743|
+    ## |ROA  |=~ |ROA1  |   0.606| 0.071|  8.524|      0|    0.467|    0.745|
+    ## |ROA  |=~ |ROA2  |   0.296| 0.074|  3.972|      0|    0.150|    0.442|
+    ## |ROA  |=~ |ROA3  |   0.672| 0.074|  9.070|      0|    0.527|    0.817|
     ## 
     ## ### 1-factor (general) 
     ##            cfi            tli          rmsea rmsea.ci.lower rmsea.ci.upper           srmr 
-    ##          0.952          0.935          0.061          0.032          0.088          0.073 
+    ##          0.926          0.902          0.073          0.051          0.095          0.075 
     ## 
     ## 
     ## |lhs |op |rhs   | est.std|    se|       z| pvalue| ci.lower| ci.upper|
     ## |:---|:--|:-----|-------:|-----:|-------:|------:|--------:|--------:|
-    ## |G   |=~ |POP1  |   0.563| 0.069|   8.143|  0.000|    0.427|    0.698|
-    ## |G   |=~ |POP2  |   0.219| 0.072|   3.048|  0.002|    0.078|    0.360|
-    ## |G   |=~ |POP3  |   0.403| 0.062|   6.501|  0.000|    0.282|    0.525|
-    ## |G   |=~ |ROA1  |  -0.458| 0.070|  -6.511|  0.000|   -0.596|   -0.320|
-    ## |G   |=~ |ROA2  |  -0.135| 0.076|  -1.784|  0.074|   -0.284|    0.013|
-    ## |G   |=~ |ROA3  |  -0.465| 0.066|  -7.021|  0.000|   -0.594|   -0.335|
-    ## |G   |=~ |CONT1 |  -0.676| 0.059| -11.393|  0.000|   -0.792|   -0.560|
-    ## |G   |=~ |CONT2 |  -0.585| 0.063|  -9.233|  0.000|   -0.709|   -0.461|
-    ## |G   |=~ |CONT3 |  -0.608| 0.058| -10.400|  0.000|   -0.723|   -0.494|
+    ## |G   |=~ |POP1  |   0.479| 0.066|   7.262|  0.000|    0.349|    0.608|
+    ## |G   |=~ |POP2  |   0.177| 0.067|   2.649|  0.008|    0.046|    0.308|
+    ## |G   |=~ |POP3  |   0.344| 0.061|   5.679|  0.000|    0.225|    0.462|
+    ## |G   |=~ |ROA1  |  -0.467| 0.061|  -7.595|  0.000|   -0.587|   -0.346|
+    ## |G   |=~ |ROA2  |  -0.227| 0.067|  -3.397|  0.001|   -0.358|   -0.096|
+    ## |G   |=~ |ROA3  |  -0.515| 0.059|  -8.782|  0.000|   -0.630|   -0.400|
+    ## |G   |=~ |CONT1 |  -0.672| 0.053| -12.761|  0.000|   -0.775|   -0.569|
+    ## |G   |=~ |CONT2 |  -0.583| 0.057| -10.319|  0.000|   -0.694|   -0.472|
+    ## |G   |=~ |CONT3 |  -0.596| 0.052| -11.471|  0.000|   -0.697|   -0.494|
 
 ### Optional: EFA (polychoric)
 
@@ -513,20 +513,20 @@ print(efa2$loadings, cutoff = 0.25)
     ## 
     ## Loadings:
     ##       PA1    PA2   
-    ## POP1  -0.442  0.266
-    ## POP2          0.534
-    ## POP3          0.472
-    ## ROA1   0.569       
-    ## ROA2   0.292  0.301
-    ## ROA3   0.554       
-    ## CONT1  0.655       
-    ## CONT2  0.524       
-    ## CONT3  0.532       
+    ## POP1  -0.288  0.371
+    ## POP2          0.448
+    ## POP3          0.635
+    ## ROA1   0.563       
+    ## ROA2   0.356       
+    ## ROA3   0.579       
+    ## CONT1  0.631       
+    ## CONT2  0.527       
+    ## CONT3  0.521       
     ## 
     ##                  PA1   PA2
-    ## SS loadings    1.934 0.763
-    ## Proportion Var 0.215 0.085
-    ## Cumulative Var 0.215 0.300
+    ## SS loadings    1.811 0.833
+    ## Proportion Var 0.201 0.093
+    ## Cumulative Var 0.201 0.294
 
 ``` r
 cat("\nEFA (3 factors):\n")
@@ -541,21 +541,21 @@ print(efa3$loadings, cutoff = 0.25)
 
     ## 
     ## Loadings:
-    ##       PA1    PA2    PA3   
-    ## POP1          0.400       
-    ## POP2          0.362  0.284
-    ## POP3          0.744       
-    ## ROA1                 0.479
-    ## ROA2                 0.348
-    ## ROA3                 0.556
-    ## CONT1  0.479              
-    ## CONT2  0.521              
-    ## CONT3  0.765              
+    ##       PA1    PA3    PA2   
+    ## POP1                 0.397
+    ## POP2                 0.382
+    ## POP3                 0.763
+    ## ROA1          0.577       
+    ## ROA2          0.456       
+    ## ROA3          0.585       
+    ## CONT1  0.507              
+    ## CONT2  0.396              
+    ## CONT3  0.816              
     ## 
-    ##                  PA1   PA2   PA3
-    ## SS loadings    1.189 0.888 0.861
-    ## Proportion Var 0.132 0.099 0.096
-    ## Cumulative Var 0.132 0.231 0.326
+    ##                  PA1   PA3   PA2
+    ## SS loadings    1.109 1.035 0.912
+    ## Proportion Var 0.123 0.115 0.101
+    ## Cumulative Var 0.123 0.238 0.340
 
 # Step 4 --- Presentism--contextualization contrast (POP vs CONT)
 
@@ -636,35 +636,35 @@ r_POP_CONT
 ```{=html}
 <td style="text-align:right;">
 ```
-2.017
+2.029
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.656
+0.646
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-2.735
+2.713
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.73
+0.732
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.357
+-0.276
 ```{=html}
 </td>
 ```
@@ -686,13 +686,13 @@ t_test
     ##  Paired t-test
     ## 
     ## data:  hpt_scores$POP_raw and hpt_scores$CONT
-    ## t = -9.345, df = 220, p-value < 2.2e-16
+    ## t = -10.306, df = 275, p-value < 2.2e-16
     ## alternative hypothesis: true mean difference is not equal to 0
     ## 95 percent confidence interval:
-    ##  -0.8693599 -0.5665376
+    ##  -0.8141513 -0.5529985
     ## sample estimates:
     ## mean difference 
-    ##      -0.7179487
+    ##      -0.6835749
 
 # Step 5 --- Distribution checks
 
@@ -843,7 +843,7 @@ HPT_CTX6
 ```{=html}
 <td style="text-align:right;">
 ```
-0.050
+0.041
 ```{=html}
 </td>
 ```
@@ -857,7 +857,7 @@ HPT_CTX6
 ```{=html}
 <td style="text-align:right;">
 ```
-0.050
+0.041
 ```{=html}
 </td>
 ```
@@ -884,7 +884,7 @@ HPT_TOT9
 ```{=html}
 <td style="text-align:right;">
 ```
-0.081
+0.089
 ```{=html}
 </td>
 ```
@@ -898,7 +898,7 @@ HPT_TOT9
 ```{=html}
 <td style="text-align:right;">
 ```
-0.081
+0.089
 ```{=html}
 </td>
 ```
@@ -925,7 +925,7 @@ POP_raw
 ```{=html}
 <td style="text-align:right;">
 ```
-0.036
+0.027
 ```{=html}
 </td>
 ```
@@ -939,7 +939,7 @@ POP_raw
 ```{=html}
 <td style="text-align:right;">
 ```
-0.036
+0.027
 ```{=html}
 </td>
 ```
@@ -966,21 +966,21 @@ ROA
 ```{=html}
 <td style="text-align:right;">
 ```
-0.037
+0.099
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.003
+0.008
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.040
+0.107
 ```{=html}
 </td>
 ```
@@ -1007,21 +1007,21 @@ CONT
 ```{=html}
 <td style="text-align:right;">
 ```
-0.040
+0.023
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.012
+0.013
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.053
+0.036
 ```{=html}
 </td>
 ```
@@ -1143,21 +1143,21 @@ alpha_KR20
 ```{=html}
 <td style="text-align:right;">
 ```
-3.131
+3.029
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-1.656
+1.622
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.567
+0.544
 ```{=html}
 </td>
 ```
@@ -1238,7 +1238,7 @@ if (!has_fr) {
     ## Omega_h for 1 factor is not meaningful, just omega_t
 
     ##   cfi   tli rmsea  srmr 
-    ## 0.984 0.970 0.063 0.054
+    ## 0.977 0.956 0.072 0.055
 
 ## KSA-3 (A1--A3, U1--U3, K1--K3)
 
@@ -1302,7 +1302,7 @@ if (!has_ksa) {
     ## Omega_h for 1 factor is not meaningful, just omega_t
 
     ##   cfi   tli rmsea  srmr 
-    ## 0.971 0.957 0.065 0.065
+    ## 0.964 0.947 0.068 0.064
 
 ## SDR-5 (SDR1--SDR5)
 
@@ -1348,7 +1348,7 @@ if (!has_sdr) {
     ## Omega_h for 1 factor is not meaningful, just omega_t
 
     ##   cfi   tli rmsea  srmr 
-    ## 0.776 0.552 0.187 0.105
+    ## 0.768 0.536 0.184 0.103
 
 # Step 9 --- Cross-construct correlations (HPT, KN, FR-LF, KSA-3, SDR-5)
 
@@ -1549,91 +1549,91 @@ HPT_CTX6
 ```{=html}
 <td style="text-align:right;">
 ```
-0.912
+0.901
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.802
+-0.770
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.322
+0.335
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.844
+0.826
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.321
+0.340
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.049
+-0.062
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.006
+0.002
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.032
+-0.035
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.016
+0.008
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.077
+-0.084
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.029
+-0.012
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.051
+-0.035
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.046
+-0.031
 ```{=html}
 </td>
 ```
@@ -1653,7 +1653,7 @@ HPT_TOT9
 ```{=html}
 <td style="text-align:right;">
 ```
-0.912
+0.901
 ```{=html}
 </td>
 ```
@@ -1667,63 +1667,70 @@ HPT_TOT9
 ```{=html}
 <td style="text-align:right;">
 ```
--0.685
+-0.645
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.683
+0.711
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.811
+0.787
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.370
+0.378
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.059
+-0.036
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.021
+-0.003
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.045
+-0.022
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.005
+0.038
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.075
+-0.057
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.022
 ```{=html}
 </td>
 ```
@@ -1737,14 +1744,7 @@ HPT_TOT9
 ```{=html}
 <td style="text-align:right;">
 ```
--0.032
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
--0.022
+-0.020
 ```{=html}
 </td>
 ```
@@ -1764,14 +1764,14 @@ HPT_POP
 ```{=html}
 <td style="text-align:right;">
 ```
--0.802
+-0.770
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.685
+-0.645
 ```{=html}
 </td>
 ```
@@ -1785,28 +1785,21 @@ HPT_POP
 ```{=html}
 <td style="text-align:right;">
 ```
--0.152
+-0.153
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.357
+-0.276
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.320
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.099
+-0.307
 ```{=html}
 </td>
 ```
@@ -1820,42 +1813,49 @@ HPT_POP
 ```{=html}
 <td style="text-align:right;">
 ```
-0.109
+0.064
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.084
+0.091
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.153
+0.065
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.131
+0.155
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.158
+0.119
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.048
+0.145
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.043
 ```{=html}
 </td>
 ```
@@ -1875,21 +1875,21 @@ HPT_ROA
 ```{=html}
 <td style="text-align:right;">
 ```
-0.322
+0.335
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.683
+0.711
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.152
+-0.153
 ```{=html}
 </td>
 ```
@@ -1903,70 +1903,70 @@ HPT_ROA
 ```{=html}
 <td style="text-align:right;">
 ```
-0.368
+0.369
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.282
+0.268
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.048
+0.022
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.037
+-0.011
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.047
+0.009
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.017
+0.070
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.035
+0.012
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.056
+0.067
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.017
+0.062
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.032
+0.007
 ```{=html}
 </td>
 ```
@@ -1986,28 +1986,28 @@ HPT_CONT
 ```{=html}
 <td style="text-align:right;">
 ```
-0.844
+0.826
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.811
+0.787
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.357
+-0.276
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.368
+0.369
 ```{=html}
 </td>
 ```
@@ -2021,63 +2021,63 @@ HPT_CONT
 ```{=html}
 <td style="text-align:right;">
 ```
-0.215
+0.241
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.012
+-0.012
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.072
+0.061
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.048
+0.027
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.050
+0.070
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.017
+0.010
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.073
+0.088
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.062
+0.075
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.029
+-0.009
 ```{=html}
 </td>
 ```
@@ -2097,35 +2097,35 @@ KN_total
 ```{=html}
 <td style="text-align:right;">
 ```
-0.321
+0.340
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.370
+0.378
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.320
+-0.307
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.282
+0.268
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.215
+0.241
 ```{=html}
 </td>
 ```
@@ -2146,49 +2146,49 @@ KN_total
 ```{=html}
 <td style="text-align:right;">
 ```
--0.150
+-0.109
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.129
+-0.105
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.014
+0.037
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.023
+0.009
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.087
+0.069
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.059
+0.050
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.001
+0.005
 ```{=html}
 </td>
 ```
@@ -2208,35 +2208,35 @@ FR_RD
 ```{=html}
 <td style="text-align:right;">
 ```
--0.049
+-0.062
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.059
+-0.036
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.099
+0.091
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.048
+0.022
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.012
+-0.012
 ```{=html}
 </td>
 ```
@@ -2257,49 +2257,49 @@ FR_RD
 ```{=html}
 <td style="text-align:right;">
 ```
-0.438
+0.424
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.841
+0.840
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.395
+0.379
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.411
+0.409
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.358
+0.356
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.503
+0.488
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.060
+-0.069
 ```{=html}
 </td>
 ```
@@ -2319,49 +2319,49 @@ FR_NS
 ```{=html}
 <td style="text-align:right;">
 ```
--0.006
+0.002
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.021
+-0.003
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.091
+0.064
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.037
+-0.011
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.072
+0.061
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.150
+-0.109
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.438
+0.424
 ```{=html}
 </td>
 ```
@@ -2375,42 +2375,42 @@ FR_NS
 ```{=html}
 <td style="text-align:right;">
 ```
-0.855
+0.848
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.350
+0.353
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.322
+0.349
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.207
+0.231
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.380
+0.400
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.268
+-0.241
 ```{=html}
 </td>
 ```
@@ -2430,56 +2430,56 @@ FR_total
 ```{=html}
 <td style="text-align:right;">
 ```
--0.032
+-0.035
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.045
+-0.022
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.109
+0.091
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.047
+0.009
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.048
+0.027
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.129
+-0.105
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.841
+0.840
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.855
+0.848
 ```{=html}
 </td>
 ```
@@ -2493,35 +2493,35 @@ FR_total
 ```{=html}
 <td style="text-align:right;">
 ```
-0.437
+0.431
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.416
+0.436
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.332
+0.346
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.510
+0.517
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.193
+-0.184
 ```{=html}
 </td>
 ```
@@ -2541,63 +2541,63 @@ KSA_A
 ```{=html}
 <td style="text-align:right;">
 ```
--0.016
+0.008
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.005
+0.038
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.084
+0.065
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.017
+0.070
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.050
+0.070
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.014
+0.037
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.395
+0.379
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.350
+0.353
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.437
+0.431
 ```{=html}
 </td>
 ```
@@ -2611,28 +2611,28 @@ KSA_A
 ```{=html}
 <td style="text-align:right;">
 ```
-0.334
+0.336
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.429
+0.423
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.794
+0.790
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.182
+-0.150
 ```{=html}
 </td>
 ```
@@ -2652,70 +2652,70 @@ KSA_U
 ```{=html}
 <td style="text-align:right;">
 ```
--0.077
+-0.084
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.075
+-0.057
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.153
+0.155
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.035
+0.012
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.017
+0.010
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.023
+0.009
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.411
+0.409
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.322
+0.349
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.416
+0.436
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.334
+0.336
 ```{=html}
 </td>
 ```
@@ -2729,21 +2729,21 @@ KSA_U
 ```{=html}
 <td style="text-align:right;">
 ```
-0.365
+0.399
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.719
+0.735
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.199
+-0.164
 ```{=html}
 </td>
 ```
@@ -2763,77 +2763,77 @@ KSA_K
 ```{=html}
 <td style="text-align:right;">
 ```
--0.029
+-0.012
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.002
+0.022
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.131
+0.119
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.056
+0.067
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.073
+0.088
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.087
+0.069
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.358
+0.356
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.207
+0.231
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.332
+0.346
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.429
+0.423
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.365
+0.399
 ```{=html}
 </td>
 ```
@@ -2847,14 +2847,14 @@ KSA_K
 ```{=html}
 <td style="text-align:right;">
 ```
-0.778
+0.787
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.032
+-0.013
 ```{=html}
 </td>
 ```
@@ -2874,28 +2874,21 @@ KSA_total
 ```{=html}
 <td style="text-align:right;">
 ```
--0.051
+-0.035
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.032
+0.002
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.158
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.017
+0.145
 ```{=html}
 </td>
 ```
@@ -2909,49 +2902,56 @@ KSA_total
 ```{=html}
 <td style="text-align:right;">
 ```
-0.059
+0.075
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.503
+0.050
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.380
+0.488
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.510
+0.400
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.794
+0.517
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.719
+0.790
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.778
+0.735
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.787
 ```{=html}
 </td>
 ```
@@ -2965,7 +2965,7 @@ KSA_total
 ```{=html}
 <td style="text-align:right;">
 ```
--0.180
+-0.140
 ```{=html}
 </td>
 ```
@@ -2985,91 +2985,91 @@ SDR_total
 ```{=html}
 <td style="text-align:right;">
 ```
--0.046
+-0.031
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.022
+-0.020
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.048
+0.043
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.032
+0.007
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.029
+-0.009
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-0.001
+0.005
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.060
+-0.069
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.268
+-0.241
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.193
+-0.184
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.182
+-0.150
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.199
+-0.164
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.032
+-0.013
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
--0.180
+-0.140
 ```{=html}
 </td>
 ```

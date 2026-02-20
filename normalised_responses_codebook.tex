@@ -39,8 +39,8 @@
 \maketitle
 
 \textbf{Data files.} The dataset is distributed in two formats: 
-\texttt{normalised\_responses\_<DATE>.RData} (R native) and 
-\texttt{normalised\_responses\_<DATE>.xlsx} (Excel). 
+\texttt{normalised\_responses.RDS} (R native) and 
+\texttt{normalised\_responses.xlsx} (Excel). 
 Variable names and coding are identical across formats.
 
 \smallskip
@@ -49,7 +49,7 @@ Variable names and coding are identical across formats.
 These variables describe the school, class, and respondent context and support filtering, grouping, and multi-level models.
 
 {\small
-\begin{longtable}{p{2cm} p{1cm} p{5.5cm} p{4cm}}
+\begin{longtable}{p{3cm} p{1.5cm} p{5.5cm} p{4cm}}
 \caption{Codebook --- Metadata}\\
 \toprule
 \textbf{Variable} & \textbf{Type} & \textbf{Description} & \textbf{Coding}\\
@@ -63,10 +63,11 @@ These variables describe the school, class, and respondent context and support f
 \endfoot
 
 \texttt{school\_id}     & factor  & School identifier (anonymized) & S01, S02, \dots \\
-\texttt{school\_level}  & factor  & School level (e.g., vocational, gymnasium, lower/higher secondary\dots) & categorical \\
+\texttt{school\_level}  & factor  & School level (vocational, gymnasium, etc.) & categorical \\
 \texttt{school\_type}   & factor  & School type (public, church, private) & categorical \\
 \texttt{region}         & factor  & Czech region of the school & categorical \\
 \texttt{class\_label}   & factor  & Class identifier & e.g., 1, 2, 9A, septima \\
+\texttt{class\_id}      & factor  & Unique class identifier (school + class) & e.g., S01.1, S01.2, S02.9A \\
 \texttt{gender}         & factor  & Student gender (recoded) & M~=~male; F~=~female; O~=~other \\
 \texttt{history\_grade} & integer & Last reported history grade & 1--5 \\
 \end{longtable}
@@ -75,7 +76,7 @@ These variables describe the school, class, and respondent context and support f
 \paragraph{Historical knowledge (KN)}
 Items KN1--KN6 are multiple-choice knowledge questions scored via exact-text matching. Each is coded 0 (incorrect) or 1 (correct).
 {\small
-\begin{longtable}{p{2cm} p{1cm} p{5.5cm} p{4cm}}
+\begin{longtable}{p{3cm} p{1.5cm} p{5.5cm} p{4cm}}
 \caption{Codebook --- Knowledge}\\
 \toprule
 \textbf{Variable} & \textbf{Type} & \textbf{Description} & \textbf{Coding}\\
@@ -90,13 +91,16 @@ Items KN1--KN6 are multiple-choice knowledge questions scored via exact-text mat
 
 \texttt{KN1-KN6}  & integer & Knowledge items on events of 1918--1929 & 0 = incorrect, 1 = correct \\
 \end{longtable}
+}
 
 \paragraph{Historical Perspective-Taking (HPT)}
-The HPT instrument assesses how well explanations align with Hannes's perspective in the 1930 vignette. Items are organised into three reasoning modes: POP (populist), ROA (role-of-agent), and CONT (context). Responses use a 1--4 “fit to situation’’ scale.
+The HPT instrument assesses how well explanations align with Hannes's perspective in the 1930 vignette. Items are organised into three reasoning modes: POP (populist), ROA (role-of-agent), and CONT (context). 
+
+\textbf{Note on scoring:} Raw POP items represent \textit{presentism} (historically flawed reasoning). These are reversed so that higher scores always indicate \textit{better} historical perspective-taking.
 
 {\small
-\begin{longtable}{p{2cm} p{1cm} p{5.5cm} p{4cm}}
-\caption{Codebook --- HPT}\\
+\begin{longtable}{p{3.2cm} p{1.5cm} p{5.3cm} p{4cm}}
+\caption{Codebook --- HPT Items \& Composites}\\
 \toprule
 \textbf{Variable} & \textbf{Type} & \textbf{Description} & \textbf{Coding}\\
 \midrule
@@ -108,9 +112,20 @@ The HPT instrument assesses how well explanations align with Hannes's perspectiv
 \bottomrule
 \endfoot
 
-\texttt{POP1-POP3}   & integer & HPT populist reasoning items & 1--4 (higher = better fit) \\
-\texttt{ROA1-ROA3}   & integer & HPT role-of-agent reasoning items & 1--4 \\
-\texttt{CONT1-CONT3} & integer & HPT context reasoning items & 1--4 \\
+\multicolumn{4}{l}{\textbf{Item-level Data}} \\
+\texttt{POP1-POP3}   & integer & Raw populist items (Presentism). & 1--4 (High = \textbf{Worse} HPT) \\
+\texttt{POP1\_rev\dots} & integer & \textbf{Reverse-coded} POP items. & 1--4 (High = \textbf{Better} HPT) \\
+\texttt{ROA1-ROA3}   & integer & Role-of-agent items. & 1--4 (High = Better HPT) \\
+\texttt{CONT1-CONT3} & integer & Contextual reasoning items. & 1--4 (High = Better HPT) \\
+
+\midrule
+\multicolumn{4}{l}{\textbf{Aggregates \& Composites}} \\
+\texttt{HPT\_POP\_raw} & numeric & Mean of raw POP items (Presentism scale). & 1--4 \\
+\texttt{HPT\_POP\_rev} & numeric & Mean of reversed POP items. & 1--4 \\
+\texttt{HPT\_CONT}     & numeric & Mean of CONT items. & 1--4 \\
+\texttt{HPT\_ROA}      & numeric & Mean of ROA items. & 1--4 \\
+\texttt{HPT\_CTX6}     & numeric & \textbf{Primary Composite}: Mean of \texttt{HPT\_POP\_rev} and \texttt{HPT\_CONT}. & 1--4 (Standard HPT metric) \\
+\texttt{HPT\_TOT9}     & numeric & \textbf{Total Score}: Mean of all 3 subscales (POP rev, CONT, ROA). & 1--4 \\
 \end{longtable}
 }
 
@@ -118,7 +133,7 @@ The HPT instrument assesses how well explanations align with Hannes's perspectiv
 Two short subscales: RD (endorsement of a strict leader / one-party rule) and NS (statements normalising or relativising Nazi crimes). Items use a standard 1--5 Likert scale.
 
 {\small
-\begin{longtable}{p{2cm} p{1cm} p{5.5cm} p{4cm}}
+\begin{longtable}{p{3cm} p{1.5cm} p{5.5cm} p{4cm}}
 \caption{Codebook --- FR-LF mini}\\
 \toprule
 \textbf{Variable} & \textbf{Type} & \textbf{Description} & \textbf{Coding}\\
@@ -140,7 +155,7 @@ Two short subscales: RD (endorsement of a strict leader / one-party rule) and NS
 An established 9-item authoritarianism short scale with three three-item facets: A (authoritarian aggression), U (submission/obedience), and K (conventionalism). All items use a 1--5 Likert response.
 
 {\small
-\begin{longtable}{p{2cm} p{1cm} p{5.5cm} p{4cm}}
+\begin{longtable}{p{3cm} p{1.5cm} p{5.5cm} p{4cm}}
 \caption{Codebook --- KSA-3}\\
 \toprule
 \textbf{Variable} & \textbf{Type} & \textbf{Description} & \textbf{Coding}\\
@@ -163,7 +178,7 @@ An established 9-item authoritarianism short scale with three three-item facets:
 A brief social desirability scale. SDR2--SDR4 are already reversed in the dataset (1$\leftrightarrow$5). Items can be summed or averaged depending on analytic needs.
 
 {\small
-\begin{longtable}{p{2cm} p{1cm} p{5.5cm} p{4cm}}
+\begin{longtable}{p{3cm} p{1.5cm} p{5.5cm} p{4cm}}
 \caption{Codebook --- SDR-5}\\
 \toprule
 \textbf{Variable} & \textbf{Type} & \textbf{Description} & \textbf{Coding}\\
