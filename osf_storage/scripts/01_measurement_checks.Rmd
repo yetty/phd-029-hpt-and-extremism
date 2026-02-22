@@ -1,0 +1,593 @@
+---
+title: "Measurement checks — HPT (Czech data)"
+subtitle: "Reliability, dimensionality, presentism-contextualization contrast, and ICCs"
+author: "HPT and Extremism project"
+date: "`r format(Sys.Date())`"
+always_allow_html: true
+output:
+  pdf_document:
+    latex_engine: xelatex
+    number_sections: true
+    toc: true
+    toc_depth: 3
+    keep_tex: true
+  
+  md_document:
+    variant: markdown
+    preserve_yaml: false
+    toc: false
+
+# global chunk options
+knitr:
+  opts_chunk:
+    dev: "png"          # ensures image files are written
+    fig.path: "figures/" # directory for external images
+    dpi: 300
+
+fontsize: 10pt
+geometry:
+  - landscape
+  - margin=0.7in
+
+header-includes:
+  - \usepackage{booktabs}
+  - \usepackage{longtable}
+  - \usepackage{array}
+  - \usepackage{multirow}
+  - \usepackage{float}
+  - \usepackage{colortbl}
+  - \usepackage{pdflscape}
+  - \usepackage{threeparttable}
+  - \usepackage{threeparttablex}
+  - \usepackage[normalem]{ulem}
+  - \usepackage{makecell}
+  - \setlength{\LTcapwidth}{\textwidth}
+---
+
+# What this document does
+
+This report checks whether our **Historical Perspective-Taking (HPT)** instrument behaves well **before** we run any hypothesis tests.
+
+We do four things:
+
+1. **Reliability:** Are the HPT subscales internally consistent? We report **Cronbach’s alpha (\(\alpha\))** and **McDonald’s omega (\(\omega\))** for **POP**, **ROA**, **CONT** (three items each; 1–4).
+2. **Dimensionality (CFA/EFA):** Does the **factor structure** match prior research (e.g., **POP+CONT** vs **ROA**, or three correlated factors)?
+3. **Presentism–contextualization contrast:** Do **POP** (presentist) and **CONT** (contextualization) show the expected contrast?
+4. **Clustering (ICCs):** Are scores clustered by **school** and **class-within-school**?
+
+> **Composite scores used** (for descriptives/ICCs and later files):
+> - **POP_rev = 5 − POP_raw** (so higher = more contextualized).
+> - **HPT_CTX6 = mean(POP_rev, CONT)** (default composite).
+> - **HPT_TOT9 = mean(POP_rev, CONT, ROA)** (includes ROA; robustness).
+
+# Setup and data loading
+
+```{r,setup,message=FALSE, warning=FALSE}
+options(width = 120)
+
+# Data handling & plots
+library(tidyverse)
+
+# Psychometrics
+library(psych)        # alpha, omega, polychoric, EFA helpers
+library(lavaan)       # CFA
+library(semTools)     # model comparisons & extras
+
+# Multilevel ICCs
+library(lme4)
+library(performance)
+
+# Tables
+library(knitr)
+
+# Make kableExtra use longtable/booktabs and avoid loading tabu
+options(kableExtra.latex.load_packages = FALSE)
+library(kableExtra)
+
+# Load the dataset created in 00_data-preparation
+load("student_responses.RData")
+stopifnot(exists("normalised_responses"))
+dat <- normalised_responses
+
+# Ensure clustering identifiers and unique class id
+stopifnot(all(c("school_id","class_label") %in% names(dat)))
+dat <- dat %>%
+  mutate(
+    school_id   = as.factor(school_id),
+    class_label = as.factor(class_label),
+    class_id    = interaction(school_id, class_label, drop = TRUE)
+  )
+
+# POP reversed item-wise and subscale helper
+POP_rev_items <- paste0("POP", 1:3)
+
+# Reverse POP items (1–4)
+dat <- dat %>%
+  mutate(
+    across(
+      all_of(POP_rev_items),
+      ~ 5 - suppressWarnings(as.numeric(.)),
+      .names = "{.col}_rev"     # <<< THIS was the culprit
+    )
+  ) %>%
+  mutate(
+    HPT_POP_raw = rowMeans(across(all_of(POP_rev_items)), na.rm = TRUE),
+    HPT_POP_rev = rowMeans(across(all_of(paste0(POP_rev_items, "_rev"))), na.rm = TRUE),
+    HPT_CONT    = rowMeans(across(CONT1:CONT3), na.rm = TRUE),
+    HPT_ROA     = rowMeans(across(ROA1:ROA3),   na.rm = TRUE),
+    HPT_CTX6    = rowMeans(cbind(HPT_POP_rev, HPT_CONT), na.rm = TRUE),
+    HPT_TOT9    = rowMeans(cbind(HPT_POP_rev, HPT_CONT, HPT_ROA), na.rm = TRUE)
+  )
+
+print_tbl <- function(df, caption, digits = 3, escape = TRUE) {
+  kbl(df, booktabs = TRUE, longtable = TRUE, caption = caption, digits = digits, escape = escape) |>
+    kable_styling(full_width = FALSE, latex_options = c("hold_position"))
+}
+```
+
+We verify that **HPT items** and **class labels** exist. If something is missing, we stop with a clear message.
+
+```{r,check-columns}
+## -- check-columns ----------------------------
+hpt_cols <- c(paste0("POP", 1:3), paste0("ROA", 1:3), paste0("CONT", 1:3))
+need   <- c(hpt_cols, "class_label", "school_id")
+miss   <- setdiff(need, names(dat))
+if (length(miss)) stop("Missing variables: ", paste(miss, collapse = ", "))
+
+# Keep only rows that are COMPLETE on all HPT items AND have class_label and school_id
+keep <- complete.cases(dat[, hpt_cols]) & !is.na(dat$class_label) & !is.na(dat$school_id)
+
+analysis_df <- dat[keep, c(hpt_cols, "class_label", "school_id", "class_id")] |> 
+  as_tibble()
+
+nrow_all   <- nrow(dat)
+nrow_keep  <- nrow(analysis_df)
+cat("Rows in full data: ", nrow_all,  "\n",
+    "Rows kept (complete HPT + class_label + school_id): ", nrow_keep, "\n", sep = "")
+```
+
+# Step 1 — Descriptives and scale construction
+
+**Why:** Simple summaries catch obvious data problems and help readers develop intuition.
+
+```{r,descriptives}
+hpt_items <- analysis_df %>% select(all_of(hpt_cols))  # 9 HPT items
+
+# Subscales and composites with POP reversed for composites
+hpt_scores <- hpt_items %>%
+  mutate(
+    POP_raw = rowMeans(select(., starts_with("POP")),  na.rm = TRUE),
+    ROA     = rowMeans(select(., starts_with("ROA")),  na.rm = TRUE),
+    CONT    = rowMeans(select(., starts_with("CONT")), na.rm = TRUE)
+  ) %>%
+  mutate(
+    POP_rev   = 5 - POP_raw,
+    HPT_CTX6  = rowMeans(cbind(POP_rev, CONT), na.rm = TRUE),
+    HPT_TOT9  = rowMeans(cbind(POP_rev, CONT, ROA), na.rm = TRUE)
+  )
+
+summary(select(hpt_scores, POP_raw, POP_rev, ROA, CONT, HPT_CTX6, HPT_TOT9))
+cor(select(hpt_scores, POP_raw, ROA, CONT, HPT_CTX6, HPT_TOT9), use = "pairwise.complete.obs")
+```
+
+# Step 2 — Reliability: \(\alpha\) and \(\omega\) for POP–ROA–CONT
+
+```{r,reliability,warning=FALSE}
+alpha_poly <- function(x) {
+  pc <- psych::polychoric(x)$rho
+  psych::alpha(pc, n.obs = nrow(x))
+}
+omega_poly <- function(x) {
+  pc <- psych::polychoric(x)$rho
+  psych::omega(pc, n.obs = nrow(x), nfactors = 1, plot = FALSE)
+}
+
+subsets <- list(
+  POP  = hpt_items %>% select(starts_with("POP")),
+  ROA  = hpt_items %>% select(starts_with("ROA")),
+  CONT = hpt_items %>% select(starts_with("CONT"))
+)
+
+rel_table <- purrr::imap_dfr(subsets, function(df, nm){
+  a_raw  <- psych::alpha(df)
+  a_poly <- alpha_poly(df)
+  om     <- omega_poly(df)
+  tibble(
+    scale = nm,
+    k_items = ncol(df),
+    alpha_raw  = unname(a_raw$total$raw_alpha),
+    alpha_poly = unname(a_poly$total$raw_alpha),
+    omega_total = unname(om$omega.tot),
+    omega_hier  = unname(om$omega.h)
+  )
+})
+
+print_tbl(rel_table, digits = 3, caption = "Reliability of HPT subscales (alpha and omega).")
+```
+
+# Step 3 — Dimensionality (CFA/EFA)
+
+```{r,cfa-setup,warning=FALSE}
+hpt_ord <- hpt_items  # treat items as ordered
+
+m1_2factor <- '
+F1 =~ POP1 + POP2 + POP3 + CONT1 + CONT2 + CONT3
+F2 =~ ROA1 + ROA2 + ROA3
+F1 ~~ F2
+'
+m2_3factor <- '
+POP  =~ POP1 + POP2 + POP3
+CONT =~ CONT1 + CONT2 + CONT3
+ROA  =~ ROA1 + ROA2 + ROA3
+POP ~~ CONT + ROA
+CONT ~~ ROA
+'
+m3_1factor <- '
+G =~ POP1 + POP2 + POP3 + ROA1 + ROA2 + ROA3 + CONT1 + CONT2 + CONT3
+'
+
+fit_2 <- cfa(m1_2factor, data = hpt_ord, ordered = hpt_cols, estimator = "WLSMV")
+fit_3 <- cfa(m2_3factor, data = hpt_ord, ordered = hpt_cols, estimator = "WLSMV")
+fit_1 <- cfa(m3_1factor, data = hpt_ord, ordered = hpt_cols, estimator = "WLSMV")
+
+# Compare fits
+semTools::compareFit(fit_2, fit_3, fit_1)
+```
+
+```{r,cfa-details}
+report_fit <- function(fit) {
+  list(
+    indices = fitMeasures(fit, c("cfi","tli","rmsea","rmsea.ci.lower","rmsea.ci.upper","srmr")),
+    loadings = standardizedSolution(fit) %>% as_tibble() %>% filter(op == "=~")
+  )
+}
+
+cfa_summary <- list(
+  `2-factor (POP+CONT vs ROA)` = report_fit(fit_2),
+  `3-factor (POP/CONT/ROA)`    = report_fit(fit_3),
+  `1-factor (general)`         = report_fit(fit_1)
+)
+
+purrr::iwalk(cfa_summary, function(x, nm){
+  cat("\n###", nm, "\n")
+  print(x$indices)
+  print(kable(x$loadings, digits = 3))
+})
+```
+
+### Optional: EFA (polychoric)
+
+```{r,efa}
+pc <- psych::polychoric(hpt_ord)$rho
+efa2 <- psych::fa(pc, nfactors = 2, fm = "pa", rotate = "oblimin")
+efa3 <- psych::fa(pc, nfactors = 3, fm = "pa", rotate = "oblimin")
+
+cat("\nEFA (2 factors):\n")
+print(efa2$loadings, cutoff = 0.25)
+
+cat("\nEFA (3 factors):\n")
+print(efa3$loadings, cutoff = 0.25)
+```
+
+# Step 4 — Presentism–contextualization contrast (POP vs CONT)
+
+```{r,pop-cont-contrast}
+contrast_tbl <- hpt_scores %>%
+  summarise(
+    mean_POP   = mean(POP_raw,  na.rm = TRUE),  sd_POP   = sd(POP_raw,  na.rm = TRUE),
+    mean_CONT  = mean(CONT,     na.rm = TRUE),  sd_CONT  = sd(CONT,     na.rm = TRUE),
+    r_POP_CONT = cor(POP_raw, CONT, use = "pairwise.complete.obs")
+  )
+
+print_tbl(contrast_tbl, digits = 3, caption = "POP (raw) vs CONT: means, SDs, and correlation.")
+
+t_test <- t.test(hpt_scores$POP_raw, hpt_scores$CONT, paired = TRUE)
+t_test
+```
+
+# Step 5 — Distribution checks
+
+```{r,distributions}
+# Item distributions
+long_items <- hpt_items %>%
+  pivot_longer(cols = everything(), names_to = "item", values_to = "score")
+
+ggplot(long_items, aes(score)) +
+  geom_histogram(binwidth = 0.5, boundary = 0, closed = "left") +
+  facet_wrap(~ item, ncol = 3) +
+  labs(title = "HPT item score distributions", x = "Score (1-4)", y = "Count")
+
+# Scale/composite distributions
+long_scales <- hpt_scores %>%
+  select(POP_raw, ROA, CONT, HPT_CTX6, HPT_TOT9) %>%
+  pivot_longer(everything(), names_to = "scale", values_to = "score")
+
+ggplot(long_scales, aes(x = score)) +
+  geom_histogram(binwidth = 0.25) +
+  facet_wrap(~ scale, scales = "free") +
+  labs(title = "Subscales and composites", x = "Mean score", y = "Count")
+```
+
+# Step 6 — Class-level ICCs (multilevel warranted?)
+
+```{r,icc}
+# Build the DV frame from analysis_df (items) and compute subscales/composites here
+icc_data <- analysis_df %>%
+  mutate(
+    POP_raw = rowMeans(select(., starts_with("POP")),  na.rm = TRUE),
+    ROA     = rowMeans(select(., starts_with("ROA")),  na.rm = TRUE),
+    CONT    = rowMeans(select(., starts_with("CONT")), na.rm = TRUE)
+  ) %>%
+  mutate(
+    POP_rev  = 5 - POP_raw,
+    HPT_CTX6 = rowMeans(cbind(POP_rev, CONT), na.rm = TRUE),
+    HPT_TOT9 = rowMeans(cbind(POP_rev, CONT, ROA), na.rm = TRUE)
+  ) %>%
+  select(school_id, class_label, class_id, POP_raw, ROA, CONT, HPT_CTX6, HPT_TOT9)
+
+mk_icc_3 <- function(dv){
+  f <- reformulate("1 + (1|school_id) + (1|school_id:class_label)", response = dv)
+  fit <- lmer(f, data = icc_data, REML = TRUE)
+
+  vc <- as.data.frame(VarCorr(fit))
+  v_school <- vc$vcov[vc$grp == "school_id"];             v_school <- if (length(v_school)) v_school[1] else 0
+  v_classW <- vc$vcov[vc$grp == "school_id:class_label"]; v_classW <- if (length(v_classW)) v_classW[1] else 0
+  v_resid  <- vc$vcov[vc$grp == "Residual"][1]
+  v_tot    <- v_school + v_classW + v_resid
+
+  tibble(
+    DV = dv,
+    ICC_school = v_school / v_tot,
+    ICC_class_within_school = v_classW / v_tot,
+    ICC_total_cluster = (v_school + v_classW) / v_tot,
+    singular = isSingular(fit)
+  )
+}
+
+icc_tbl <- purrr::map_dfr(c("HPT_CTX6","HPT_TOT9","POP_raw","ROA","CONT"), mk_icc_3)
+print_tbl(icc_tbl, digits = 3, caption = "ICCs: school and class-within-school (HPT composites and subscales).")
+```
+
+# Step 7 — Knowledge mini-test (KN1–KN6)
+
+```{r,kn-items,warning=FALSE}
+kn_cols <- paste0("KN", 1:6)
+has_kn  <- all(kn_cols %in% names(dat))
+
+if (!has_kn) {
+  cat("\n**Knowledge section skipped:** KN1–KN6 not found in data.\n")
+} else {
+  kn_items <- dat[keep, kn_cols]  # align to analysis_df rows via 'keep'
+  # Basic sanity: coerce to numeric 0/1
+  kn_items <- kn_items %>% mutate(across(everything(), ~ as.numeric(.)))
+
+  # Total score, difficulty (p), discrimination (point-biserial)
+  kn_total <- rowSums(kn_items, na.rm = TRUE)
+
+  item_stats <- tibble(
+    item = kn_cols,
+    difficulty_p = sapply(kn_items, function(x) mean(x, na.rm = TRUE)),
+    discr_pb = sapply(kn_items, function(x) cor(x, kn_total - x, use = "pairwise.complete.obs"))
+  )
+
+  # KR-20 (alpha on dichotomous items)
+  kn_alpha <- psych::alpha(kn_items)
+
+  print_tbl(item_stats, digits = 3, caption = "KN items: difficulty (p) and point-biserial discrimination.")
+
+  print_tbl(tibble(
+    k_items = ncol(kn_items),
+    total_mean = mean(kn_total, na.rm = TRUE),
+    total_sd   = sd(kn_total, na.rm = TRUE),
+    alpha_KR20 = unname(kn_alpha$total$raw_alpha)
+  ), digits = 3, caption = "KN total: summary and KR-20 (alpha for dichotomous items).")
+}
+```
+
+# Step 8 — Ideology batteries (FR-LF mini, KSA-3) and Social Desirability (SDR-5)
+
+```{r,ideology-batteries-helpers,warning=FALSE}
+# Helper: reliability table for Likert batteries (polychoric + omega total)
+alpha_poly_likert <- function(x) {
+  pc <- psych::polychoric(x)$rho
+  psych::alpha(pc, n.obs = nrow(x))
+}
+omega_total_poly_likert <- function(x) {
+  pc <- psych::polychoric(x)$rho
+  if (!all(eigen(pc, symmetric = TRUE)$values > 1e-6)) pc <- psych::cor.smooth(pc)
+  suppressWarnings(psych::omega(pc, n.obs = nrow(x), nfactors = 1, plot = FALSE)$omega.tot)
+}
+```
+
+## FR-LF mini (RD1–RD3, NS1–NS3)
+
+```{r,fr-lf-mini,warning=FALSE}
+fr_cols <- c(paste0("RD", 1:3), paste0("NS", 1:3))
+has_fr  <- all(fr_cols %in% names(dat))
+
+if (!has_fr) {
+  cat("\n**FR-LF mini section skipped:** RD1–3 and/or NS1–3 not found.\n")
+} else {
+  fr_df <- dat[keep, fr_cols] %>% as_tibble()
+  RD <- fr_df %>% select(starts_with("RD"))
+  NS <- fr_df %>% select(starts_with("NS"))
+
+  fr_rel <- bind_rows(
+    {
+      a <- psych::alpha(RD); ap <- alpha_poly_likert(RD); wt <- omega_total_poly_likert(RD)
+      tibble(scale = "FR-LF: RD", k_items = ncol(RD),
+             alpha_raw = a$total$raw_alpha, alpha_poly = ap$total$raw_alpha, omega_total = wt)
+    },
+    {
+      a <- psych::alpha(NS); ap <- alpha_poly_likert(NS); wt <- omega_total_poly_likert(NS)
+      tibble(scale = "FR-LF: NS", k_items = ncol(NS),
+             alpha_raw = a$total$raw_alpha, alpha_poly = ap$total$raw_alpha, omega_total = wt)
+    },
+    {
+      a <- psych::alpha(fr_df); ap <- alpha_poly_likert(fr_df); wt <- omega_total_poly_likert(fr_df)
+      tibble(scale = "FR-LF: total (RD+NS)", k_items = ncol(fr_df),
+             alpha_raw = a$total$raw_alpha, alpha_poly = ap$total$raw_alpha, omega_total = wt)
+    }
+  )
+
+  print_tbl(fr_rel, digits = 3, caption = "FR-LF mini reliability (alpha, polychoric alpha, omega total).")
+
+  # Optional CFA: 2 correlated factors (RD, NS), ordered WLSMV
+  fr_model <- '
+  RD =~ RD1 + RD2 + RD3
+  NS =~ NS1 + NS2 + NS3
+  RD ~~ NS
+  '
+  fr_fit <- try(lavaan::cfa(fr_model, data = fr_df, ordered = colnames(fr_df), estimator = "WLSMV"), silent = TRUE)
+  if (!inherits(fr_fit, "try-error")) {
+    print(fitMeasures(fr_fit, c("cfi","tli","rmsea","srmr")))
+  } else {
+    cat("\nFR-LF CFA skipped (model failed to converge).\n")
+  }
+}
+```
+
+## KSA-3 (A1–A3, U1–U3, K1–K3)
+
+```{r,ksa-3,warning=FALSE}
+ksa_cols <- c(paste0("A",1:3), paste0("U",1:3), paste0("K",1:3))
+has_ksa  <- all(ksa_cols %in% names(dat))
+
+if (!has_ksa) {
+  cat("\n**KSA-3 section skipped:** A1–A3, U1–U3, and/or K1–K3 not found.\n")
+} else {
+  ksa_df <- dat[keep, ksa_cols] %>% as_tibble()
+  A <- ksa_df %>% select(starts_with("A"))
+  U <- ksa_df %>% select(starts_with("U"))
+  K <- ksa_df %>% select(starts_with("K"))
+
+  ksa_rel <- bind_rows(
+    {
+      a <- psych::alpha(A); ap <- alpha_poly_likert(A); wt <- omega_total_poly_likert(A)
+      tibble(scale = "KSA-3: Aggression (A)", k_items = 3,
+             alpha_raw = a$total$raw_alpha, alpha_poly = ap$total$raw_alpha, omega_total = wt)
+    },
+    {
+      a <- psych::alpha(U); ap <- alpha_poly_likert(U); wt <- omega_total_poly_likert(U)
+      tibble(scale = "KSA-3: Submission (U)", k_items = 3,
+             alpha_raw = a$total$raw_alpha, alpha_poly = ap$total$raw_alpha, omega_total = wt)
+    },
+    {
+      a <- psych::alpha(K); ap <- alpha_poly_likert(K); wt <- omega_total_poly_likert(K)
+      tibble(scale = "KSA-3: Conventionalism (K)", k_items = 3,
+             alpha_raw = a$total$raw_alpha, alpha_poly = ap$total$raw_alpha, omega_total = wt)
+    },
+    {
+      a <- psych::alpha(ksa_df); ap <- alpha_poly_likert(ksa_df); wt <- omega_total_poly_likert(ksa_df)
+      tibble(scale = "KSA-3: total", k_items = 9,
+             alpha_raw = a$total$raw_alpha, alpha_poly = ap$total$raw_alpha, omega_total = wt)
+    }
+  )
+
+  print_tbl(ksa_rel, digits = 3, caption = "KSA-3 reliability (alpha, polychoric alpha, omega total).")
+
+  # Optional CFA: 3 correlated factors (A, U, K)
+  ksa_model <- '
+  A =~ A1 + A2 + A3
+  U =~ U1 + U2 + U3
+  K =~ K1 + K2 + K3
+  A ~~ U + K
+  U ~~ K
+  '
+  ksa_fit <- try(lavaan::cfa(ksa_model, data = ksa_df, ordered = colnames(ksa_df), estimator = "WLSMV"), silent = TRUE)
+  if (!inherits(ksa_fit, "try-error")) {
+    print(fitMeasures(ksa_fit, c("cfi","tli","rmsea","srmr")))
+  } else {
+    cat("\nKSA-3 CFA skipped (model failed to converge).\n")
+  }
+}
+```
+
+## SDR-5 (SDR1–SDR5)
+
+```{r,sdr-5,warning=FALSE}
+sdr_cols <- paste0("SDR", 1:5)
+has_sdr  <- all(sdr_cols %in% names(dat))
+
+if (!has_sdr) {
+  cat("\n**SDR-5 section skipped:** SDR1–SDR5 not found.\n")
+} else {
+  sdr_df <- dat[keep, sdr_cols] %>% as_tibble()
+  a_sdr  <- psych::alpha(sdr_df)
+  ap_sdr <- alpha_poly_likert(sdr_df)
+  wt_sdr <- omega_total_poly_likert(sdr_df)
+
+  print_tbl(tibble(
+    scale = "SDR-5",
+    k_items = 5,
+    alpha_raw = a_sdr$total$raw_alpha,
+    alpha_poly = ap_sdr$total$raw_alpha,
+    omega_total = wt_sdr
+  ), digits = 3, caption = "SDR-5 reliability (alpha, polychoric alpha, omega total).") 
+
+  # Optional CFA: 1 factor
+  sdr_model <- 'SDR =~ SDR1 + SDR2 + SDR3 + SDR4 + SDR5'
+  sdr_fit <- try(lavaan::cfa(sdr_model, data = sdr_df, ordered = colnames(sdr_df), estimator = "WLSMV"), silent = TRUE)
+  if (!inherits(sdr_fit, "try-error")) {
+    print(fitMeasures(sdr_fit, c("cfi","tli","rmsea","srmr")))
+  } else {
+    cat("\nSDR-5 CFA skipped (model failed to converge).\n")
+  }
+}
+```
+
+# Step 9 — Cross-construct correlations (HPT, KN, FR-LF, KSA-3, SDR-5)
+
+```{r,cross-construct-correlations}
+# Build scale scores that exist in your data (gracefully skipping any missing block)
+scales_list <- list(
+  HPT_CTX6  = hpt_scores$HPT_CTX6,
+  HPT_TOT9  = hpt_scores$HPT_TOT9,
+  HPT_POP   = hpt_scores$POP_raw,  # presentism foil (higher = worse)
+  HPT_ROA   = hpt_scores$ROA,
+  HPT_CONT  = hpt_scores$CONT
+)
+
+# optional blocks
+kn_cols <- paste0("KN", 1:6); has_kn <- all(kn_cols %in% names(dat))
+fr_cols <- c(paste0("RD", 1:3), paste0("NS", 1:3)); has_fr <- all(fr_cols %in% names(dat))
+ksa_cols <- c(paste0("A",1:3), paste0("U",1:3), paste0("K",1:3)); has_ksa <- all(ksa_cols %in% names(dat))
+sdr_cols <- paste0("SDR", 1:5); has_sdr <- all(sdr_cols %in% names(dat))
+
+if (has_kn) {
+  scales_list$KN_total <- rowSums(dat[keep, kn_cols], na.rm = TRUE)
+}
+
+if (has_fr) {
+  fr_df <- dat[keep, fr_cols]
+  scales_list$FR_RD     <- rowMeans(fr_df[, paste0("RD",1:3)], na.rm = TRUE)
+  scales_list$FR_NS     <- rowMeans(fr_df[, paste0("NS",1:3)], na.rm = TRUE)
+  scales_list$FR_total  <- rowMeans(fr_df, na.rm = TRUE)
+}
+
+if (has_ksa) {
+  ksa_df <- dat[keep, ksa_cols]
+  scales_list$KSA_A     <- rowMeans(ksa_df[, paste0("A",1:3)], na.rm = TRUE)
+  scales_list$KSA_U     <- rowMeans(ksa_df[, paste0("U",1:3)], na.rm = TRUE)
+  scales_list$KSA_K     <- rowMeans(ksa_df[, paste0("K",1:3)], na.rm = TRUE)
+  scales_list$KSA_total <- rowMeans(ksa_df, na.rm = TRUE)
+}
+
+if (has_sdr) {
+  sdr_df <- dat[keep, sdr_cols]
+  scales_list$SDR_total <- rowMeans(sdr_df, na.rm = TRUE)
+}
+
+scales_df <- as_tibble(scales_list)
+
+# Pairwise complete correlations
+cors <- cor(scales_df, use = "pairwise.complete.obs")
+
+print_tbl(round(cors, 3), caption = "Cross-construct correlations (pairwise complete).")
+```
+
+# Reproducibility appendix
+
+```{r,session-info}
+sessionInfo()
+```

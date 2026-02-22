@@ -1,0 +1,10 @@
+07_reproducibility_report.Rmd
+
+Purpose: One-stop summary for reviewers.
+Content:
+
+Session info, package versions.
+
+Data provenance.
+
+File map linking each .Rmd to each preregistered analytic step.

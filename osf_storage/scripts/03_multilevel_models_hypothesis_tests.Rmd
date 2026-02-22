@@ -1,0 +1,369 @@
+---
+title: "Hypothesis tests — HPT (Czech data)"
+subtitle: "Multilevel models for H1–H2"
+author: "HPT and Extremism project"
+date: "`r format(Sys.Date())`"
+always_allow_html: true
+output:
+  pdf_document:
+    latex_engine: xelatex
+    number_sections: true
+    toc: true
+    toc_depth: 3
+    keep_tex: true
+  md_document:
+    variant: markdown
+    preserve_yaml: false
+    toc: false
+
+# global chunk options
+knitr:
+  opts_chunk:
+    dev: "png"
+    fig.path: "figures/"
+    dpi: 300
+
+fontsize: 10pt
+geometry:
+  - landscape
+  - margin=0.7in
+
+header-includes:
+  - \usepackage{booktabs}
+  - \usepackage{longtable}
+  - \usepackage{array}
+  - \usepackage{multirow}
+  - \usepackage{float}
+  - \usepackage{colortbl}
+  - \usepackage{pdflscape}
+  - \usepackage{threeparttable}
+  - \usepackage{threeparttablex}
+  - \usepackage[normalem]{ulem}
+  - \usepackage{makecell}
+  - \setlength{\LTcapwidth}{\textwidth}
+---
+
+# 1. Purpose and hypotheses
+
+This document runs the **main confirmatory analyses** for:
+
+* **H1.** Higher right‐authoritarian / pro-Nazi attitudes predict **higher HPT scores** on the original instrument (risk of ideological contamination). Predictors: FR-LF-mini (total or RD/NS facets) and KSA-3.
+* **H2.** The H1 effect **persists controlling** for prior knowledge (KN total) and social desirability (SDR-5).
+
+Notes on constructs and scoring:
+
+* HPT subscores (POP, ROA, CONT) follow Hartmann & Hasselhorn / Huijgen et al. We treat **POP items as presentist** and therefore **reverse-score POP** so that **higher = more contextualised reasoning**. DVs used here are **HPT total (CTX6: POP_rev+CONT)**, **CONT**, and **POP_rev**.
+* FR-LF-mini uses **RD1–RD3** and **NS1–NS3**; we analyse **total** and **RD/NS facets**.
+* KSA-3 (9 items; aggression, submission, conventionalism) is included as a convergent authoritarian predictor. (Registered.)
+
+# 2. Data, variables, and preprocessing
+
+```{r,setup, include=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+set.seed(1234)
+```
+
+```{r,packages}
+# Core
+library(tidyverse)
+library(readxl)
+library(janitor)
+
+# Models + tables
+library(lme4)
+library(lmerTest)
+library(performance)
+library(effectsize)
+library(broom.mixed)
+library(modelsummary)
+library(glue)
+
+library(kableExtra)
+options(
+  modelsummary_format = "latex",
+  modelsummary_factory_latex = "kableExtra"
+)
+```
+
+```{r,load-data}
+# Load the dataset created in 00_data-preparation
+load("student_responses.RData")
+stopifnot(exists("normalised_responses"))
+
+# Clean names to lower_snake so items are pop1/roa1/cont1 etc.
+dat_raw <- normalised_responses |> janitor::clean_names()
+
+# ------------------------------------------------------------------
+# Build a UNIQUE class identifier = school_id x class label
+# We support multiple plausible column names from the codebook.
+# ------------------------------------------------------------------
+# Detect school id column
+school_var <- names(dat_raw)[names(dat_raw) %in% c("school_id","school")]
+# Detect class label column (human-readable class label)
+class_label_var <- names(dat_raw)[names(dat_raw) %in% c("classroom_label","class_label","class")]
+
+if (length(school_var) == 0) stop("No school id column found (tried: school_id, school).")
+if (length(class_label_var) == 0) stop("No class label column found (tried: classroom_label, class_label, class).")
+
+school_var <- school_var[1]
+class_label_var <- class_label_var[1]
+
+# Force factors and create class_id
+dat_raw <- dat_raw |>
+  mutate(
+    !!school_var := as.factor(.data[[school_var]]),
+    !!class_label_var := as.factor(.data[[class_label_var]]),
+    class_id = interaction(.data[[school_var]], .data[[class_label_var]], drop = TRUE)
+  )
+
+# ------------------
+# HPT item vectors (lowercase after clean_names())
+# ------------------
+pop_items  <- paste0("pop", 1:3)
+roa_items  <- paste0("roa", 1:3)
+cont_items <- paste0("cont", 1:3)
+
+# Reverse POP items so higher = more contextualised (1-4 scale assumed)
+dat_raw <- dat_raw %>%
+  mutate(across(all_of(pop_items), ~ 5 - as.numeric(.), .names = "{.col}_rev"))
+```
+
+```{r,score-constructs}
+# ---- Knowledge ----
+kn_items <- paste0("kn", 1:6)
+
+dat <- dat_raw |>
+  mutate(
+    kn_total = rowSums(across(all_of(kn_items)), na.rm = TRUE)
+  )
+
+# ---- HPT (use reversed POP) ----
+dat <- dat |>
+  mutate(
+    hpt_pop_rev = rowMeans(across(paste0(pop_items, "_rev")), na.rm = TRUE),
+    hpt_cont    = rowMeans(across(all_of(cont_items)),       na.rm = TRUE),
+    hpt_roa     = rowMeans(across(all_of(roa_items)),        na.rm = TRUE),
+    # Primary total (CTX6 = POP_rev + CONT); keep 9-item as sensitivity if needed
+    hpt_total   = rowMeans(cbind(hpt_pop_rev, hpt_cont), na.rm = TRUE),
+    hpt_total9  = rowMeans(cbind(hpt_pop_rev, hpt_cont, hpt_roa), na.rm = TRUE)
+  )
+
+# ---- FR-LF mini ----
+rd_items <- paste0("rd", 1:3)
+ns_items <- paste0("ns", 1:3)
+
+dat <- dat |>
+  mutate(
+    frlf_rd  = rowMeans(across(all_of(rd_items)), na.rm = TRUE),
+    frlf_ns  = rowMeans(across(all_of(ns_items)), na.rm = TRUE),
+    frlf_tot = rowMeans(cbind(frlf_rd, frlf_ns),  na.rm = TRUE)
+  )
+
+# ---- KSA-3 ----
+a_items   <- paste0("a", 1:3)
+u_items   <- paste0("u", 1:3)
+k_items   <- paste0("k", 1:3)
+ksa_items <- c(a_items, u_items, k_items)
+
+dat <- dat |>
+  mutate(
+    ksa3_a   = rowMeans(across(all_of(a_items)),   na.rm = TRUE),
+    ksa3_u   = rowMeans(across(all_of(u_items)),   na.rm = TRUE),
+    ksa3_k   = rowMeans(across(all_of(k_items)),   na.rm = TRUE),
+    ksa3_tot = rowMeans(across(all_of(ksa_items)), na.rm = TRUE)
+  )
+
+# ---- SDR-5 ----
+sdr_items <- paste0("sdr", 1:5)
+
+dat <- dat |>
+  mutate(
+    sdr5_tot = rowMeans(across(all_of(sdr_items)), na.rm = TRUE)
+  )
+```
+
+```{r,standardise}
+# Z-standardise continuous predictors (for comparability)
+z <- function(x) as.numeric(scale(x))
+
+# Ensure clustering vars present for every analysed row
+
+dat <- dat |>
+  mutate(
+    z_hpt_total = z(hpt_total),
+    z_hpt_cont  = z(hpt_cont),
+    z_hpt_pop   = z(hpt_pop_rev),
+
+    z_frlf_tot = z(frlf_tot),
+    z_frlf_rd  = z(frlf_rd),
+    z_frlf_ns  = z(frlf_ns),
+
+    z_ksa3_tot = z(ksa3_tot),
+
+    z_kn_total = z(kn_total),
+    z_sdr5_tot = z(sdr5_tot)
+  ) |>
+  drop_na(all_of(c(school_var, "class_id")))
+```
+
+# 3. Model plan
+
+We estimate **random‐intercept multilevel models** with **two clustering terms** (students nested in classes within schools):
+
+* Base (FR-LF total):
+  `DV ~ z_frlf_tot + z_ksa3_tot + z_kn_total + z_sdr5_tot + (1 | school_id) + (1 | class_id)`
+* Facet (RD/NS):
+  `DV ~ z_frlf_rd + z_frlf_ns + z_ksa3_tot + z_kn_total + z_sdr5_tot + (1 | school_id) + (1 | class_id)`
+* Interaction (if preregistered):
+  `DV ~ z_frlf_tot * z_kn_total + z_ksa3_tot + z_sdr5_tot + (1 | school_id) + (1 | class_id)`
+
+DVs: `z_hpt_total` (CTX6), `z_hpt_cont`, `z_hpt_pop` (POP_rev).
+
+```{r,fit-models}
+dv_list <- c("z_hpt_total","z_hpt_cont","z_hpt_pop")
+
+fits <- list()
+
+for (dv in dv_list) {
+  form_base  <- as.formula(
+    glue("{dv} ~ z_frlf_tot + z_ksa3_tot + z_kn_total + z_sdr5_tot + (1 | {school_var}) + (1 | class_id)")
+  )
+  form_facet <- as.formula(
+    glue("{dv} ~ z_frlf_rd + z_frlf_ns + z_ksa3_tot + z_kn_total + z_sdr5_tot + (1 | {school_var}) + (1 | class_id)")
+  )
+  form_int   <- as.formula(
+    glue("{dv} ~ z_frlf_tot * z_kn_total + z_ksa3_tot + z_sdr5_tot + (1 | {school_var}) + (1 | class_id)")
+  )
+
+  m_base  <- lmer(form_base,  data = dat)
+  m_facet <- lmer(form_facet, data = dat)
+  m_int   <- lmer(form_int,   data = dat)
+
+  fits[[dv]] <- list(base=m_base, facet=m_facet, int=m_int)
+}
+```
+
+```{r,model-summaries}
+msummary(
+  list(
+    "HPT total (CTX6) — Base"  = fits$z_hpt_total$base,
+    "HPT total (CTX6) — Facet" = fits$z_hpt_total$facet,
+    "HPT total (CTX6) — Int."  = fits$z_hpt_total$int
+  ),
+  statistic = "({std.error})",
+  gof_omit = "IC|Log|AIC|BIC",
+  stars = TRUE
+)
+
+msummary(
+  list(
+    "CONT — Base"  = fits$z_hpt_cont$base,
+    "CONT — Facet" = fits$z_hpt_cont$facet,
+    "CONT — Int."  = fits$z_hpt_cont$int
+  ),
+  statistic = "({std.error})",
+  gof_omit = "IC|Log|AIC|BIC",
+  stars = TRUE
+)
+
+msummary(
+  list(
+    "POP_rev — Base"  = fits$z_hpt_pop$base,
+    "POP_rev — Facet" = fits$z_hpt_pop$facet,
+    "POP_rev — Int."  = fits$z_hpt_pop$int
+  ),
+  statistic = "({std.error})",
+  gof_omit = "IC|Log|AIC|BIC",
+  stars = TRUE
+)
+```
+
+```{r,fit-metrics}
+`%||%` <- function(a, b) if (!is.null(a) && length(a) > 0) a else b
+
+collect_metrics <- function(m) {
+  icc_val <- tryCatch({
+    ic <- performance::icc(m)
+    as.numeric(ic$ICC_adjusted %||% ic$ICC %||% ic$ICC_conditional %||% NA_real_)
+  }, error = function(e) NA_real_)
+
+  r2m <- r2c <- NA_real_
+  try({
+    r2o <- performance::r2_nakagawa(m)
+    r2m <- as.numeric(r2o$R2_marginal %||% r2o$R2m %||% NA_real_)
+    r2c <- as.numeric(r2o$R2_conditional %||% r2o$R2c %||% NA_real_)
+  }, silent = TRUE)
+
+  data.frame(ICC = icc_val, R2_m = r2m, R2_c = r2c, check.names = FALSE)
+}
+
+metrics <- dplyr::bind_rows(
+  list(
+    `HPT total (CTX6) — Base`  = collect_metrics(fits$z_hpt_total$base),
+    `HPT total (CTX6) — Facet` = collect_metrics(fits$z_hpt_total$facet),
+    `HPT total (CTX6) — Int.`  = collect_metrics(fits$z_hpt_total$int),
+    `CONT — Base`               = collect_metrics(fits$z_hpt_cont$base),
+    `CONT — Facet`              = collect_metrics(fits$z_hpt_cont$facet),
+    `CONT — Int.`               = collect_metrics(fits$z_hpt_cont$int),
+    `POP_rev — Base`            = collect_metrics(fits$z_hpt_pop$base),
+    `POP_rev — Facet`           = collect_metrics(fits$z_hpt_pop$facet),
+    `POP_rev — Int.`            = collect_metrics(fits$z_hpt_pop$int)
+  ),
+  .id = "Model"
+)
+
+knitr::kable(metrics, digits = 3, caption = "Model fit and clustering (ICC, $R^2$).")
+```
+
+```{r,tidy-effects}
+tidy_all <- function(lst, label) {
+  bind_rows(
+    broom.mixed::tidy(lst$base,  effects="fixed", conf.int=TRUE) |> mutate(spec="Base"),
+    broom.mixed::tidy(lst$facet, effects="fixed", conf.int=TRUE) |> mutate(spec="Facet"),
+    broom.mixed::tidy(lst$int,   effects="fixed", conf.int=TRUE) |> mutate(spec="Interaction")
+  ) |>
+    filter(term != "(Intercept)") |>
+    mutate(dv = label)
+}
+
+tidy_tbl <- bind_rows(
+  tidy_all(fits$z_hpt_total, "HPT total (CTX6)"),
+  tidy_all(fits$z_hpt_cont,  "CONT"),
+  tidy_all(fits$z_hpt_pop,   "POP_rev")
+)
+
+knitr::kable(
+  tidy_tbl |> select(dv, spec, term, estimate, conf.low, conf.high, p.value),
+  digits = 3,
+  caption = "Fixed effects (standardized coefficients)."
+)
+```
+
+# 4. Results — decision rules
+
+Interpret **only the preregistered tests**:
+
+* **H1 supported** if the coefficient for **FR-LF** (either `z_frlf_tot` in Base/Int. or `z_frlf_rd`/`z_frlf_ns` in Facet) is **> 0 and p < .05** for **HPT total (CTX6)** and/or **CONT**.
+* **H2 supported** if the same holds **after** adding controls (**KN**, **SDR-5**) and **KSA-3** (already included), and — if preregistered — the **FR-LF × KN** interaction is **not necessary** for the main effect to persist (or, if hypothesised, is significant in the expected direction).
+
+**Reading POP_rev.** Because POP is reversed, higher **POP_rev** means **less presentism / more contextualised fit** on items that originally cued presentist endorsements. Interpret alongside **CONT**.
+
+# 5. Brief interpretation guide (for the write-up)
+
+* **Effect size:** Coefficients are **standardised** (β). Values around 0.10 are small, 0.20–0.30 moderate for individual-level predictors in multilevel models; report 95% CIs.
+* **Clustering:** Report **ICC** to show class-level variance.
+* **Model fit:** Report marginal and conditional R² and compare Base vs. Facet vs. Interaction.
+* **Substantive meaning:** A **positive FR-LF** effect on **HPT total / CONT** suggests that ideological affinity **elevates apparent contextualisation**, consistent with the contamination concern.
+* **Controls:** If FR-LF remains significant after **KN** and **SDR-5**, state that results are **not explained** by prior knowledge or social desirability (per H2).
+
+# 6. Transparency and provenance
+
+* HPT structure and reversal logic follow Hartmann & Hasselhorn / Huijgen et al.
+* FR-LF-mini originates from the Leipzig FR-LF.
+* Analysis plan: random-intercept LMMs; DVs: HPT total (CTX6), CONT, POP_rev; predictors: FR-LF (total; RD/NS facets), KSA-3; controls: KN, SDR-5; clustering: school + class_id.
+
+# 7. Session info
+
+```{r,session-info}
+sessionInfo()
+```

@@ -1,0 +1,292 @@
+---
+title: "Sensitivity analyses — HPT (Czech data)"
+subtitle: "Robustness checks for scoring, ideology operationalisation, exclusions, and random-slopes"
+author: "HPT and Extremism project"
+date: "`r format(Sys.Date())`"
+always_allow_html: true
+output:
+  pdf_document:
+    latex_engine: xelatex
+    number_sections: true
+    toc: true
+    toc_depth: 3
+    keep_tex: true
+  md_document:
+    variant: markdown
+    preserve_yaml: false
+    toc: false
+
+# global chunk options
+knitr:
+  opts_chunk:
+    dev: "png"          # ensures image files are written
+    fig.path: "figures/" # directory for external images
+    dpi: 300
+
+fontsize: 10pt
+geometry:
+  - landscape
+  - margin=0.7in
+
+header-includes:
+  - \usepackage{booktabs}
+  - \usepackage{longtable}
+  - \usepackage{array}
+  - \usepackage{multirow}
+  - \usepackage{float}
+  - \usepackage{colortbl}
+  - \usepackage{pdflscape}
+  - \usepackage{threeparttable}
+  - \usepackage{threeparttablex}
+  - \usepackage[normalem]{ulem}
+  - \usepackage{makecell}
+  - \setlength{\LTcapwidth}{\textwidth}
+---
+
+# Purpose and scope
+
+This file documents **exploratory robustness checks** of our main results. We vary how HPT is scored, how ideology is operationalised, which observations are included, and whether class-level **random slopes** are needed. The goal is to see if substantive conclusions survive reasonable perturbations—**not** to hunt for significance.
+
+HPT scoring follows the Hartmann–Hasselhorn / Huijgen instrument logic; note earlier reports that ROA items can behave inconsistently across samples, motivating ROA-free alternatives here. We also leverage the FR-LF dimensions RD and NS for ideology variants. All results explicitly use **reversed POP items** so that higher scores mean **more contextualised/agent-aware** reasoning.
+
+## Setup
+```{r setup, message=FALSE, warning=FALSE}
+# Core packages
+library(tidyverse)
+library(lme4)
+library(lmerTest)
+library(broom)
+library(broom.mixed)
+library(performance)
+library(glue)
+library(gt)
+
+# Nice printing
+theme_set(theme_bw())
+```
+
+## Data
+
+```{r load-data}
+# Load the dataset created in 00_data-preparation
+load("student_responses.RData")
+stopifnot(exists("normalised_responses"))
+dat_raw <- normalised_responses
+
+# Cluster identifiers
+dat_raw <- dat_raw %>%
+  mutate(
+    school_id   = as.factor(school_id),
+    class_label = as.factor(class_label),
+    class_id    = interaction(school_id, class_label, drop = TRUE)
+  )
+
+# Reverse POP (1-4) so higher = more contextualised
+POP_rev_items <- paste0("POP", 1:3)
+dat_raw <- dat_raw %>%
+  mutate(across(all_of(POP_rev_items), ~ 5 - as.numeric(.), .names = "{.col}_rev")) %>%
+  mutate(
+    HPT_POP_rev = rowMeans(across(paste0(POP_rev_items, "_rev")), na.rm = TRUE),
+    HPT_CONT    = rowMeans(across(CONT1:CONT3), na.rm = TRUE),
+    HPT_ROA     = rowMeans(across(ROA1:ROA3),   na.rm = TRUE),
+    # Canonical composites
+    HPT_CTX6    = rowMeans(cbind(HPT_POP_rev, HPT_CONT), na.rm = TRUE),
+    HPT_TOT9    = rowMeans(cbind(HPT_POP_rev, HPT_CONT, HPT_ROA), na.rm = TRUE)
+  )
+```
+
+**Variable dictionary.** KN, POP/ROA/CONT, RD/NS, KSA facets, SDR as per codebook.
+
+# 1. Scoring variants for HPT (with POP reversed)
+
+```{r hpt-scores}
+# IMPORTANT: use reversed POP columns in all totals
+
+dat <- dat_raw %>%
+  mutate(
+    HPT_total_9 = rowMeans(across(c(paste0("POP",1:3, "_rev"), ROA1:ROA3, CONT1:CONT3)), na.rm = TRUE),
+    HPT_total_8 = rowMeans(across(c(paste0("POP",1:3, "_rev"), ROA2:ROA3, CONT1:CONT3)), na.rm = TRUE), # drop ROA1
+    HPT_total_6 = rowMeans(across(c(paste0("POP",1:3, "_rev"), CONT1:CONT3)), na.rm = TRUE)             # no ROA
+  )
+
+# Means & SDs so the reader sees scale location and spread
+hpt_desc <- dat %>%
+  summarise(
+    `9-item (POP_rev + ROA + CONT)` := mean(HPT_total_9,  na.rm=TRUE),
+    `8-item (drop ROA1)`            := mean(HPT_total_8,  na.rm=TRUE),
+    `6-item (no ROA)`               := mean(HPT_total_6,  na.rm=TRUE),
+    .groups = "drop"
+  ) %>%
+  pivot_longer(everything(), names_to = "Score", values_to = "Mean")
+
+hpt_sd <- dat %>%
+  summarise(
+    `9-item (POP_rev + ROA + CONT)` := sd(HPT_total_9,  na.rm=TRUE),
+    `8-item (drop ROA1)`            := sd(HPT_total_8,  na.rm=TRUE),
+    `6-item (no ROA)`               := sd(HPT_total_6,  na.rm=TRUE)
+  ) %>%
+  pivot_longer(everything(), names_to = "Score", values_to = "SD")
+
+hpt_desc_tbl <- left_join(hpt_desc, hpt_sd, by = "Score")
+
+hpt_desc_tbl %>%
+  gt() %>%
+  fmt_number(columns = c(Mean, SD), decimals = 2) %>%
+  tab_header(title = "HPT scoring variants (POP reversed): means and SDs")
+```
+
+# 2. Ideology operationalisations
+
+```{r ideology-scores}
+dat <- dat %>%
+  mutate(
+    KN_total   = rowSums(across(KN1:KN6), na.rm = TRUE),
+    SDR_total  = rowSums(across(starts_with("SDR")), na.rm = TRUE),
+    NS_sum     = rowSums(across(NS1:NS3), na.rm = TRUE),
+    RD_sum     = rowSums(across(RD1:RD3), na.rm = TRUE),
+    FRLF_mini  = NS_sum + RD_sum,
+    KSA_A      = rowSums(across(A1:A3), na.rm = TRUE),
+    KSA_U      = rowSums(across(U1:U3), na.rm = TRUE),
+    KSA_K      = rowSums(across(K1:K3), na.rm = TRUE),
+    KSA_total  = KSA_A + KSA_U + KSA_K
+  ) %>%
+  mutate(across(c(NS_sum, RD_sum, FRLF_mini, KSA_total, KN_total, SDR_total), scale, .names = "{.col}_z"))
+
+# Show quick reliables for predictors (descriptive only)
+ideo_desc <- dat %>% summarise(
+  KN_mean = mean(KN_total, na.rm=TRUE), KN_sd = sd(KN_total, na.rm=TRUE),
+  SDR_mean = mean(SDR_total, na.rm=TRUE), SDR_sd = sd(SDR_total, na.rm=TRUE),
+  NS_mean = mean(NS_sum, na.rm=TRUE), NS_sd = sd(NS_sum, na.rm=TRUE),
+  RD_mean = mean(RD_sum, na.rm=TRUE), RD_sd = sd(RD_sum, na.rm=TRUE),
+  KSA_mean = mean(KSA_total, na.rm=TRUE), KSA_sd = sd(KSA_total, na.rm=TRUE)
+)
+ideo_desc %>% gt() %>% tab_header(title = "Predictor summaries (raw scale units)")
+```
+
+# 3. Exclusions: knowledge outliers & extreme SDR
+
+```{r exclusions}
+# Tukey fence for KN; top 10% for SDR
+kn_q <- quantile(dat$KN_total, probs = c(.25, .75), na.rm = TRUE)
+kn_iqr <- kn_q[2]-kn_q[1]
+kn_low <- kn_q[1] - 1.5*kn_iqr
+kn_high<- kn_q[2] + 1.5*kn_iqr
+
+sdr_p90 <- quantile(dat$SDR_total, probs = .90, na.rm = TRUE)
+
+dat <- dat %>%
+  mutate(
+    excl_KN  = KN_total < kn_low | KN_total > kn_high,
+    excl_SDR = SDR_total >= sdr_p90,
+    keep_all = TRUE,
+    keep_excl= !(excl_KN | excl_SDR)
+  )
+
+excl_tbl <- tibble(
+  Criterion = c("Total N", "Drop KN outliers", "Drop top-10% SDR", "Kept (both rules)"),
+  N = c(nrow(dat), sum(dat$excl_KN, na.rm=TRUE), sum(dat$excl_SDR, na.rm=TRUE), sum(dat$keep_excl, na.rm=TRUE))
+) %>%
+  mutate(Percent = scales::percent(N / first(N)))
+
+excl_tbl %>% gt() %>% tab_header(title = "Exclusion counts and percentages")
+```
+
+# 4. Mixed models with clustering & random slopes
+
+```{r model-funs}
+fit_models <- function(data, hpt_var, ideol_var){
+  form0 <- as.formula(glue(
+    "{hpt_var} ~ {ideol_var} + KN_total_z + SDR_total_z + (1 | school_id) + (1 | class_id)"
+  ))
+  form1 <- as.formula(glue(
+    "{hpt_var} ~ {ideol_var} + KN_total_z + SDR_total_z + (1 | school_id) + (1 + {ideol_var} | class_id)"
+  ))
+  m0 <- lmer(form0, data = data)
+  m1 <- try(lmer(form1, data = data), silent = TRUE)
+  if (inherits(m1, "try-error") || isTRUE(isSingular(m1))) m1 <- NULL
+  list(m0 = m0, m1 = m1)
+}
+
+summarise_model <- function(m){
+  fx <- broom.mixed::tidy(m, effects = "fixed", conf.int = TRUE)
+  r2 <- performance::r2_nakagawa(m)
+  fx %>% mutate(R2_marg = r2$R2_marginal, R2_cond = r2$R2_conditional)
+}
+```
+
+```{r run-models, warning=FALSE, message=FALSE}
+hpt_vars   <- c("HPT_total_9","HPT_total_8","HPT_total_6")
+ideol_vars <- c("NS_sum_z","FRLF_mini_z","KSA_total_z")
+
+# Full sample
+full_grid <- tidyr::expand_grid(hpt = hpt_vars, ideol = ideol_vars) %>%
+  mutate(fits = map2(hpt, ideol, ~fit_models(dat %>% filter(keep_all), .x, .y)),
+         m0   = map(fits, "m0"),
+         m1   = map(fits, "m1"))
+
+# Exclusion sample
+excl_grid <- tidyr::expand_grid(hpt = hpt_vars, ideol = ideol_vars) %>%
+  mutate(fits = map2(hpt, ideol, ~fit_models(dat %>% filter(keep_excl), .x, .y)),
+         m0   = map(fits, "m0"),
+         m1   = map(fits, "m1"))
+```
+
+```{r tidy-collect}
+collect_table <- function(grid, label){
+  out0 <- grid %>% mutate(t0 = map(m0, summarise_model)) %>% unnest(t0) %>% mutate(model = "RI")
+  out1 <- grid %>% filter(!map_lgl(m1, is.null)) %>% mutate(t1 = map(m1, summarise_model)) %>% unnest(t1) %>% mutate(model = "RS")
+  bind_rows(out0, out1) %>% mutate(sample = label)
+}
+
+tab_full <- collect_table(full_grid, "Full")
+tab_excl <- collect_table(excl_grid, "Exclusions applied")
+
+# Keep only ideology terms + intercept
+tab_models <- bind_rows(tab_full, tab_excl) %>%
+  filter(term %in% c("(Intercept)", "NS_sum_z", "FRLF_mini_z", "KSA_total_z")) %>%
+  mutate(
+    ideol = recode(term, NS_sum_z = "NS (z)", FRLF_mini_z = "FR-LF: RD+NS (z)", KSA_total_z = "KSA-3 total (z)", `(Intercept)` = "(Intercept)"),
+    hpt = recode(hpt,
+      HPT_total_9 = "HPT 9-item (POP_rev + ROA + CONT)",
+      HPT_total_8 = "HPT 8-item (drop ROA1)",
+      HPT_total_6 = "HPT 6-item (no ROA)"
+    )
+  ) %>%
+  select(sample, hpt, model, ideol, estimate, conf.low, conf.high, p.value, R2_marg, R2_cond) %>%
+  arrange(sample, hpt, ideol, model)
+
+# Display as a compact table
+(tab_models %>%
+  mutate(across(c(estimate, conf.low, conf.high, R2_marg, R2_cond), ~round(., 3)),
+         p.value = signif(p.value, 3)) %>%
+  gt() %>%
+  tab_header(title = "Multilevel models: ideology → HPT (POP reversed; controls: KN, SDR; school + class clustering)") %>%
+  tab_spanner(label = "Effect (β and 95% CI)", columns = c(estimate, conf.low, conf.high)) %>%
+  cols_label(sample="Sample", hpt="HPT score", model="Model", ideol="Predictor",
+             estimate="β", conf.low="CI low", conf.high="CI high", p.value="p",
+             R2_marg="R² (marg.)", R2_cond="R² (cond.)"))
+```
+
+# 5. Sanity plots
+
+```{r quick-plots, fig.width=8, fig.height=5}
+dat %>%
+  ggplot(aes(NS_sum, HPT_total_9)) +
+  geom_point(alpha=.25) + geom_smooth(method="lm", se=TRUE) +
+  labs(x="NS (sum)", y="HPT total (9-item, POP_rev)",
+       title="Bivariate check (unadjusted): NS vs. HPT total (POP reversed)") +
+  theme(plot.title.position="plot")
+```
+
+# 6. Read-outs for prose
+
+* **Stable conclusions** across HPT **9/8/6** scoring → results **do not depend** on ROA items.
+* **NS-only** ≳ **KSA-3** → supports the **ideological contamination** concern.
+* Survives **knowledge/SDR exclusions** → less likely driven by misunderstanding or impression management.
+* **Random slopes needed** → ideology effects differ **by class** (pedagogical moderation hypothesis).
+
+# Reproducibility appendix
+
+```{r session-info}
+sessionInfo()
+```
