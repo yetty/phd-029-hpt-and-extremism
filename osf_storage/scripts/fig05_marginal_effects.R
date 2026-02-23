@@ -20,9 +20,10 @@ library(lme4)
 library(lmerTest)
 library(janitor)
 
+dir.create("../figures", showWarnings = FALSE)
 # ---- 1. Data preparation (mirrors 03_multilevel_models_hypothesis_tests.Rmd)
 
-load("student_responses.RData")
+normalised_responses <- readRDS("student_responses.RDS")
 stopifnot(exists("normalised_responses"))
 
 dat_raw <- normalised_responses |> clean_names()
@@ -188,10 +189,10 @@ fig5 <- ggplot(pred_all, aes(x = frlf_tot, y = fit,
 
 # ---- 5. Save ----------------------------------------------------------------
 
-ggsave("trse_outputs/fig05_marginal_effects.pdf", fig5,
+ggsave("../figures/fig05_marginal_effects.pdf", fig5,
        width = 160, height = 120, units = "mm", device = cairo_pdf)
 
-ggsave("trse_outputs/fig05_marginal_effects.png", fig5,
+ggsave("../figures/fig05_marginal_effects.png", fig5,
        width = 160, height = 120, units = "mm", dpi = 300)
 
-cat("Figure 5 saved to trse_outputs/\n")
+cat("Figure 5 saved to ../figures/\n")

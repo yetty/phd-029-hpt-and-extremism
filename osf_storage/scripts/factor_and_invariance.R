@@ -3,7 +3,7 @@
 # Dimensionality of HPT (PCA, EFA, CFA) and measurement
 # invariance across ideological subgroups.
 #
-# Loads data from: student_responses.RData
+# Loads data from: student_responses.RDS
 ############################################################
 
 # ----------------------------------------------------------
@@ -17,7 +17,7 @@ library(semTools)     # measurement invariance utilities
 # ----------------------------------------------------------
 # 1. Load data
 # ----------------------------------------------------------
-load("student_responses.RData") 
+normalised_responses <- readRDS("student_responses.RDS") 
 all_data <- normalised_responses
 
 # ----------------------------------------------------------

@@ -21,12 +21,12 @@ all: $(PDFS)
 %.pdf: %.Rmd
 	$(R) -e "rmarkdown::render('$<', output_format='all', output_dir='../outputs')"
 
-# File-specific data dependency (these reports load student_responses.RData)
-01_measurement_checks.pdf: student_responses.RData
-02_descriptives_and_zero_order_correlations.pdf: student_responses.RData
-03_multilevel_models_hypothesis_tests.pdf: student_responses.RData
-04_dif_and_mg_cfa_measurement_bias.pdf: student_responses.RData
-05_sensitivity_analyses.pdf: student_responses.RData
+# File-specific data dependency (these reports read student_responses.RDS)
+01_measurement_checks.pdf: student_responses.RDS
+02_descriptives_and_zero_order_correlations.pdf: student_responses.RDS
+03_multilevel_models_hypothesis_tests.pdf: student_responses.RDS
+04_dif_and_mg_cfa_measurement_bias.pdf: student_responses.RDS
+05_sensitivity_analyses.pdf: student_responses.RDS
 
 list:
 	@echo "Rmd files:" $(RMDS)

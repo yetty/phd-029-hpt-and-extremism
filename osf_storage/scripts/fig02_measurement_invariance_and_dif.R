@@ -6,8 +6,8 @@
 #   Panel B — Item discrimination and threshold parameters from unconstrained
 #             multi-group graded IRT model (Low vs High)
 #
-# Output: trse_outputs/fig02_invariance_and_dif.pdf  (vector, 210 × 130 mm)
-#         trse_outputs/fig02_invariance_and_dif.png  (300 DPI raster fallback)
+# Output: trse_outputs/fig02_measurement_invariance_and_dif.pdf  (vector, 210 × 130 mm)
+#         trse_outputs/fig02_measurement_invariance_and_dif.png  (300 DPI raster fallback)
 # =============================================================================
 
 library(dplyr)
@@ -17,9 +17,10 @@ library(lavaan)
 library(mirt)
 library(patchwork)
 
+dir.create("../figures", showWarnings = FALSE)
 # ---- 1. Data preparation (mirrors 04_dif_and_mg_cfa_measurement_bias.Rmd) --
 
-load("student_responses.RData")
+normalised_responses <- readRDS("student_responses.RDS")
 dat_raw <- normalised_responses
 
 hpt_items <- c(paste0("POP", 1:3), paste0("ROA", 1:3), paste0("CONT", 1:3))
@@ -285,10 +286,10 @@ fig2 <- panel_a + panel_b +
     )
   )
 
-ggsave("trse_outputs/fig02_invariance_and_dif.pdf", fig2,
+ggsave("../figures/fig02_measurement_invariance_and_dif.pdf", fig2,
        width = 210, height = 130, units = "mm", device = cairo_pdf)
 
-ggsave("trse_outputs/fig02_invariance_and_dif.png", fig2,
+ggsave("../figures/fig02_measurement_invariance_and_dif.png", fig2,
        width = 210, height = 130, units = "mm", dpi = 300)
 
-cat("Figure 2 saved to trse_outputs/\n")
+cat("Figure 2 saved to ../figures/\n")

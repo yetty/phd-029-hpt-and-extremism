@@ -87,7 +87,7 @@ options(
 
 ```{r,load-data}
 # Load the dataset created in 00_data-preparation
-load("student_responses.RData")
+normalised_responses <- readRDS("student_responses.RDS")
 stopifnot(exists("normalised_responses"))
 
 # Clean names to lower_snake so items are pop1/roa1/cont1 etc.

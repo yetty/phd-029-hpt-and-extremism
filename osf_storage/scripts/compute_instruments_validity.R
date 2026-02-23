@@ -12,7 +12,7 @@ suppressPackageStartupMessages({
 })
 
 # ---------------- Data ----------------
-load("student_responses.RData")   # object: normalised_responses
+normalised_responses <- readRDS("student_responses.RDS")   # object: normalised_responses
 dat <- normalised_responses
 
 # ---------------- Safe helpers ----------------

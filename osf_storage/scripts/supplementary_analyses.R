@@ -20,7 +20,7 @@ suppressPackageStartupMessages({
   library(psych)
 })
 
-load("student_responses.RData")
+normalised_responses <- readRDS("student_responses.RDS")
 dat_raw <- normalised_responses |> clean_names()
 
 school_var      <- names(dat_raw)[names(dat_raw) %in% c("school_id", "school")][1]

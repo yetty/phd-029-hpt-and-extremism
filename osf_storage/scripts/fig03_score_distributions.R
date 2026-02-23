@@ -15,9 +15,10 @@ library(ggplot2)
 library(janitor)
 library(patchwork)
 
+dir.create("../figures", showWarnings = FALSE)
 # ---- 1. Data preparation (mirrors 02_descriptives_and_zero_order_correlations.Rmd) -
 
-load("student_responses.RData")
+normalised_responses <- readRDS("student_responses.RDS")
 stopifnot(exists("normalised_responses"))
 
 dat_raw <- normalised_responses |> clean_names()
@@ -147,10 +148,10 @@ fig3 <- panel_hpt / panel_pred +
     )
   )
 
-ggsave("trse_outputs/fig03_score_distributions.pdf", fig3,
+ggsave("../figures/fig03_score_distributions.pdf", fig3,
        width = 210, height = 150, units = "mm", device = cairo_pdf)
 
-ggsave("trse_outputs/fig03_score_distributions.png", fig3,
+ggsave("../figures/fig03_score_distributions.png", fig3,
        width = 210, height = 150, units = "mm", dpi = 300)
 
-cat("Figure 3 saved to trse_outputs/\n")
+cat("Figure 3 saved to ../figures/\n")

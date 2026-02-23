@@ -75,7 +75,7 @@ library(mirt)
 
 ```{r,load-data}
 # Load the dataset created in 00_data-preparation
-load("student_responses.RData")
+normalised_responses <- readRDS("student_responses.RDS")
 stopifnot(exists("normalised_responses"))
 dat_raw <- normalised_responses
 

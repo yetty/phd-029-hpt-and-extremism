@@ -19,7 +19,7 @@ library(performance)
 set.seed(123); dir.create("outputs", showWarnings=FALSE); dir.create("outputs/figures", showWarnings=FALSE); dir.create("outputs/tables", showWarnings=FALSE)
 
 # 1) Load
-load("student_responses.RData")  
+normalised_responses <- readRDS("student_responses.RDS")  
 all_data <- normalised_responses  # adjust if object name differs
 
 # 2) Scoring (per codebook)
@@ -68,8 +68,9 @@ readr::write_csv(tb, "outputs/tables/H1_fixed_effects.csv")
 
 # Quick ICC
 icc_from_lme <- function(m){
-  re <- as.numeric(nlme::VarCorr(m)["class_label","Variance"])
-  rs <- as.numeric(nlme::VarCorr(m)["Residual","Variance"])
+  vc <- nlme::VarCorr(m)
+  re <- as.numeric(vc[rownames(vc) == "class_label", "Variance"])
+  rs <- as.numeric(vc[rownames(vc) == "Residual", "Variance"])
   re/(re+rs)
 }
 icc_tbl <- tibble::tibble(model=names(mods), ICC=sapply(mods, icc_from_lme))

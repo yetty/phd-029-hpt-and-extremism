@@ -49,8 +49,7 @@ school names are included. Schools are identified only by anonymised codes.
 
 | File | Description |
 |------|-------------|
-| `student_responses.RData` | De-identified data in R's binary format. Load with `load("student_responses.RData")`. Object name: `normalised_responses`. |
-| `student_responses.RDS` | Same data as a serialised R object. Load with `dat <- readRDS("student_responses.RDS")`. |
+| `student_responses.RDS` | De-identified data as a serialised R object. Load with `normalised_responses <- readRDS("student_responses.RDS")`. |
 | `student_responses.xlsx` | Same data in Excel format for non-R users. |
 | `codebook.pdf` | Full variable codebook: variable names, labels, response scales, scoring procedures, and descriptive statistics for all 50+ variables. |
 | `codebook_source.tex` | LaTeX source file for the codebook (for reproducibility). Compile with `latexmk -pdf codebook_source.tex`. |
@@ -74,10 +73,9 @@ school names are included. Schools are identified only by anonymised codes.
 
 ## scripts/
 
-All scripts expect `student_responses.RData` (or `student_responses.RDS`) to be in the
-**working directory** (or one level up, depending on the script — see each file header).
-The simplest approach is to copy `data/student_responses.RData` to the same directory as
-the scripts before running.
+All scripts expect `student_responses.RDS` to be in the **working directory** (or one level up,
+depending on the script — see each file header). The simplest approach is to copy
+`data/student_responses.RDS` to the same directory as the scripts before running.
 
 ### Main analysis pipeline (R Markdown, numbered sequence)
 
@@ -96,7 +94,7 @@ or wherever `output_dir` is set in the Makefile/render call).
 
 **To run the full pipeline:**
 ```r
-# From the scripts/ directory, with student_responses.RData present:
+# From the scripts/ directory, with student_responses.RDS present:
 rmarkdown::render("01_measurement_checks.Rmd", output_dir = "../outputs")
 rmarkdown::render("02_descriptives_and_zero_order_correlations.Rmd", output_dir = "../outputs")
 # ... etc., or use the Makefile (see below)
@@ -104,14 +102,14 @@ rmarkdown::render("02_descriptives_and_zero_order_correlations.Rmd", output_dir 
 
 Or using **make** (requires R and latexmk):
 ```bash
-# From scripts/ directory, after copying student_responses.RData here:
+# From scripts/ directory, after copying student_responses.RDS here:
 make all
 ```
 
 ### Manuscript figure scripts
 
 Standalone R scripts that regenerate the four main manuscript figures.
-Each loads `student_responses.RData` from the working directory and saves output to `../figures/`.
+Each loads `student_responses.RDS` from the working directory and saves output to `../figures/`.
 
 | Script | Figure |
 |--------|--------|

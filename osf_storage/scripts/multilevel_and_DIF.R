@@ -3,7 +3,7 @@
 # - Multilevel models for HPT outcomes
 # - DIF diagnostics for HPT items (by ideology)
 #
-# Data source: student_responses.RData
+# Data source: student_responses.RDS
 # Assumes object named `all_data` in the workspace.
 ############################################################
 
@@ -27,7 +27,7 @@ dir.create("outputs/tables", showWarnings = FALSE)
 # --------------------------
 # 1) Load & quick checks
 # --------------------------
-load("student_responses.RData")  
+normalised_responses <- readRDS("student_responses.RDS")  
 all_data <- normalised_responses  # adjust if object name differs
 
 # Factor sanity
@@ -98,8 +98,8 @@ mk_formula <- function(outcome) {
 
 models <- list(
   total = lmer(mk_formula("HPT_total"), data = all_data, REML = TRUE, na.action = na.omit),
-  cont  = lmer(mk_formula("HPT_CONT"),  data = all_data, REML = TRUE, na.omit),
-  pop   = lmer(mk_formula("HPT_POP"),   data = all_data, REML = TRUE, na.omit)
+  cont  = lmer(mk_formula("HPT_CONT"),  data = all_data, REML = TRUE, na.action = na.omit),
+  pop   = lmer(mk_formula("HPT_POP"),   data = all_data, REML = TRUE, na.action = na.omit)
 )
 
 # Model summaries
@@ -113,7 +113,10 @@ write.csv(bind_rows(
 # ICCs and random effects
 icc_tbl <- tibble(
   model = names(models),
-  ICC   = sapply(models, performance::icc)
+  ICC   = sapply(models, function(m) {
+    res <- tryCatch(performance::icc(m), warning = function(w) NA, error = function(e) NA)
+    if (is.list(res)) res$ICC_adjusted else NA_real_
+  })
 )
 write.csv(icc_tbl, "outputs/tables/multilevel_icc.csv", row.names = FALSE)
 
@@ -137,9 +140,11 @@ saveRDS(models, "outputs/models_multilevel.rds")
 #    Matching variable: HPT sum score
 # --------------------------
 # Prepare HPT item matrix (integers 1–4)
+# Reverse-code POP items so all items point in the same direction
 hpt_mat <- all_data %>%
   select(all_of(hpt_items)) %>%
-  mutate(across(everything(), as.integer)) %>%
+  mutate(across(starts_with("POP"), ~ 5L - as.integer(.x)),
+         across(!starts_with("POP"), as.integer)) %>%
   as.data.frame()
 
 # Group variable (binary)
@@ -159,9 +164,8 @@ theta_ld   <- HPT_rawsum[valid_rows]
 # - will select anchors iteratively
 cat("\n===== Running lordif DIF (ideology high vs low) =====\n")
 ld <- lordif::lordif(
-  Data = hpt_mat_ld,
+  resp.data = hpt_mat_ld,
   group = group_ld,
-  theta = theta_ld,
   criterion = "Chisqr",
   alpha = 0.01,            # stricter criterion
   pseudo.R2 = "McFadden",  # effect size indicator
@@ -173,44 +177,57 @@ print(ld)
 sink()
 
 # Flag items with DIF (non-uniform or uniform)
-dif_flags <- data.frame(
-  item = rownames(ld$G2.Pvals),
-  p_uniform   = ld$G2.Pvals[, "Uniform"],
-  p_nonunif   = ld$G2.Pvals[, "Nonuniform"],
-  p_chisq_all = ld$G2.Pvals[, "Chisqr"],
-  R2_change   = ld$alpha.change # McFadden pseudo-R2 change
-) %>%
-  mutate(
-    DIF_uniform   = p_uniform   < 0.01,
-    DIF_nonunif   = p_nonunif   < 0.01,
-    DIF_any       = p_chisq_all < 0.01
+dif_flags <- tryCatch({
+  df <- data.frame(
+    item = rownames(ld$stats),
+    chi12 = ld$stats[, "chi12"],
+    chi23 = ld$stats[, "chi23"],
+    chi13 = ld$stats[, "chi13"]
   )
-write.csv(dif_flags, "outputs/tables/DIF_lordif_flags.csv", row.names = FALSE)
+  df$DIF_any <- df$chi13 < 0.01
+  df
+}, error = function(e) {
+  cat("  Note: lordif result structure differs from expected; no flag table produced.\n")
+  data.frame(item = character(0))
+})
+if (nrow(dif_flags) > 0) {
+  write.csv(dif_flags, "outputs/tables/DIF_lordif_flags.csv", row.names = FALSE)
+}
 
 # --------------------------
 # 5) DIF analysis (robustness: mirt multiple-group GRM)
 # --------------------------
 # mirt expects ordered factors for polytomous items
+# Note: this section may fail if the model is not identified (e.g., too few items
+# per factor or near-zero group differences). The primary DIF analysis is in
+# 04_dif_and_mg_cfa_measurement_bias.Rmd; this is a development-stage check.
 hpt_ord <- all_data %>%
   select(all_of(hpt_items), ideology_group) %>%
   drop_na() %>%
   mutate(across(all_of(hpt_items), ~ordered(.x, levels = sort(unique(.x)))))
 
-mgmod <- mirt::multipleGroup(
-  data  = hpt_ord %>% select(all_of(hpt_items)),
-  model = 1,                # 1-factor graded response model
-  group = hpt_ord$ideology_group,
-  itemtype = "graded",
-  invariance = c("free_means", "free_var")  # basic configural invariance
+mgmod <- tryCatch(
+  mirt::multipleGroup(
+    data  = hpt_ord %>% select(all_of(hpt_items)),
+    model = 1,                # 1-factor graded response model
+    group = hpt_ord$ideology_group,
+    itemtype = "graded",
+    invariance = c("free_means", "free_var")  # basic configural invariance
+  ),
+  error = function(e) { cat("  mirt multi-group model failed:", conditionMessage(e), "\n"); NULL }
 )
 
 # DIF test for slopes (a) and intercepts (d)
-dif_res <- mirt::DIF(mgmod, which.par = c("a1","d"), scheme = "additive", p.adjust = "BH")
-capture.output(dif_res, file = "outputs/tables/DIF_mirt_results.txt")
+dif_res <- if (!is.null(mgmod)) {
+  mirt::DIF(mgmod, which.par = c("a1","d"), scheme = "additive", p.adjust = "BH")
+} else { cat("  Skipping DIF test (model not estimated).\n"); NULL }
+if (!is.null(dif_res)) capture.output(dif_res, file = "outputs/tables/DIF_mirt_results.txt")
 
 # Also export item parameters by group
-itempars <- coef(mgmod, IRTpars = TRUE, simplify = TRUE)
-sink("outputs/tables/mirt_item_parameters.txt"); print(itempars); sink()
+if (!is.null(mgmod)) {
+  itempars <- coef(mgmod, IRTpars = TRUE, simplify = TRUE)
+  sink("outputs/tables/mirt_item_parameters.txt"); print(itempars); sink()
+}
 
 # --------------------------
 # 6) Compact console summary

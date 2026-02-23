@@ -18,9 +18,10 @@ library(lmerTest)
 library(broom.mixed)
 library(janitor)
 
+dir.create("../figures", showWarnings = FALSE)
 # ---- 1. Data preparation (mirrors 03_multilevel_models_hypothesis_tests.Rmd)
 
-load("student_responses.RData")
+normalised_responses <- readRDS("student_responses.RDS")
 stopifnot(exists("normalised_responses"))
 
 dat_raw <- normalised_responses |> clean_names()
@@ -177,10 +178,10 @@ fig4 <- ggplot(tidy_df, aes(x = estimate, y = predictor,
 
 # ---- 5. Save -----------------------------------------------------------------
 
-ggsave("trse_outputs/fig04_coefficient_plot.pdf", fig4,
+ggsave("../figures/fig04_coefficient_plot.pdf", fig4,
        width = 180, height = 140, units = "mm", device = cairo_pdf)
 
-ggsave("trse_outputs/fig04_coefficient_plot.png", fig4,
+ggsave("../figures/fig04_coefficient_plot.png", fig4,
        width = 180, height = 140, units = "mm", dpi = 300)
 
-cat("Figure 4 saved to trse_outputs/\n")
+cat("Figure 4 saved to ../figures/\n")

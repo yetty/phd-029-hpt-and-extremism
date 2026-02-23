@@ -85,7 +85,7 @@ options(kableExtra.latex.load_packages = FALSE)
 library(kableExtra)
 
 # Load the dataset created in 00_data-preparation
-load("student_responses.RData")
+normalised_responses <- readRDS("student_responses.RDS")
 stopifnot(exists("normalised_responses"))
 dat <- normalised_responses
 

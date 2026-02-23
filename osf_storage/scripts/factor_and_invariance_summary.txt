@@ -1,0 +1,245 @@
+===== PCA =====
+Principal Components Analysis
+Call: principal(r = hpt_items, nfactors = 3, rotate = "varimax")
+Standardized loadings (pattern matrix) based upon correlation matrix
+        RC1   RC3   RC2   h2   u2 com
+POP1  -0.18 -0.24  0.62 0.48 0.52 1.5
+POP2   0.05  0.07  0.69 0.48 0.52 1.0
+POP3  -0.15  0.01  0.73 0.56 0.44 1.1
+ROA1   0.22  0.69 -0.06 0.52 0.48 1.2
+ROA2  -0.06  0.76  0.06 0.59 0.41 1.0
+ROA3   0.35  0.57 -0.13 0.46 0.54 1.8
+CONT1  0.74  0.20 -0.08 0.60 0.40 1.2
+CONT2  0.66  0.17 -0.10 0.47 0.53 1.2
+CONT3  0.80  0.00 -0.07 0.65 0.35 1.0
+
+                       RC1  RC3  RC2
+SS loadings           1.86 1.50 1.45
+Proportion Var        0.21 0.17 0.16
+Cumulative Var        0.21 0.37 0.53
+Proportion Explained  0.39 0.31 0.30
+Cumulative Proportion 0.39 0.70 1.00
+
+Mean item complexity =  1.2
+Test of the hypothesis that 3 components are sufficient.
+
+The root mean square of the residuals (RMSR) is  0.12 
+ with the empirical chi square  307.05  with prob <  1.6e-58 
+
+Fit based upon off diagonal values = 0.65
+===== EFA =====
+Factor Analysis using method =  ml
+Call: fa(r = hpt_items, nfactors = 2, rotate = "varimax", fm = "ml")
+Standardized loadings (pattern matrix) based upon correlation matrix
+        ML1   ML2    h2   u2 com
+POP1  -0.26  0.39 0.220 0.78 1.7
+POP2  -0.01  0.32 0.104 0.90 1.0
+POP3  -0.07  0.68 0.471 0.53 1.0
+ROA1   0.47 -0.03 0.220 0.78 1.0
+ROA2   0.30  0.06 0.096 0.90 1.1
+ROA3   0.49 -0.15 0.257 0.74 1.2
+CONT1  0.62 -0.19 0.416 0.58 1.2
+CONT2  0.51 -0.16 0.288 0.71 1.2
+CONT3  0.54 -0.15 0.316 0.68 1.1
+
+                       ML1  ML2
+SS loadings           1.55 0.84
+Proportion Var        0.17 0.09
+Cumulative Var        0.17 0.27
+Proportion Explained  0.65 0.35
+Cumulative Proportion 0.65 1.00
+
+Mean item complexity =  1.2
+Test of the hypothesis that 2 factors are sufficient.
+
+df null model =  36  with the objective function =  1.09 with Chi Square =  313.28
+df of  the model are 19  and the objective function was  0.15 
+
+The root mean square of the residuals (RMSR) is  0.05 
+The df corrected root mean square of the residuals is  0.06 
+
+The harmonic n.obs is  285 with the empirical chi square  45.65  with prob <  0.00056 
+The total n.obs was  293  with Likelihood Chi Square =  41.71  with prob <  0.0019 
+
+Tucker Lewis Index of factoring reliability =  0.844
+RMSEA index =  0.064  and the 90 % confidence intervals are  0.037 0.09
+BIC =  -66.21
+Fit based upon off diagonal values = 0.95
+Measures of factor score adequacy             
+                                                   ML1  ML2
+Correlation of (regression) scores with factors   0.82 0.74
+Multiple R square of scores with factors          0.67 0.54
+Minimum correlation of possible factor scores     0.33 0.08
+
+===== CFA (2-factor) =====
+lavaan 0.6-20 ended normally after 16 iterations
+
+  Estimator                                         ML
+  Optimization method                           NLMINB
+  Number of model parameters                        19
+
+                                                  Used       Total
+  Number of observations                           276         293
+
+Model Test User Model:
+                                                      
+  Test statistic                                54.228
+  Degrees of freedom                                26
+  P-value (Chi-square)                           0.001
+
+Model Test Baseline Model:
+
+  Test statistic                               302.412
+  Degrees of freedom                                36
+  P-value                                        0.000
+
+User Model versus Baseline Model:
+
+  Comparative Fit Index (CFI)                    0.894
+  Tucker-Lewis Index (TLI)                       0.853
+
+Loglikelihood and Information Criteria:
+
+  Loglikelihood user model (H0)              -3262.509
+  Loglikelihood unrestricted model (H1)      -3235.395
+                                                      
+  Akaike (AIC)                                6563.017
+  Bayesian (BIC)                              6631.805
+  Sample-size adjusted Bayesian (SABIC)       6571.559
+
+Root Mean Square Error of Approximation:
+
+  RMSEA                                          0.063
+  90 Percent confidence interval - lower         0.039
+  90 Percent confidence interval - upper         0.086
+  P-value H_0: RMSEA <= 0.050                    0.173
+  P-value H_0: RMSEA >= 0.080                    0.119
+
+Standardized Root Mean Square Residual:
+
+  SRMR                                           0.056
+
+Parameter Estimates:
+
+  Standard errors                             Standard
+  Information                                 Expected
+  Information saturated (h1) model          Structured
+
+Latent Variables:
+                   Estimate  Std.Err  z-value  P(>|z|)   Std.lv  Std.all
+  HPT_PC =~                                                             
+    POP1              0.381    0.067    5.726    0.000    0.381    0.398
+    POP2              0.155    0.066    2.342    0.019    0.155    0.167
+    POP3              0.267    0.063    4.229    0.000    0.267    0.298
+    CONT1            -0.600    0.061   -9.765    0.000   -0.600   -0.658
+    CONT2            -0.569    0.070   -8.138    0.000   -0.569   -0.552
+    CONT3            -0.550    0.063   -8.700    0.000   -0.550   -0.588
+  HPT_ROA =~                                                            
+    ROA1              0.567    0.077    7.360    0.000    0.567    0.570
+    ROA2              0.267    0.066    4.051    0.000    0.267    0.306
+    ROA3              0.629    0.080    7.867    0.000    0.629    0.629
+
+Covariances:
+                   Estimate  Std.Err  z-value  P(>|z|)   Std.lv  Std.all
+  HPT_PC ~~                                                             
+    HPT_ROA          -0.658    0.081   -8.157    0.000   -0.658   -0.658
+
+Variances:
+                   Estimate  Std.Err  z-value  P(>|z|)   Std.lv  Std.all
+   .POP1              0.772    0.071   10.799    0.000    0.772    0.842
+   .POP2              0.837    0.072   11.604    0.000    0.837    0.972
+   .POP3              0.730    0.065   11.259    0.000    0.730    0.911
+   .CONT1             0.472    0.060    7.805    0.000    0.472    0.567
+   .CONT2             0.740    0.078    9.491    0.000    0.740    0.695
+   .CONT3             0.572    0.063    9.011    0.000    0.572    0.654
+   .ROA1              0.667    0.084    7.974    0.000    0.667    0.675
+   .ROA2              0.690    0.063   11.001    0.000    0.690    0.907
+   .ROA3              0.604    0.090    6.693    0.000    0.604    0.605
+    HPT_PC            1.000                               1.000    1.000
+    HPT_ROA           1.000                               1.000    1.000
+
+
+===== Measurement Invariance =====
+$fit.configural
+lavaan 0.6-20 ended normally after 74 iterations
+
+  Estimator                                         ML
+  Optimization method                           NLMINB
+  Number of model parameters                        56
+
+  Number of observations per group:               Used       Total
+    high_ideo                                      155         162
+    low_ideo                                       108         113
+
+Model Test User Model:
+                                                      
+  Test statistic                                89.449
+  Degrees of freedom                                52
+  P-value (Chi-square)                           0.001
+  Test statistic for each group:
+    high_ideo                                   41.574
+    low_ideo                                    47.875
+
+$fit.loadings
+lavaan 0.6-20 ended normally after 50 iterations
+
+  Estimator                                         ML
+  Optimization method                           NLMINB
+  Number of model parameters                        56
+  Number of equality constraints                     7
+
+  Number of observations per group:               Used       Total
+    high_ideo                                      155         162
+    low_ideo                                       108         113
+
+Model Test User Model:
+                                                      
+  Test statistic                                97.221
+  Degrees of freedom                                59
+  P-value (Chi-square)                           0.001
+  Test statistic for each group:
+    high_ideo                                   45.586
+    low_ideo                                    51.636
+
+$fit.intercepts
+lavaan 0.6-20 ended normally after 60 iterations
+
+  Estimator                                         ML
+  Optimization method                           NLMINB
+  Number of model parameters                        58
+  Number of equality constraints                    16
+
+  Number of observations per group:               Used       Total
+    high_ideo                                      155         162
+    low_ideo                                       108         113
+
+Model Test User Model:
+                                                      
+  Test statistic                               106.395
+  Degrees of freedom                                66
+  P-value (Chi-square)                           0.001
+  Test statistic for each group:
+    high_ideo                                   49.325
+    low_ideo                                    57.070
+
+$fit.means
+lavaan 0.6-20 ended normally after 63 iterations
+
+  Estimator                                         ML
+  Optimization method                           NLMINB
+  Number of model parameters                        56
+  Number of equality constraints                    16
+
+  Number of observations per group:               Used       Total
+    high_ideo                                      155         162
+    low_ideo                                       108         113
+
+Model Test User Model:
+                                                      
+  Test statistic                               106.632
+  Degrees of freedom                                68
+  P-value (Chi-square)                           0.002
+  Test statistic for each group:
+    high_ideo                                   49.567
+    low_ideo                                    57.064
+
