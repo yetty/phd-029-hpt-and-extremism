@@ -3,3 +3,6 @@
 .DS_Store
 **/*.gdoc
 **/*.gform
+# Google Drive symlinks
+drive
+gdocs
