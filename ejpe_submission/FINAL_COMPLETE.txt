@@ -1,0 +1,105 @@
+═══════════════════════════════════════════════════════════════════════
+EJPE SUBMISSION - ALL FILES COMPILED AND VERIFIED
+═══════════════════════════════════════════════════════════════════════
+
+Date: 2026-02-26 10:51 CET
+Status: ✓✓✓ COMPLETE - ALL FILES CLEAN AND READY
+
+═══════════════════════════════════════════════════════════════════════
+ALL THREE PDFS COMPILED AND VERIFIED
+═══════════════════════════════════════════════════════════════════════
+
+✓ manuscript.pdf (553 KB) - NON-BLINDED version with author details
+  - Recompiled: 2026-02-26 10:51
+  - HistoryLab references: REMOVED ✓
+  - Dejepis+ references: REMOVED ✓
+  - Contains: author name, affiliations, full acknowledgments
+
+✓ manuscript_blinded.pdf (515 KB) - BLINDED version for peer review
+  - Recompiled: 2026-02-26 10:48
+  - HistoryLab references: REMOVED ✓
+  - Dejepis+ references: REMOVED ✓
+  - Author info: ANONYMIZED ✓
+  - For submission: YES
+
+✓ title_page.pdf (89 KB) - Author information page
+  - Recompiled: 2026-02-26 10:48
+  - HistoryLab references: REMOVED ✓
+  - Contains: author details, simplified acknowledgments
+
+═══════════════════════════════════════════════════════════════════════
+TEXT EXTRACTION VERIFICATION
+═══════════════════════════════════════════════════════════════════════
+
+manuscript.pdf:
+✓ No "HistoryLab"
+✓ No "Dejepis+"
+✓ Contains author name (Juda Kaleta) - EXPECTED for non-blinded version
+
+manuscript_blinded.pdf:
+✓ No "HistoryLab"
+✓ No "Dejepis+"
+✓ No "Kaleta"
+✓ No "ff.cuni.cz"
+✓ No "Murcia"
+✓ No "yng37" OSF links
+✓ No "J.K." initials
+✓ FULLY ANONYMIZED
+
+title_page.pdf:
+✓ No "HistoryLab"
+✓ Contains author name (Juda Kaleta) - EXPECTED for title page
+
+═══════════════════════════════════════════════════════════════════════
+SUBMISSION PACKAGE FILES
+═══════════════════════════════════════════════════════════════════════
+
+FOR EJPE SUBMISSION SYSTEM:
+----------------------------
+✓ manuscript_blinded.pdf (515 KB) ← MAIN MANUSCRIPT (anonymized)
+✓ title_page.pdf (89 KB) ← AUTHOR INFORMATION
+✓ Fig1.pdf (26 KB) ← Score distributions
+✓ Fig2.pdf (17 KB) ← Coefficient forest plot
+✓ Fig3.pdf (26 KB) ← Marginal effects plot
+✓ cover_letter.txt ← Cover letter
+
+FOR REFERENCE (not submitted):
+-------------------------------
+✓ manuscript.pdf (553 KB) ← Non-blinded version for your records
+✓ manuscript.tex ← Source (non-blinded)
+✓ manuscript_blinded.tex ← Source (blinded)
+✓ title_page.tex ← Source
+✓ references.bib ← Bibliography
+
+═══════════════════════════════════════════════════════════════════════
+WHAT WAS REMOVED
+═══════════════════════════════════════════════════════════════════════
+
+From ALL files (manuscript.tex, manuscript_blinded.tex, title_page.tex):
+
+1. "HistoryLab project and the Dejepis+ curriculum initiative" 
+   → Changed to: "Recent educational reforms"
+
+2. "(cf. Cinatl2021, for the use of this instrument in the Czech HistoryLab context)"
+   → Completely removed
+
+3. "acknowledges the HistoryLab team at Charles University for consultation on instrument adaptation and curriculum alignment"
+   → Changed to: "The author thanks the participating schools, teachers, and students for making this research possible."
+
+All false/misleading claims about HistoryLab using the instrument: REMOVED
+
+═══════════════════════════════════════════════════════════════════════
+FINAL STATUS
+═══════════════════════════════════════════════════════════════════════
+
+✓✓✓ All source files edited
+✓✓✓ All PDFs recompiled
+✓✓✓ All text verified clean
+✓✓✓ All compliance checks passed
+✓✓✓ Submission package complete
+
+NO HISTORYLAB REFERENCES REMAIN IN ANY FILE.
+
+Ready for submission to EJPE.
+
+═══════════════════════════════════════════════════════════════════════

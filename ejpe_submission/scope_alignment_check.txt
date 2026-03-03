@@ -1,0 +1,49 @@
+EJPE Scope Alignment Check
+===========================
+
+CRITICAL REQUIREMENT: EJPE submission guidelines (line 71) state: "validation studies of measurement instruments fall outside the scope of the journal."
+
+QUESTION: Does the manuscript read as:
+ ✓ An educational psychology study about attitude-cognition interference
+ ✗ A psychometric validation study of the HPT instrument
+
+ANALYSIS:
+
+1. TITLE: "Do Political Attitudes Contaminate Historical Reasoning?"
+   → Educational psychology framing (attitude-cognition question) ✓
+
+2. ABSTRACT OPENING: "When educational assessments use morally and politically charged historical content, students' personal political attitudes could interfere with their cognitive performance..."
+   → Leads with educational psychology question, not psychometric validation ✓
+
+3. INTRODUCTION (lines 48-58):
+   - Opens with: "do students' personal political attitudes interfere with their cognitive performance?"
+   - States: "This question matters for any domain in which assessment tasks touch on ideologically sensitive material"
+   - Treats HPT as CASE STUDY of broader attitude-cognition problem ✓
+
+4. THEORETICAL FRAMEWORK (lines 66-86):
+   Grounded in educational psychology theory:
+   - Construct-irrelevant variance (measurement theory)
+   - Identity-protective cognition (motivated reasoning)
+   - Authoritarian cognition and integrative complexity
+   - Dual-process models of cognition
+   → NOT psychometric theory; educational psychology and cognitive psychology ✓
+
+5. RESULTS PRESENTATION:
+   - Measurement properties (CFA, reliability, invariance, DIF) presented as SUPPORTING EVIDENCE
+   - Primary findings: ideology-performance associations, knowledge effects, TOST equivalence
+   → Measurement = evidence, not primary findings ✓
+
+6. DISCUSSION - "Implications for educational psychology" (section 4.3):
+   - FIRST implications section (before history education)
+   - Themes: attitude-cognition separation, domain knowledge, measurement fairness
+   - Educational psychology is PRIMARY framing ✓
+
+7. CONCLUSION (line 478):
+   "For educational psychology, the key insight is that well-structured cognitive assessments can elicit disciplinary reasoning in politically sensitive domains without being contaminated by students' personal political commitments."
+   → Educational psychology contribution clearly articulated ✓
+
+VERDICT: PASS ✓
+--------------
+The manuscript reads as an educational psychology study about whether political attitudes interfere with cognitive performance in assessments. HPT is the empirical case study, not the object of validation. Measurement properties are supporting evidence for the substantive hypothesis about attitude-cognition interference.
+
+This manuscript is WITHIN EJPE scope and does NOT fall under the "validation studies of measurement instruments" exclusion.

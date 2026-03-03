@@ -1,0 +1,86 @@
+Dear Editor-in-Chief and Editorial Team,
+
+I am writing to submit the manuscript "Do Political Attitudes Contaminate Historical Reasoning? Ideological Attitudes and Disciplinary Thinking in Czech Adolescents" for consideration in the European Journal of Psychology of Education.
+
+CURRENT RESEARCH THEMES
+
+My research focuses on the psychology of historical reasoning and disciplinary thinking in adolescents, with particular attention to how political attitudes and ideological orientations interact with cognitive performance in educational contexts. My work examines the validity of educational assessments in politically sensitive domains, investigating whether student performance reflects genuine disciplinary competence or construct-irrelevant variance driven by personal beliefs. I also study authoritarianism and political attitudes as they relate to educational outcomes, particularly in post-communist societies with complex relationships to totalitarian ideologies.
+
+MOTIVATION FOR SUBMITTING TO EJPE
+
+This manuscript is particularly well-suited for EJPE for several reasons:
+
+1. ALIGNMENT WITH JOURNAL SCOPE: The manuscript addresses a core question in educational psychology: do students' political attitudes interfere with their cognitive performance on disciplinary assessments? This investigation of attitude-cognition interaction in educational settings aligns directly with EJPE's focus on psychological dimensions of learning and development.
+
+2. INTERNATIONAL AND CROSS-CULTURAL PERSPECTIVE: The study contributes to EJPE's international scope by providing empirical evidence from Czech secondary education, a context underrepresented in the English-language literature. The Czech Republic's post-communist experience offers unique insights into how adolescents navigate politically charged historical content in classroom settings.
+
+3. METHODOLOGICAL DIVERSITY: The manuscript mobilizes diverse methodological approaches—multilevel modeling, measurement invariance testing, differential item functioning analysis, and equivalence testing—reflecting EJPE's emphasis on methodological pluralism in educational psychology research.
+
+4. PRECEDENT IN THE JOURNAL: EJPE has previously published research on historical perspective taking instruments (Huijgen et al., 2014, EJPE, 29:321-337), establishing the journal's receptivity to this line of inquiry. The present manuscript extends this tradition by examining a critical validity threat that has received insufficient attention in prior HPT research.
+
+5. BROADER SOCIETAL RELEVANCE: The study situates learning within broader societal issues—political polarization, fair assessment, and the challenges of teaching contested history—consistent with EJPE's mission to connect educational psychology to real-world concerns.
+
+Importantly, this manuscript is NOT a validation study of a measurement instrument, which falls outside EJPE's scope (per submission guidelines, line 71). Rather, it is an educational psychology study that uses measurement properties as evidence to test a substantive hypothesis about attitude-cognition interference. The HPT instrument serves as a case study of a broader theoretical and practical problem: whether assessments in politically sensitive domains can remain construct-valid across the ideological spectrum.
+
+RELEVANT PUBLICATIONS
+
+This is my first submission to the European Journal of Psychology of Education. My prior work in history education and assessment validity has appeared in disciplinary journals, but I believe EJPE is the most appropriate venue for this manuscript given its focus on the psychological mechanisms underlying attitude-assessment interactions.
+
+ETHICAL COMPLIANCE AND MANUSCRIPT STATUS
+
+- This manuscript is not under consideration elsewhere.
+- The manuscript was previously desk-rejected by Theory & Research in Social Education. It has been substantially reframed for EJPE's audience in educational psychology, with greater emphasis on cognitive and attitudinal processes rather than curricular implications.
+- The study was approved by the ethics committee of the Institute of History, Faculty of Arts, Charles University, prior to data collection.
+- All participants provided informed consent (parental consent for minors, plus student assent).
+- The study was preregistered on the Open Science Framework (https://osf.io/yng37/) prior to data collection.
+- I declare no conflicts of interest.
+- I am the sole author and approved this submission.
+
+SUGGESTED REVIEWERS (Optional)
+
+I suggest the following international experts who could provide informed evaluation of this manuscript:
+
+1. Dr. Tibor Šimandl
+   - Institution: Faculty of Education, Charles University, Czech Republic
+   - Email: tibor.simandl@pedf.cuni.cz
+   - Expertise: Educational psychology, political attitudes, Czech education
+
+2. Dr. Carla van Boxtel
+   - Institution: University of Amsterdam, Netherlands
+   - Email: c.a.m.vanboxtel@uva.nl
+   - Expertise: Historical reasoning, perspective taking, educational assessment
+
+3. Dr. Jannet van Drie
+   - Institution: University of Amsterdam, Netherlands
+   - Email: j.p.vandrie@uva.nl
+   - Expertise: Historical thinking, assessment validity, learning environment
+
+4. Dr. Mario Carretero
+   - Institution: Universidad Autónoma de Madrid, Spain
+   - Email: mario.carretero@uam.es
+   - Expertise: Historical cognition, national narratives, identity and learning
+
+5. Dr. Bruce VanSledright
+   - Institution: University of North Carolina, USA
+   - Email: bgv@email.unc.edu
+   - Expertise: Historical thinking assessment, epistemic cognition, adolescent learning
+
+All suggested reviewers are independent and have no conflicts of interest to my knowledge. They represent diverse geographic and methodological perspectives.
+
+DATA AND CODE AVAILABILITY
+
+All de-identified data, analysis scripts, and materials are publicly available on the Open Science Framework (https://osf.io/yng37/) to support reproducibility and transparency.
+
+Thank you for considering this manuscript for publication in EJPE. I believe it makes a substantive contribution to educational psychology by demonstrating that disciplinary reasoning can remain robust against ideological interference—a reassuring finding for assessment design in an era of political polarization.
+
+I look forward to your response and remain available for any clarifications or additional materials you may require.
+
+Sincerely,
+
+Juda Kaleta, PhD
+Institute of History, Faculty of Arts
+Charles University, Czech Republic
+Laboratorio Temporal, Faculty of Education
+Universidad de Murcia, Spain
+
+Email: juda.kaleta@ff.cuni.cz

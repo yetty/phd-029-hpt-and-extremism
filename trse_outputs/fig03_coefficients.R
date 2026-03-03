@@ -84,7 +84,7 @@ dat <- dat_raw |>
 # ---- 2. Fit base models -----------------------------------------------------
 
 dv_list <- c("z_hpt_total", "z_hpt_cont", "z_hpt_pop")
-dv_labels <- c("HPT CTX6 (primary)", "Contextualisation", "Presentism (rev.)")
+dv_labels <- c("HPT CTX6", "CONT", "POP (rev.)")
 
 fits <- list()
 for (i in seq_along(dv_list)) {
@@ -161,10 +161,10 @@ fig4 <- ggplot(tidy_df, aes(x = estimate, y = predictor,
     legend.box = "horizontal",
     panel.grid.minor = element_blank(),
     panel.grid.major.y = element_blank(),
-    axis.text = element_text(size = 9),
-    axis.title.x = element_text(size = 9.5),
+    axis.text = element_text(size = 9, margin = margin(t = 5, l = -20)),
+    axis.title.x = element_text(size = 9.5, margin = margin(t = 5, l = -20)),
     plot.caption = element_text(size = 7.5, hjust = 0, lineheight = 1.2,
-                                margin = margin(t = 10))
+                                margin = margin(t = 10, l = -50))
   ) +
   labs(
     caption = paste0(
@@ -177,10 +177,10 @@ fig4 <- ggplot(tidy_df, aes(x = estimate, y = predictor,
 
 # ---- 5. Save -----------------------------------------------------------------
 
-ggsave("trse_outputs/fig04_coefficient_plot.pdf", fig4,
+ggsave("trse_outputs/fig03_coefficients.pdf", fig4,
        width = 180, height = 140, units = "mm", device = cairo_pdf)
 
-ggsave("trse_outputs/fig04_coefficient_plot.png", fig4,
+ggsave("trse_outputs/fig03_coefficients.png", fig4,
        width = 180, height = 140, units = "mm", dpi = 300)
 
-cat("Figure 4 saved to trse_outputs/\n")
+cat("Figure 3 saved to trse_outputs/\n")

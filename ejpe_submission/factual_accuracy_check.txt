@@ -1,0 +1,53 @@
+EJPE Manuscript Factual Accuracy Verification
+==============================================
+
+Comparison against TRSE manuscript (extracted from "Manuscript TRSE.docx")
+
+CORRECTED ERRORS:
+-----------------
+1. HPT translation source: FIXED ✓
+   - Was: "from the original German by a bilingual Czech-German historian"
+   - Now: "from the original English version by two bilingual Czech-English experts"
+   - Method: "forward and backward translation"
+
+VERIFIED CORRECT:
+-----------------
+
+Sample Characteristics:
+- Total N: 293 students ✓
+- Classrooms: 20 ✓
+- Schools: 10 ✓
+- ISCED 2 (lower-secondary): n=87, 29.7% ✓
+- ISCED 3 (upper-secondary): n=206, 70.3% ✓
+- Gender: M=192 (65.5%), F=88 (30.0%), Other=13 (4.4%) ✓
+- School types: public 90.8%, private 6.5%, church-affiliated 2.7% ✓
+- History grade: M=1.71, SD=0.92 ✓
+- Analytic sample range: 276-287 ✓
+
+Statistical Results:
+- FR-LF correlation with HPT_CTX6: r = -.05 ✓
+- FR-LF correlation with CONT: r = .01 ✓
+- FR-LF correlation with POP_rev: (matches) ✓
+- Knowledge coefficient range: β = 0.21-0.34 ✓
+- Knowledge p-value: p < .001 ✓
+- Ideology coefficients: β ≈ 0, all ps > .43 ✓
+- TOST results: all ps < .003 ✓
+
+Methodological Details:
+- Power analysis target: β ≥ .15, 80% power ✓
+- Administration time: 30-40 minutes ✓
+- Data collection: regular class period ✓
+- Teachers present but non-interventionist ✓
+- Missing data handling: exclusion criteria ✓
+
+Instrument Details:
+- HPT: 9 items, 4-point Likert, 3 subscales (POP, ROA, CONT) ✓
+- FR-LF: 6 items, 5-point Likert, 2 facets (RD, NS) ✓
+- KSA-3: 9 items, 5-point Likert ✓
+- KN: 6 items, dichotomous scoring ✓
+- SDR-5: 5 items, 5-point Likert ✓
+
+SUMMARY:
+--------
+All factual details verified correct after fixing the HPT translation error.
+No additional discrepancies identified between TRSE and EJPE manuscripts.

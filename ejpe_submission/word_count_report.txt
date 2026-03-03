@@ -1,0 +1,23 @@
+EJPE Manuscript Word Count and Structure Compliance Report
+===========================================================
+
+Generated: 2026-02-26
+
+WORD COUNTS:
+-----------
+Body text: 5,344 words (limit: ≤ 7,000 words) ✓ PASS
+Abstract: 222 words (limit: 150-250 words) ✓ PASS  
+Keywords: 6 keywords (limit: 4-6 keywords) ✓ PASS
+
+STRUCTURE:
+----------
+Heading levels: 3 levels (section, subsection, subsubsection) (limit: ≤ 3 levels) ✓ PASS
+Introduction subheadings: 0 (requirement: none) ✓ PASS
+All sections properly numbered: YES ✓ PASS
+
+SUMMARY:
+--------
+All word count and structure requirements met.
+Manuscript is compliant with EJPE submission guidelines.
+
+Keywords: historical reasoning, political attitudes, construct validity, measurement invariance, multilevel modeling, educational assessment

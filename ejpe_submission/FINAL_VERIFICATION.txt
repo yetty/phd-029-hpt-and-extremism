@@ -1,0 +1,167 @@
+═══════════════════════════════════════════════════════════════════════
+EJPE SUBMISSION - FINAL VERIFICATION (POST HISTORYLAB REMOVAL)
+═══════════════════════════════════════════════════════════════════════
+
+Date: 2026-02-26
+Action: Removed ALL HistoryLab references from both manuscripts
+Status: COMPLETE AND VERIFIED
+
+═══════════════════════════════════════════════════════════════════════
+HISTORYLAB REMOVAL - COMPLETE ✓
+═══════════════════════════════════════════════════════════════════════
+
+REMOVED FROM manuscript.tex (non-blinded):
+------------------------------------------
+1. Line 113: "including the HistoryLab project and the Dejepis+ curriculum initiative"
+   → Changed to: "Recent educational reforms have sought to promote..."
+   
+2. Line 142: "(cf. \citealp{Cinatl2021}, for the use of this instrument in the Czech HistoryLab context)"
+   → Completely removed this parenthetical
+   
+3. Line 491: "and acknowledges the HistoryLab team at Charles University for consultation..."
+   → Changed to: "The author thanks the participating schools, teachers, and students..."
+
+REMOVED FROM title_page.tex:
+-----------------------------
+1. Acknowledgments: "and acknowledges the HistoryLab team at Charles University..."
+   → Changed to: "The author thanks the participating schools, teachers, and students..."
+
+VERIFIED CLEAN - manuscript_blinded.tex:
+----------------------------------------
+✓ No HistoryLab references (was already cleaned during anonymization)
+
+═══════════════════════════════════════════════════════════════════════
+COMPILATION STATUS
+═══════════════════════════════════════════════════════════════════════
+
+✓ manuscript_blinded.pdf - Recompiled successfully (515 KB)
+✓ title_page.pdf - Recompiled successfully (89 KB)
+✓ All LaTeX passes completed without errors
+✓ All citations resolved
+✓ All cross-references resolved
+
+═══════════════════════════════════════════════════════════════════════
+PDF VERIFICATION
+═══════════════════════════════════════════════════════════════════════
+
+Text extraction verification:
+------------------------------
+✓ No "HistoryLab" in manuscript_blinded.pdf
+✓ No "HistoryLab" in title_page.pdf
+✓ No "Dejepis+" in manuscript_blinded.pdf
+✓ No author identifying information in manuscript_blinded.pdf:
+  - No "Kaleta"
+  - No "ff.cuni.cz"
+  - No "Murcia"
+  - No "yng37" OSF links
+  - No "J.K." initials
+
+Anonymization integrity:
+------------------------
+✓ COMPLETE - Manuscript is fully anonymized for double-blind review
+
+═══════════════════════════════════════════════════════════════════════
+FINAL SUBMISSION PACKAGE
+═══════════════════════════════════════════════════════════════════════
+
+Required files (ALL VERIFIED):
+-------------------------------
+✓ manuscript_blinded.pdf (515 KB) - Main manuscript (anonymized, no HistoryLab)
+✓ title_page.pdf (89 KB) - Author info (no HistoryLab in acknowledgments)
+✓ Fig1.pdf (26 KB) - Score distributions
+✓ Fig2.pdf (17 KB) - Coefficient forest plot  
+✓ Fig3.pdf (26 KB) - Marginal effects plot
+✓ cover_letter.txt - Research themes, motivation, compliance
+
+Supporting files:
+-----------------
+✓ manuscript_blinded.tex - Clean source (no HistoryLab)
+✓ manuscript.tex - Clean source (no HistoryLab)
+✓ title_page.tex - Clean source (no HistoryLab)
+✓ references.bib - Bibliography database
+
+═══════════════════════════════════════════════════════════════════════
+COMPLIANCE CHECKS (RE-VERIFIED)
+═══════════════════════════════════════════════════════════════════════
+
+Word Counts:
+------------
+✓ Body text: 5,344 words (≤ 7,000) - UNCHANGED
+✓ Abstract: 222 words (150-250) - UNCHANGED
+✓ Keywords: 6 (4-6) - UNCHANGED
+
+Structure:
+----------
+✓ Heading levels: 3 (≤ 3)
+✓ Introduction: no subheadings
+✓ All sections numbered
+
+Double-Blind:
+-------------
+✓ Author names removed
+✓ Affiliations removed
+✓ Email removed
+✓ Charles University anonymized
+✓ HistoryLab references REMOVED ✓✓✓
+✓ Dejepis+ references REMOVED ✓✓✓
+✓ OSF links anonymized
+✓ Acknowledgments moved to title page
+
+Scope Alignment:
+----------------
+✓ Educational psychology study (not validation)
+✓ HPT as case study (not object of validation)
+✓ Measurement = supporting evidence
+
+Figures:
+--------
+✓ All 3 figures PDF format
+✓ Vector graphics (resolution-independent)
+✓ Colorblind-friendly colors
+✓ Descriptive captions
+
+References:
+-----------
+✓ APA 7th edition
+✓ All citations resolved
+✓ DOIs as URLs
+
+═══════════════════════════════════════════════════════════════════════
+FACTUAL ACCURACY (RE-VERIFIED)
+═══════════════════════════════════════════════════════════════════════
+
+✓ HPT translation: English (not German), two experts (not one)
+✓ Sample size: 293 students, 20 classrooms, 10 schools
+✓ Demographics: ISCED levels, gender, school types
+✓ Statistical results: correlations, coefficients, p-values
+✓ Methodological details: administration, power analysis
+
+═══════════════════════════════════════════════════════════════════════
+CHANGES FROM PREVIOUS VERSION
+═══════════════════════════════════════════════════════════════════════
+
+Previous Issue:
+- HistoryLab project mentioned in Czech context section
+- HistoryLab "use of instrument" claim in HPT section  
+- HistoryLab team acknowledged for consultation
+
+Current Status:
+- ALL HistoryLab references REMOVED from all files
+- Cleaner, more general statements about Czech reforms
+- No false claims about HistoryLab using the instrument
+- Acknowledgments simplified to schools/teachers/students only
+
+═══════════════════════════════════════════════════════════════════════
+FINAL STATUS
+═══════════════════════════════════════════════════════════════════════
+
+✓✓✓ ALL HISTORYLAB REFERENCES REMOVED
+✓✓✓ ALL DEJEPIS+ REFERENCES REMOVED
+✓✓✓ ALL FILES RECOMPILED AND VERIFIED
+✓✓✓ ALL COMPLIANCE CHECKS PASSED
+✓✓✓ SUBMISSION PACKAGE COMPLETE AND READY
+
+No further issues detected.
+Manuscript is ready for submission to EJPE.
+
+═══════════════════════════════════════════════════════════════════════
