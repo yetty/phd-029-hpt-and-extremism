@@ -1,0 +1,45 @@
+EDITORIAL MANAGER UPLOAD ORDER
+European Journal of Psychology of Education (EUPE)
+Submission ID: EUPE-D-26-00272
+===============================================
+
+Upload files in this exact order:
+
+1. manuscript_blinded.tex
+   → Click "Manuscript" in Item Type dropdown
+   → This MUST be uploaded first
+
+2. references.bib
+   → Click "LaTeX Supporting File(s)" in dropdown
+
+3. sn-jnl.cls
+   → Click "LaTeX Supporting File(s)" in dropdown
+
+4. sn-apacite.bst
+   → Click "LaTeX Supporting File(s)" in dropdown
+
+5. Fig1.pdf
+   → Click "Figure" in dropdown
+   → Figure 1: Score distributions
+
+6. Fig2.pdf
+   → Click "Figure" in dropdown
+   → Figure 2: Forest plot of multilevel model coefficients
+
+7. Fig3.pdf
+   → Click "Figure" in dropdown
+   → Figure 3: Predicted marginal effects
+
+8. manuscript_blinded.pdf
+   → Click "Supplementary Material for Review" or "PDF for Review" in dropdown
+   → This is the compiled output for reference
+
+IMPORTANT NOTES:
+- All files are on same folder level (no subfolders) ✓
+- Line numbering is enabled via \usepackage{lineno} + \linenumbers ✓
+- Special characters properly encoded (UTF-8 with T1 fonts) ✓
+- No custom macros, .ps, or .dvi files ✓
+- TeX files compile without errors ✓
+
+After upload, EM will automatically compile the PDF from source files.
+Verify the compiled PDF looks correct before final submission.
