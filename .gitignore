@@ -6,3 +6,13 @@
 # Google Drive symlinks
 drive
 gdocs
+
+# LaTeX build artifacts
+*.aux
+*.log
+*.out
+*.synctex.gz
+*.bbl
+*.blg
+*.fls
+*.fdb_latexmk
