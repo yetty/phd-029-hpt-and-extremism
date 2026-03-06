@@ -1,7 +1,8 @@
 # Project Status Log: phd-029-hpt-and-extremism
 
 **Title:** Stress-Testing Historical Perspective Taking: Ideological Attitudes and Disciplinary Reasoning in Czech Adolescents
-**Target journal:** Theory & Research in Social Education (TRSE)
+**Target journal:** European Journal of Psychology of Education (EJPE)
+**Submission ID:** EUPE-D-26-00272
 **Preregistration:** https://osf.io/yng37/
 **Last updated:** 2026-03-06
 
@@ -35,21 +36,25 @@
 
 ---
 
+### EJPE Submission Preparation
+- Switched target from TRSE to EJPE. Converted manuscript from Markdown/DOCX to LaTeX using `sn-jnl.cls` (Springer Nature template with `sn-apa` style). Created blinded manuscript (`manuscript_blinded.tex`) and separate title page (`title_page.tex`). Upload package assembled in `ejpe_submission/UPLOAD_PACKAGE_EUPE/`.
+
+### EJPE Submission (EUPE-D-26-00272)
+- Submitted 2026-03-05 via Editorial Manager. Preview PDF revealed broken title page — `sn-jnl.cls` calls `\allowdisplaybreaks` at `\begin{document}` which requires `amsmath`, but `title_page.tex` didn't load it. Fixed by adding `\usepackage{amsmath}`. Merged two upload folders into single `UPLOAD_PACKAGE_EUPE/`.
+
+---
+
 ## Current Work
 
-**Phase:** Finalising manuscript for TRSE submission.
+**Phase:** Resubmit corrected title page to EJPE, then await editorial decision.
 
-- Addressing TRSE compliance gaps: disclosure statement, ethics approval formatting, contribution clarity, figure caption list.
-- Strengthening disciplinary framing (contextualization as epistemic norm, not just descriptive construct).
-- Deepening null-result theorisation (restricted ideology variance, task constraint strength, social desirability suppression).
-- Reframing contribution as boundary-condition validation of HPT under ideological heterogeneity.
-- Final APA 7 and American English pass before submission.
+- Upload fixed `title_page.tex` (with `\usepackage{amsmath}`) to EJPE portal.
+- Verify compiled preview renders correctly.
 
 ---
 
 ## Upcoming
 
-- Prepare cover letter for TRSE submission.
-- Submit manuscript via Taylor & Francis ScholarOne portal.
+- Monitor EJPE submission for editorial/reviewer feedback.
 - Transfer project outputs to knowledge base (`/project-to-knowledge` workflow).
 - Create literature note for preprint/publication in `knowledge/R/`.
