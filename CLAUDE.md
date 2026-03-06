@@ -8,6 +8,18 @@ Hypotheses, instruments, and analysis plan were preregistered on the Open Scienc
 
 The study tests whether a Historical Perspective Taking (HPT) instrument used in history education is contaminated by right-authoritarian ideological attitudes. The core question: do students with stronger right-authoritarian views score higher on HPT simply because the instrument conflates ideological agreement with disciplinary reasoning?
 
+## Status Tracking
+
+Two files track project state. **Read both at the start of every session.**
+
+- **`status.md`** — Short current-state snapshot (~30 lines). Contains 3-5 active items per phase and points to the latest plan file. Tells you "where are we right now."
+- **`project_status.md`** — Running log (100-200 lines). Tracks overall project state across time. Past completed work is compacted to 1-2 line summaries to stay lean.
+
+**Maintenance rules:**
+1. After completing a task, update `status.md` to reflect the new current state.
+2. After completing a milestone or phase, update `project_status.md`: move finished items to Completed Milestones (as a compact summary) and update Active Work.
+3. Keep `status.md` under ~30 lines and `project_status.md` under ~200 lines.
+
 ## Research Design
 
 ### Sample
