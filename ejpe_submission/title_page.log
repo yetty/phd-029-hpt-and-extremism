@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.2)  26 FEB 2026 10:48
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2026.2.2)  6 MAR 2026 11:43
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -552,31 +552,41 @@ File: english.apc 2013/07/21 v6.03 apacite language file
 LaTeX Info: Redefining \BPBI on input line 129.
 LaTeX Info: Redefining \BHBI on input line 130.
 )
-LaTeX Font Info:    Calculating math sizes for size <12.045> on input line 28.
+LaTeX Font Info:    Calculating math sizes for size <12.045> on input line 32.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12.045> on input line 28.
+(Font)              <12.045> on input line 32.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8.43146> on input line 28.
+(Font)              <8.43146> on input line 32.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6.02249> on input line 28.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 28.
+(Font)              <6.02249> on input line 32.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 32.
  (/home/yetty/.TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Calculating math sizes for size <11.04124> on input line 28.
+LaTeX Font Info:    Calculating math sizes for size <11.04124> on input line 32.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <11.04124> on input line 28.
+(Font)              <11.04124> on input line 32.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7.72884> on input line 28.
+(Font)              <7.72884> on input line 32.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5.52061> on input line 28.
-LaTeX Font Info:    Calculating math sizes for size <10.03749> on input line 28.
+(Font)              <5.52061> on input line 32.
+LaTeX Font Info:    Calculating math sizes for size <9.03374> on input line 32.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <10.03749> on input line 28.
+(Font)              <9.03374> on input line 32.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7.0262> on input line 28.
+(Font)              <6.32358> on input line 32.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5.01874> on input line 28.
+(Font)              <4.51686> on input line 32.
+LaTeX Font Info:    Calculating math sizes for size <10.03749> on input line 32.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <10.03749> on input line 32.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7.0262> on input line 32.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5.01874> on input line 32.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
@@ -585,7 +595,10 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 {/home/yetty/.TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/home/yetty/.TinyTeX/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [2] (./title_page.aux)
+ [2]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [3] (./title_page.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
@@ -594,18 +607,18 @@ Package rerunfilecheck Info: File `title_page.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 11141 strings out of 467533
- 171917 string characters out of 5421059
- 595518 words of memory out of 5000000
- 39880 multiletter control sequences out of 15000+600000
- 644427 words of font info for 84 fonts, out of 8000000 for 9000
+ 11178 strings out of 467533
+ 172485 string characters out of 5421059
+ 598518 words of memory out of 5000000
+ 39903 multiletter control sequences out of 15000+600000
+ 651585 words of font info for 101 fonts, out of 8000000 for 9000
  1151 hyphenation exceptions out of 8191
- 90i,7n,93p,547b,439s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</home/yetty/.TinyTeX/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></home/yetty/.TinyTeX/texmf-dist/fonts/type1/public/cm-super/sfrm0700.pfb></home/yetty/.TinyTeX/texmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb></home/yetty/.TinyTeX/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></home/yetty/.TinyTeX/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></home/yetty/.TinyTeX/texmf-dist/fonts/type1/public/cm-super/sfrm1728.pfb>
-Output written on title_page.pdf (2 pages, 90843 bytes).
+ 90i,7n,93p,1806b,440s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</home/yetty/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbsy10.pfb></home/yetty/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></home/yetty/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></home/yetty/.TinyTeX/texmf-dist/fonts/type1/public/cm-super/sfbx0800.pfb></home/yetty/.TinyTeX/texmf-dist/fonts/type1/public/cm-super/sfbx0900.pfb></home/yetty/.TinyTeX/texmf-dist/fonts/type1/public/cm-super/sfbx1000.pfb></home/yetty/.TinyTeX/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></home/yetty/.TinyTeX/texmf-dist/fonts/type1/public/cm-super/sfrm0700.pfb></home/yetty/.TinyTeX/texmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb></home/yetty/.TinyTeX/texmf-dist/fonts/type1/public/cm-super/sfrm0900.pfb></home/yetty/.TinyTeX/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></home/yetty/.TinyTeX/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></home/yetty/.TinyTeX/texmf-dist/fonts/type1/public/cm-super/sfrm1728.pfb></home/yetty/.TinyTeX/texmf-dist/fonts/type1/public/cm-super/sfti1000.pfb>
+Output written on title_page.pdf (3 pages, 227341 bytes).
 PDF statistics:
- 64 PDF objects out of 1000 (max. 8388607)
- 47 compressed objects within 1 object stream
- 13 named destinations out of 1000 (max. 500000)
+ 121 PDF objects out of 1000 (max. 8388607)
+ 87 compressed objects within 1 object stream
+ 21 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
