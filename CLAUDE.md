@@ -20,6 +20,10 @@ Two files track project state. **Read both at the start of every session.**
 2. After completing a milestone or phase, update `project_status.md`: move finished items to Completed Milestones (as a compact summary) and update Active Work.
 3. Keep `status.md` under ~30 lines and `project_status.md` under ~200 lines.
 
+## Reference Verification
+
+**Before finalizing any manuscript content with academic citations**, run the `reference-verifier` agent to verify all references against `knowledge/R/`. This catches hallucinated references, misattributed claims, and bibliography errors.
+
 ## Research Design
 
 ### Sample
