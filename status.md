@@ -13,9 +13,14 @@ Null ideology effects across all analyses. Historical knowledge is the only cons
 
 ## Next Steps
 
-- [ ] Choose next target journal (consider assessment/measurement, history education, or social psychology outlets)
-- [ ] Reformat manuscript for new target (may need theoretical reframing depending on journal)
+- [ ] **Reframe manuscript for Social Psychology of Education** (Strategy A: identity-protective cognition framing)
+- [ ] Submit to Social Psychology of Education (Springer, Q1, free via CzechELib) — 4-day desk decision
+- [ ] If desk-rejected: pivot to AME (Strategy B) or Historical Encounters (Strategy C)
 - [ ] Upload preprint to OSF or PsyArXiv (optional, to establish priority)
+
+## Journal Analysis
+
+Full analysis with desk reviewer simulations in `journal_target_analysis.md`.
 
 ## Rejection Summary
 
