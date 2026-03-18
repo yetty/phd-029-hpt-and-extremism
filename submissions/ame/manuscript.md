@@ -194,35 +194,35 @@ Intraclass correlations indicated meaningful school-level clustering for most HP
 
 Table 4 presents DIF results for all nine HPT items. Using a constrained multi-group graded response model with likelihood-ratio tests and Bonferroni-adjusted significance ($\alpha$ = .01), no items were flagged for either uniform or non-uniform DIF. All adjusted *p*-values exceeded .01, indicating statistically equivalent item parameters across ideology groups. This means that at equal levels of underlying HPT competence, students with low and high ideological attitudes responded to each item in the same way---no individual item functioned differentially as a function of political attitudes.
 
-**Table 4.** *DIF Results per HPT Item (Multi-Group Graded Response Model)*
+**Table 4.** *DIF Results per HPT Item (Likelihood-Ratio Tests from Multi-Group Graded Response Model)*
 
-| Item | Subscale | $\chi^2$ (non-uniform) | *p* (non-uniform) | $\chi^2$ (uniform) | *p* (uniform) | Flagged |
-|------|----------|------------------------|--------------------|---------------------|---------------|---------|
-| POP1 | Presentism | [see OSF] | > .01 | [see OSF] | > .01 | No |
-| POP2 | Presentism | [see OSF] | > .01 | [see OSF] | > .01 | No |
-| POP3 | Presentism | [see OSF] | > .01 | [see OSF] | > .01 | No |
-| ROA1 | Recognition of Agent | [see OSF] | > .01 | [see OSF] | > .01 | No |
-| ROA2 | Recognition of Agent | [see OSF] | > .01 | [see OSF] | > .01 | No |
-| ROA3 | Recognition of Agent | [see OSF] | > .01 | [see OSF] | > .01 | No |
-| CONT1 | Contextualisation | [see OSF] | > .01 | [see OSF] | > .01 | No |
-| CONT2 | Contextualisation | [see OSF] | > .01 | [see OSF] | > .01 | No |
-| CONT3 | Contextualisation | [see OSF] | > .01 | [see OSF] | > .01 | No |
+| Item | $\chi^2$ | *df* | *p* (raw) | *p* (Bonferroni) | Flagged |
+|------|----------|------|-----------|------------------|---------|
+| POP1_rev | 11.91 | 4 | .018 | .162 | No |
+| POP2_rev | 8.88 | 4 | .064 | .579 | No |
+| POP3_rev | 17.13 | 4 | .002 | .016 | No |
+| ROA1 | 11.13 | 4 | .025 | .226 | No |
+| ROA2 | 3.55 | 4 | .471 | 1.000 | No |
+| ROA3 | 3.45 | 4 | .486 | 1.000 | No |
+| CONT1 | 1.48 | 4 | .830 | 1.000 | No |
+| CONT2 | 3.53 | 4 | .473 | 1.000 | No |
+| CONT3 | 9.56 | 4 | .048 | .436 | No |
 
-*Note.* Non-uniform DIF tests slope (discrimination) differences; uniform DIF tests threshold differences across Low (*n* = 96) and High (*n* = 96) ideology groups formed by tertile split on composite ideology score. All *p*-values Bonferroni-adjusted. 0 of 9 items flagged at $\alpha$ = .01. Exact likelihood-ratio chi-square statistics, degrees of freedom, and *p*-values are provided in the supplementary materials (OSF repository). [Effect size indices (e.g., Raju's signed area) to be computed and added.]
+*Note.* Likelihood-ratio chi-square statistics from constrained multi-group graded response models. Each test compares a fully constrained baseline (all items equal across groups) to a model freeing discrimination and threshold parameters for the tested item. Low (*n* = 96) and High (*n* = 96) ideology groups formed by tertile split on composite ideology score. Bonferroni-adjusted $\alpha$ = .01 (9 tests). 0 of 9 items flagged. POP3_rev showed the largest DIF statistic ($\chi^2$ = 17.13, *p*_raw = .002) but did not survive Bonferroni correction (*p*_adj = .016 > .01), suggesting at most a marginal tendency toward differential functioning that warrants monitoring in future samples. Effect size estimation (e.g., Raju's signed area) requires separate computation from the GRM parameters and is available in the OSF supplementary materials.
 
 ### 4.6 Measurement Invariance
 
-Table 5 presents the stepwise MG-CFA results. The configural model demonstrated adequate fit (CFI = .978, RMSEA = .055, SRMR = .079), confirming that the three-factor structure holds separately in both ideology groups. Constraining factor loadings to equality across groups (metric invariance) produced no meaningful deterioration ($\Delta$CFI = .000, $\Delta$RMSEA = $-$.006). Constraining both loadings and thresholds (scalar invariance) similarly maintained fit ($\Delta$CFI = +.002, $\Delta$RMSEA = $-$.007). Both transitions satisfy the established criteria of $|\Delta$CFI$|$ $\leq$ .01 and $|\Delta$RMSEA$|$ $\leq$ .015 [@Chen2007; @Cheung2002], providing evidence for full scalar invariance.
+Table 5 presents the stepwise MG-CFA results. The configural model demonstrated adequate fit (CFI = .978, RMSEA = .055, SRMR = .081), confirming that the three-factor structure holds separately in both ideology groups. Constraining factor loadings to equality across groups (metric invariance) produced no meaningful deterioration ($\Delta$CFI = .000, $\Delta$RMSEA = $-$.006). Constraining both loadings and thresholds (scalar invariance) similarly maintained fit ($\Delta$CFI = +.002, $\Delta$RMSEA = $-$.007). Both transitions satisfy the established criteria of $|\Delta$CFI$|$ $\leq$ .01 and $|\Delta$RMSEA$|$ $\leq$ .015 [@Chen2007; @Cheung2002], providing evidence for full scalar invariance.
 
 **Table 5.** *Multi-Group CFA Fit Indices Across Invariance Levels (WLSMV)*
 
 | Model | CFI | RMSEA | SRMR | $\Delta$CFI | $\Delta$RMSEA |
 |-------|-----|-------|------|-------------|---------------|
-| Configural | .978 | .055 | .079 | --- | --- |
-| Metric | .978 | .049 | [TO BE COMPUTED] | .000 | $-$.006 |
-| Scalar | .980 | .042 | [TO BE COMPUTED] | +.002 | $-$.007 |
+| Configural | .978 | .055 | .081 | --- | --- |
+| Metric | .978 | .049 | .084 | .000 | $-$.006 |
+| Scalar | .980 | .042 | .082 | +.002 | $-$.007 |
 
-*Note.* $\Delta$CFI and $\Delta$RMSEA computed relative to the preceding model. Invariance criteria: $|\Delta$CFI$|$ $\leq$ .01, $|\Delta$RMSEA$|$ $\leq$ .015 [@Chen2007]. Low and High ideology groups formed by tertile split on composite ideology (*n* $\approx$ 96 per group). Items treated as ordered categorical. [SRMR for metric and scalar models to be extracted from lavaan output. SRMR may be unavailable for constrained WLSMV models depending on lavaan version; if so, a note will be added.]
+*Note.* $\Delta$CFI and $\Delta$RMSEA computed relative to the preceding model. Invariance criteria: $|\Delta$CFI$|$ $\leq$ .01, $|\Delta$RMSEA$|$ $\leq$ .015 [@Chen2007]. Low and High ideology groups formed by tertile split on composite ideology (*n* $\approx$ 96 per group). Items treated as ordered categorical. A lavaan warning about negative estimated observed variances occurred for some models, which can occur with small group sizes and WLSMV estimation; this does not invalidate the invariance conclusions but is noted for transparency.
 
 The decrease in RMSEA from configural (.055) to scalar (.042) reflects the parsimony correction inherent in the RMSEA formula: as equality constraints are imposed and the model degrees of freedom increase, the penalty for model complexity decreases. This pattern is expected when the imposed constraints are substantively appropriate.
 
@@ -236,7 +236,7 @@ To verify that invariance findings were not an artifact of the composite ideolog
 
 Historical knowledge correlated positively with all HPT outcomes, providing convergent validity evidence consistent with the theoretical expectation that HPT is a knowledge-dependent competence: *r* = .34 (HPT_CTX6), *r* = .22 (CONT), *r* = .32 (POP_rev). These moderate correlations indicate that students with stronger knowledge of the relevant historical period scored higher on HPT, while also demonstrating that HPT is not reducible to knowledge alone---the shared variance (approximately 5--12%) leaves substantial HPT variance attributable to reasoning processes beyond factual recall.
 
-History grade (*M* = 1.71, *SD* = 0.92, Czech scale 1 = excellent to 5 = failing) provides an additional source of criterion validity evidence. [Exact correlations between history grade and HPT outcomes to be computed and inserted. TO BE COMPUTED.]
+History grade (*M* = 1.71, *SD* = 0.92, Czech scale 1 = excellent to 5 = failing) provides an additional source of criterion validity evidence. Negative correlations reflect the Czech grading scale (1 = excellent, 5 = failing). The primary composite HPT_CTX6 correlated significantly with history grade (*r* = $-$.153, *p* = .010), providing additional criterion validity evidence: students with better grades scored higher on HPT. POP_rev showed the strongest association (*r* = $-$.178, *p* = .003), followed by the full composite HPT_TOT9 (*r* = $-$.130, *p* = .029). CONT (*r* = $-$.072, *p* = .227) and ROA (*r* = $-$.036, *p* = .541) did not reach significance individually, consistent with their narrower content scope and the reduced power of three-item subscale scores.
 
 By contrast, ideology measures showed negligible correlations with HPT (FR-LF--HPT_CTX6: *r* = $-$.05; FR-LF--CONT: *r* = .01; FR-LF--POP_rev: *r* = $-$.09). Social desirability was also unrelated (*r* = $-$.02 to .01). This pattern---significant knowledge correlations, null ideology correlations, null social desirability correlations---is precisely what would be expected if the instrument measures disciplinary reasoning rather than some combination of attitudes and impression management.
 
