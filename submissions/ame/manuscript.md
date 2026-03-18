@@ -20,7 +20,7 @@ The international expansion of history education research has produced growing d
 
 The instrument developed by @Hartmann2008 represents the most widely used standardized HPT measure in European research. Originally validated with German secondary students, it has been adapted for use in the Netherlands [@Huijgen2014; @Huijgen2017] and employed in comparative studies of historical reasoning. The instrument operationalizes HPT through a scenario-based approach in which students read about a historically situated dilemma and respond to nine Likert-scaled items capturing three developmental levels: presentism (POP), recognition of the agent's role (ROA), and contextualisation (CONT). This structure reflects a theoretical progression from naive present-centered judgment toward increasingly sophisticated historical reasoning [@Hartmann2008; @Lee2001].
 
-The present study reports the first Czech adaptation and psychometric evaluation of the Hartmann and Hasselhorn HPT instrument. Two considerations motivate this work. First, no validated Czech-language HPT instrument currently exists, despite growing interest in historical thinking assessment within Czech education reform [@Cinatl2021; @Munich2023; @Ripka2023]. The Czech adaptation addresses this gap and provides the research community with a tool for cross-cultural comparisons of HPT development.
+The present study reports the first Czech adaptation and psychometric evaluation of the Hartmann and Hasselhorn HPT instrument. Two considerations motivate this work. First, no validated Czech-language HPT instrument currently exists, despite growing interest in historical thinking assessment within Czech education reform [@Cinatl2021; @Munich2023; @Ripka2024]. The Czech adaptation addresses this gap and provides the research community with a tool for cross-cultural comparisons of HPT development.
 
 Second, the instrument's scenario content raises a specific fairness question. The scenario describes a young man in the Weimar Republic deliberating whether to join an extremist political movement. Items that require students to contextualize this figure's reasoning could, in principle, function differently for students whose political attitudes align with the scenario's ideological content. Students with right-authoritarian sympathies might find it cognitively easier to endorse contextualizing responses---not because they are reasoning historically, but because the responses resonate with their own attitudes. If present, such a pattern would constitute construct-irrelevant variance (CIV): systematic score variation attributable to a factor extraneous to the target construct [@Messick1995; @AERA2014].
 
@@ -136,17 +136,17 @@ CFA supported the three-factor model (POP, ROA, CONT) as best-fitting, outperfor
 
 | Model | $\chi^2$ | *df* | CFI | TLI | RMSEA | 90% CI | SRMR |
 |-------|----------|------|-----|-----|-------|--------|------|
-| 1-Factor | [TO BE COMPUTED] | [TO BE COMPUTED] | .926 | .902 | .073 | [.051, .095] | .075 |
-| 2-Factor (POP+CONT, ROA) | [TO BE COMPUTED] | [TO BE COMPUTED] | .956 | .940 | .057 | [.032, .081] | .066 |
-| 3-Factor (POP, ROA, CONT) | [TO BE COMPUTED] | [TO BE COMPUTED] | .999 | .998 | .011 | [.000, .051] | .048 |
+| 1-Factor | 66.68 | 27 | .926 | .902 | .073 | [.051, .095] | .075 |
+| 2-Factor (POP+CONT, ROA) | 49.48 | 26 | .956 | .940 | .057 | [.032, .081] | .066 |
+| 3-Factor (POP, ROA, CONT) | 24.78 | 24 | .999 | .998 | .011 | [.000, .051] | .048 |
 
-*Note.* WLSMV = weighted least squares mean and variance adjusted. All items treated as ordered categorical. The 2-factor model groups POP and CONT items on a single factor with ROA on a separate factor. Chi-square values are mean-and-variance adjusted (WLSMV). Nested model comparisons require the DIFFTEST procedure rather than standard chi-square difference tests. [$\chi^2$ and *df* to be extracted from WLSMV output.]
+*Note.* WLSMV = weighted least squares mean and variance adjusted. All items treated as ordered categorical. The 2-factor model groups POP and CONT items on a single factor with ROA on a separate factor. Chi-square values are mean-and-variance adjusted (WLSMV). Nested model comparisons require the DIFFTEST procedure rather than standard chi-square difference tests. All *p* < .001 except the three-factor model (*p* = .418).
 
 The near-perfect global fit of the three-factor model reflects the small item set (nine items in three just-identified three-indicator factors) and should be interpreted alongside local fit diagnostics: the largest modification index was 7.35 (below the threshold of 10), and standardized residual correlations were small ($|r|$ $\leq$ .13). These results confirm that the Czech adaptation preserves the theorized three-level structure of the original German instrument.
 
-Inter-factor correlations from the three-factor CFA were: POP--ROA *r* = [TO BE COMPUTED], POP--CONT *r* = [TO BE COMPUTED], ROA--CONT *r* = [TO BE COMPUTED]. These values [provide/do not provide] evidence of discriminant validity at the factor level. [Factor correlations to be extracted from lavaan output and inserted.]
+Inter-factor correlations from the three-factor CFA were: POP--ROA $\Phi$ = .377, POP--CONT $\Phi$ = .509, ROA--CONT $\Phi$ = .631. These moderate-to-strong correlations indicate meaningful associations among the HPT dimensions, with ROA and CONT showing the strongest link. Discriminant validity is supported since all inter-factor correlations are below .85, confirming that the three subscales capture related but distinct aspects of historical perspective taking.
 
-A bifactor model specifying one general HPT factor and three specific residual factors was also tested. [Fit indices to be computed: CFI = ___, RMSEA = ___, SRMR = ___.] [If fit is similar to three-factor model, state: "The bifactor model did not meaningfully improve fit, supporting subscale-level interpretation."] [TO BE COMPUTED]
+A bifactor model specifying one general HPT factor and three specific residual factors was also tested ($\chi^2$ = 14.70, *df* = 18, *p* = .682, CFI = 1.000, TLI = 1.012, RMSEA = .000 [.000, .043], SRMR = .037). General factor loadings ranged from .116 (POP2) to .632 (CONT1), with CONT items loading highest on the general factor. POP and ROA specific factors retained meaningful loadings (.28--.66), while CONT-specific loadings were non-significant. The bifactor model fit well but did not meaningfully improve over the correlated three-factor model ($\Delta$CFI = .001, $\Delta$RMSEA = .011). General factor loadings were strongest for CONT items, while POP and ROA retained meaningful specific factor variance. This pattern suggests that while a general HPT dimension exists, the subscale-level structure captures meaningful additional variance, supporting subscale-level interpretation for POP and ROA.
 
 ### 4.2 Standardized Factor Loadings
 
@@ -176,11 +176,11 @@ Table 3 presents reliability coefficients for each HPT subscale. Raw Cronbach's 
 
 | Subscale | Items | $\alpha$ (raw) | $\alpha$ (polychoric) | $\omega$ total | Mean $r_{ii}$ |
 |----------|-------|---------|--------------------|---------|------------|
-| POP | 3 | .47 | .53 | .55 | [TO BE COMPUTED] |
-| ROA | 3 | .50 | .53 | .56 | [TO BE COMPUTED] |
-| CONT | 3 | .64 | .69 | .69 | [TO BE COMPUTED] |
+| POP | 3 | .47 | .53 | .55 | .226 |
+| ROA | 3 | .50 | .53 | .56 | .249 |
+| CONT | 3 | .64 | .69 | .69 | .372 |
 
-*Note.* POP items are reverse-scored. $\alpha$ = Cronbach's alpha; $\omega$ = McDonald's omega total. Mean $r_{ii}$ = mean inter-item correlation. [Mean inter-item correlations to be computed from correlation matrices.]
+*Note.* POP items are reverse-scored. $\alpha$ = Cronbach's alpha; $\omega$ = McDonald's omega total. Mean $r_{ii}$ = mean inter-item correlation.
 
 These reliability values are modest by conventional standards but must be interpreted in context. Three considerations are relevant. First, reliability is a direct function of the number of items, and with only three items per subscale, $\alpha$ is structurally constrained. With *k* = 3 items and assuming moderate mean inter-item correlations in the range .20--.35 (typical for short educational assessment subscales), $\alpha$ values of .47--.64 are consistent with the Spearman-Brown prediction; extending each subscale to six items would yield projected $\alpha$ values of .64--.79. Second, $\omega$ is more appropriate than $\alpha$ for congeneric measures where items have unequal loadings, as is clearly the case here (Table 2). The $\omega$ values (.55--.69) are consistently higher than raw $\alpha$, reflecting the congeneric nature of the subscales. Third, the original @Hartmann2008 validation did not report $\alpha$ per subscale but noted that the three-factor solution accounted for 51% of variance, suggesting comparable internal consistency in the German original. The Dutch adaptation by @Huijgen2014 similarly worked with short subscales and reported reliability challenges inherent to the instrument's design.
 
