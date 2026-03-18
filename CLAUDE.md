@@ -2,7 +2,7 @@
 
 ## Overview
 
-This is a quantitative research project for a manuscript titled _"Stress-Testing Historical Perspective Taking: Ideological Attitudes and Disciplinary Reasoning in Czech Adolescents"_ by Juda Kaleta (Institute of History, Faculty of Arts, Charles University), targeting **Theory & Research in Social Education (TRSE)**.
+This is a quantitative research project for a manuscript titled _"Do Political Attitudes Contaminate Historical Reasoning? Ideological Attitudes and Disciplinary Thinking in Czech Adolescents"_ by Juda Kaleta (Institute of History, Faculty of Arts, Charles University). Currently seeking a new target journal after desk rejections from TRSE (2026-02-25) and EJPE (2026-03-18). See `_archive/` for past submission materials.
 
 Hypotheses, instruments, and analysis plan were preregistered on the Open Science Framework (https://osf.io/yng37/).
 

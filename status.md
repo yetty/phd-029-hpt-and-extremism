@@ -1,11 +1,11 @@
 # Status: phd-029-hpt-and-extremism
 
-**Stage:** Submitted to EJPE / Awaiting revision resubmission
-**Updated:** 2026-03-06
+**Stage:** Seeking new journal target (2 desk rejections)
+**Updated:** 2026-03-18
 
 ## Current State
 
-Manuscript submitted to **European Journal of Psychology of Education (EJPE)** as EUPE-D-26-00272. First submission preview had a broken title page (missing `amsmath` in `title_page.tex`). Fixed — resubmit with corrected `title_page.tex`.
+Manuscript desk-rejected by both **TRSE** (2026-02-25) and **EJPE** (2026-03-18). Core analysis, OSF replication package, and LaTeX/DOCX manuscripts are ready. Need to identify a better-fit journal and potentially reframe.
 
 ## Key Result
 
@@ -13,28 +13,22 @@ Null ideology effects across all analyses. Historical knowledge is the only cons
 
 ## Next Steps
 
-- [ ] **Resubmit fixed `title_page.tex`** to EJPE (added `\usepackage{amsmath}` — required by `sn-jnl.cls`)
-- [ ] Verify the compiled PDF preview on EJPE portal renders title page correctly
-- [ ] Monitor submission status for editorial/reviewer feedback
+- [ ] Choose next target journal (consider assessment/measurement, history education, or social psychology outlets)
+- [ ] Reformat manuscript for new target (may need theoretical reframing depending on journal)
+- [ ] Upload preprint to OSF or PsyArXiv (optional, to establish priority)
 
-## Upload Package
+## Rejection Summary
 
-Single folder: `ejpe_submission/UPLOAD_PACKAGE_EUPE/` (see `UPLOAD_ORDER.txt` inside for EM upload sequence). Contains `.tex` source, `.bib`, `.cls`, `.bst`, figures, and title page.
+| Journal | Date | Reason |
+|---------|------|--------|
+| TRSE | 2026-02-25 | Too psychometric, lacks pedagogical/theoretical grounding |
+| EJPE | 2026-03-18 | Outside scope; suggests Social Psychology journal |
 
-## Completed
+## Archive
 
-- [x] Data collection (N=293, 20 classrooms, 10 schools)
-- [x] Full analysis pipeline (7 Rmd reports rendered)
-- [x] Multilevel models, DIF, MG-CFA, TOST equivalence, Mundlak decomposition, sensitivity analyses
-- [x] Manuscript drafted and converted to LaTeX for EJPE (`ejpe_submission/manuscript_blinded.tex`)
-- [x] OSF replication package assembled (`osf_storage/`)
-- [x] AI-assisted review simulations completed (`reviews/`)
-- [x] EJPE submission EUPE-D-26-00272 uploaded (2026-03-05)
-- [x] Title page compilation fix: added `\usepackage{amsmath}` (2026-03-06)
-- [x] Merged upload folders into single `UPLOAD_PACKAGE_EUPE/`
+Previous submission materials archived in `_archive/` (TRSE, EJPE packages, AI reviews, checklists).
 
 ## References
 
-- Submission ID: EUPE-D-26-00272
 - Preregistration: https://osf.io/yng37/
-- Upload package: `ejpe_submission/UPLOAD_PACKAGE_EUPE/UPLOAD_ORDER.txt`
+- OSF replication package: `osf_storage/`

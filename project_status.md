@@ -1,10 +1,10 @@
 # Project Status Log: phd-029-hpt-and-extremism
 
 **Title:** Stress-Testing Historical Perspective Taking: Ideological Attitudes and Disciplinary Reasoning in Czech Adolescents
-**Target journal:** European Journal of Psychology of Education (EJPE)
-**Submission ID:** EUPE-D-26-00272
+**Target journal:** TBD (TRSE and EJPE both desk-rejected)
+**Previous submissions:** TRSE (desk-rejected 2026-02-25), EJPE EUPE-D-26-00272 (desk-rejected 2026-03-18)
 **Preregistration:** https://osf.io/yng37/
-**Last updated:** 2026-03-06
+**Last updated:** 2026-03-18
 
 ---
 
@@ -44,17 +44,22 @@
 
 ---
 
+### EJPE Desk Rejection (2026-03-18)
+- Submission EUPE-D-26-00272 desk-rejected by Editor in Chief Cintia Rodríguez Garrido. Manuscript deemed outside EJPE aims and scopes. Editor noted EJPE only accepts one-time questionnaire studies with novel concepts/relationships. Suggested resubmitting to a Social Psychology journal. Rejection materials archived in `_archive/ejpe_2026-03/`.
+
+---
+
 ## Current Work
 
-**Phase:** Resubmit corrected title page to EJPE, then await editorial decision.
+**Phase:** Seeking new journal target. Two desk rejections (TRSE, EJPE) suggest a journal-fit problem — manuscript is too psychometric for education journals, not novel enough for psychology of education. Need to find the right audience.
 
-- Upload fixed `title_page.tex` (with `\usepackage{amsmath}`) to EJPE portal.
-- Verify compiled preview renders correctly.
+- Choose next target journal
+- Consider reframing manuscript for new audience
+- Optionally post preprint to establish priority
 
 ---
 
 ## Upcoming
 
-- Monitor EJPE submission for editorial/reviewer feedback.
 - Transfer project outputs to knowledge base (`/project-to-knowledge` workflow).
 - Create literature note for preprint/publication in `knowledge/R/`.
