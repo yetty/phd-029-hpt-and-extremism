@@ -157,6 +157,10 @@ In osf_storage, data files are renamed to `student_responses.*` and scripts use 
 - **Output directory**: All generated reports go to `outputs/`
 - **Manuscript style**: APA 7th edition, American English, Taylor & Francis template
 
+## Code Review via GitHub PRs
+
+For non-trivial tasks (analysis code, multi-file changes), use branch + PR workflow. See root `~/PhD/CLAUDE.md` → "Code Review via GitHub PRs" for full protocol. Branch naming: `claude/<short-description>`. Create draft PR with `gh pr create --draft`, announce URL, and wait for review.
+
 ## Important Notes
 
 - Files containing `CONFIDENTAL` or `CONFIDENTIAL` in the name are gitignored and must not be committed.

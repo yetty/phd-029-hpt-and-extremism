@@ -1,10 +1,10 @@
 # Project Status Log: phd-029-hpt-and-extremism
 
 **Title:** Stress-Testing Historical Perspective Taking: Ideological Attitudes and Disciplinary Reasoning in Czech Adolescents
-**Target journal:** TBD (TRSE and EJPE both desk-rejected)
+**Target journals:** Social Psychology of Education (Paper A), Applied Measurement in Education (Paper B)
 **Previous submissions:** TRSE (desk-rejected 2026-02-25), EJPE EUPE-D-26-00272 (desk-rejected 2026-03-18)
 **Preregistration:** https://osf.io/yng37/
-**Last updated:** 2026-03-18
+**Last updated:** 2026-03-23
 
 ---
 
@@ -49,13 +49,33 @@
 
 ---
 
+### Two-Paper Reframe and Submission Preparation (2026-03-18 → 2026-03-19)
+- Deep journal research with desk-reviewer simulations (`journal_target_analysis.md`). Identified SPE and AME as optimal targets.
+- Split single manuscript into two papers targeting different audiences:
+  - **Paper A** (SPE): Focuses on null ideology–HPT relationship (social psychology angle)
+  - **Paper B** (AME): Focuses on measurement quality — DIF, invariance, bifactor models (psychometric angle)
+- R analyses run to fill all [TO BE COMPUTED] placeholders in Paper B. Quality review and fixes applied to both papers.
+- Paper A converted to Springer LaTeX (`sn-jnl.cls`), built to PDF with separate title page. Paper B built to anonymous and authored DOCX via `build_docx.py`.
+- Cover letters written for both journals. Abstract and keywords extracted for SPE submission portal.
+- Original `trse_outputs/` figure scripts and outputs archived to `_archive/`.
+
+---
+
+### AME Desk Rejection (2026-03-20)
+- Paper B (HAME-2026-0087) desk-rejected by Joel Puchalla (Editorial Assistant). Reason: "AME does not publish studies on specific instruments." Suggested alternative: International Journal of Testing. Third desk rejection overall for phd-029 manuscripts.
+
+### Paper A Submitted to SPE (~2026-03-19)
+- Paper A submitted to Social Psychology of Education via Springer Editorial Manager. Awaiting decision.
+
+---
+
 ## Current Work
 
-**Phase:** Seeking new journal target. Two desk rejections (TRSE, EJPE) suggest a journal-fit problem — manuscript is too psychometric for education journals, not novel enough for psychology of education. Need to find the right audience.
+**Phase:** Paper A under review at SPE. Paper B needs a new target journal after AME desk rejection.
 
-- Choose next target journal
-- Consider reframing manuscript for new audience
-- Optionally post preprint to establish priority
+- [ ] Wait for SPE decision on Paper A
+- [ ] Find new target for Paper B (IJT suggested by AME; consider other measurement journals)
+- [ ] Verify Decker2013 and Ripka2023 bib entries
 
 ---
 

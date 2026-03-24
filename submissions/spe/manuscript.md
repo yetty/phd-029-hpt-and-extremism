@@ -102,17 +102,17 @@ Schools were recruited through convenience sampling; the sample over-represents 
 
 Internal consistency reflected the constraints of three-item subscales: POP raw $\alpha$ = .47 (polychoric $\alpha$ = .53), $\omega$ = .55; ROA raw $\alpha$ = .50 (polychoric $\alpha$ = .53), $\omega$ = .56; CONT raw $\alpha$ = .64 (polychoric $\alpha$ = .69), $\omega$ = .69. These values are modest but expected for three-item subscales with ordinal response formats; CONT demonstrated the strongest reliability, consistent with its highest average factor loadings. Correcting the observed FR-LF--HPT_CTX6 correlation (*r* = -.043) for attenuation yielded a disattenuated *r* = -.065, indicating that measurement error does not plausibly mask a meaningful association. Full psychometric evaluation of the Czech adaptation, including CFA factor structure, measurement invariance, and DIF analyses, is reported in the companion paper [Author, in preparation].
 
-**Right-authoritarian ideology (FR-LF mini).** A six-item short form of the Fragebogen Rechtsextremer Einstellungen---Leipziger Form [@Decker2013], comprising acceptance of right-wing dictatorship (RD) and National Socialist sympathy/relativisation (NS) facets, rated on a 5-point scale. The NS facet is the most direct operationalisation of the content congruence pathway, as it captures attitudes toward the specific ideological content of the HPT scenario.
+**Right-authoritarian ideology (FR-LF mini).** A six-item short form of the Fragebogen Rechtsextremer Einstellungen---Leipziger Form [@Decker2013], comprising acceptance of right-wing dictatorship (RD) and National Socialist sympathy/relativisation (NS) facets, rated on a 5-point scale ($\alpha$ = .67). The NS facet is the most direct operationalisation of the content congruence pathway, as it captures attitudes toward the specific ideological content of the HPT scenario.
 
-**Authoritarianism (KSA-3).** The nine-item Kurzskala Autoritarismus [@Beierlein2014], measuring authoritarian aggression, submission, and conventionalism on a 5-point scale. KSA-3 operationalises the rigidity pathway through its capture of authoritarian cognitive style.
+**Authoritarianism (KSA-3).** The nine-item Kurzskala Autoritarismus [@Beierlein2014], measuring authoritarian aggression, submission, and conventionalism on a 5-point scale ($\alpha$ = .72). KSA-3 operationalises the rigidity pathway through its capture of authoritarian cognitive style.
 
 **Historical knowledge (KN).** Six multiple-choice items covering content relevant to the HPT scenario (e.g., Weimar Republic political conditions, interwar European history), scored dichotomously (sum score 0--6).
 
-**Social desirability (SDR-5).** The five-item short form [@Hays1989], rated on a 5-point scale with items SDR2--SDR4 reverse-coded. Included to control for impression management in self-reported political attitudes.
+**Social desirability (SDR-5).** The five-item short form [@Hays1989], rated on a 5-point scale with items SDR2--SDR4 reverse-coded ($\alpha$ = .50). Included to control for impression management in self-reported political attitudes.
 
 ### 3.3 Analytic Approach
 
-All analyses were conducted in R (version 4.4.2) using lme4 and lmerTest for multilevel models, with lavaan for CFA and mirt for IRT-based DIF analysis.
+All analyses were conducted in R (version 4.4.2) using lme4 and lmerTest for multilevel models, with lavaan for CFA and mirt for IRT-based DIF analysis. Final multilevel models were estimated with restricted maximum likelihood (REML); degrees of freedom for fixed-effect *t*-tests were computed using the Satterthwaite approximation implemented in lmerTest.
 
 **Multilevel models.** Students were nested within classrooms within schools. Random-intercept models with school and classroom random intercepts took the form:
 
@@ -174,25 +174,28 @@ Before specifying multilevel models, we examined the clustering structure of the
 
 Table 3 presents fixed effects from the preregistered multilevel models predicting HPT outcomes. Across all three dependent variables, political attitudes were consistently non-significant, providing no support for H1 or H2.
 
-For HPT_CTX6 (primary outcome), right-authoritarian ideology was unrelated to perspective taking performance: $\beta$ = 0.012, *SE* = 0.067, 95% CI [-0.120, 0.143], *p* = .863. Authoritarianism was similarly non-significant ($\beta$ = -0.052, *p* = .435). Historical knowledge was the only significant predictor ($\beta$ = 0.336, *SE* = 0.057, 95% CI [0.223, 0.448], *p* < .001; $R^2_{\text{marginal}}$ = .113).
+For HPT_CTX6 (primary outcome), right-authoritarian ideology was unrelated to perspective taking performance: $\beta$ = 0.012, *SE* = 0.067, *t*(279.5) = 0.17, 95% CI [-0.120, 0.143], *p* = .863. Authoritarianism was similarly non-significant ($\beta$ = -0.052, *t*(275.7) = -0.78, *p* = .435). Historical knowledge was the only significant predictor ($\beta$ = 0.336, *SE* = 0.057, *t*(277.0) = 5.88, 95% CI [0.223, 0.448], *p* < .001; $R^2_{\text{marginal}}$ = .113).
 
-For CONT, the pattern was identical: FR-LF $\beta$ = 0.004, *p* = .949; KSA-3 $\beta$ = 0.062, *p* > .05; knowledge $\beta$ = 0.211, *p* < .001; $R^2_{\text{marginal}}$ = .049.
+For CONT, the pattern was identical: FR-LF $\beta$ = 0.004, *t*(278.9) = 0.06, *p* = .949; KSA-3 $\beta$ = 0.062, *t*(276.4) = 0.90, *p* = .367; knowledge $\beta$ = 0.211, *t*(275.6) = 3.60, *p* < .001; $R^2_{\text{marginal}}$ = .049.
 
-For POP_rev, FR-LF was again non-significant ($\beta$ = 0.005, *p* = .945). KSA-3 showed a small negative association ($\beta$ = -0.159, *SE* = 0.065, *p* = .016), which is examined in Section 4.7. $R^2_{\text{marginal}}$ = .132.
+For POP_rev, FR-LF was again non-significant ($\beta$ = 0.005, *t*(280) = 0.07, *p* = .945). KSA-3 showed a small negative association ($\beta$ = -0.159, *SE* = 0.065, *t*(280) = -2.44, *p* = .016), which is examined in Section 4.7. $R^2_{\text{marginal}}$ = .132.
 
-**Table 3.** *Fixed effects from multilevel models predicting HPT outcomes (standardised coefficients)*
+**Table 3.** *Fixed effects and variance components from multilevel models predicting HPT outcomes (standardised coefficients)*
 
 | Predictor | HPT CTX6 | CONT | POP_rev |
 |:----------|:--------:|:----:|:-------:|
-| FR-LF (*z*) | 0.012 (0.067) | 0.004 (0.069) | 0.005 (0.066) |
-| KSA-3 (*z*) | -0.052 (0.066) | 0.062 (0.068) | -0.159* (0.065) |
-| KN (*z*) | 0.336*** (0.057) | 0.211*** (0.059) | 0.334*** (0.056) |
-| SDR-5 (*z*) | -0.043 (0.057) | 0.007 (0.059) | -0.082 (0.057) |
+| FR-LF (*z*) | 0.012 (0.067) [0.17] | 0.004 (0.069) [0.06] | 0.005 (0.066) [0.07] |
+| KSA-3 (*z*) | -0.052 (0.066) [-0.78] | 0.062 (0.068) [0.90] | -0.159* (0.065) [-2.44] |
+| KN (*z*) | 0.336*** (0.057) [5.88] | 0.211*** (0.059) [3.60] | 0.334*** (0.056) [5.95] |
+| SDR-5 (*z*) | -0.043 (0.057) [-0.75] | 0.007 (0.059) [0.12] | -0.082 (0.057) [-1.44] |
 | | | | |
+| $\sigma^2_{\text{school}}$ | 0.013 | 0.010 | < 0.001 |
+| $\sigma^2_{\text{class}}$ | < 0.001 | 0.013 | < 0.001 |
+| $\sigma^2_{\text{residual}}$ | 0.886 | 0.929 | 0.878 |
 | $R^2_{\text{marginal}}$ | .113 | .049 | .132 |
 | *N* | 285 | 285 | 285 |
 
-*Note.* Standard errors in parentheses. All predictors *z*-standardised; outcome variables in their original metric (1--4 Likert scale). Coefficients represent the expected change in HPT units per 1-SD change in the predictor. Random intercepts for school and classroom. \* *p* < .05. \*\*\* *p* < .001.
+*Note.* Entries are $\beta$ (*SE*) [*t*]. All predictors and outcomes *z*-standardised. Models estimated with REML; *t*-tests use Satterthwaite denominator degrees of freedom (range: 275.6--280.0). Random intercepts for school and classroom. \* *p* < .05. \*\*\* *p* < .001.
 
 Facet models decomposing FR-LF into its RD (right-wing dictatorship) and NS (National Socialist relativisation) components yielded the same pattern: neither facet significantly predicted any HPT outcome (all *p*s > .21). This is particularly noteworthy for the NS facet, which is theoretically the most direct operationalisation of content congruence with the Weimar scenario---and even this facet showed no association with HPT. Interaction models testing whether the FR-LF effect was moderated by historical knowledge (FR-LF $\times$ KN) found no significant interaction for HPT_CTX6 ($\beta$ = -0.020, *p* = .732) or POP_rev ($\beta$ = 0.074, *p* = .210). For CONT, the interaction approached but did not reach conventional significance ($\beta$ = -0.100, *p* = .099).
 

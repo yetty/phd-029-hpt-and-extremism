@@ -1,0 +1,397 @@
+%% Anonymous manuscript for double-blind review
+%% Target: Social Psychology of Education (Springer)
+%% Compile: pdflatex -> bibtex -> pdflatex x2
+\documentclass[referee,pdflatex,sn-apa]{sn-jnl}
+
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{url}
+\usepackage{lineno}
+
+\raggedbottom
+
+\begin{document}
+
+\title{Does Identity-Protective Cognition Operate in Educational Assessment? Political Attitudes and Historical Reasoning in Czech Adolescents}
+
+%% No \author or \affil -- double-blind review
+
+\abstract{When educational tasks involve politically charged content, does identity-protective cognition bias student performance? This study tests whether political attitudes shape reasoning on a historical perspective taking (HPT) task requiring adolescents to contextualise a young man's decision to join an extremist movement in the Weimar Republic---a scenario where ideological sympathy could substitute for disciplinary reasoning. We administered measures of HPT, right-authoritarian ideology (FR-LF), authoritarianism (KSA-3), historical knowledge, and social desirability to 293 Czech secondary students (10 schools, 20 classrooms). Multilevel models found no association between right-authoritarian ideology and HPT performance (all FR-LF $\beta \approx 0$, all \textit{p}s $>$ .86). Two One-Sided Tests (TOST) confirmed statistical equivalence within $\pm 0.20$ standardised bounds (all TOST \textit{p}s $<$ .003), ruling out practically meaningful ideology effects. Historical knowledge was the sole consistent predictor ($\beta$ = 0.21--0.34, \textit{p} $<$ .001). An exploratory analysis revealed that authoritarianism was negatively associated with presentism resistance ($\beta$ = $-$0.159, \textit{p} = .016), though this effect did not survive correction for multiple comparisons. Full scalar measurement invariance across ideology groups confirmed equivalent item functioning (details in companion paper). These findings suggest that identity-protective cognition does not operate when structured assessment tasks channel deliberative processing---even when content is ideologically charged.}
+
+\keywords{identity-protective cognition, perspective taking, political attitudes, authoritarianism, historical reasoning, educational assessment}
+
+\maketitle
+
+\linenumbers
+
+\section{Introduction}\label{sec:introduction}
+
+Identity-protective cognition---the tendency to process information in ways that reinforce pre-existing beliefs and group identities---is among the most robust findings in social psychology \citep{Kahan2017,Jost2003,Kunda1990}. When information bears on individuals' ideological commitments, they evaluate it less critically if it is attitude-consistent and more sceptically if it challenges their worldview \citep{LodgeTaber2013}. This motivated reasoning operates across domains, shaping how people interpret scientific evidence, evaluate policy arguments, and assess numerical information \citep{Kahan2017,Stanovich2013}.
+
+A natural question follows: does identity-protective cognition extend into educational assessment? When students encounter tasks involving politically charged content, do their political attitudes bias their cognitive performance? This question has significant implications for the social psychology of education. If attitude-consistent processing inflates or deflates scores on cognitive assessments, it undermines not only measurement validity but also the fairness of educational evaluation in ideologically diverse classrooms. Students whose attitudes happen to align with assessment content would receive an unearned advantage---not through superior reasoning but through reduced cognitive friction.
+
+The present study tests this possibility in a domain where ideological content is intrinsic to the task. Historical perspective taking (HPT)---the capacity to reconstruct the beliefs, values, and circumstances that made past actors' decisions intelligible in their own time \citep{Lee2001,Hartmann2008}---is a structured form of perspective taking applied to politically charged historical material. Unlike the interpersonal perspective taking studied extensively in social psychology \citep{Galinsky2005,Selman1980}, HPT requires students to adopt the viewpoint of historical agents whose decisions may involve morally repugnant ideologies. Students must understand without endorsing---inhabiting a past perspective analytically while maintaining critical distance \citep{Lee2001,Wineburg2001}.
+
+A widely used HPT instrument \citep{Hartmann2008} creates a particularly informative test case. The instrument presents students with a scenario about a young man in the Weimar Republic deliberating whether to join an extremist political movement. Students who hold right-authoritarian attitudes might appear to ``contextualise'' the agent's decision not because they are reasoning historically, but because they sympathise with the ideological content. If so, the assessment conflates ideological agreement with disciplinary reasoning---a direct manifestation of identity-protective cognition in an educational measurement context.
+
+Three competing theoretical predictions frame the investigation. The \textit{congruence pathway}, derived from identity-protective cognition theory \citep{Kahan2017,Jost2003}, predicts that students with right-authoritarian attitudes score higher on the Weimar scenario because ideological sympathy reduces the cognitive effort of contextualisation. The \textit{rigidity pathway}, derived from research on authoritarian cognition and integrative complexity \citep{Suedfeld1977,Duckitt2001,VanHiel2016}, predicts that authoritarian students score lower because reduced cognitive flexibility impairs the multi-perspective coordination that perspective taking demands. The \textit{dual-process buffering} account \citep{Evans2013} predicts null associations if the structured assessment format channels deliberative processing, overriding the automatic attitude-retrieval processes that would produce identity-protective responding.
+
+This study reports a preregistered test of the congruence pathway (H1 and H2) alongside exploratory examination of the rigidity pathway, using multilevel models, equivalence testing, and sensitivity analyses with 293 Czech secondary students. Full psychometric evaluation of the Czech HPT adaptation, including factor structure and measurement invariance analyses, is reported in a companion paper [Author, in preparation].
+
+\section{Theoretical Framework}\label{sec:theory}
+
+\subsection{Identity-Protective Cognition and Motivated Reasoning}\label{subsec:ipc}
+
+The concept of identity-protective cognition holds that individuals are motivated to maintain beliefs consistent with their social identities and group memberships \citep{Kahan2017}. When confronted with information that bears on these commitments, people engage in asymmetric processing: attitude-consistent information is accepted at face value, while attitude-inconsistent information is subjected to heightened scrutiny \citep{Kunda1990,LodgeTaber2013}. This is not simply confirmation bias---it is identity maintenance through cognition, with individuals deploying their reasoning abilities in the service of pre-existing conclusions rather than truth-seeking \citep{Stanovich2013}.
+
+In political domains, this phenomenon is well documented. \citet{Kahan2017} demonstrated that numerically literate individuals were \textit{more} prone to misinterpreting quantitative evidence when correct interpretation would challenge their political views---a finding that directly counters the assumption that greater cognitive ability protects against motivated reasoning. \citet{Jost2003}, in their influential meta-analysis, showed that political conservatism is associated with specific epistemic motivations, including needs for order, structure, and closure, that shape how individuals process ambiguous information.
+
+The application to educational assessment is straightforward but largely untested. When assessment tasks involve ideologically charged content, students' responses may be shaped by attitude-consistent processing rather than by the cognitive operations the assessment intends to measure. A student with right-authoritarian attitudes encountering a scenario about joining an extremist movement might find it cognitively easier to ``contextualise'' the historical figure's decision---not through disciplinary reasoning but through attitudinal resonance. The resulting score inflation would represent identity-protective cognition operating within an educational measurement context.
+
+\subsection{Authoritarian Cognition and Integrative Complexity}\label{subsec:authcog}
+
+An alternative prediction emerges from research linking authoritarianism to cognitive style. High authoritarianism is consistently associated with reduced integrative complexity---the capacity to differentiate among and integrate multiple competing perspectives \citep{Suedfeld1977,Duckitt2001}. Authoritarian individuals tend to prefer simple, unambiguous categorisations and resist cognitive complexity \citep{VanHiel2016}. \citet{Duckitt2001} proposed a dual-process model in which right-wing authoritarianism and social dominance orientation reflect distinct motivational bases (threat perception vs.\ competitive worldview) that each constrain the range of perspectives an individual is willing to entertain.
+
+HPT requires precisely the integrative capacity that authoritarianism inhibits. To contextualise a historical actor's decision, students must simultaneously hold in mind the actor's circumstances, values, and knowledge while maintaining their own present-day analytical stance---a form of cognitive coordination that demands flexibility rather than closure. On this account, authoritarian students should perform \textit{worse} on HPT, not better, because the task demands the kind of multi-perspective thinking that authoritarianism constrains. We term this the rigidity pathway.
+
+Critically, the congruence and rigidity pathways could operate simultaneously and partially cancel in aggregate data. A student with right-authoritarian attitudes might benefit from ideological sympathy with the scenario content (congruence) while simultaneously being hampered by reduced cognitive flexibility (rigidity). The net effect on observed scores could be near zero even when both mechanisms are active. Detecting the rigidity pathway therefore requires examining authoritarianism measures separately from content-specific ideology measures.
+
+\subsection{Dual-Process Models and Structured Assessment}\label{subsec:dualprocess}
+
+Dual-process theories distinguish between fast, intuitive processing (Type 1) and slow, deliberative processing (Type 2) \citep{Evans2013}. Identity-protective cognition is typically understood as a Type 1 process: attitudes are automatically activated by relevant content and shape subsequent information processing before deliberative evaluation can intervene. However, the operating conditions of Type 1 processes are not fixed---task characteristics can shift the balance toward deliberative processing.
+
+Structured educational assessments may constitute precisely such a shift. When students encounter a scenario that presents contextual information, poses specific analytical questions, and requires evaluative responses on a rating scale, the task demands may channel Type 2 processing. The requirement to evaluate statements about a historical actor's reasoning---rather than simply to express an opinion about extremism---may activate analytical processing pathways that override automatic attitude retrieval. If so, the assessment format itself serves as a buffer against identity-protective cognition, not because attitudes are absent but because the task structure redirects cognitive resources toward deliberative evaluation.
+
+This possibility connects to broader debates in social psychology about the conditions under which motivated reasoning is attenuated. Accountability, cognitive load, and task framing have all been shown to moderate the influence of prior attitudes on information processing \citep{Kunda1990}. Educational assessments that scaffold analytical reasoning may function similarly, creating conditions where the cognitive architecture of the task overrides the motivational pull of identity protection.
+
+\subsection{The HPT Assessment Context}\label{subsec:hptcontext}
+
+Historical perspective taking occupies a central place in history education internationally \citep{Seixas2013,vanDrie2007,Wineburg2001}. As a form of structured perspective taking applied to historical contexts, HPT shares conceptual territory with the perspective-taking literature in social psychology \citep{Galinsky2005,Selman1980} while differing in important respects. Where interpersonal perspective taking involves adopting the viewpoint of a contemporary other, HPT requires reconstructing the mental world of a historically distant actor---understanding decisions within value systems and circumstances radically different from one's own \citep{Lee2001}.
+
+\citet{Hartmann2008} operationalised HPT into a developmental model with three levels: \textit{presentism}, where students judge historical actors by contemporary standards; \textit{recognition of the agent's role}, where students acknowledge the actor's social position; and \textit{contextualisation}, where students situate decisions within the specific historical conditions that rendered them intelligible. The instrument has been validated in German \citep{Hartmann2008} and Dutch \citep{Huijgen2014} samples, and adapted internationally. The present study uses a Czech adaptation whose psychometric properties are detailed in a companion paper [Author, in preparation].
+
+The specific scenario---a young man in the Weimar Republic weighing whether to join an extremist political movement---was designed in consultation with historians to be age-appropriate and connected to the history curriculum \citep{Hartmann2008}. However, the scenario's content creates the precise conditions under which identity-protective cognition might operate: students must reason about the motivations for joining a movement whose ideological descendants are the subject of contemporary right-authoritarian attitudes.
+
+\subsection{Competing Predictions and Hypotheses}\label{subsec:hypotheses}
+
+The theoretical perspectives outlined above generate distinct, testable predictions:
+
+\begin{enumerate}
+\item \textbf{Congruence pathway} (identity-protective cognition): Students with stronger right-authoritarian attitudes score \textit{higher} on HPT because ideological sympathy reduces the cognitive effort required to contextualise the historical agent's decision. This would manifest as a positive association between right-authoritarian ideology (FR-LF) and HPT scores.
+
+\item \textbf{Rigidity pathway} (authoritarian cognition): Students higher in authoritarianism score \textit{lower} on HPT because reduced integrative complexity impairs multi-perspective reasoning. This would manifest as a negative association between authoritarianism (KSA-3) and HPT scores, particularly on the presentism subscale (which captures the failure to move beyond present-day evaluative frameworks).
+
+\item \textbf{Dual-process buffering}: The structured assessment format channels deliberative processing, overriding attitude-retrieval pathways. This would manifest as null associations between all ideology measures and HPT scores.
+\end{enumerate}
+
+Following the preregistered protocol (OSF: \url{https://osf.io/XXXX/?view_only=ANONYMIZED}), we tested two directional hypotheses:
+
+\textbf{H1 (Congruence pathway):} Students with stronger right-authoritarian attitudes score higher on HPT, consistent with identity-protective cognition inflating scores through ideological sympathy with the scenario content.
+
+\textbf{H2 (Persistence after controls):} The H1 relationship persists after controlling for historical knowledge and social desirability, indicating that the ideological signal is not reducible to confounds.
+
+The rigidity pathway was examined in exploratory analyses.
+
+\section{Method}\label{sec:method}
+
+\subsection{Participants and Procedure}\label{subsec:participants}
+
+The full sample comprised 293 students from 20 classrooms across 10 schools in the Czech Republic, spanning lower-secondary (ISCED 2; \textit{n} = 87, 29.7\%) and upper-secondary (ISCED 3; \textit{n} = 206, 70.3\%) levels. The inclusion criterion was completion of the curricular unit on the interwar period. Schools were drawn from five Czech regions and three funding categories (public: 90.8\%; private: 6.5\%; church-affiliated: 2.7\%). Gender composition was 192 male (65.5\%), 88 female (30.0\%), and 13 identifying as another gender (4.4\%). Students' most recent history grade averaged 1.71 (\textit{SD} = 0.92; Czech scale: 1 = excellent, 5 = failing).
+
+Schools were recruited through convenience sampling; the sample over-represents upper-secondary students relative to the national age cohort composition and should not be treated as a probability sample of Czech adolescents. Sample size was determined by an a priori power analysis targeting 80\% power to detect standardised ideology effects of $\beta \geq .15$ in a two-level multilevel model; the achieved \textit{N} = 285--293 met this target. Within each school, all students present on the day of administration completed the instrument battery during a regular class period (approximately 30--40 minutes). Teachers were present during administration but did not intervene in students' responses. Analytic samples ranged from 276 to 287 depending on variable-specific missingness: missing cluster identifiers (\textit{n} = 6--17), missing individual items on ideology or SDR scales. No systematic pattern of missingness was detected.
+
+\subsection{Measures}\label{subsec:measures}
+
+\textbf{Historical perspective taking (HPT).} We used a Czech adaptation of the \citet{Hartmann2008} scenario-based HPT instrument. Students read a narrative about a young man in the Weimar Republic considering joining an extremist political movement, then responded to nine items on a 4-point Likert scale (1 = \textit{strongly disagree} to 4 = \textit{strongly agree}). Three items each tapped presentism (POP1--POP3), recognition of the agent's role (ROA1--ROA3), and contextualisation (CONT1--CONT3). POP items were reverse-scored (5 $-$ POP) so that higher scores indicate more contextualised reasoning. The primary dependent variable was HPT\_CTX6, the mean of reversed POP and CONT items. HPT\_TOT9 (adding ROA) and CONT alone served as secondary outcomes.
+
+Internal consistency reflected the constraints of three-item subscales: POP raw $\alpha$ = .47 (polychoric $\alpha$ = .53), $\omega$ = .55; ROA raw $\alpha$ = .50 (polychoric $\alpha$ = .53), $\omega$ = .56; CONT raw $\alpha$ = .64 (polychoric $\alpha$ = .69), $\omega$ = .69. These values are modest but expected for three-item subscales with ordinal response formats; CONT demonstrated the strongest reliability, consistent with its highest average factor loadings. Correcting the observed FR-LF--HPT\_CTX6 correlation (\textit{r} = $-$.043) for attenuation yielded a disattenuated \textit{r} = $-$.065, indicating that measurement error does not plausibly mask a meaningful association. Full psychometric evaluation of the Czech adaptation, including CFA factor structure, measurement invariance, and DIF analyses, is reported in the companion paper [Author, in preparation].
+
+\textbf{Right-authoritarian ideology (FR-LF mini).} A six-item short form of the Fragebogen Rechtsextremer Einstellungen---Leipziger Form \citep{Decker2013}, comprising acceptance of right-wing dictatorship (RD) and National Socialist sympathy/relativisation (NS) facets, rated on a 5-point scale ($\alpha$ = .67). The NS facet is the most direct operationalisation of the content congruence pathway, as it captures attitudes toward the specific ideological content of the HPT scenario.
+
+\textbf{Authoritarianism (KSA-3).} The nine-item Kurzskala Autoritarismus \citep{Beierlein2014}, measuring authoritarian aggression, submission, and conventionalism on a 5-point scale ($\alpha$ = .72). KSA-3 operationalises the rigidity pathway through its capture of authoritarian cognitive style.
+
+\textbf{Historical knowledge (KN).} Six multiple-choice items covering content relevant to the HPT scenario (e.g., Weimar Republic political conditions, interwar European history), scored dichotomously (sum score 0--6).
+
+\textbf{Social desirability (SDR-5).} The five-item short form \citep{Hays1989}, rated on a 5-point scale with items SDR2--SDR4 reverse-coded ($\alpha$ = .50). Included to control for impression management in self-reported political attitudes.
+
+\subsection{Analytic Approach}\label{subsec:analytic}
+
+All analyses were conducted in R (version 4.4.2) using lme4 and lmerTest for multilevel models, with lavaan for CFA and mirt for IRT-based DIF analysis. Final multilevel models were estimated with restricted maximum likelihood (REML); degrees of freedom for fixed-effect \textit{t}-tests were computed using the Satterthwaite approximation implemented in lmerTest.
+
+\textbf{Multilevel models.} Students were nested within classrooms within schools. Random-intercept models with school and classroom random intercepts took the form:
+
+\begin{equation}\label{eq:mlm}
+\text{HPT}_{ijk} = \gamma_{00} + \gamma_{10}\text{FR-LF}_{ijk} + \gamma_{20}\text{KSA}_{ijk} + \gamma_{30}\text{KN}_{ijk} + \gamma_{40}\text{SDR}_{ijk} + u_{0j} + u_{0k} + e_{ijk}
+\end{equation}
+
+where \textit{i} indexes students, \textit{j} classrooms, and \textit{k} schools. All predictors were \textit{z}-standardised. Variance inflation factors for all model predictors were below 2.0 in every specification, indicating that multicollinearity did not threaten coefficient estimates. Three dependent variables were analysed: HPT\_CTX6, CONT, and POP\_rev. Gender (65.5\% male, 30.0\% female, 4.4\% other) was not included as a covariate in the primary models because the preregistered analysis plan did not include it. Supplementary models including a binary gender indicator (male/female; \textit{n} = 246 after excluding `other' responses) yielded virtually identical ideology coefficients: FR-LF $\beta$ changed from .011 to .005 (\textit{p} = .898); KSA-3 $\beta$ changed from $-$.077 to $-$.079 (\textit{p} = .058). Gender itself was not a significant predictor of HPT\_CTX6 ($\beta$ = $-$0.106, \textit{p} = .143). These results confirm that the null ideology finding is not confounded by the sample's gender composition.
+
+\textbf{Equivalence testing.} Post hoc Two One-Sided Tests \citep[TOST;][]{Lakens2017} with a smallest effect size of interest (SESOI) of $\pm 0.20$ standardised units tested whether ideology effects could be statistically ruled out as practically significant. The $\pm 0.20$ bound was chosen on three grounds: (a) it corresponds to Cohen's conventional threshold for a ``small'' standardised effect; (b) comparable effect sizes in the motivated reasoning literature---where ideology effects on cognitive performance in structured tasks typically range from $\beta$ = 0.10 to 0.25 \citep{Kahan2017}---suggest that effects below 0.20 would be substantively negligible in an educational assessment context; and (c) for a low-stakes classroom assessment on a 1--4 Likert scale, a 0.20 \textit{SD} shift represents less than one-tenth of a scale point, which is too small to have practical consequences for student evaluation or score interpretation. As a sensitivity check, we also evaluated equivalence at tighter SESOI bounds of $\pm 0.15$ and $\pm 0.10$. The observed ideology estimates ($\beta$ = 0.004--0.012 in absolute value) fall well within all three thresholds, and TOST would confirm equivalence at each bound (see Section~\ref{subsec:tost}). Although TOST was not part of the preregistered protocol, we report it to move beyond the limitations of null hypothesis significance testing and provide positive evidence for the absence of meaningful effects.
+
+\textbf{Sensitivity analyses.} Robustness was assessed across alternative HPT scoring composites (6-, 8-, 9-item), different ideology operationalisations (FR-LF total, NS facet, KSA-3 total), exclusion of high social desirability responders, random-slope models, and school fixed-effects models. Mundlak contextual effects decomposition \citep{Mundlak1978} separated within-classroom and between-classroom ideology effects.
+
+\section{Results}\label{sec:results}
+
+\subsection{Descriptive Statistics}\label{subsec:descriptives}
+
+Table~\ref{tab:descriptive} presents descriptive statistics for all study variables. HPT scores showed the expected ordering: students scored highest on reversed presentism (POP\_rev: \textit{M} = 2.97, \textit{SD} = 0.64), followed by recognition of the agent's role (ROA: \textit{M} = 2.80, \textit{SD} = 0.68) and contextualisation (CONT: \textit{M} = 2.71, \textit{SD} = 0.74). Ideology scores were below the scale midpoint (FR-LF: \textit{M} = 2.48, \textit{SD} = 0.75; KSA-3: \textit{M} = 2.86, \textit{SD} = 0.62), with positively skewed distributions reflecting the rarity of strong right-authoritarian endorsement in mainstream adolescent samples. Only 17.7\% of the full sample scored above the FR-LF midpoint (3.0). Historical knowledge was moderate (\textit{M} = 3.04, \textit{SD} = 1.62 on a 0--6 scale).
+
+\begin{table}[!t]
+\caption{Descriptive statistics for study variables}\label{tab:descriptive}
+\begin{tabular}{lrcccc}
+\toprule
+Variable & \textit{n} & \textit{M} & \textit{SD} & Min & Max \\
+\midrule
+HPT POP (reversed) & 287 & 2.97 & 0.64 & 1.33 & 4.00 \\
+HPT ROA & 287 & 2.80 & 0.68 & 1.00 & 4.00 \\
+HPT CONT & 287 & 2.71 & 0.74 & 1.00 & 4.00 \\
+HPT CTX6 (primary) & 287 & 2.84 & 0.55 & 1.33 & 4.00 \\
+HPT TOT9 & 287 & 2.83 & 0.49 & 1.67 & 3.89 \\
+KN Total (0--6) & 293 & 3.04 & 1.62 & 0.00 & 6.00 \\
+FR-LF RD & 285 & 2.54 & 0.88 & 1.00 & 5.00 \\
+FR-LF NS & 286 & 2.43 & 0.89 & 1.00 & 5.00 \\
+FR-LF Total & 284 & 2.48 & 0.75 & 1.00 & 5.00 \\
+KSA-3 Total & 283 & 2.86 & 0.62 & 1.00 & 5.00 \\
+SDR-5 Total & 283 & 3.02 & 0.63 & 1.00 & 4.60 \\
+\botrule
+\end{tabular}
+
+\medskip\noindent\small\textit{Note.} HPT items scored on a 1--4 scale; POP items reverse-coded. FR-LF and KSA-3 scored on a 1--5 scale. KN scored as sum of correct responses (0--6).
+\end{table}
+
+\subsection{Zero-Order Correlations}\label{subsec:correlations}
+
+Table~\ref{tab:correlations} presents bivariate correlations among key variables. The most striking finding is the near-complete absence of association between political attitudes and HPT performance. FR-LF correlated negligibly with HPT\_CTX6 (\textit{r} = $-$.05), CONT (\textit{r} = .01), and POP\_rev (\textit{r} = $-$.09). KSA-3 showed similarly negligible correlations (\textit{r} = $-$.03 to .07). By contrast, historical knowledge was the strongest correlate of HPT (\textit{r} = .34 with HPT\_CTX6). The ideology measures correlated moderately with each other (FR-LF--KSA-3: \textit{r} = .52), confirming convergent validity of the two attitude measures while supporting their conceptual distinction.
+
+\begin{table}[!t]
+\caption{Zero-order Pearson correlations among key variables}\label{tab:correlations}
+\begin{tabular}{lccccccc}
+\toprule
+ & CTX6 & CONT & POP & KN & FR-LF & KSA & SDR \\
+\midrule
+HPT CTX6 & --- &  &  &  &  &  &  \\
+HPT CONT & .82 & --- &  &  &  &  &  \\
+HPT POP (rev) & .76 & .26 & --- &  &  &  &  \\
+KN Total & .34 & .22 & .32 & --- &  &  &  \\
+FR-LF Total & $-$.05 & .01 & $-$.09 & $-$.10 & --- &  &  \\
+KSA-3 Total & $-$.03 & .07 & $-$.13 & .05 & .52 & --- &  \\
+SDR-5 Total & $-$.02 & .01 & $-$.05 & .03 & $-$.19 & $-$.15 & --- \\
+\botrule
+\end{tabular}
+
+\medskip\noindent\small\textit{Note.} Pairwise complete observations (\textit{n} = 276--287). HPT POP is reverse-scored.
+\end{table}
+
+\subsection{Intraclass Correlations and Random Effect Structure}\label{subsec:icc}
+
+Before specifying multilevel models, we examined the clustering structure of the data. Intraclass correlations indicated meaningful school-level clustering for most HPT outcomes: HPT\_CTX6 ICC$_{\text{school}}$ = .041; HPT\_TOT9 ICC$_{\text{school}}$ = .085; ROA ICC$_{\text{school}}$ = .102. Classroom-level variance was generally near zero for the primary composite but non-negligible for CONT (ICC$_{\text{class}}$ = .033) and ROA (ICC$_{\text{class}}$ = .104), justifying the use of three-level multilevel models with random intercepts for both school and classroom. ICCs for the ideology predictors at the classroom level were small but non-negligible: FR-LF ICC$_{\text{class}}$ = .061, KSA-3 ICC$_{\text{class}}$ = .097, indicating modest classroom clustering of ideological attitudes consistent with shared social environments.
+
+\subsection{Hypothesis Tests: Multilevel Models}\label{subsec:mlm}
+
+Table~\ref{tab:fixedeffects} presents fixed effects from the preregistered multilevel models predicting HPT outcomes. Across all three dependent variables, political attitudes were consistently non-significant, providing no support for H1 or H2.
+
+For HPT\_CTX6 (primary outcome), right-authoritarian ideology was unrelated to perspective taking performance: $\beta$ = 0.012, \textit{SE} = 0.067, \textit{t}(279.5) = 0.17, 95\% CI [$-$0.120, 0.143], \textit{p} = .863. Authoritarianism was similarly non-significant ($\beta$ = $-$0.052, \textit{t}(275.7) = $-$0.78, \textit{p} = .435). Historical knowledge was the only significant predictor ($\beta$ = 0.336, \textit{SE} = 0.057, \textit{t}(277.0) = 5.88, 95\% CI [0.223, 0.448], \textit{p} $<$ .001; $R^2_{\text{marginal}}$ = .113).
+
+For CONT, the pattern was identical: FR-LF $\beta$ = 0.004, \textit{t}(278.9) = 0.06, \textit{p} = .949; KSA-3 $\beta$ = 0.062, \textit{t}(276.4) = 0.90, \textit{p} = .367; knowledge $\beta$ = 0.211, \textit{t}(275.6) = 3.60, \textit{p} $<$ .001; $R^2_{\text{marginal}}$ = .049.
+
+For POP\_rev, FR-LF was again non-significant ($\beta$ = 0.005, \textit{t}(280) = 0.07, \textit{p} = .945). KSA-3 showed a small negative association ($\beta$ = $-$0.159, \textit{SE} = 0.065, \textit{t}(280) = $-$2.44, \textit{p} = .016), which is examined in Section~\ref{subsec:rigidity}. $R^2_{\text{marginal}}$ = .132.
+
+\begin{table}[!t]
+\caption{Fixed effects and variance components from multilevel models predicting HPT outcomes (standardised coefficients)}\label{tab:fixedeffects}
+\begin{tabular}{lccc}
+\toprule
+Predictor & HPT CTX6 & CONT & POP\_rev \\
+\midrule
+FR-LF (\textit{z}) & 0.012 (0.067) [0.17] & 0.004 (0.069) [0.06] & 0.005 (0.066) [0.07] \\
+KSA-3 (\textit{z}) & $-$0.052 (0.066) [$-$0.78] & 0.062 (0.068) [0.90] & $-$0.159$^{*}$ (0.065) [$-$2.44] \\
+KN (\textit{z}) & 0.336$^{***}$ (0.057) [5.88] & 0.211$^{***}$ (0.059) [3.60] & 0.334$^{***}$ (0.056) [5.95] \\
+SDR-5 (\textit{z}) & $-$0.043 (0.057) [$-$0.75] & 0.007 (0.059) [0.12] & $-$0.082 (0.057) [$-$1.44] \\
+ &  &  &  \\
+$\sigma^2_{\text{school}}$ & 0.013 & 0.010 & $<$ 0.001 \\
+$\sigma^2_{\text{class}}$ & $<$ 0.001 & 0.013 & $<$ 0.001 \\
+$\sigma^2_{\text{residual}}$ & 0.886 & 0.929 & 0.878 \\
+$R^2_{\text{marginal}}$ & .113 & .049 & .132 \\
+\textit{N} & 285 & 285 & 285 \\
+\botrule
+\end{tabular}
+
+\medskip\noindent\small\textit{Note.} Entries are $\beta$ (\textit{SE}) [\textit{t}]. All predictors and outcomes \textit{z}-standardised. Models estimated with REML; \textit{t}-tests use Satterthwaite denominator degrees of freedom (range: 275.6--280.0). Random intercepts for school and classroom. $^{*}$~\textit{p} $<$ .05. $^{***}$~\textit{p} $<$ .001.
+\end{table}
+
+Facet models decomposing FR-LF into its RD (right-wing dictatorship) and NS (National Socialist relativisation) components yielded the same pattern: neither facet significantly predicted any HPT outcome (all \textit{p}s $>$ .21). This is particularly noteworthy for the NS facet, which is theoretically the most direct operationalisation of content congruence with the Weimar scenario---and even this facet showed no association with HPT. Interaction models testing whether the FR-LF effect was moderated by historical knowledge (FR-LF $\times$ KN) found no significant interaction for HPT\_CTX6 ($\beta$ = $-$0.020, \textit{p} = .732) or POP\_rev ($\beta$ = 0.074, \textit{p} = .210). For CONT, the interaction approached but did not reach conventional significance ($\beta$ = $-$0.100, \textit{p} = .099).
+
+\subsection{Equivalence Tests (TOST)}\label{subsec:tost}
+
+Moving beyond the absence of a significant effect, we tested whether ideology effects can be positively ruled out as practically meaningful. TOST with a SESOI of $\pm 0.20$ standardised units confirmed equivalence for all HPT outcomes. Table~\ref{tab:tost} presents the equivalence test results.
+
+\begin{table}[!t]
+\caption{Equivalence test (TOST) results for ideology--HPT associations}\label{tab:tost}
+\begin{tabular}{llcccccc}
+\toprule
+Outcome & Predictor & $\beta$ & \textit{SE} & 90\% CI lower & 90\% CI upper & TOST \textit{p} & Decision \\
+\midrule
+HPT\_CTX6 & FR-LF & 0.012 & 0.067 & $-$0.098 & 0.122 & .0026 & Equivalent \\
+CONT & FR-LF & 0.004 & 0.069 & $-$0.110 & 0.118 & .0024 & Equivalent \\
+POP\_rev & FR-LF & 0.005 & 0.066 & $-$0.104 & 0.114 & .0017 & Equivalent \\
+HPT\_CTX6 & KSA-3 & $-$0.052 & 0.066 & $-$0.161 & 0.057 & .0117 & Equivalent \\
+\botrule
+\end{tabular}
+
+\medskip\noindent\small\textit{Note.} SESOI = $\pm 0.20$ standardised units. 90\% CIs fell entirely within [$-$0.20, $+$0.20] for all rows. TOST \textit{p} = the larger of the two one-sided test \textit{p}-values. Exact 90\% CI bounds for additional predictor--outcome combinations are available in the OSF repository.
+\end{table}
+
+In all cases, the 90\% confidence intervals fell entirely within the equivalence bounds, indicating that ideology effects are statistically ruled out as practically significant at the $\pm 0.20$ threshold. The observed point estimates ($\beta$ = 0.004--0.012 in absolute value for FR-LF) are 17 to 50 times smaller than the SESOI. As a sensitivity check, equivalence was also evaluated at tighter bounds of $\pm 0.15$ and $\pm 0.10$. Because the observed FR-LF estimates are so close to zero and the 90\% CIs are narrow, the ideology coefficients pass TOST at all three thresholds. This result moves the inferential status of the null from ``failure to reject'' to ``positive evidence for equivalence''---a critical distinction when the theoretical question concerns the \textit{absence} of identity-protective cognition.
+
+For the exploratory KSA-3--POP\_rev association ($\beta$ = $-$0.159), the 90\% CI lower bound approaches $-$0.27, which falls outside the $\pm 0.20$ equivalence region; accordingly, equivalence cannot be confirmed for this predictor--outcome pair, consistent with the possibility of a small rigidity effect (see Section~\ref{subsec:rigidity}).
+
+\subsection{Sensitivity Analyses}\label{subsec:sensitivity}
+
+The null ideology finding was robust across all sensitivity specifications (Table~\ref{tab:sensitivity}). Across six alternative model specifications---varying HPT scoring (6-, 8-, 9-item composites), ideology operationalisation (FR-LF total, NS facet, KSA-3 total), sample composition (excluding top-10\% social desirability responders), and variance structure (random intercepts, random slopes, school fixed effects)---the ideology coefficient remained non-significant (all \textit{p}s $>$ .42), with point estimates clustering around zero.
+
+\begin{table}[!t]
+\caption{Sensitivity analysis: Ideology coefficients across model specifications}\label{tab:sensitivity}
+\small
+\begin{tabular}{lllllll}
+\toprule
+HPT Score & Predictor & Sample & Model & \textit{B} & 95\% CI & \textit{p} \\
+\midrule
+6-item & FR-LF (\textit{z}) & Full & RI & 0.009 & [$-$0.057, 0.074] & .798 \\
+6-item & FR-LF (\textit{z}) & Full & RS & 0.007 & [$-$0.081, 0.096] & .864 \\
+6-item & NS (\textit{z}) & Full & RI & 0.026 & [$-$0.038, 0.089] & .429 \\
+6-item & KSA-3 (\textit{z}) & Full & RI & $-$0.020 & [$-$0.088, 0.048] & .561 \\
+8-item & FR-LF (\textit{z}) & Full & RI & 0.009 & [$-$0.049, 0.067] & .760 \\
+9-item & FR-LF (\textit{z}) & Full & RI & 0.021 & [$-$0.037, 0.079] & .471 \\
+6-item & FR-LF (\textit{z}) & Excl. & RI & $-$0.006 & [$-$0.075, 0.062] & .853 \\
+8-item & FR-LF (\textit{z}) & Excl. & RI & $-$0.006 & [$-$0.068, 0.055] & .838 \\
+9-item & FR-LF (\textit{z}) & Excl. & RI & 0.005 & [$-$0.056, 0.065] & .876 \\
+6-item & FR-LF (\textit{z}) & Full & FE & 0.028 & [$-$0.106, 0.163] & .677 \\
+\botrule
+\end{tabular}
+
+\medskip\noindent\small\textit{Note.} RI = random intercepts; RS = random slope for FR-LF at the classroom level; FE = school fixed effects. Excl.\ = excluding top-10\% SDR respondents. All models control for KN and SDR. The RS model converged without warnings; estimated random slope variance was near zero, consistent with the absence of classroom-level moderation.
+\end{table}
+
+The null result survived the random-slopes specification, which allows ideology effects to vary across classrooms, indicating that the absence of an ideology effect is not an artefact of averaging over heterogeneous classroom-level relationships. Addressing the concern that multilevel models with only 10 schools may produce biased standard errors \citep{Maas2005}, the school fixed-effects specification yielded virtually identical results (FR-LF $\beta$ = 0.028, \textit{p} = .677).
+
+\subsection{Exploratory Finding: Authoritarianism and Presentism}\label{subsec:rigidity}
+
+\textit{Note: The analysis reported in this subsection was not preregistered and should be treated as exploratory. The effect (p = .016) does not survive Bonferroni correction for the 12 predictor $\times$ outcome combinations tested in the main models (adjusted $\alpha$ = .004), nor would it survive Holm-Bonferroni correction.}
+
+While political ideology showed no association with HPT, authoritarianism (KSA-3) was negatively associated with reversed presentism: $\beta$ = $-$0.159, \textit{SE} = 0.065, 95\% CI [$-$0.288, $-$0.031], \textit{p} = .016. More authoritarian students were slightly more presentist---that is, more likely to judge the historical actor by contemporary moral standards rather than reconstructing the actor's perspective within its historical context. The effect is directionally opposite to what identity-protective cognition would predict: if ideological sympathy were inflating scores, authoritarian students should score higher, not lower. Instead, it is consistent with the rigidity pathway: authoritarian cognitive styles, characterised by reduced integrative complexity and preference for unambiguous categorisation \citep{Duckitt2001,Suedfeld1977}, may make it harder to set aside present-day evaluative frameworks. TOST could not confirm equivalence for this association: with $\beta$ = $-$0.159 and SESOI $\pm 0.20$, the 90\% CI lower bound approaches $-$0.27, falling outside the equivalence region. The specificity of this effect to the presentism subscale is theoretically coherent: contextualisation (CONT) showed no association with KSA-3 ($\beta$ = 0.062, \textit{p} $>$ .05), suggesting that the rigidity pathway operates at the point where students must resist applying their own moral frameworks to the past.
+
+\subsection{Mundlak Decomposition}\label{subsec:mundlak}
+
+A Mundlak contextual effects model decomposing FR-LF into within-classroom and between-classroom components found that neither predicted HPT outcomes (within-classroom: $\beta$ = $+$0.015, \textit{p} = .828; between-classroom: $\beta$ = $-$0.023, \textit{p} = .909 for HPT\_CTX6). This rules out classroom-level ideological climate as a pathway through which political attitudes might influence perspective taking performance---an important finding given that identity-protective cognition could theoretically operate at the group level through social identity salience.
+
+\subsection{Measurement Note}\label{subsec:measurement}
+
+Full scalar measurement invariance was confirmed across ideology groups using multi-group confirmatory factor analysis (configural CFI = .978; scalar $\Delta$CFI = $+$.002, $\Delta$RMSEA = $-$.007). No items exhibited differential functioning in IRT-based DIF analysis (0 of 9 items flagged). These results indicate that the HPT instrument makes equivalent measurement demands on students regardless of their political attitudes. Detailed measurement invariance evidence, including factor structure comparisons, loading patterns, and supplementary invariance analyses using NS-only grouping, is reported in the companion paper [Author, in preparation].
+
+\section{Discussion}\label{sec:discussion}
+
+\subsection{Summary of Findings}\label{subsec:summary}
+
+This study tested whether identity-protective cognition operates in an educational assessment context where task content is directly relevant to students' political attitudes. Across every analytic approach---bivariate correlations, multilevel models, equivalence tests, and multiple sensitivity specifications---no association was found between right-authoritarian political attitudes and historical perspective taking performance. Neither preregistered hypothesis was supported. The TOST procedure provided positive evidence that ideology effects fall within the region of practical equivalence ($\pm 0.20$), and this conclusion held even at tighter bounds of $\pm 0.15$ and $\pm 0.10$. Historical knowledge was the sole consistent predictor of performance ($\beta$ = 0.21--0.34, \textit{p} $<$ .001). An exploratory analysis revealed that authoritarianism (distinct from content-specific right-authoritarian ideology) was negatively associated with presentism resistance, consistent with a rigidity pathway, though this effect did not survive correction for multiple comparisons.
+
+\subsection{Implications for Identity-Protective Cognition Theory}\label{subsec:ipctheory}
+
+The null finding for the congruence pathway has implications for understanding the boundary conditions of identity-protective cognition. The extensive literature documenting motivated reasoning \citep{Kahan2017,Kunda1990,LodgeTaber2013,Stanovich2013} might lead to the prediction that political attitudes would bias performance whenever assessment content is ideologically charged. Our results suggest this prediction is too broad. Even when students encountered a scenario directly relevant to right-authoritarian ideological commitments---a young man considering joining an extremist political movement---their attitudes did not shape their reasoning performance.
+
+This finding identifies a potential boundary condition: identity-protective cognition may not operate when tasks are structured to demand analytical rather than evaluative processing. The HPT assessment does not ask students whether they approve of the historical agent's decision; it asks them to evaluate the degree to which the decision is comprehensible within its historical context. This distinction between understanding and endorsement \citep{Lee2001} may be the critical feature that buffers the task from motivated reasoning. Students are not defending or attacking their own identity commitments; they are engaging in an analytical exercise that happens to involve ideologically relevant content.
+
+This interpretation aligns with the broader literature on conditions that attenuate motivated reasoning. \citet{Kunda1990} argued that motivation biases reasoning primarily when the reasoning strategy can be justified as rational. When tasks make clear what constitutes a good response---as structured assessments arguably do---the space for motivated distortion may shrink. The HPT assessment, by presenting contextual information and asking students to evaluate specific analytical claims, may narrow the ambiguity that motivated reasoning exploits.
+
+\subsection{The Rigidity Pathway: Authoritarianism and Perspective Taking}\label{subsec:rigiditydiscussion}
+
+While the congruence pathway produced null results, the exploratory finding that authoritarianism predicts presentism ($\beta$ = $-$0.159, \textit{p} = .016) opens a potentially informative line of inquiry, though one that must be treated cautiously given that the effect does not survive multiple comparison correction.
+
+The finding is consistent with the integrative complexity tradition \citep{Suedfeld1977}, which has documented that authoritarian individuals produce less integratively complex reasoning across diverse domains. More authoritarian students showed greater difficulty in suspending present-day moral judgement---exactly the cognitive operation that requires simultaneous consideration of multiple, potentially conflicting value systems. The \citet{Duckitt2001} dual-process model predicts that right-wing authoritarianism, driven by threat sensitivity and need for security, should be associated with reduced tolerance for the moral ambiguity inherent in HPT. The specificity to the presentism subscale is theoretically coherent: contextualisation (CONT) showed no KSA-3 association, suggesting that the rigidity pathway operates at the point where students must resist applying their own moral frameworks to the past, rather than at the point of actively constructing a historical interpretation.
+
+This exploratory result warrants preregistered replication before theoretical weight is placed on it. A preregistered study with a larger sample, more comprehensive measures of cognitive style (e.g., need for closure, integrative complexity assessed through open-ended responses), and sufficient power to detect effects of this magnitude would be needed to establish the rigidity pathway as a reliable finding. Until then, the result should be understood as hypothesis-generating rather than hypothesis-confirming.
+
+\subsection{Dual-Process Interpretation}\label{subsec:dualprocessdiscussion}
+
+The null congruence pathway finding is consistent with the dual-process account in which structured assessment tasks channel deliberative processing \citep{Evans2013}. When students encounter the HPT instrument, they are presented with a detailed historical narrative, contextual information, and analytical statements to evaluate. This task structure may activate Type 2 processing from the outset, pre-empting the automatic attitude-retrieval (Type 1) that would produce identity-protective responding.
+
+This interpretation has a practical corollary: the design features of the assessment may themselves constitute the buffering mechanism. The Hartmann instrument's scenario-based approach---providing rich contextual information, posing specific analytical questions, and requiring graduated evaluative responses---may be ``contamination-resistant by design.'' If so, assessment developers working with politically sensitive content have a concrete design principle: scaffolding analytical reasoning through contextual information and specific evaluative prompts may protect against identity-protective cognition.
+
+However, this interpretation must be qualified in two respects. First, we cannot distinguish empirically between ``structured tasks channel deliberative processing'' and ``historical reasoning and political attitudes draw on cognitively independent systems'' on current evidence. It is possible that HPT recruits situation-model construction and perspective-coordination processes that simply do not interact with declarative attitude endorsement, even when their content overlaps. The dual-process interpretation remains speculative without direct measures of processing mode, cognitive effort, or time-on-task. An alternative account is that null ideology effects reflect not active buffering but simply the absence of partisan reasoning defaults---the ``lazy, not biased'' account \citep{PennycookRand2019}, whereby deliberative engagement with the task prevents default ideological responses without requiring active override. Second, resolving these mechanistic alternatives would require process data such as think-aloud protocols or response-time analyses.
+
+\subsection{Domain Knowledge as the Critical Variable}\label{subsec:knowledge}
+
+The robust knowledge--HPT relationship ($\beta$ = 0.21--0.34 across all outcomes) supports the theoretical conceptualisation of HPT as a knowledge-dependent competence \citep{Hartmann2008,Chapman2021,Wineburg2001}. This finding is consistent with the perspective-taking literature more broadly: effective perspective taking requires a knowledge base from which to construct an alternative viewpoint \citep{Galinsky2005}. In the historical domain, students who knew more about the Weimar Republic's political conditions could construct richer, more contextualised interpretations of the historical agent's reasoning.
+
+The contrast between the null ideology effect and the strong knowledge effect produces a clear nomological pattern: the instrument captures what it claims to capture (disciplinary reasoning grounded in domain knowledge) and is not contaminated by what it should be independent of (political attitudes). For social psychologists interested in perspective taking, this suggests that domain knowledge may be a more powerful determinant of perspective-taking quality than dispositional factors---at least in structured assessment contexts.
+
+\subsection{Implications for the Social Psychology of Education}\label{subsec:implications}
+
+These findings carry several implications for the social psychology of education.
+
+First, \textit{assessment fairness in ideologically diverse classrooms}. The confirmation of full scalar measurement invariance means that the HPT instrument makes equivalent demands on students regardless of political attitudes. In classroom settings where students hold diverse political views---increasingly common in polarised societies---this is a reassuring finding. Teachers and assessment developers can use historically sensitive content without systematic bias against (or in favour of) students with particular political orientations.
+
+Second, \textit{perspective taking as a teachable competence}. The dominance of knowledge over attitudes as a predictor suggests that perspective taking in educational contexts is a knowledge-dependent skill rather than an attitude-dependent disposition. This has implications for curriculum design: interventions targeting domain knowledge may be more effective than those targeting political attitudes or tolerance when the goal is to improve students' capacity for structured perspective taking.
+
+Third, \textit{the limits of identity threat}. Research on stereotype threat \citep{Steele1997} has demonstrated that identity-relevant assessment content can impair performance for members of stigmatised groups. A parallel concern might be raised for politically charged content: do students whose attitudes are at odds with the ``correct'' response experience a form of identity threat? Our results suggest that, at least in mainstream classroom settings and with a structured assessment format, identity threat from politically charged content does not manifest in performance differences. This null finding may reflect the same buffering mechanism (structured task demands channelling deliberative processing) or may indicate that political attitudes in adolescents are not yet consolidated enough to function as identity-relevant threats in assessment contexts.
+
+Fourth, \textit{group-level processes}. The Mundlak decomposition finding that neither within-classroom nor between-classroom ideology predicted HPT scores rules out social identity salience as a classroom-level mechanism. Even in classrooms with higher average ideological scores, students' perspective-taking performance was unaffected. This suggests that the identity-protective cognition null extends from the individual to the contextual level.
+
+\subsection{Czech Context: Post-Communist Political Landscape}\label{subsec:czech}
+
+The Czech Republic provides a particularly informative context for this investigation. As a post-communist society with direct historical experience of totalitarian regimes, Czech students encounter the Weimar Republic scenario not as abstract European history but as a narrative with resonance for their own national experience. The 1938 Munich Agreement, Nazi occupation, and subsequent communist regime mean that the dynamics of democratic fragility and radicalisation are living components of Czech historical consciousness \citep{Cinatl2021,Ripka2024,Munich2023}.
+
+The post-1989 Czech Republic has experienced periodic surges in populist and authoritarian political discourse, providing a backdrop against which students encounter politically charged historical content in classrooms. However, the distribution of FR-LF scores in our sample---concentrated below the scale midpoint, with only 17.7\% exceeding it---suggests that strong right-authoritarian attitudes remain relatively rare in mainstream Czech classrooms. This distributional characteristic is both a limitation (restricted range attenuates correlations) and a finding in itself: the null result applies specifically to the range of attitudes typical of democratic classroom settings.
+
+The Czech educational context also shapes how students encounter historical perspective taking. Recent reforms have emphasised historical thinking competences \citep{Cinatl2021,Munich2023}, and recent educational reforms have promoted source-based, inquiry-oriented approaches to history teaching in Czech schools \citep{Ripka2024}. Students in our sample may therefore have had more exposure to structured historical reasoning than students in education systems that emphasise factual recall, potentially increasing their capacity to engage deliberatively with perspective-taking tasks.
+
+\subsection{Limitations}\label{subsec:limitations}
+
+Several limitations should be acknowledged. First, the study uses a single country and a single scenario; generalisability to other national contexts, historical topics, and student populations remains open. Identity-protective cognition might operate more strongly in contexts where political polarisation is more pronounced, where students hold more crystallised political identities, or where the assessment scenario maps onto live political controversies rather than historical ones.
+
+Second, the ideological range is restricted. FR-LF scores were concentrated below the scale midpoint, constituting restriction of range that attenuates observed correlations. Our results characterise the ordinary democratic classroom, not classrooms populated by ideologically committed students. Even within the ``High ideology'' tertile (\textit{n} = 96, FR-LF \textit{M} = 3.20, \textit{SD} = 0.62), only 50\% exceeded the scale midpoint, underscoring that this group represents moderately elevated, not extreme, ideological endorsement.
+
+Third, the sample (\textit{N} = 285--293 across 10 schools) provides adequate power for moderate effects but limited sensitivity to very small effects. The minimum detectable standardised ideology coefficient at 80\% power is approximately $\beta \approx 0.12$--$0.14$. The observed point estimates ($-$0.006 to 0.026) are well within the undetectable range; small effects of $|\beta|$ $<$ 0.08 cannot be excluded with confidence, though such effects would be substantively negligible.
+
+Fourth, the Czech relationship to the Weimar/Nazi period is not merely curricular but existential---the Munich Agreement, Nazi occupation, and post-war Bene\v{s} decrees mean Czech students may approach this scenario through a lens of national historical trauma rather than ideological identification. This historical consciousness could itself serve as a contextualising frame that suppresses identity-protective processing, making the null finding partly context-specific. Replication in countries without this direct historical connection (e.g., Scandinavian or Latin American samples) would help disentangle the role of national historical consciousness from the structural features of the assessment task.
+
+Fifth, ideology measures capture explicit self-reported attitudes and may not capture implicit ideological orientations. Implicit association measures might reveal attitude--performance links that explicit measures miss. Sixth, all study variables were collected via self-report in a single administration session, and common method variance cannot be entirely excluded. Seventh, the closed-ended Likert format may not generalise to open-ended assessments where ideology could operate through different mechanisms such as argument framing or source selection. Eighth, the model controls for historical knowledge and social desirability but does not account for general cognitive ability, academic achievement, socioeconomic background, or family political socialisation.
+
+Finally, the exploratory rigidity pathway finding ($\beta$ = $-$0.159, \textit{p} = .016) does not survive Bonferroni correction and should be interpreted cautiously pending preregistered replication.
+
+\subsection{Future Directions}\label{subsec:future}
+
+Several research directions follow from these findings. Cross-national replications using diverse scenarios---particularly scenarios mapping onto live political controversies in the respective national contexts---would establish the generalisability of the null congruence pathway finding. Studies in politically polarised settings (e.g., the United States, Hungary, or Turkey) would test whether the dual-process buffering mechanism holds under conditions of heightened identity threat.
+
+The rigidity pathway finding invites preregistered replications with larger samples and more comprehensive measures of cognitive style, including need for closure, need for cognition, and integrative complexity assessed through open-ended responses. Experimental designs that manipulate task structure (e.g., structured vs.\ open-ended perspective-taking prompts) could test the dual-process buffering hypothesis directly by examining whether the protective effect of structured assessment disappears when task demands are relaxed.
+
+Process-level investigations using think-aloud protocols or response-time analyses would help distinguish between the competing mechanistic accounts: does the structured task genuinely channel deliberative processing, or do historical reasoning and political attitudes simply operate through independent cognitive systems?
+
+Finally, the strong knowledge effect invites experimental designs that manipulate domain knowledge input to establish causal claims about the knowledge--perspective taking nexus, connecting the educational assessment literature to social psychological research on the conditions under which perspective taking succeeds or fails.
+
+\subsection{Conclusion}\label{subsec:conclusion}
+
+This study provides converging evidence that identity-protective cognition does not operate when adolescents complete a structured historical perspective-taking assessment involving politically charged content. Political attitudes---both content-specific right-authoritarian ideology and general authoritarianism---were unrelated to reasoning performance in mainstream Czech classrooms. Equivalence testing ruled out practically significant ideology effects within $\pm 0.20$ standardised bounds. Historical knowledge, not ideology, determined how well students could contextualise a historical actor's decision.
+
+The exploratory finding that authoritarianism predicts presentism---the failure to suspend present-day moral judgement---opens a distinct theoretical pathway that warrants further investigation. Rather than contaminating assessment through ideological sympathy (the congruence pathway), authoritarian cognitive style may impair the genuine cognitive achievement of perspective taking through reduced integrative complexity (the rigidity pathway). This finding requires preregistered replication before theoretical weight is placed on it.
+
+For the social psychology of education, the key insight is that well-structured cognitive tasks can elicit analytical reasoning even when content is ideologically charged. The assessment format---providing contextual information, posing analytical questions, requiring evaluative responses---may channel deliberative processing that overrides the automatic attitude-retrieval processes underlying identity-protective cognition. This suggests a design principle for educational assessments in politically sensitive domains: structure the task to demand analysis rather than evaluation, and the cognitive architecture of the task may protect against motivational contamination.
+
+\section*{Data Availability Statement}
+
+De-identified data, analysis scripts, and preregistration materials are publicly available on the Open Science Framework (\url{https://osf.io/XXXX/?view_only=ANONYMIZED}). This study shares its dataset with a companion paper reporting the psychometric validation and measurement invariance analysis of the Czech HPT adaptation (Author, in preparation). The two papers address distinct research questions---substantive social psychological questions (present paper) versus measurement properties (companion paper)---and report non-overlapping primary analyses.
+
+\backmatter
+
+\section*{Declarations}
+
+\begin{description}
+\item[Competing interests.] The author declares no competing interests.
+\item[Funding.] This research received no external funding.
+\item[Ethics approval.] This study was conducted in accordance with the ethical requirements of the author's institution and applicable Czech legal provisions for research involving minors. Research procedures were reviewed and approved by the institutional ethics committee prior to data collection.
+\item[Consent to participate.] Participation was fully voluntary; written informed consent was obtained from parents or legal guardians of all participants, and each student's assent was confirmed before administration.
+\item[Preregistration.] Hypotheses, instruments, and analysis plan were preregistered on OSF prior to data collection (\url{https://osf.io/XXXX/?view_only=ANONYMIZED}).
+\end{description}
+
+\bibliography{references}
+
+\end{document}
