@@ -1,26 +1,34 @@
 # Status: phd-029-hpt-and-extremism
 
-**Stage:** Paper A under review at SPE; Paper B desk-rejected by AME, needs new target
-**Updated:** 2026-03-23
+**Stage:** Both papers under review
+**Updated:** 2026-04-03
 
 ## Current State
 
-Paper A submitted to SPE, awaiting decision. Paper B desk-rejected by AME (2026-03-20) — "AME does not publish studies on specific instruments." Third desk rejection for phd-029 manuscripts overall (TRSE, EJPE, AME). Suggested alternative: International Journal of Testing.
+Paper A under review at SPE (submitted ~Mar 19). Paper B submitted
+to International Journal of Testing (IJT, T&F) on 2026-04-03 via
+ScholarOne. Manuscript reframed from AME version with DIF
+sensitivity analysis, clustered data handling (DEFF), expanded CIV
+generalizability discussion, Introduction reframed for measurement
+audience, and abstract shortened to 88 words per IJT guidelines.
+CzechELib OA selected.
 
 ## Manuscripts
 
 | Paper | Journal | Status |
 |-------|---------|--------|
 | **A** | Social Psychology of Education (Q1, Springer) | **Under review** (submitted ~Mar 19) |
-| **B** | Applied Measurement in Education (Q2, T&F) | **Desk-rejected** (2026-03-20, HAME-2026-0087) |
+| **B** | International Journal of Testing (T&F) | **Under review** (submitted 2026-04-03) |
 
 ## Next Steps
 
 - [ ] Wait for SPE decision on Paper A
-- [x] ~~Journal-fit analysis for Paper B~~ → see `submissions/paper_b_journal_fit.md`
-- [ ] **Prepare Paper B for IJT submission:** add DIF power analysis, address clustered data, strengthen CIV generalizability in Discussion, reformat for IJT guidelines
-- [ ] **Submit Paper B** to International Journal of Testing (free via CzechELib)
-- [ ] Verify Decker2013 and Ripka2023 bib entries
+- [ ] Wait for IJT decision on Paper B
+- [x] ~~Journal-fit analysis for Paper B~~ →
+  `submissions/paper_b_journal_fit.md`
+- [x] ~~Prepare Paper B for IJT~~ → `submissions/ijt/`
+- [x] ~~Verify Decker2013 and Ripka2024 bib entries~~ → correct
+- [x] ~~Submit Paper B via ScholarOne~~ → submitted 2026-04-03
 
 ## Key Result
 

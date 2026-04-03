@@ -1,10 +1,13 @@
 # Project Status Log: phd-029-hpt-and-extremism
 
 **Title:** Stress-Testing Historical Perspective Taking: Ideological Attitudes and Disciplinary Reasoning in Czech Adolescents
-**Target journals:** Social Psychology of Education (Paper A), Applied Measurement in Education (Paper B)
-**Previous submissions:** TRSE (desk-rejected 2026-02-25), EJPE EUPE-D-26-00272 (desk-rejected 2026-03-18)
+**Target journals:** Social Psychology of Education (Paper A),
+  International Journal of Testing (Paper B)
+**Previous submissions:** TRSE (desk-rejected 2026-02-25), EJPE
+  EUPE-D-26-00272 (desk-rejected 2026-03-18), AME HAME-2026-0087
+  (desk-rejected 2026-03-20)
 **Preregistration:** https://osf.io/yng37/
-**Last updated:** 2026-03-23
+**Last updated:** 2026-04-03
 
 ---
 
@@ -69,17 +72,42 @@
 
 ---
 
+### Paper B Journal-Fit Analysis and IJT Preparation (2026-03-23 → 2026-04-03)
+- Evaluated 6 journals via desk-reviewer simulations
+  (`submissions/paper_b_journal_fit.md`). IJT selected as primary
+  target (editor-recommended by AME, CzechELib OA, JCR IF 1.43).
+- Manuscript reframed for IJT measurement audience: Introduction
+  leads with cross-cultural adaptation and CIV as general
+  measurement problems; contribution statement reordered
+  (transferable protocol first). Added DIF sensitivity paragraph,
+  clustered data handling (DEFF calculations), expanded CFI=.999
+  explanation, strengthened Discussion CIV generalizability with
+  5-step transferable protocol. Abstract shortened to 88 words per
+  IJT guidelines. References verified, orphan bib entries removed.
+- IJT cover letter written mentioning AME editor recommendation.
+- Separate title page with running head, word count, submission
+  date, and mailing address created per IJT author instructions.
+
+### Paper B Submitted to IJT (2026-04-03)
+- Submitted via ScholarOne (Traditional Submission). Files:
+  `manuscript_anonymous.docx` (Main Document),
+  `title_page.docx` (Title Page), `cover_letter.docx`.
+  CzechELib OA agreement selected.
+
+---
+
 ## Current Work
 
-**Phase:** Paper A under review at SPE. Paper B needs a new target journal after AME desk rejection.
+**Phase:** Both papers under review.
 
 - [ ] Wait for SPE decision on Paper A
-- [ ] Find new target for Paper B (IJT suggested by AME; consider other measurement journals)
-- [ ] Verify Decker2013 and Ripka2023 bib entries
+- [ ] Wait for IJT decision on Paper B
 
 ---
 
 ## Upcoming
 
-- Transfer project outputs to knowledge base (`/project-to-knowledge` workflow).
-- Create literature note for preprint/publication in `knowledge/R/`.
+- Transfer project outputs to knowledge base
+  (`/project-to-knowledge` workflow).
+- Create literature note for preprint/publication in
+  `knowledge/R/`.
