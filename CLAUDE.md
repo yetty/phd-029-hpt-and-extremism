@@ -8,6 +8,11 @@ Hypotheses, instruments, and analysis plan were preregistered on the Open Scienc
 
 The study tests whether a Historical Perspective Taking (HPT) instrument used in history education is contaminated by right-authoritarian ideological attitudes. The core question: do students with stronger right-authoritarian views score higher on HPT simply because the instrument conflates ideological agreement with disciplinary reasoning?
 
+## Markdown Formatting
+
+Hard-wrap `.md` files at 80 characters. Break lines at word boundaries.
+Exceptions: tables, URLs, code blocks, YAML frontmatter.
+
 ## Status Tracking
 
 Two files track project state. **Read both at the start of every session.**
