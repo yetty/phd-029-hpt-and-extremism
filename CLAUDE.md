@@ -2,7 +2,18 @@
 
 ## Overview
 
-This is a quantitative research project for a manuscript titled _"Do Political Attitudes Contaminate Historical Reasoning? Ideological Attitudes and Disciplinary Thinking in Czech Adolescents"_ by Juda Kaleta (Institute of History, Faculty of Arts, Charles University). Currently seeking a new target journal after desk rejections from TRSE (2026-02-25) and EJPE (2026-03-18). See `_archive/` for past submission materials.
+This is a quantitative research project for a manuscript titled _"Do Political Attitudes Contaminate Historical Reasoning? Ideological Attitudes and Disciplinary Thinking in Czech Adolescents"_ by Juda Kaleta (Institute of History, Faculty of Arts, Charles University). Previously desk-rejected from TRSE (2026-02-25) and EJPE (2026-03-18). See `_archive/` for past submission materials.
+
+## Publication Venue
+
+**Primary:** PCI Psychology → Peer Community Journal (diamond
+OA, WoS + Scopus indexed, IF 2.0, no fees). Submit preprint
+to PsyArXiv, then submit to PCI Psychology for peer review
+under Educational Psychology / Social Psychology scope.
+
+**Fallback:** Theory & Research in Social Education (TRSE),
+Journal of Social Studies Research (JSSR), or similar
+discipline-specific journals.
 
 Hypotheses, instruments, and analysis plan were preregistered on the Open Science Framework (https://osf.io/yng37/).
 
