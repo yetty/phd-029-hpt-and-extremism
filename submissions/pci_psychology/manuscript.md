@@ -709,35 +709,30 @@ from Multi-Group Graded Response Model)*
 
 | Item | $\chi^2$ | *df* | *p* (raw) | *p* (Bonferroni) | Flagged |
 |------|----------|------|-----------|------------------|---------|
-| POP1_rev | 11.91 | 4 | .018 | .162 | No |
-| POP2_rev | 8.88 | 4 | .064 | .579 | No |
-| POP3_rev | 17.13 | 4 | .002 | .016 | No |
-| ROA1 | 11.13 | 4 | .025 | .226 | No |
-| ROA2 | 3.55 | 4 | .471 | 1.000 | No |
-| ROA3 | 3.45 | 4 | .486 | 1.000 | No |
-| CONT1 | 1.48 | 4 | .830 | 1.000 | No |
-| CONT2 | 3.53 | 4 | .473 | 1.000 | No |
-| CONT3 | 9.56 | 4 | .048 | .436 | No |
+| POP1 | 11.18 | 4 | .025 | .222 | No |
+| POP2 | 9.42 | 4 | .051 | .462 | No |
+| POP3 | 9.50 | 4 | .050 | .448 | No |
+| ROA1 | 9.88 | 4 | .043 | .383 | No |
+| ROA2 | 2.90 | 4 | .575 | 1.000 | No |
+| ROA3 | 8.03 | 4 | .091 | .815 | No |
+| CONT1 | 1.65 | 4 | .800 | 1.000 | No |
+| CONT2 | 3.45 | 4 | .486 | 1.000 | No |
+| CONT3 | 9.43 | 4 | .051 | .461 | No |
 
 *Note.* Likelihood-ratio chi-square statistics from constrained
 multi-group graded response models. Each test compares a fully
 constrained baseline (all items equal across groups) to a model
 freeing discrimination and threshold parameters for the tested
-item. Low (*n* = 86) and High (*n* = 82) ideology groups formed by
+item. Low (*n* = 96) and High (*n* = 96) ideology groups formed by
 tertile split on composite ideology score (middle tertile
 excluded). Bonferroni-adjusted $\alpha$ = .01 (9 tests). 0 of 9
-items flagged. POP3_rev showed the largest DIF statistic ($\chi^2$
-= 17.13, *p*_raw = .002) but did not survive Bonferroni correction
-(*p*_adj = .016 > .01). This near-significant result is
-substantively noteworthy because POP items---reverse-scored
-presentism statements---are theoretically the most susceptible to
-attitude-congruent responding: a student who rejects presentist
-judgments may do so from ideological sympathy rather than
-disciplinary reasoning. Whether POP3_rev's marginal DIF reflects a
-genuine attitudinal pathway or sampling variability cannot be
-determined with the present sample size. Raju's signed area (an
-IRT-based DIF effect-size index) and raw parameter differences are
-available in the OSF supplementary materials (Table S1).
+items flagged. POP1 showed the largest DIF statistic ($\chi^2$ =
+11.18, *p*_raw = .025), well above the Bonferroni threshold after
+correction (*p*_adj = .222). No item approached significance after
+correction, indicating statistically equivalent item parameters
+across ideology groups. GRM item discrimination and threshold
+parameters are reported in Table S1 in the OSF supplementary
+materials.
 
 ### 4.7 Measurement Invariance
 
@@ -770,8 +765,13 @@ groups formed by tertile split on composite ideology (*n* $\approx$
 
 The SRMR increased slightly from configural (.074) to metric
 (.081) before returning at scalar (.076). This pattern can signal
-partial loading non-invariance, but the change magnitude is small
-and no individual loading modification index was large.
+partial loading non-invariance. The largest modification index at
+the metric step was 11.28 (ROA =~ POP2 cross-loading in the Low
+ideology group), marginally above the conventional threshold of 10.
+This suggests a minor loading difference for POP2 that is
+consistent with its weak loading (.30) in the overall CFA (Table
+2) rather than evidence of systematic group-specific
+misspecification.
 
 A lavaan warning about negative estimated observed variances
 occurred for the configural and metric models, which can arise with
@@ -799,9 +799,10 @@ groups defined by the NS facet alone (National Socialist
 sympathy/relativization), which represents the most direct
 theoretical operationalization of content congruence with the
 Weimar scenario. With the NS tertile split, group sizes were *n* =
-98 (Low) and *n* = 89 (High). The supplementary analysis confirmed
-scalar invariance (configural CFI = .971, RMSEA = .049; metric
-$\Delta$CFI = $-$.001; scalar $\Delta$CFI = +.002), indicating
+126 (Low) and *n* = 125 (High). The supplementary analysis
+confirmed scalar invariance (configural CFI = .960, RMSEA = .050,
+SRMR = .070; metric $\Delta$CFI = +.002, $\Delta$SRMR = +.006;
+scalar $\Delta$CFI = +.014, $\Delta$SRMR = $-$.003), indicating
 that the instrument functions equivalently even when groups are
 defined by the ideology facet most proximal to the scenario
 content. Full fit statistics for this supplementary analysis are
@@ -868,7 +869,8 @@ target of $\beta$ $\geq$ .15 was narrower than this SESOI, meaning
 that effects between .15 and .20 cannot be confidently excluded.
 With this boundary, the TOST results confirmed that ideology
 effects at or above $\beta$ = .20 are statistically ruled out (all
-TOST *p*s < .003). The ideology
+TOST *p*s < .003; 90% CI for the primary outcome [$-$0.10, 0.12],
+entirely within the $\pm$ 0.20 SESOI). The ideology
 coefficient remained non-significant across all sensitivity checks,
 including alternative HPT scoring composites, different ideology
 operationalizations, exclusion of high social desirability
