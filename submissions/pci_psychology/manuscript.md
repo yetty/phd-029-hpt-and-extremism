@@ -841,17 +841,18 @@ management.
 | | CTX6 | CONT | POP_rev | KN | FR-LF | KSA | SDR |
 |------|------|------|---------|------|-------|------|------|
 | HPT CTX6 | --- | | | | | | |
-| HPT CONT | .82 | --- | | | | | |
-| HPT POP_rev | .76 | .26 | --- | | | | |
-| KN Total | .34 | .22 | .32 | --- | | | |
+| HPT CONT | .82\*\*\* | --- | | | | | |
+| HPT POP_rev | .76\*\*\* | .26\*\*\* | --- | | | | |
+| KN Total | .34\*\*\* | .22\*\*\* | .32\*\*\* | --- | | | |
 | FR-LF Total | $-$.05 | .01 | $-$.09 | $-$.10 | --- | | |
-| KSA-3 Total | $-$.03 | .07 | $-$.13 | .05 | .52 | --- | |
-| SDR-5 Total | $-$.02 | .01 | $-$.05 | .03 | $-$.19 | $-$.15 | --- |
+| KSA-3 Total | $-$.03 | .07 | $-$.13\* | .05 | .52\*\*\* | --- | |
+| SDR-5 Total | $-$.02 | .01 | $-$.05 | .03 | $-$.19\*\* | $-$.15\* | --- |
 
 *Note.* Pairwise complete observations (*n* = 276--287). HPT POP
 is reverse-scored. KN = historical knowledge (0--6 sum); FR-LF =
 right-authoritarian ideology (1--5); KSA-3 = authoritarianism
 (1--5); SDR-5 = social desirability (1--5).
+\*\*\* *p* < .001. \*\* *p* < .01. \* *p* < .05.
 
 ### 4.10 Substantive Context: Ideology-HPT Relationships
 
