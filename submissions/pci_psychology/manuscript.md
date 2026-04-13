@@ -336,7 +336,7 @@ four-point response format (1 = *strongly disagree* to 4 =
 subscale), and the reverse-scoring of POP items were retained
 unchanged from the validated German version. All deviations from
 the original were documented transparently in the OSF repository
-(https://osf.io/yng37/). The scenario narrative was cross-checked
+(https://doi.org/10.17605/OSF.IO/YNG37). The scenario narrative was cross-checked
 against the Czech history curriculum to confirm that all contextual
 references were accessible to the target population.
 
@@ -364,7 +364,7 @@ over-represents upper-secondary students relative to the national
 age cohort composition and should not be treated as a probability
 sample of Czech adolescents. Sample size was determined by an a
 priori power analysis specified in the preregistered protocol (OSF:
-https://osf.io/yng37/), targeting 80% power to detect standardized
+https://doi.org/10.17605/OSF.IO/YNG37), targeting 80% power to detect standardized
 ideology effects of $\beta$ $\geq$ .15 in a two-level multilevel
 model; the achieved *N* = 285--293 met this target. Within each
 school, all students present on the day of administration completed
@@ -1073,8 +1073,7 @@ content meets competence assessment.
 De-identified data, annotated analysis scripts, the complete
 instrument battery (in Czech), supplementary materials, and
 all deviations from the original instrument are available on
-the Open Science Framework (https://osf.io/yng37/; DOI to be
-assigned upon acceptance). Data are provided in
+the Open Science Framework (https://doi.org/10.17605/OSF.IO/YNG37). Data are provided in
 machine-readable formats (RDS and xlsx) accompanied by a full
 variable codebook (PDF). The analysis pipeline consists of
 seven numbered R Markdown scripts that reproduce all reported
