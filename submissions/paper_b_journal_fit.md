@@ -179,5 +179,64 @@
 | TRSE | 2026-02-25 | Too psychometric, lacks pedagogical grounding |
 | EJPE | 2026-03-18 | Outside scope, no novel concepts/relationships |
 | AME | 2026-03-20 | "Does not publish studies on specific instruments" |
+| IJT | 2026-04-11 | HPT too niche, Czech sample too narrow for "international generalizability" scope |
 
-All three rejections were scope mismatches, not quality concerns. The three passing journals above have been validated against this exact pattern.
+All four rejections were scope mismatches, not quality concerns.
+
+---
+
+## Iteration 2: PCI Psychology Pivot (2026-04-13)
+
+### Pattern Analysis
+
+Four desk rejections reveal a structural mismatch with
+traditional journal categories:
+- **Education journals** (TRSE, EJPE): "too psychometric"
+- **Measurement journals** (AME): "we don't publish instrument
+  studies"
+- **Testing journals** (IJT): "not generalizable enough"
+
+Paper B is too psychometric for education, too niche for
+measurement, and too domain-specific for testing. Traditional
+journals require the paper to be something it isn't.
+
+### New Primary Target: PCI Psychology → Peer Community Journal
+
+**Pathway:** Post preprint on PsyArXiv → submit to PCI
+Psychology → if recommended → publish in Peer Community Journal.
+
+| Dimension | PCI Psychology → PCJ |
+|-----------|---------------------|
+| **Cost** | Free (Diamond OA, no APCs) |
+| **IF (JCR)** | 2.0 (PCJ) |
+| **WoS** | Yes |
+| **Scopus** | Yes |
+| **Scope fit** | Quantitative Psychology section: psychometrics, measurement models, test fairness |
+| **Desk-reject risk** | None — recommenders self-select by expertise, no editor gatekeeping |
+| **Review model** | Open, transparent peer review |
+| **Preregistration** | Valued (study is preregistered on OSF) |
+
+**Why PCI Psychology works where traditional journals failed:**
+1. No scope gatekeeping — recommenders volunteer based on
+   expertise match, not editorial policy exclusions
+2. Quantitative Psychology section explicitly covers
+   psychometrics, measurement models, and fairness
+3. The CIV methodology framing is generalizable enough for
+   quantitative psychologists
+4. Educational assessment context is not disqualifying (unlike
+   EJPA's narrow "psychological instruments" requirement)
+5. Diamond OA with better indexing than PTAD (WoS + Scopus,
+   IF 2.0 vs no WoS, no JCR)
+
+**Potential concern:** Recommender availability for
+domain-specific measurement papers. Mitigated by the
+methodology's generalizability (CIV detection applies beyond
+history education).
+
+### Updated Priority
+
+| Priority | Venue | Rationale |
+|----------|-------|-----------|
+| **1st** | **PCI Psychology → PCJ** | Diamond OA, no fees, WoS + Scopus, no desk-reject risk, aligns with open science values |
+| **2nd** | **JPA (SAGE)** | Strong scope fit if fairness angle foregrounded, CzechELib OA |
+| **3rd** | **PTAD (Hogrefe)** | Lowest desk-reject risk, but EUR 1,950 APC, not in JCR |

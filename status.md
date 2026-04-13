@@ -1,41 +1,41 @@
 # Status: phd-029-hpt-and-extremism
 
-**Stage:** Both papers under review
-**Updated:** 2026-04-03
+**Stage:** Paper A under review; Paper B venue pivot after 4th
+desk rejection
+**Updated:** 2026-04-13
 
 ## Current State
 
-Paper A under review at SPE (submitted ~Mar 19). Paper B submitted
-to International Journal of Testing (IJT, T&F) on 2026-04-03 via
-ScholarOne. Manuscript reframed from AME version with DIF
-sensitivity analysis, clustered data handling (DEFF), expanded CIV
-generalizability discussion, Introduction reframed for measurement
-audience, and abstract shortened to 88 words per IJT guidelines.
-CzechELib OA selected.
+Paper A under review at SPE (submitted ~Mar 19). Paper B
+desk-rejected by IJT (2026-04-11) — 4th rejection (TRSE, EJPE,
+AME, IJT). All rejections were scope mismatches, not quality.
+Venue strategy pivoting to PCI Psychology (Diamond OA).
 
 ## Manuscripts
 
-| Paper | Journal | Status |
-|-------|---------|--------|
-| **A** | Social Psychology of Education (Q1, Springer) | **Under review** (submitted ~Mar 19) |
-| **B** | International Journal of Testing (T&F) | **Under review** (submitted 2026-04-03) |
+| Paper | Target | Status |
+|-------|--------|--------|
+| **A** | Social Psychology of Education (Q1, Springer) | **Under review** (~Mar 19) |
+| **B** | PCI Psychology → Peer Community Journal | **Venue pivot** — preparing PsyArXiv preprint |
 
 ## Next Steps
 
 - [ ] Wait for SPE decision on Paper A
-- [ ] Wait for IJT decision on Paper B
-- [x] ~~Journal-fit analysis for Paper B~~ →
-  `submissions/paper_b_journal_fit.md`
-- [x] ~~Prepare Paper B for IJT~~ → `submissions/ijt/`
-- [x] ~~Verify Decker2013 and Ripka2024 bib entries~~ → correct
-- [x] ~~Submit Paper B via ScholarOne~~ → submitted 2026-04-03
+- [ ] Post Paper B preprint on PsyArXiv
+- [ ] Submit Paper B to PCI Psychology (Quantitative Psych scope)
+- [ ] Archive IJT submission materials to `_archive/`
 
 ## Key Result
 
-Null ideology effects across all analyses. Historical knowledge is the only consistent predictor of HPT scores.
+Null ideology effects across all analyses. Historical knowledge
+is the only consistent predictor of HPT scores.
 
-## References
+## Venue Strategy (Paper B)
 
-- Journal analysis: `journal_target_analysis.md`
-- Preregistration: https://osf.io/yng37/
-- Previous submissions archived: `_archive/`
+Four desk rejections confirm a journal-fit problem, not quality.
+PCI Psychology chosen because: no desk-rejection gatekeeping
+(recommenders self-select by expertise), Diamond OA (no fees),
+WoS + Scopus via PCJ (IF 2.0), Quantitative Psychology section
+covers psychometrics and measurement fairness.
+
+Fallbacks: JPA (SAGE), PTAD (Hogrefe, EUR 1,950 APC).

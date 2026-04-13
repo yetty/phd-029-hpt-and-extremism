@@ -6,14 +6,17 @@ This is a quantitative research project for a manuscript titled _"Do Political A
 
 ## Publication Venue
 
-**Primary:** PCI Psychology → Peer Community Journal (diamond
-OA, WoS + Scopus indexed, IF 2.0, no fees). Submit preprint
-to PsyArXiv, then submit to PCI Psychology for peer review
-under Educational Psychology / Social Psychology scope.
+**Paper A:** Social Psychology of Education (Springer, Q1) —
+under review since ~Mar 2026.
 
-**Fallback:** Theory & Research in Social Education (TRSE),
-Journal of Social Studies Research (JSSR), or similar
-discipline-specific journals.
+**Paper B:** PCI Psychology → Peer Community Journal (diamond OA,
+WoS + Scopus indexed, IF 2.0, no fees). Submit preprint to
+PsyArXiv, then submit to PCI Psychology for peer review under
+Quantitative Psychology / Educational Psychology scope.
+
+**Paper B fallbacks:** Journal of Psychoeducational Assessment
+(JPA, SAGE), Psychological Test Adaptation and Development
+(PTAD, Hogrefe — EUR 1,950 APC).
 
 Hypotheses, instruments, and analysis plan were preregistered on the Open Science Framework (https://osf.io/yng37/).
 

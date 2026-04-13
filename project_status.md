@@ -2,12 +2,13 @@
 
 **Title:** Stress-Testing Historical Perspective Taking: Ideological Attitudes and Disciplinary Reasoning in Czech Adolescents
 **Target journals:** Social Psychology of Education (Paper A),
-  International Journal of Testing (Paper B)
+  PCI Psychology → Peer Community Journal (Paper B)
 **Previous submissions:** TRSE (desk-rejected 2026-02-25), EJPE
   EUPE-D-26-00272 (desk-rejected 2026-03-18), AME HAME-2026-0087
-  (desk-rejected 2026-03-20)
+  (desk-rejected 2026-03-20), IJT IJT260038 (desk-rejected
+  2026-04-11)
 **Preregistration:** https://osf.io/yng37/
-**Last updated:** 2026-04-03
+**Last updated:** 2026-04-13
 
 ---
 
@@ -96,12 +97,37 @@
 
 ---
 
+### IJT Desk Rejection (2026-04-11)
+- Paper B (IJT260038) desk-rejected by Editor Christopher D. Nye.
+  IJT does not publish studies on a specific measure or specific
+  sample unless the measure is widely used with profound
+  implications. HPT + Czech sample too narrow for IJT's
+  "international generalizability" scope. Fourth desk rejection
+  for Paper B — AME editor's recommended target path exhausted.
+
+### Venue Strategy Pivot: PCI Psychology (2026-04-13)
+- Four desk rejections reveal a structural journal-fit problem:
+  education journals say "too psychometric," measurement journals
+  say "too niche/instrument-specific," testing journals say "not
+  generalizable enough." Paper B falls between traditional
+  categories.
+- **New primary target: PCI Psychology → Peer Community Journal.**
+  Quantitative Psychology section covers psychometrics, measurement
+  models, test fairness. No desk-rejection gatekeeping (recommenders
+  self-select). Diamond OA, WoS + Scopus indexed, IF 2.0, no fees.
+- Pathway: post preprint on PsyArXiv → submit to PCI Psychology →
+  if recommended, publish in Peer Community Journal.
+- Fallbacks: JPA (SAGE, CzechELib), PTAD (Hogrefe, EUR 1,950 APC).
+
+---
+
 ## Current Work
 
-**Phase:** Both papers under review.
+**Phase:** Paper A under review; Paper B venue pivot.
 
 - [ ] Wait for SPE decision on Paper A
-- [ ] Wait for IJT decision on Paper B
+- [ ] Post Paper B preprint on PsyArXiv
+- [ ] Submit Paper B to PCI Psychology (Quantitative Psychology)
 
 ---
 
