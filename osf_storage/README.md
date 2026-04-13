@@ -6,7 +6,8 @@ A Boundary-Condition Validation of the Hartmann & Hasselhorn HPT Instrument
 **Author:** Juda Kaleta
 **Affiliation:** Institute of History, Faculty of Arts, Charles University, Prague
 **Preregistration:** https://osf.io/yng37/
-**Manuscript target journal:** *Theory & Research in Social Education*
+**Preprint:** [DOI to be assigned]
+**Submitted to:** PCI Psychology (Peer Community In)
 
 ---
 
@@ -105,6 +106,28 @@ Or using **make** (requires R and latexmk):
 # From scripts/ directory, after copying student_responses.RDS here:
 make all
 ```
+
+**Expected runtime:** The full pipeline (7 Rmd reports + 4 figure
+scripts) takes approximately 10--15 minutes on a standard laptop
+(4-core CPU, 16 GB RAM). The most time-intensive step is
+`04_dif_and_mg_cfa_measurement_bias.Rmd` (IRT model fitting,
+~3--5 min). Individual figure scripts run in under 30 seconds each.
+
+### Mapping scripts to manuscript tables and figures
+
+| Manuscript element | Source script |
+|--------------------|--------------|
+| Table 1 (Sample descriptives) | `02_descriptives_and_zero_order_correlations.Rmd` |
+| Table 2 (Reliability and CFA fit) | `01_measurement_checks.Rmd` |
+| Table 3 (Zero-order correlations) | `02_descriptives_and_zero_order_correlations.Rmd` |
+| Table 4 (Multilevel model results) | `03_multilevel_models_hypothesis_tests.Rmd` |
+| Table 5 (MG-CFA invariance) | `04_dif_and_mg_cfa_measurement_bias.Rmd` |
+| Table 6 (Sensitivity analyses) | `05_sensitivity_analyses.Rmd` |
+| Table S1 (GRM item parameters) | `04_dif_and_mg_cfa_measurement_bias.Rmd` |
+| Figure 1 (MG-CFA + DIF) | `fig02_measurement_invariance_and_dif.R` |
+| Figure 2 (Score distributions) | `fig03_score_distributions.R` |
+| Figure 3 (Coefficient plot) | `fig04_coefficient_plot.R` |
+| Figure 4 (Marginal effects) | `fig05_marginal_effects.R` |
 
 ### Manuscript figure scripts
 
@@ -242,10 +265,10 @@ Student responses were anonymised at the point of data entry.
 
 ## Citation
 
-Kaleta, J. (in press). Does ideological orientation contaminate historical perspective taking?
-A boundary-condition validation study. *Theory & Research in Social Education*.
-
-Preregistration: https://osf.io/yng37/
+Kaleta, J. (2026). Cross-cultural validation and ideological
+fairness of a Historical Perspective Taking instrument: Evidence
+from Czech secondary students. [Preprint submitted to PCI
+Psychology]. https://osf.io/yng37/
 
 ---
 

@@ -1070,11 +1070,20 @@ content meets competence assessment.
 
 ## Data Availability Statement
 
-De-identified data, analysis scripts, the complete instrument
-battery (in Czech), and all deviations from the original instrument
-are available on the Open Science Framework
-(https://osf.io/yng37/). The study design, hypotheses, and
-analysis plan were preregistered on OSF prior to data collection.
+De-identified data, annotated analysis scripts, the complete
+instrument battery (in Czech), supplementary materials, and
+all deviations from the original instrument are available on
+the Open Science Framework (https://osf.io/yng37/; DOI to be
+assigned upon acceptance). Data are provided in
+machine-readable formats (RDS and xlsx) accompanied by a full
+variable codebook (PDF). The analysis pipeline consists of
+seven numbered R Markdown scripts that reproduce all reported
+results; a README file documents the directory structure,
+execution order, software requirements, and mapping of scripts
+to manuscript tables and figures. Supplementary materials
+(Table S1: GRM item parameters) are included in the OSF
+repository. The study design, hypotheses, and analysis plan
+were preregistered on OSF prior to data collection.
 
 ## Conflict of Interest Disclosure
 
