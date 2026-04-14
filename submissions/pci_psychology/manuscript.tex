@@ -54,32 +54,8 @@
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{-\maxdimen} % remove section numbering
-\newlength{\cslhangindent}
-\setlength{\cslhangindent}{1.5em}
-\newlength{\csllabelwidth}
-\setlength{\csllabelwidth}{3em}
-\newlength{\cslentryspacingunit} % times entry-spacing
-\setlength{\cslentryspacingunit}{\parskip}
-\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
- {% don't indent paragraphs
-  \setlength{\parindent}{0pt}
-  % turn on hanging indent if param 1 is 1
-  \ifodd #1
-  \let\oldpar\par
-  \def\par{\hangindent=\cslhangindent\oldpar}
-  \fi
-  % set entry spacing
-  \setlength{\parskip}{#2\cslentryspacingunit}
- }%
- {}
-\usepackage{calc}
-\newcommand{\CSLBlock}[1]{#1\hfill\break}
-\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
-\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
-\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+\usepackage[natbibapa]{apacite}
 \usepackage{lineno}\linenumbers
-\usepackage{longtable}
-\usepackage{booktabs}
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
@@ -104,29 +80,68 @@ Juda Kaleta
 
 Institute of History, Faculty of Arts, Charles University, Czech Republic
 
-Email: juda.kaleta@ff.cuni.cz \textbar{} ORCID: 0000-0003-0043-4039
+Email: juda.kaleta@ff.cuni.cz | ORCID: 0000-0003-0043-4039
 
 \hypertarget{abstract}{%
 \subsection{Abstract}\label{abstract}}
 
-This study reports the first Czech adaptation of the Hartmann and Hasselhorn Historical Perspective Taking (HPT) instrument and examines whether its politically charged scenario introduces construct-irrelevant variance related to students' ideological attitudes. Among 293 Czech secondary students, confirmatory factor analysis (CFA) confirmed the three-factor structure. Item Response Theory (IRT)-based differential item functioning (DIF) analysis detected no biased items across ideology groups, and multi-group CFA demonstrated full scalar measurement invariance (meaning the instrument measures the same construct equivalently regardless of students' political attitudes). Historical knowledge predicted HPT scores; ideology was unrelated. These findings support a transferable protocol for evaluating measurement fairness when assessment content carries attitudinal valence, and indicate that structured scenario-based instruments can employ politically sensitive content without compromising score interpretation.
+This study reports the first Czech adaptation of the Hartmann and
+Hasselhorn Historical Perspective Taking (HPT) instrument and examines
+whether its politically charged scenario introduces
+construct-irrelevant variance (CIV) related to students' ideological
+attitudes. Among 293 Czech secondary students, confirmatory factor
+analysis (CFA) confirmed the three-factor structure. Item Response
+Theory (IRT)-based differential item functioning (DIF) analysis
+detected no biased items across ideology groups. Multi-group CFA
+demonstrated full scalar measurement invariance. Historical knowledge
+predicted HPT scores; ideology was unrelated. These findings support a
+transferable protocol for evaluating measurement fairness when
+assessment content carries attitudinal valence.
 
 \textbf{Keywords:} historical perspective taking, cross-cultural validation, measurement invariance, differential item functioning, construct-irrelevant variance, test fairness
 
 \hypertarget{introduction}{%
 \subsection{1. Introduction}\label{introduction}}
 
-Cross-cultural adaptation of educational and psychological instruments requires more than linguistic translation: it demands evidence that the adapted version measures the same construct, with equivalent psychometric properties, in the target population (American Educational Research Association et al., 2014; Hambleton et al., 2005; International Test Commission, 2017). When assessment content carries attitudinal valence---when scenarios, stimuli, or items touch on beliefs that respondents may hold---an additional fairness question arises: does the content introduce construct-irrelevant variance (CIV) by functioning differently for subgroups whose attitudes align with that content (Messick, 1995)? This question is especially pressing for scenario-based instruments in the social sciences, where rich contextual material is needed to elicit complex reasoning but may simultaneously activate respondents' pre-existing attitudes. Historical perspective taking (HPT)---the capacity to reconstruct the beliefs, values, and circumstances that made past actors' decisions intelligible in their own time (Hartmann \& Hasselhorn, 2008; Lee \& Ashby, 2001)---provides a particularly informative case, because HPT instruments routinely use politically and morally charged historical scenarios as the stimulus for disciplinary reasoning (Drie \& Boxtel, 2007; Seixas \& Morton, 2013; Wineburg, 2001).
+Cross-cultural adaptation of educational and psychological instruments
+requires more than linguistic translation: it demands evidence that
+the adapted version measures the same construct, with equivalent
+psychometric properties, in the target population \citep{AERA2014Standards,Hambleton2005,ITC2017}. When assessment content carries
+attitudinal valence---when scenarios, stimuli, or items touch on
+beliefs that respondents may hold---an additional fairness question
+arises: does the content introduce construct-irrelevant variance (CIV)
+by functioning differently for subgroups whose attitudes align with
+that content \citep{Messick1995Validity}? This question is especially pressing for
+scenario-based instruments in the social sciences, where rich
+contextual material is needed to elicit complex reasoning but may
+simultaneously activate respondents' pre-existing attitudes.
+Historical perspective taking (HPT)---the capacity to reconstruct the
+beliefs, values, and circumstances that made past actors' decisions
+intelligible in their own time \citep{Hartmann2008,Lee2001Empathy}---provides a particularly informative case. HPT
+instruments routinely use politically and morally charged historical
+scenarios as the stimulus for disciplinary reasoning (reasoning
+according to the methodological norms of the historical discipline,
+such as source criticism and contextualisation; \citealp{VanDrie2008Historical}; \citealp{Seixas_Morton2013TheBig}; \citealp{Wineburg2001Historical}).
 
-The instrument developed by Hartmann \& Hasselhorn (2008) is among the most extensively validated standardized HPT measures in European research. Originally validated with German secondary students, it has been adapted for use in the Netherlands (Huijgen et al., 2014; Huijgen et al., 2017) and employed in comparative studies of historical reasoning. The instrument operationalizes HPT through a scenario-based approach in which students read about a historically situated dilemma and respond to nine Likert-scaled items capturing three developmental levels: presentism (POP), recognition of the agent's role (ROA), and contextualization (CONT). This structure reflects a theoretical progression from naive present-centered judgment toward increasingly sophisticated historical reasoning (Hartmann \& Hasselhorn, 2008; Lee \& Ashby, 2001).
+The instrument developed by \citet{Hartmann2008} is among
+the most extensively validated standardized HPT measures in European
+research. Originally validated with German secondary students, it has
+been adapted for use in the Netherlands \citep{Huijgen_et_al2014Testing,Huijgen_et_al2017Toward} and employed in comparative studies of historical
+reasoning. The instrument operationalizes HPT through a scenario-based
+approach in which students read about a historically situated dilemma
+and respond to nine Likert-scaled items capturing three developmental
+levels: presentism/othering of people (POP), recognition of the
+agent's social role and situational context (ROA), and
+contextualization (CONT). This structure reflects a theoretical progression from naive present-centered judgment toward increasingly sophisticated historical reasoning \citep{Hartmann2008,Lee2001Empathy}.
 
-The present study reports the first Czech adaptation and psychometric evaluation of the Hartmann and Hasselhorn HPT instrument. Two considerations motivate this work. First, no validated Czech-language HPT instrument currently exists, despite growing interest in historical thinking assessment within Czech education reform (Činátl et al., 2021; Münich et al., 2023; Ripka et al., 2024). The Czech adaptation addresses this gap and provides the research community with a tool for cross-cultural comparisons of HPT development.
+The present study reports the first Czech adaptation and psychometric evaluation of the Hartmann and Hasselhorn HPT instrument. Two considerations motivate this work. First, no validated Czech-language HPT instrument currently exists, despite growing interest in historical thinking assessment within Czech education reform \citep{Cinatl_et_al2021Historicka,Munich2023Zaverecna,Ripka_et_al2024Epistemic}. The Czech adaptation addresses this gap and provides the research community with a tool for cross-cultural comparisons of HPT development.
 
-Second, the instrument's scenario content raises a specific fairness question. The scenario describes a young man in the Weimar Republic deliberating whether to join an extremist political movement. Items that require students to contextualize this figure's reasoning could, in principle, function differently for students whose political attitudes align with the scenario's ideological content. Students with right-authoritarian sympathies might find it cognitively easier to endorse contextualizing responses---not because they are reasoning historically, but because the responses resonate with their own attitudes. If present, such a pattern would constitute construct-irrelevant variance (CIV): systematic score variation attributable to a factor extraneous to the target construct (American Educational Research Association et al., 2014; Messick, 1995).
+Second, the instrument's scenario content raises a specific fairness question. The scenario describes a young man in the Weimar Republic deliberating whether to join an extremist political movement. Items that require students to contextualize this figure's reasoning could, in principle, function differently for students whose political attitudes align with the scenario's ideological content. Students with right-authoritarian sympathies might find it cognitively easier to endorse contextualizing responses---not because they are reasoning historically, but because the responses resonate with their own attitudes. If present, such a pattern would constitute construct-irrelevant variance (CIV): systematic score variation attributable to a factor extraneous to the target construct \citep{AERA2014Standards,Messick1995Validity}.
 
-This concern is not merely theoretical. Research on identity-protective cognition demonstrates that individuals process information through the lens of pre-existing beliefs (Jost et al., 2003; Kahan et al., 2017). Recent work has documented how ideological content can infiltrate competence judgments in history assessment, whether through teacher scoring bias (Alvén, 2019) or through construct comparability challenges in cross-cultural settings (Badham et al., 2025). The question central to the present study is whether the HPT instrument's psychometric properties---its factor structure, item parameters, and score interpretations---hold equivalently across students with different political attitudes, or whether politically charged content introduces measurement bias.
+This concern is not merely theoretical. Research on identity-protective cognition demonstrates that individuals process information through the lens of pre-existing beliefs \citep{Jost2003,Kahan2017}. Recent work has documented how ideological content can infiltrate competence judgments in history assessment, whether through teacher scoring bias in open-ended narrative
+assessment \citep{Alven2019Bias} or through construct comparability challenges in cross-cultural settings \citep{Badham_et_al2025Construct}. The question central to the present study is whether the HPT instrument's psychometric properties---its factor structure, item parameters, and score interpretations---hold equivalently across students with different political attitudes, or whether politically charged content introduces measurement bias.
 
-The study contributes to the literature in three ways: (a) it demonstrates a transferable methodological approach for evaluating whether attitudinally charged assessment content introduces construct-irrelevant variance, (b) it provides DIF and measurement invariance evidence for a fairness-relevant grouping variable---political ideology---that has not previously been examined in HPT measurement, and (c) it reports the first published Czech validation of the Hartmann and Hasselhorn HPT instrument, extending the cross-cultural evidence base for this measure. To establish this evidence, we integrated confirmatory factor analysis (CFA), reliability analysis, intraclass correlation estimation, IRT-based differential item functioning (DIF) analysis, and multi-group CFA for measurement invariance testing.
+The study contributes to the literature in three ways: (a) it demonstrates a transferable methodological approach for evaluating whether attitudinally charged assessment content introduces construct-irrelevant variance, (b) it provides DIF and measurement invariance evidence for a fairness-relevant grouping variable---political ideology---that has not previously been examined in HPT measurement, and (c) it reports the first published Czech validation of the Hartmann and Hasselhorn HPT instrument, extending the cross-cultural evidence base for this measure. To establish this evidence, we conducted confirmatory factor analysis (CFA), reliability analysis, intraclass correlation estimation, IRT-based differential item functioning (DIF) analysis, and multi-group CFA for measurement invariance testing.
 
 \hypertarget{literature-review}{%
 \subsection{2. Literature Review}\label{literature-review}}
@@ -134,34 +149,93 @@ The study contributes to the literature in three ways: (a) it demonstrates a tra
 \hypertarget{historical-perspective-taking-and-its-measurement}{%
 \subsubsection{2.1 Historical Perspective Taking and Its Measurement}\label{historical-perspective-taking-and-its-measurement}}
 
-HPT refers to the ability to understand past actors' decisions by reconstructing the historical context in which they operated (Hartmann \& Hasselhorn, 2008; Lee \& Ashby, 2001). The concept has roots in British traditions that progressively refined the construct from historical empathy (Ashby \& Lee, 1987; Shemilt, 1984) toward rational reconstruction (Lee \& Ashby, 2001) and has been situated within broader frameworks of historical reasoning that encompass evidence use, argumentation, and substantive concept deployment (the application of domain-specific content knowledge about events, causes, and actors; Van Boxtel \& Van Drie (2018); Drie \& Boxtel (2007); VanSledright (2014)). The literature variously labels this capacity ``historical empathy,'' ``perspective taking,'' or ``rational reconstruction''; we follow Hartmann \& Hasselhorn (2008) in adopting the term ``perspective taking'' within the rationalist tradition of Lee \& Ashby (2001), which emphasizes cognitive reconstruction of context rather than affective identification with past actors (see Barton \& Levstik, 2004 for a contrasting view that emphasizes affective engagement alongside cognitive reconstruction). Across these frameworks, HPT is understood as a cognitively demanding, knowledge-dependent competence---not a disposition but a disciplinary achievement requiring both domain-specific knowledge and the capacity to deploy that knowledge in reconstructing past perspectives (Chapman, 2021; VanSledright, 2014; Wineburg, 2001).
+HPT refers to the ability to understand past actors' decisions by
+reconstructing the historical context in which they operated \citep{Hartmann2008,Lee2001Empathy}. HPT is a second-order
+(procedural or disciplinary) concept---as distinct from first-order
+(substantive) concepts such as ``revolution'' or ``empire,'' it
+concerns the meta-level reasoning processes historians use to make
+sense of the past \citep{Seixas2004Teaching}. The concept has roots in
+British traditions that progressively refined the construct from
+historical empathy \citep{Ashby1987,Shemilt1984} toward
+rational reconstruction \citep{Lee2001Empathy}. It has been situated
+within broader frameworks of historical reasoning that encompass
+evidence use, argumentation, and substantive concept deployment---the
+application of domain-specific content knowledge about events, causes,
+and actors \citep{vanBoxtel_vanDrie2018Historical,VanDrie2008Historical,VanSledright2014Assessing}. The literature variously labels this
+capacity ``historical empathy,'' ``perspective taking,'' or ``rational
+reconstruction.'' We follow \citet{Hartmann2008} in adopting
+the term ``perspective taking'' within the rationalist tradition of
+\citet{Lee2001Empathy}, which emphasises cognitive reconstruction of
+context rather than affective identification with past actors (see
+\citealp{Barton2004}, for a contrasting view that emphasises
+affective engagement alongside cognitive reconstruction; see also
+\citealp{Endacott2014Negotiating}, for a more recent treatment of the
+empathy/perspective-taking distinction). Across these frameworks, HPT
+is understood as a cognitively demanding, knowledge-dependent
+competence---not a disposition but a disciplinary achievement requiring
+both domain-specific knowledge and the capacity to deploy that
+knowledge in reconstructing past perspectives \citep{Chapman2021Introduction,VanSledright2014Assessing,Wineburg2001Historical}. Distinguishing genuine
+disciplinary reasoning from attitude-driven responding is a
+measurement challenge that extends beyond HPT to epistemic cognition in
+history more broadly \citep{Maggioni2009Walking}.
 
-Hartmann \& Hasselhorn (2008) operationalized HPT into a developmental model with three levels: \emph{presentism} (POP), where students judge historical actors by contemporary standards; \emph{recognition of the agent's role} (ROA), where students acknowledge the agent's social position without full contextual reconstruction; and \emph{contextualization} (CONT), where students situate decisions within the specific historical conditions that rendered them intelligible. The original validation study (\emph{n} = 170 German students, Grade 10) recovered three levels through principal component analysis (explained variance = 51\%), and students classified at the highest level had significantly better history grades. The instrument was extended by Huijgen et al. (2014) and Huijgen et al. (2017), who confirmed the core theoretical structure while highlighting the difficulty of contextualization for most students.
+\citet{Hartmann2008} operationalised HPT into a developmental
+model with three levels: \emph{presentism} (POP), where students judge
+historical actors by contemporary standards; \emph{recognition of the
+agent's role} (ROA), where students acknowledge the agent's social
+position without full contextual reconstruction; and
+\emph{contextualization} (CONT), where students situate decisions
+within the specific historical conditions that rendered them
+intelligible. This developmental progression from present-centred
+judgment toward contextualisation has empirical parallels in earlier
+work on students' historical understanding \citep{Lee2003A_scaffold}. The
+original validation study (\emph{n} = 170 German students, Grade 10)
+recovered three levels through principal component analysis (explained
+variance = 51\%), and students classified at the highest level had
+significantly better history grades; however, PCA is an exploratory
+technique, and the present study provides the first confirmatory factor
+analytic test of the three-level structure. The instrument was extended
+by \citet{Huijgen_et_al2014Testing} and \citet{Huijgen_et_al2017Toward}, who confirmed the
+core theoretical structure while highlighting the difficulty of
+contextualization for most students.
 
-The difficulty of measuring HPT stems from its inherently interpretive character. Unlike factual recall, HPT cannot be assessed through simple multiple-choice items with single correct answers (Breakstone, 2014; Smith, 2017). Scenario-based instruments address this challenge by presenting contextual information and requiring students to evaluate statements reflecting different levels of historical reasoning (Hartmann \& Hasselhorn, 2008; Seixas et al., 2015). However, this approach introduces a measurement tension: the richer the historical context, the more opportunity for construct-irrelevant factors---including attitudes toward that content---to influence responses.
+The difficulty of measuring HPT stems from its inherently interpretive character. Unlike factual recall, HPT cannot be assessed through simple multiple-choice items with single correct answers \citep{Breakstone2014Try,Smith2017Cognitive}. Scenario-based instruments address this challenge by presenting contextual information and requiring students to evaluate statements reflecting different levels of historical reasoning \citep{Hartmann2008,Seixas_et_al2015A_Design}. However, this approach introduces a measurement tension: the richer the historical context, the more opportunity for construct-irrelevant factors---including attitudes toward that content---to influence responses.
 
 \hypertarget{cross-cultural-test-adaptation}{%
 \subsubsection{2.2 Cross-Cultural Test Adaptation}\label{cross-cultural-test-adaptation}}
 
-The adaptation of educational and psychological instruments across languages and cultures requires systematic procedures to ensure that the adapted version measures the same construct as the original (Hambleton et al., 2005; International Test Commission, 2017). The International Test Commission (ITC) guidelines emphasize that adaptation involves more than translation: it requires attention to construct equivalence, cultural appropriateness, and technical quality of the adapted version (International Test Commission, 2017). For instruments used in history education, cross-cultural adaptation faces the additional challenge that historical content may carry different resonances across national contexts. A scenario about the Weimar Republic, originally designed for German students, intersects differently with Czech historical memory---where the period connects directly to the 1938 Munich Agreement, the cession of the Sudetenland, and the Nazi occupation of 1939--1945.
+The adaptation of educational and psychological instruments across languages and cultures requires systematic procedures to ensure that the adapted version measures the same construct as the original \citep{Hambleton2005,ITC2017}. The International Test Commission (ITC) guidelines emphasize that adaptation involves more than translation: it requires attention to construct equivalence, cultural appropriateness, and technical quality of the adapted version \citep{ITC2017}. For instruments used in history education, cross-cultural adaptation faces the additional challenge that historical content may carry different resonances across national contexts. A scenario about the Weimar Republic, originally designed for German
+students, intersects differently with Czech historical memory---while
+subsequent events shape contemporary Czech memory of the interwar
+period, the scenario centres on Weimar-era deliberation (early 1930s),
+which predates the 1938 Munich Agreement and cession of the
+Sudetenland by approximately five years. Nevertheless, the broader
+period connects directly to the Nazi occupation of 1939--1945 in Czech
+collective memory.
 
-Cross-cultural validation studies should demonstrate that the adapted instrument preserves the factor structure, reliability, and validity relationships of the original (Hambleton et al., 2005). At minimum, this requires confirming the theorized factor structure through CFA, reporting reliability estimates appropriate for the item characteristics, and providing convergent validity evidence through expected correlations with related constructs. When the instrument will be used to compare groups or predict outcomes, measurement invariance testing becomes essential (American Educational Research Association et al., 2014).
+Cross-cultural validation studies should demonstrate that the adapted instrument preserves the factor structure, reliability, and validity relationships of the original \citep{Hambleton2005}. At minimum, this requires confirming the theorized factor structure through CFA, reporting reliability estimates appropriate for the item characteristics, and providing convergent validity evidence through expected correlations with related constructs. When the instrument will be used to compare groups or predict outcomes, measurement invariance testing becomes essential \citep{AERA2014Standards}.
 
 \hypertarget{construct-irrelevant-variance-in-educational-assessment}{%
 \subsubsection{2.3 Construct-Irrelevant Variance in Educational Assessment}\label{construct-irrelevant-variance-in-educational-assessment}}
 
-The unified validity framework identifies construct-irrelevant variance as a principal threat to score interpretation (American Educational Research Association et al., 2014; Messick, 1995). CIV occurs when systematic variance in test scores is attributable to factors extraneous to the target construct. When assessment content intersects with respondents' attitudes or social identities, CIV can arise through attitude-consistent responding: students whose beliefs align with test content may find certain response options more natural or appealing, inflating their scores without corresponding gains in the assessed competence (Messick, 1995).
+The unified validity framework identifies construct-irrelevant variance as a principal threat to score interpretation \citep{AERA2014Standards,Messick1995Validity}. CIV occurs when systematic variance in test scores is attributable to factors extraneous to the target construct. When assessment content intersects with respondents' attitudes or social identities, CIV can arise through attitude-consistent responding: students whose beliefs align with test content may find certain response options more natural or appealing, inflating their scores without corresponding gains in the assessed competence \citep{Messick1995Validity}.
 
-For the HPT instrument specifically, the concern is that the Weimar Republic scenario creates a \emph{congruence pathway}---a mechanism whereby attitudinal similarity to item content lowers the cognitive effort required to endorse a response, inflating scores independently of competence. Consider a contextualization item such as ``His decision was understandable given the political and economic turmoil of the Weimar Republic.'' A student who endorses this statement because she has reconstructed the historical context produces a valid HPT response. But a student who endorses it because the sentiment resonates with her own political sympathies---not because she has engaged in historical reasoning---produces an inflated score. This would represent construct contamination in Messick (1995)'s terms---a systematic source of score variance unrelated to HPT competence. Evidence of internal structure, including measurement invariance across relevant subgroups, constitutes essential validity evidence when scores are used to compare groups or when the construct definition requires demonstrating that extraneous factors do not influence scores (American Educational Research Association et al., 2014).
+For the HPT instrument specifically, the concern is that the Weimar Republic scenario creates a \emph{congruence pathway}---a mechanism whereby attitudinal similarity to item content lowers the cognitive effort required to endorse a response, inflating scores independently of competence. Consider a contextualization item such as ``His decision was understandable given the political and economic turmoil of the Weimar Republic.'' A student who endorses this statement because she has reconstructed the historical context produces a valid HPT response. But a student who endorses it because the sentiment resonates with her own political sympathies---not because she has engaged in historical reasoning---produces an inflated score. This would represent construct contamination in \citeauthor{Messick1995Validity}'s (\citeyear{Messick1995Validity}) terms---a systematic source of score variance unrelated to HPT competence. Evidence of internal structure, including measurement invariance across relevant subgroups, constitutes essential validity evidence when scores are used to compare groups or when the construct definition requires demonstrating that extraneous factors do not influence scores \citep{AERA2014Standards}.
 
-An alternative theoretical prediction deserves mention. Research on authoritarian cognition suggests that high authoritarianism is associated with reduced integrative complexity---the cognitive capacity to hold and reconcile multiple conflicting perspectives simultaneously (Duckitt, 2001; Suedfeld \& Tetlock, 1977). Because HPT requires precisely this kind of integrative capacity, authoritarian students might perform \emph{worse}, not better. The direction of any bias, if present, was genuinely uncertain. Additionally, dual-process theories of cognition (Evans \& Stanovich, 2013) suggest that structured assessment formats may channel deliberative processing, overriding the automatic attitude-retrieval processes that would produce attitude-consistent responding. If so, the assessment format itself may buffer against attitudinal interference.
+An alternative theoretical prediction deserves mention. Research on authoritarian cognition suggests that high authoritarianism is associated with reduced integrative complexity---the cognitive capacity to hold and reconcile multiple conflicting perspectives simultaneously \citep{Duckitt2001,Suedfeld1977}. Because HPT requires precisely this kind of integrative capacity, authoritarian students might perform \emph{worse}, not better. The direction of any bias, if present, was genuinely uncertain. Additionally, dual-process theories of cognition \citep{Evans2013} suggest that structured assessment formats may channel deliberative processing, overriding the automatic attitude-retrieval processes that would produce attitude-consistent responding. If so, the assessment format itself may buffer against attitudinal interference.
 
 \hypertarget{dif-and-measurement-invariance-as-fairness-evidence}{%
 \subsubsection{2.4 DIF and Measurement Invariance as Fairness Evidence}\label{dif-and-measurement-invariance-as-fairness-evidence}}
 
-Differential item functioning and measurement invariance testing provide complementary approaches to evaluating measurement fairness (Chen, 2007; Cheung \& Rensvold, 2002; Finch, 2005). DIF analysis examines whether individual items function differently across groups after controlling for the latent trait, identifying specific items that may be biased. Measurement invariance testing through multi-group CFA examines whether the overall measurement model holds across groups at three progressively restrictive levels: \emph{configural invariance} (the same factors exist in both groups), \emph{metric invariance} (items relate equally strongly to the factors in both groups), and \emph{scalar invariance} (the scale origin is identical, so mean scores can be directly compared across groups).
+Differential item functioning and measurement invariance testing provide complementary approaches to evaluating measurement fairness \citep{Chen2007,Cheung2002,Finch2005}. DIF analysis examines whether individual items function differently across groups after controlling for the latent trait, identifying specific items that may be biased. Measurement invariance testing through multi-group CFA examines whether the overall measurement model holds across groups at three progressively restrictive levels: \emph{configural invariance} (the same factors exist in both groups), \emph{metric invariance} (items relate equally strongly to the factors in both groups), and \emph{scalar invariance} (the scale origin is identical, so mean scores can be directly compared across groups).
 
-For ordinal items, the weighted least squares mean and variance adjusted (WLSMV) estimator is recommended for CFA (Flora \& Curran, 2004), and threshold-based invariance testing replaces intercept-based approaches. The conventional criteria for evaluating invariance steps use changes in fit indices rather than chi-square difference tests, which are sensitive to sample size: \(\Delta\)CFI \(\leq\) .01 and \(\Delta\)RMSEA \(\leq\) .015 indicate that the more constrained model does not fit meaningfully worse (Chen, 2007; Cheung \& Rensvold, 2002).
+For ordinal items, the weighted least squares mean and variance
+adjusted (WLSMV) estimator---a robust estimation method designed for
+categorical data---is recommended for CFA \citep{Flora2004}.
+Because ordinal items have discrete response categories rather than
+continuous scales, threshold-based invariance testing (which models the
+boundaries between response categories) replaces intercept-based
+approaches. The conventional criteria for evaluating invariance steps use changes in fit indices rather than chi-square difference tests, which are sensitive to sample size: \(\Delta\)CFI \(\leq\) .01 and \(\Delta\)RMSEA \(\leq\) .015 indicate that the more constrained model does not fit meaningfully worse \citep{Chen2007,Cheung2002}.
 
 In the context of HPT measurement, establishing scalar invariance across ideology groups would mean that the factor structure, loadings, and item thresholds are equivalent for students with different political attitudes---a necessary condition for concluding that observed score differences (or the lack thereof) reflect true construct differences rather than measurement artifacts.
 
@@ -186,7 +260,7 @@ We hypothesized that the three-factor structure would be confirmed and that the 
 \hypertarget{adaptation-process}{%
 \subsubsection{3.1 Adaptation Process}\label{adaptation-process}}
 
-The Czech HPT instrument was developed through a systematic translation and adaptation process following ITC guidelines (International Test Commission, 2017). Two bilingual Czech-English experts conducted independent forward translations from the published English version of the instrument. An independent backward translation was produced by a third bilingual expert unfamiliar with the original. Five Czech history educators at the secondary level reviewed the adapted items for conceptual equivalence, age-appropriateness, and curricular alignment. No items required substantive modification; minor wording adjustments were made to two items for naturalness in Czech. Reviewers confirmed that the Weimar Republic scenario content was familiar to Czech secondary students through the national history curriculum, given the direct connections between the interwar period and subsequent Czech historical experience (the Munich Agreement, the cession of the Sudetenland, and the Nazi occupation).
+The Czech HPT instrument was developed through a systematic translation and adaptation process following ITC guidelines \citep{ITC2017}. Two bilingual Czech-English experts conducted independent forward translations from the published English version of the instrument. An independent backward translation was produced by a third bilingual expert unfamiliar with the original. Five Czech history educators at the secondary level reviewed the adapted items for conceptual equivalence, age-appropriateness, and curricular alignment. No items required substantive modification; minor wording adjustments were made to two items for naturalness in Czech. Reviewers confirmed that the Weimar Republic scenario content was familiar to Czech secondary students through the national history curriculum, given the direct connections between the interwar period and subsequent Czech historical experience (the Munich Agreement, the cession of the Sudetenland, and the Nazi occupation).
 
 The adaptation preserved the original instrument's structure: the four-point response format (1 = \emph{strongly disagree} to 4 = \emph{strongly agree}), the three-factor item structure (three items per subscale), and the reverse-scoring of POP items were retained unchanged from the validated German version. All deviations from the original were documented transparently in the OSF repository (https://doi.org/10.17605/OSF.IO/YNG37). The scenario narrative was cross-checked against the Czech history curriculum to confirm that all contextual references were accessible to the target population.
 
@@ -195,7 +269,11 @@ No cognitive pilot study (e.g., think-aloud interviews) was conducted prior to m
 \hypertarget{participants}{%
 \subsubsection{3.2 Participants}\label{participants}}
 
-The sample comprised 293 students from 20 classrooms across 10 schools in the Czech Republic, spanning lower-secondary (ISCED 2; \emph{n} = 87, 29.7\%) and upper-secondary (ISCED 3; \emph{n} = 206, 70.3\%) levels. The inclusion criterion was completion of the curricular unit on the interwar period. Schools were drawn from five Czech regions (Praha: 42.7\%; Královéhradecký: 34.8\%; Zlínský: 11.3\%; Jihomoravský: 8.2\%; Ústecký: 3.1\%) and three funding categories (public: 90.8\%; private: 6.5\%; church-affiliated: 2.7\%). Gender composition was 192 male (65.5\%), 88 female (30.0\%), and 13 identifying as another gender (4.4\%). Students' most recent history grade averaged 1.71 (\emph{SD} = 0.92; Czech scale: 1 = excellent, 5 = failing).
+The sample comprised 293 students from 20 classrooms across 10
+schools in the Czech Republic, spanning lower-secondary
+(International Standard Classification of Education [ISCED] level 2,
+approximately ages 11--15; \emph{n} = 87, 29.7\%) and upper-secondary
+(ISCED 3, approximately ages 15--19; \emph{n} = 206, 70.3\%) levels. The inclusion criterion was completion of the curricular unit on the interwar period. Schools were drawn from five Czech regions (Praha: 42.7\%; Královéhradecký: 34.8\%; Zlínský: 11.3\%; Jihomoravský: 8.2\%; Ústecký: 3.1\%) and three funding categories (public: 90.8\%; private: 6.5\%; church-affiliated: 2.7\%). Gender composition was 192 male (65.5\%), 88 female (30.0\%), and 13 identifying as another gender (4.4\%). Students' most recent history grade averaged 1.71 (\emph{SD} = 0.92; Czech scale: 1 = excellent, 5 = failing).
 
 Schools were recruited through convenience sampling; the sample over-represents upper-secondary students relative to the national age cohort composition and should not be treated as a probability sample of Czech adolescents. Sample size was determined by an a priori power analysis specified in the preregistered protocol (OSF: https://doi.org/10.17605/OSF.IO/YNG37), targeting 80\% power to detect standardized ideology effects of \(\beta\) \(\geq\) .15 in a two-level multilevel model; the achieved \emph{N} = 285--293 met this target. Within each school, all students present on the day of administration completed the instrument battery during a regular class period (approximately 30--40 minutes). Teachers were present during administration but did not intervene in students' responses.
 
@@ -205,17 +283,19 @@ Schools were recruited through convenience sampling; the sample over-represents 
 \hypertarget{historical-perspective-taking-hpt}{%
 \paragraph{3.3.1 Historical Perspective Taking (HPT)}\label{historical-perspective-taking-hpt}}
 
-Students completed the Czech adaptation of the Hartmann \& Hasselhorn (2008) scenario-based HPT instrument. They read a narrative about a young man in the Weimar Republic considering joining an extremist political movement, then responded to nine items on a 4-point Likert scale. Three items each tapped presentism (POP1--POP3), recognition of the agent's role (ROA1--ROA3), and contextualization (CONT1--CONT3). POP items capture present-centered moral judgments of the historical figure (e.g., evaluating his decision by contemporary standards); these are reverse-scored (5 \(-\) POP, yielding a reversed range of 1--4) so that higher scores indicate more contextualized reasoning. ROA items reflect awareness of the agent's social position and circumstances without full contextual integration. CONT items represent the most sophisticated level, requiring students to situate the historical figure's deliberation within the specific political, economic, and social conditions of the Weimar Republic. The primary composite was HPT\_CTX6, the mean of reversed POP and CONT items. HPT\_TOT9 (adding ROA) served as a secondary outcome.
+Students completed the Czech adaptation of the \citet{Hartmann2008} scenario-based HPT instrument. They read a narrative about a young man in the Weimar Republic considering joining an extremist political movement, then responded to nine items on a 4-point Likert scale. Three items each tapped presentism (POP1--POP3), recognition of the agent's role (ROA1--ROA3), and contextualization (CONT1--CONT3). POP items capture present-centered moral judgments of the historical figure (e.g., evaluating his decision by contemporary standards); these are reverse-scored (5 $-$ POP, yielding a reversed range of 1--4) so that higher scores indicate more contextualized reasoning. ROA items reflect awareness of the agent's social position and circumstances without full contextual integration. CONT items represent the most sophisticated level, requiring students to situate the historical figure's deliberation within the specific political, economic, and social conditions of the Weimar Republic. The primary composite was HPT\_CTX6, the mean of reversed POP and CONT items. HPT\_TOT9 (adding ROA) served as a secondary outcome.
 
 \hypertarget{right-authoritarian-ideology-fr-lf-mini}{%
 \paragraph{3.3.2 Right-Authoritarian Ideology (FR-LF mini)}\label{right-authoritarian-ideology-fr-lf-mini}}
 
-A six-item short form of the Fragebogen Rechtsextremer Einstellungen---Leipziger Form (Questionnaire on Right-Wing Extremist Attitudes---Leipzig Form; Decker et al. (2013)), comprising acceptance of right-wing dictatorship (RD; 3 items) and National Socialist sympathy/relativization (NS; 3 items) facets, rated on a 5-point scale. The NS facet is theoretically the most direct operationalization of potential content congruence with the Weimar scenario.
+A six-item short form of the Fragebogen Rechtsextremer Einstellungen---Leipziger Form (Questionnaire on Right-Wing Extremist Attitudes---Leipzig Form; \citealp{Decker_et_al2013Rechtsextremismus}), comprising acceptance of right-wing dictatorship (RD; 3 items) and National Socialist sympathy/relativization (NS; 3 items) facets, rated on a 5-point scale. The NS facet is theoretically the most direct operationalization of potential content congruence with the Weimar scenario.
 
 \hypertarget{authoritarianism-ksa-3}{%
 \paragraph{3.3.3 Authoritarianism (KSA-3)}\label{authoritarianism-ksa-3}}
 
-The nine-item Kurzskala Autoritarismus (Beierlein et al., 2014), measuring authoritarian aggression, submission, and conventionalism on a 5-point scale. This instrument was used for a supplementary measurement invariance check using an alternative ideology operationalization.
+The nine-item Kurzskala Autoritarismus (Short Scale of
+Authoritarianism; \citealp{Beierlein_et_al2014Die_Kurzskala}), measuring authoritarian
+aggression, submission, and conventionalism on a 5-point scale. This instrument was used for a supplementary measurement invariance check using an alternative ideology operationalization.
 
 \hypertarget{historical-knowledge-kn}{%
 \paragraph{3.3.4 Historical Knowledge (KN)}\label{historical-knowledge-kn}}
@@ -225,26 +305,60 @@ Six multiple-choice items covering content relevant to the HPT scenario, scored 
 \hypertarget{social-desirability-sdr-5}{%
 \paragraph{3.3.5 Social Desirability (SDR-5)}\label{social-desirability-sdr-5}}
 
-The five-item short form (Hays et al., 1989), rated on a 5-point scale with items SDR2--SDR4 reverse-coded. Included to evaluate whether HPT scores reflect impression management rather than genuine reasoning.
+The five-item short form \citep{Hays_et_al1989A_Five}, rated on a 5-point scale with items SDR2--SDR4 reverse-coded. Included to evaluate whether HPT scores reflect impression management rather than genuine reasoning.
 
 \hypertarget{analytic-approach}{%
 \subsubsection{3.4 Analytic Approach}\label{analytic-approach}}
 
 All analyses were conducted in R (version 4.4.2) using lavaan for CFA, mirt for IRT-based DIF analysis, psych for reliability estimation, and lme4/performance for intraclass correlations.
 
-\textbf{Factor structure.} CFA compared one-factor (general HPT), two-factor (POP+CONT vs.~ROA), and three-factor (POP, ROA, CONT) models using the WLSMV estimator, appropriate for ordinal item responses (Flora \& Curran, 2004). CFA fit indices summarize how well a hypothesized factor structure reproduces the observed correlations among items; multiple indices are reported because each captures a different aspect of misfit. Model evaluation used CFI (\(\geq\) .95 acceptable, \(\geq\) .97 good), TLI (\(\geq\) .95), RMSEA (\(\leq\) .08 acceptable, \(\leq\) .05 good), and SRMR (\(\leq\) .08).
+\textbf{Factor structure.} CFA compared one-factor (general HPT), two-factor (POP+CONT vs.~ROA), and three-factor (POP, ROA, CONT) models using the WLSMV estimator, appropriate for ordinal item responses \citep{Flora2004}. CFA fit indices summarize how well a hypothesized factor structure reproduces the observed correlations among items; multiple indices are reported because each captures a different aspect of misfit. Model evaluation used CFI (\(\geq\) .95 acceptable, \(\geq\) .97
+good), the Tucker--Lewis Index (TLI; \(\geq\) .95), the Root Mean
+Square Error of Approximation (RMSEA; \(\leq\) .08 acceptable,
+\(\leq\) .05 good), and the Standardized Root Mean Square Residual
+(SRMR; \(\leq\) .08).
 
-\textbf{Reliability.} Internal consistency was assessed via Cronbach's \(\alpha\) (raw and based on polychoric correlations) and McDonald's \(\omega\), which does not assume tau-equivalence and is generally preferred for congeneric measures (Flora \& Curran, 2004).
+\textbf{Reliability.} Internal consistency was assessed via Cronbach's \(\alpha\) (raw and
+based on polychoric correlations) and McDonald's \(\omega\), which
+does not assume tau-equivalence (the assumption that all items relate
+equally strongly to the latent factor) and is generally preferred for
+congeneric measures (measures whose items may differ in how strongly
+they relate to the factor; \citealp{Flora2004}).
 
-\textbf{Intraclass correlations.} ICCs at the school and classroom levels were computed to characterize the multilevel structure of the data and to evaluate whether clustering warranted multilevel approaches.
+\textbf{Intraclass correlations.} We computed intraclass correlation
+coefficients (ICCs) at the school and classroom levels to characterise
+the multilevel structure of the data and to evaluate whether
+clustering warranted multilevel approaches.
 
-\textbf{Clustered data handling.} The DIF and MG-CFA analyses treat observations as independent, which is standard practice in applied DIF and measurement invariance research. To evaluate whether ignoring the nested structure introduces meaningful bias, design effects (DEFF) were computed post hoc. A design effect of 1.0 means clustering has no impact on precision; values approaching 2.0 indicate modest inflation of standard errors that can usually be tolerated (Maas \& Hox, 2005). The primary composite (HPT\_CTX6) had DEFF = 1.56, within the conventional \(\leq\) 2.0 threshold. The secondary composite (HPT\_TOT9) had DEFF = 2.16, marginally above this threshold; consequently, inferential claims are anchored primarily to HPT\_CTX6, and HPT\_TOT9 results should be interpreted with this caveat.\footnote{DEFF = 1 + (\(\bar{n}_c\) \(-\) 1) \(\times\) ICC, where \(\bar{n}_c\) is the average cluster size (approximately 14.7 students per school). The TYPE=COMPLEX option in lavaan was not applied because the DIF analysis in mirt does not support clustered standard errors, and applying different corrections to DIF and MG-CFA would make the two sets of results less directly comparable.}
+\textbf{Clustered data handling.} The DIF and MG-CFA analyses treat
+observations as independent, which is standard practice in applied DIF
+and measurement invariance research. To evaluate whether ignoring the
+nested structure introduces meaningful bias, design effects (DEFF---a
+multiplier indicating how much clustering inflates standard errors
+relative to a simple random sample) were computed post hoc. A design
+effect of 1.0 means clustering has no impact on precision; values
+approaching 2.0 indicate modest inflation of standard errors that can
+usually be tolerated \citep{Maas2005}. The primary composite (HPT\_CTX6) had DEFF = 1.56, within the conventional \(\leq\) 2.0 threshold. The secondary composite (HPT\_TOT9) had DEFF = 2.16, marginally above this threshold; consequently, inferential claims are anchored primarily to HPT\_CTX6, and HPT\_TOT9 results should be interpreted with this caveat.\footnote{DEFF = 1 + (\(\bar{n}_c\) $-$ 1) \(\times\) ICC, where \(\bar{n}_c\) is the average cluster size (approximately 14.7 students per school). The TYPE=COMPLEX option in lavaan was not applied because the DIF analysis in mirt does not support clustered standard errors, and applying different corrections to DIF and MG-CFA would make the two sets of results less directly comparable.}
 
-\textbf{Differential item functioning.} Low and High ideology groups were formed using tertile splits on a composite ideology score (mean of \emph{z}-scored FR-LF and KSA-3), with the middle tertile excluded to maximize contrast (\emph{n} \(\approx\) 96 per group). This extreme-group design follows established practice in DIF research (Finch, 2005). A constrained multi-group graded response model (GRM item discrimination and threshold parameters for each item by group are reported in Table S1 in the OSF supplementary materials) using an all-others-as-anchor strategy tested each item for uniform DIF (items are systematically easier or harder for one group at all ability levels) and non-uniform DIF (the group difference reverses depending on ability level) with Bonferroni correction (\(\alpha\) = .01). The all-others-as-anchor approach assumes that the remaining eight items are DIF-free when testing each focal item; iterative purification was not applied, which means that if multiple items exhibited small DIF in the same direction, anchor contamination could mask detection (Woods, 2009).
+\textbf{Differential item functioning.} Low and High ideology groups were formed using tertile splits on a composite ideology score (mean of \emph{z}-scored FR-LF and KSA-3), with the middle tertile excluded to maximize contrast (\emph{n} \(\approx\) 96 per group). This extreme-group design follows established practice in DIF research \citep{Finch2005}. A constrained multi-group graded response model (GRM item
+discrimination and threshold parameters for each item by group are
+reported in Table S1 in the OSF supplementary materials) using a
+sequential item-release design tested each item for uniform DIF (items
+are systematically easier or harder for one group at all ability
+levels) and non-uniform DIF (the group difference reverses depending
+on ability level) with Bonferroni correction (\(\alpha\) = .01). The
+baseline model constrains all nine items to equality across groups;
+each test then frees the discrimination and threshold parameters for
+the focal item, yielding a likelihood-ratio comparison against the
+fully constrained baseline (an all-others-as-anchor strategy). This
+approach assumes that the remaining eight items are DIF-free when
+testing each focal item; iterative purification was not applied, which
+means that if multiple items exhibited small DIF in the same
+direction, anchor contamination could mask detection \citep{Woods2009}.
 
-\textbf{Sensitivity of DIF detection.} With approximately 96 respondents per ideology group, the likelihood-ratio DIF tests at Bonferroni-corrected \(\alpha\) = .01 (9 tests) are powered primarily to detect moderate-to-large parameter differences (\(\Delta\beta\) \(\geq\) 0.5 logits on discrimination or threshold parameters). Weak DIF effects (\(\Delta\beta\) \textless{} 0.5 logits) cannot be confidently excluded. This sensitivity threshold is consistent with the sample size requirements documented for IRT-based DIF methods (Finch, 2005). The extreme-group design maximizes statistical contrast between ideology subgroups at the cost of reduced per-group sample size---a standard trade-off in DIF research when the grouping variable is continuous.
+\textbf{Sensitivity of DIF detection.} With approximately 96 respondents per ideology group, the likelihood-ratio DIF tests at Bonferroni-corrected \(\alpha\) = .01 (9 tests) are powered primarily to detect moderate-to-large parameter differences (\(\Delta\beta\) \(\geq\) 0.5 logits on discrimination or threshold parameters). Weak DIF effects (\(\Delta\beta\) $<$ 0.5 logits) cannot be confidently excluded. This sensitivity threshold is consistent with the sample size requirements documented for IRT-based DIF methods \citep{Finch2005}. The extreme-group design maximizes statistical contrast between ideology subgroups at the cost of reduced per-group sample size---a standard trade-off in DIF research when the grouping variable is continuous.
 
-\textbf{Multi-group CFA.} Stepwise MG-CFA tested configural, metric, and scalar invariance across ideology groups using the three-factor model with WLSMV estimation. Invariance was evaluated using \(\Delta\)CFI \(\leq\) .01 and \(\Delta\)RMSEA \(\leq\) .015 criteria (Chen, 2007; Cheung \& Rensvold, 2002).
+\textbf{Multi-group CFA.} Stepwise MG-CFA tested configural, metric, and scalar invariance across ideology groups using the three-factor model with WLSMV estimation. Invariance was evaluated using \(\Delta\)CFI \(\leq\) .01 and \(\Delta\)RMSEA \(\leq\) .015 criteria \citep{Chen2007,Cheung2002}.
 
 \textbf{Convergent validity.} Pearson correlations between HPT composites and historical knowledge provided convergent validity evidence.
 
@@ -256,53 +370,55 @@ All analyses were conducted in R (version 4.4.2) using lavaan for CFA, mirt for 
 \hypertarget{factor-structure}{%
 \subsubsection{4.1 Factor Structure}\label{factor-structure}}
 
-CFA supported the three-factor model (POP, ROA, CONT) as best-fitting, outperforming the two-factor and one-factor alternatives (Table 1). The three-factor model showed excellent global fit: CFI = .999, TLI = .998, RMSEA = .011 (90\% CI {[}.000, .051{]}), SRMR = .048. The two-factor model combining POP and CONT items on a single factor showed acceptable but inferior fit (CFI = .956, RMSEA = .057), while the one-factor model fit poorly (CFI = .926, RMSEA = .073).
+CFA supported the three-factor model (POP, ROA, CONT) as best-fitting, outperforming the two-factor and one-factor alternatives (Table 1). The three-factor model showed excellent global fit: CFI = .999, TLI = .998, RMSEA = .011 (90\% CI [.000, .051]), SRMR = .048. The two-factor model combining POP and CONT items on a single factor showed acceptable but inferior fit (CFI = .956, RMSEA = .057), while the one-factor model fit poorly (CFI = .926, RMSEA = .073).
 
 \textbf{Table 1.} \emph{CFA Fit Indices for HPT Factor Models (WLSMV Estimator)}
 
-\begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1296}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1852}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1111}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.0926}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.0926}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1296}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1481}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1111}}@{}}
-\toprule\noalign{}
-\begin{minipage}[b]{\linewidth}\raggedright
-Model
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-\(\chi^2\)
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-\emph{df}
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-CFI
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-TLI
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-RMSEA
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-90\% CI
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-SRMR
-\end{minipage} \\
-\midrule\noalign{}
+\begin{longtable}[]{@{}lrrrrrll@{}}
+\toprule
+Model & \(\chi^2\) & \emph{df} & CFI & TLI & RMSEA & 90\% CI & SRMR \\
+\midrule
 \endhead
-\bottomrule\noalign{}
+\bottomrule
 \endlastfoot
-1-Factor & 66.68 & 27 & .926 & .902 & .073 & {[}.051, .095{]} & .075 \\
-2-Factor (POP+CONT, ROA) & 49.48 & 26 & .956 & .940 & .057 & {[}.032, .081{]} & .066 \\
-3-Factor (POP, ROA, CONT) & 24.78 & 24 & .999 & .998 & .011 & {[}.000, .051{]} & .048 \\
+1-Factor & 66.68 & 27 & .926 & .902 & .073 & [.051, .095] & .075 \\
+2-Factor (POP+CONT, ROA) & 49.48 & 26 & .956 & .940 & .057 & [.032, .081] & .066 \\
+3-Factor (POP, ROA, CONT) & 24.78 & 24 & .999 & .998 & .011 & [.000, .051] & .048 \\
 \end{longtable}
 
-\emph{Note.} WLSMV = weighted least squares mean and variance adjusted. All items treated as ordered categorical. The 2-factor model groups POP and CONT items on a single factor with ROA on a separate factor. Chi-square values are mean-and-variance adjusted (WLSMV). Nested model comparisons require the DIFFTEST procedure rather than standard chi-square difference tests. All \emph{p} \textless{} .001 except the three-factor model (\emph{p} = .418).
+\emph{Note.} WLSMV = weighted least squares mean and variance adjusted. All items treated as ordered categorical. The 2-factor model groups POP and CONT items on a single factor with ROA on a separate factor. Chi-square values are mean-and-variance adjusted (WLSMV). Nested model comparisons require the DIFFTEST procedure rather than standard chi-square difference tests. All \emph{p} $<$ .001 except the three-factor model (\emph{p} = .418).
 
-The near-perfect global fit of the three-factor model reflects the small item set (nine items in three just-identified three-indicator factors) and should be interpreted alongside local fit diagnostics: the largest modification index was 7.35 (below the threshold of 10), and standardized residual correlations were small (\(|r|\) \(\leq\) .13). With only \emph{df} = 24 for the three-factor model (9 items, 3 factors, 24 free parameters against 45 observed statistics), there is minimal room for misfit; the near-unity CFI is therefore a structural consequence of the low-\emph{df} specification rather than evidence of an unusually well-fitting model. These results confirm that the Czech adaptation preserves the theorized three-level structure of the original German instrument.
+The near-perfect global fit of the three-factor model reflects the
+small item set (nine items in three just-identified three-indicator
+factors---each subscale has exactly as many free parameters as observed
+statistics, leaving no room for misfit within subscales) and should be
+interpreted alongside local fit diagnostics: the largest modification
+index was 7.35 (POP1--ROA3 residual covariance; below the threshold
+of 10), and standardized residual correlations were small (\(|r|\)
+\(\leq\) .13). With only \emph{df} = 24 for the three-factor model (9
+items, 3 factors, 24 free parameters against 45 observed statistics),
+there is minimal room for misfit; the near-perfect CFI is therefore a
+structural consequence of the low-\emph{df} specification rather than
+evidence of an unusually well-fitting model. These results confirm
+that the Czech adaptation preserves the theorized three-level
+structure of the original German instrument.
 
-Inter-factor correlations from the three-factor CFA were: POP--ROA \(\Phi\) = .377, POP--CONT \(\Phi\) = .509, ROA--CONT \(\Phi\) = .631. These moderate-to-strong correlations indicate meaningful associations among the HPT dimensions, with ROA and CONT showing the strongest link. Discriminant validity is supported since all inter-factor correlations are below .85, confirming that the three subscales capture related but distinct aspects of historical perspective taking.
+Inter-factor correlations from the three-factor CFA were: POP--ROA \(\Phi\) = .377, POP--CONT \(\Phi\) = .509, ROA--CONT \(\Phi\) = .631. These moderate-to-strong correlations indicate meaningful associations among the HPT dimensions, with ROA and CONT showing the strongest link. Discriminant validity is supported because all inter-factor
+correlations are below .85,
+confirming that the three subscales capture related but distinct
+aspects of historical perspective taking.
 
-A supplementary bifactor model (one general factor, three specific factors) fit well (\(\chi^2\) = 14.70, \emph{df} = 18, \emph{p} = .682) but did not meaningfully improve over the correlated three-factor model (\(\Delta\)CFI = .001). CONT items loaded primarily on the general factor (.47--.63), while POP and ROA retained meaningful specific factor variance, supporting subscale-level interpretation.
+A supplementary bifactor model (one general factor plus three specific
+factors, in which each item loads on both the general factor and its
+subscale-specific factor) fit well (\(\chi^2\) = 14.70, \emph{df} =
+18, \emph{p} = .682) but did not meaningfully improve over the
+correlated three-factor model (\(\Delta\)CFI = .001). The low
+\emph{df} (18) results from the additional cross-loadings consuming
+degrees of freedom, and the comparison with the correlated three-factor
+model (\emph{df} = 24) should be treated cautiously given the
+different parameterisations. CONT items loaded primarily on the
+general factor (.47--.63), while POP and ROA retained meaningful
+specific factor variance, supporting subscale-level interpretation.
 
 \hypertarget{standardized-factor-loadings}{%
 \subsubsection{4.2 Standardized Factor Loadings}\label{standardized-factor-loadings}}
@@ -312,24 +428,24 @@ Table 2 presents the standardized loadings from the three-factor CFA. CONT items
 \textbf{Table 2.} \emph{Standardized Factor Loadings for the Three-Factor HPT Model}
 
 \begin{longtable}[]{@{}lllll@{}}
-\toprule\noalign{}
+\toprule
 Item & Subscale & Loading & \emph{SE} & 95\% CI \\
-\midrule\noalign{}
+\midrule
 \endhead
-\bottomrule\noalign{}
+\bottomrule
 \endlastfoot
-POP1 & Presentism & .74 & .099 & {[}.54, .93{]} \\
-POP2 & Presentism & .30 & .076 & {[}.15, .44{]} \\
-POP3 & Presentism & .50 & .068 & {[}.37, .63{]} \\
-ROA1 & Recognition of Agent's Role & .61 & .071 & {[}.47, .75{]} \\
-ROA2 & Recognition of Agent's Role & .30 & .074 & {[}.15, .44{]} \\
-ROA3 & Recognition of Agent's Role & .67 & .074 & {[}.53, .82{]} \\
-CONT1 & Contextualization & .72 & .055 & {[}.61, .82{]} \\
-CONT2 & Contextualization & .61 & .059 & {[}.49, .72{]} \\
-CONT3 & Contextualization & .64 & .054 & {[}.53, .74{]} \\
+POP1 & Presentism & .74 & .099 & [.54, .93] \\
+POP2 & Presentism & .30 & .076 & [.15, .44] \\
+POP3 & Presentism & .50 & .068 & [.37, .63] \\
+ROA1 & Recognition of Agent's Role & .61 & .071 & [.47, .75] \\
+ROA2 & Recognition of Agent's Role & .30 & .074 & [.15, .44] \\
+ROA3 & Recognition of Agent's Role & .67 & .074 & [.53, .82] \\
+CONT1 & Contextualization & .72 & .055 & [.61, .82] \\
+CONT2 & Contextualization & .61 & .059 & [.49, .72] \\
+CONT3 & Contextualization & .64 & .054 & [.53, .74] \\
 \end{longtable}
 
-\emph{Note.} POP items are reverse-scored (higher = more contextualized reasoning). All loadings significant at \emph{p} \textless{} .001. WLSMV estimator with items treated as ordered categorical.
+\emph{Note.} POP items are reverse-scored (higher = more contextualized reasoning). All loadings significant at \emph{p} $<$ .001. WLSMV estimator with items treated as ordered categorical.
 
 \hypertarget{reliability-and-internal-consistency}{%
 \subsubsection{4.3 Reliability and Internal Consistency}\label{reliability-and-internal-consistency}}
@@ -338,30 +454,12 @@ Table 3 presents reliability coefficients for each HPT subscale. Raw Cronbach's 
 
 \textbf{Table 3.} \emph{Reliability Coefficients for HPT Subscales}
 
-\begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1493}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1045}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1343}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.2985}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1343}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1791}}@{}}
-\toprule\noalign{}
-\begin{minipage}[b]{\linewidth}\raggedright
-Subscale
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Items
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-\(\alpha\) (raw)
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-\(\alpha\) (polychoric)
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-\(\omega\) total
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Mean \(r_{ii}\)
-\end{minipage} \\
-\midrule\noalign{}
+\begin{longtable}[]{@{}lccccc@{}}
+\toprule
+Subscale & Items & \(\alpha\) (raw) & \(\alpha\) (polychoric) & \(\omega\) total & Mean \(r_{ii}\) \\
+\midrule
 \endhead
-\bottomrule\noalign{}
+\bottomrule
 \endlastfoot
 POP & 3 & .47 & .53 & .55 & .226 \\
 ROA & 3 & .50 & .53 & .56 & .249 \\
@@ -370,21 +468,28 @@ CONT & 3 & .64 & .69 & .69 & .372 \\
 
 \emph{Note.} POP items are reverse-scored. \(\alpha\) = Cronbach's alpha; \(\omega\) = McDonald's omega total. Mean \(r_{ii}\) = mean inter-item correlation.
 
-These values are modest by conventional standards but structurally constrained by the three-item design: with \emph{k} = 3, even moderate inter-item correlations (.20--.35) yield \(\alpha\) in this range. The Spearman-Brown formula (which estimates how reliability would improve if subscale length were doubled) projects \(\alpha\) = .64--.79 for six-item subscales, though this assumes tau-equivalence---an assumption violated when loadings range from .30 to .74 (Table 2)---so the projections should be treated as approximate upper bounds. McDonald's \(\omega\) (.55--.69) is more appropriate given unequal loadings (Table 2). The knowledge--HPT correlations reported below (\(r\) = .22--.34) demonstrate that the instrument carries genuine psychometric signal despite modest subscale reliability. Correcting the ideology--HPT correlation for attenuation yielded a disattenuated \(r\) = -.07, indicating that measurement error does not mask a meaningful ideology association.
+These values are modest by conventional standards but structurally constrained by the three-item design: with \emph{k} = 3, even moderate inter-item correlations (.20--.35) yield \(\alpha\) in this range. The Spearman-Brown formula (which estimates how reliability would improve if subscale length were doubled) projects \(\alpha\) = .64--.79 for six-item subscales, though this assumes tau-equivalence---an assumption violated when loadings range from .30 to .74 (Table 2)---so the projections should be treated as approximate upper bounds. McDonald's \(\omega\) (.55--.69) is more appropriate given unequal loadings (Table 2). The knowledge--HPT correlations reported below (\(r\) = .22--.34) demonstrate that the instrument carries genuine psychometric signal despite modest subscale reliability. Correcting the ideology--HPT correlation for measurement unreliability
+(disattenuation---an adjustment that estimates what the correlation
+would be if both measures had perfect reliability) yielded a
+disattenuated \(r\) = -.07, indicating that measurement error does not
+mask a meaningful ideology association. However, reliability for the
+composite ideology score (the mean of \emph{z}-scored FR-LF and
+KSA-3) was not separately estimated, which limits the precision of
+this disattenuated estimate.
 
 \hypertarget{descriptive-statistics}{%
 \subsubsection{4.4 Descriptive Statistics}\label{descriptive-statistics}}
 
-Table 4 presents descriptive statistics. HPT scores followed the expected developmental ordering (POP\_rev \textgreater{} ROA \textgreater{} CONT), with contextualization producing the lowest scores (\emph{M} = 2.71). Ideology scores were below the scale midpoint (FR-LF: \emph{M} = 2.48; KSA: \emph{M} = 2.86), reflecting the rarity of strong right-authoritarian endorsement in mainstream adolescent samples.
+Table 4 presents descriptive statistics. HPT scores followed the expected developmental ordering (POP\_rev $>$ ROA $>$ CONT), with contextualization producing the lowest scores (\emph{M} = 2.71). Ideology scores were below the scale midpoint (FR-LF: \emph{M} = 2.48; KSA: \emph{M} = 2.86), reflecting the rarity of strong right-authoritarian endorsement in mainstream adolescent samples.
 
 \textbf{Table 4.} \emph{Descriptive Statistics for Study Variables}
 
 \begin{longtable}[]{@{}llllll@{}}
-\toprule\noalign{}
+\toprule
 Variable & \emph{n} & \emph{M} & \emph{SD} & Min & Max \\
-\midrule\noalign{}
+\midrule
 \endhead
-\bottomrule\noalign{}
+\bottomrule
 \endlastfoot
 HPT POP (reversed) & 287 & 2.97 & 0.64 & 1.33 & 4.00 \\
 HPT ROA & 287 & 2.80 & 0.68 & 1.00 & 4.00 \\
@@ -404,7 +509,10 @@ SDR-5 Total & 283 & 3.02 & 0.63 & 1.00 & 4.60 \\
 \hypertarget{intraclass-correlations}{%
 \subsubsection{4.5 Intraclass Correlations}\label{intraclass-correlations}}
 
-Intraclass correlations indicated meaningful school-level clustering for most HPT outcomes (HPT\_CTX6: ICC\_school = .041; HPT\_TOT9: ICC\_school = .085; ROA: ICC\_school = .102), consistent with between-school differences in instructional emphasis and student composition. Classroom-level variance was near zero for the primary composite but non-negligible for CONT (ICC\_class = .033) and ROA (ICC\_class = .104). These ICCs justify multilevel modeling for substantive analyses and indicate that the instrument is sensitive to contextual variation in historical reasoning opportunities---a desirable property for a measure intended to capture educationally meaningful differences. The corresponding design effects for the primary composite were modest (HPT\_CTX6: DEFF = 1.56; HPT\_TOT9: DEFF = 2.16; see Section 3.4 for computation and implications).
+Intraclass correlations indicated meaningful school-level clustering for most HPT outcomes (HPT\_CTX6: ICC\_school = .041; HPT\_TOT9: ICC\_school = .085; ROA: ICC\_school = .102), consistent with between-school differences in instructional emphasis and student composition. Classroom-level variance was near zero for the primary composite but non-negligible for CONT (ICC\_class = .033) and ROA (ICC\_class = .104). These ICCs justify multilevel modelling for substantive analyses.
+The school-level variance is consistent with between-school
+differences in history instruction, curricular emphasis, and student
+composition. The corresponding design effects for the primary composite were modest (HPT\_CTX6: DEFF = 1.56; HPT\_TOT9: DEFF = 2.16; see Section 3.4 for computation and implications).
 
 \hypertarget{dif-analysis}{%
 \subsubsection{4.6 DIF Analysis}\label{dif-analysis}}
@@ -414,11 +522,11 @@ Table 5 presents DIF results for all nine HPT items. Using a constrained multi-g
 \textbf{Table 5.} \emph{DIF Results per HPT Item (Likelihood-Ratio Tests from Multi-Group Graded Response Model)}
 
 \begin{longtable}[]{@{}llllll@{}}
-\toprule\noalign{}
+\toprule
 Item & \(\chi^2\) & \emph{df} & \emph{p} (raw) & \emph{p} (Bonferroni) & Flagged \\
-\midrule\noalign{}
+\midrule
 \endhead
-\bottomrule\noalign{}
+\bottomrule
 \endlastfoot
 POP1 & 11.18 & 4 & .025 & .222 & No \\
 POP2 & 9.42 & 4 & .051 & .462 & No \\
@@ -431,115 +539,177 @@ CONT2 & 3.45 & 4 & .486 & 1.000 & No \\
 CONT3 & 9.43 & 4 & .051 & .461 & No \\
 \end{longtable}
 
-\emph{Note.} Likelihood-ratio chi-square statistics from constrained multi-group graded response models. Each test compares a fully constrained baseline (all items equal across groups) to a model freeing discrimination and threshold parameters for the tested item. Low (\emph{n} = 96) and High (\emph{n} = 96) ideology groups formed by tertile split on composite ideology score (middle tertile excluded). Bonferroni-adjusted \(\alpha\) = .01 (9 tests). 0 of 9 items flagged. POP1 showed the largest DIF statistic (\(\chi^2\) = 11.18, \emph{p}\_raw = .025), well above the Bonferroni threshold after correction (\emph{p}\_adj = .222). No item approached significance after correction, indicating statistically equivalent item parameters across ideology groups. GRM item discrimination and threshold parameters are reported in Table S1 in the OSF supplementary materials.
+\emph{Note.} Likelihood-ratio chi-square statistics from constrained
+multi-group graded response models. Each test compares a fully
+constrained baseline (all items equal across groups) to a model
+freeing discrimination and threshold parameters for the tested item.
+Low (\emph{n} = 96) and High (\emph{n} = 96) ideology groups formed
+by tertile split on composite ideology score (middle tertile
+excluded). Bonferroni-adjusted \(\alpha\) = .01 (9 tests). 0 of 9
+items flagged. POP1 showed the largest DIF statistic (\(\chi^2\) =
+11.18, \emph{p}\_raw = .025), well above the Bonferroni threshold
+after correction (\emph{p}\_adj = .222). GRM item discrimination and
+threshold parameters are reported in Table S1 in the OSF
+supplementary materials.
+
+Although no individual item reached significance after Bonferroni
+correction, five of nine items (POP1, POP3, ROA1, ROA3, CONT3) had
+raw \emph{p}-values below .10. This clustering of near-significant
+results is consistent with a pattern in which multiple items share
+weak DIF in the same direction---precisely the scenario under which
+the all-others-as-anchor strategy without iterative purification is
+most vulnerable to anchor contamination \citep{Woods2009}. Because the
+anchor set may itself be contaminated by small uniform DIF, the
+likelihood-ratio tests may underestimate the true magnitude of
+item-level differences. This pattern does not invalidate the overall
+null DIF finding, but it suggests that the absence of flagged items
+should be interpreted as ``no moderate-to-large DIF detected'' rather
+than ``no DIF present.''
 
 \hypertarget{measurement-invariance}{%
 \subsubsection{4.7 Measurement Invariance}\label{measurement-invariance}}
 
-Table 6 presents the stepwise MG-CFA results. The configural model demonstrated adequate fit (CFI = .978, RMSEA = .043, SRMR = .074), confirming that the three-factor structure holds separately in both ideology groups. Constraining factor loadings to equality across groups (metric invariance) produced no meaningful deterioration (\(\Delta\)CFI = .000, \(\Delta\)RMSEA = \(-\).002). Constraining both loadings and thresholds (scalar invariance) similarly maintained fit (\(\Delta\)CFI = +.002, \(\Delta\)RMSEA = \(-\).006). Both transitions satisfy the established criteria of \(|\Delta\)CFI\(|\) \(\leq\) .01 and \(|\Delta\)RMSEA\(|\) \(\leq\) .015 (Chen, 2007; Cheung \& Rensvold, 2002), providing evidence for full scalar invariance.
+Table 6 presents the stepwise MG-CFA results. The configural model demonstrated adequate fit (CFI = .978, RMSEA = .043, SRMR = .074), confirming that the three-factor structure holds separately in both ideology groups. Constraining factor loadings to equality across groups (metric invariance) produced no meaningful deterioration (\(\Delta\)CFI = .000, \(\Delta\)RMSEA = $-$.002). Constraining both loadings and thresholds (scalar invariance) similarly maintained fit (\(\Delta\)CFI = +.002, \(\Delta\)RMSEA = $-$.006). Both transitions satisfy the established criteria of $|\Delta\text{CFI}|$ \(\leq\) .01 and $|\Delta\text{RMSEA}|$ \(\leq\) .015 \citep{Chen2007,Cheung2002}, providing evidence for full scalar invariance.
 
 \textbf{Table 6.} \emph{Multi-Group CFA Fit Indices Across Invariance Levels (WLSMV)}
 
 \begin{longtable}[]{@{}llllll@{}}
-\toprule\noalign{}
+\toprule
 Model & CFI & RMSEA & SRMR & \(\Delta\)CFI & \(\Delta\)RMSEA \\
-\midrule\noalign{}
+\midrule
 \endhead
-\bottomrule\noalign{}
+\bottomrule
 \endlastfoot
 Configural & .978 & .043 & .074 & --- & --- \\
-Metric & .978 & .041 & .081 & .000 & \(-\).002 \\
-Scalar & .980 & .035 & .076 & +.002 & \(-\).006 \\
+Metric & .978 & .041 & .081 & .000 & $-$.002 \\
+Scalar & .980 & .035 & .076 & +.002 & $-$.006 \\
 \end{longtable}
 
-\emph{Note.} \(\Delta\)CFI and \(\Delta\)RMSEA computed relative to the preceding model. Invariance criteria: \(|\Delta\)CFI\(|\) \(\leq\) .01, \(|\Delta\)RMSEA\(|\) \(\leq\) .015 (Chen, 2007). Low and High ideology groups formed by tertile split on composite ideology (\emph{n} \(\approx\) 96 per group). Items treated as ordered categorical.
+\emph{Note.} \(\Delta\)CFI and \(\Delta\)RMSEA computed relative to the preceding model. Invariance criteria: $|\Delta\text{CFI}|$ \(\leq\) .01, $|\Delta\text{RMSEA}|$ \(\leq\) .015 \citep{Chen2007}. Low and High ideology groups formed by tertile split on composite ideology (\emph{n} \(\approx\) 96 per group). Items treated as ordered categorical.
 
-The SRMR increased slightly from configural (.074) to metric (.081) before returning at scalar (.076). This pattern can signal partial loading non-invariance. The largest modification index at the metric step was 11.28 (ROA =\textasciitilde{} POP2 cross-loading in the Low ideology group), marginally above the conventional threshold of 10. This suggests a minor loading difference for POP2 that is consistent with its weak loading (.30) in the overall CFA (Table 2) rather than evidence of systematic group-specific misspecification.
+The SRMR increased slightly from configural (.074) to metric (.081),
+marginally exceeding the conventional \(\leq\) .08 threshold. This
+threshold was developed for maximum-likelihood estimation with
+continuous indicators and may not apply directly to WLSMV-estimated
+models with polychoric residuals; the marginal exceedance should
+therefore be interpreted cautiously. The SRMR returned to .076 at the
+scalar step. This pattern can signal partial loading non-invariance.
+The largest modification index at the metric step was 11.28 (a
+suggested cross-loading of POP2 on the ROA factor in the Low ideology
+group), marginally above the conventional threshold of 10. This
+suggests a minor loading difference for POP2 that is consistent with
+its weak loading (.30) in the overall CFA (Table 2) rather than
+evidence of systematic group-specific misspecification.
 
-A lavaan warning about negative estimated observed variances occurred for the configural and metric models, which can arise with small per-group samples and WLSMV estimation of ordinal items. The affected parameters were residual variances for ROA items in the Low ideology group. This is a known estimation artifact with three-item factors and does not invalidate the invariance conclusions, but it signals that the per-group sample sizes (\emph{n} \(\approx\) 82--96) are at the lower boundary of what MG-CFA with WLSMV requires (Putnick \& Bornstein, 2016). The invariance results should therefore be treated as convergent evidence alongside the DIF analysis rather than as definitive confirmation of scalar equivalence.
-
-Full scalar invariance means that the factor structure, factor loadings, and item thresholds are equivalent for students with low and high ideological attitudes---a necessary condition for meaningful group comparisons.
+Negative estimated residual variances (Heywood cases) occurred for ROA
+items in the Low ideology group in the configural and metric models.
+Such estimates indicate a non-positive-definite covariance matrix,
+which can invalidate fit statistics and render parameter estimates
+uninterpretable. While Heywood cases can arise with small per-group
+samples and WLSMV estimation of ordinal items---particularly with
+three-item factors---they signal potential model inadmissibility rather
+than a benign estimation artefact. The per-group sample sizes
+(\emph{n} \(\approx\) 82--96) are at the lower boundary of what
+MG-CFA with WLSMV requires \citep{Putnick2016}. The
+configural and metric invariance conclusions should therefore be
+qualified: they represent the best available evidence given sample size
+constraints, but the Heywood cases introduce uncertainty about the
+precision of the configural baseline. The invariance results should be
+treated as convergent evidence alongside the DIF analysis rather than
+as definitive confirmation of scalar equivalence.
 
 \hypertarget{supplementary-invariance-ns-only-grouping}{%
 \subsubsection{4.8 Supplementary Invariance: NS-Only Grouping}\label{supplementary-invariance-ns-only-grouping}}
 
-To verify that invariance findings were not an artifact of the composite ideology grouping variable, we repeated the MG-CFA using groups defined by the NS facet alone (National Socialist sympathy/relativization), which represents the most direct theoretical operationalization of content congruence with the Weimar scenario. With the NS tertile split, group sizes were \emph{n} = 126 (Low) and \emph{n} = 125 (High). The supplementary analysis confirmed scalar invariance (configural CFI = .960, RMSEA = .050, SRMR = .070; metric \(\Delta\)CFI = +.002, \(\Delta\)SRMR = +.006; scalar \(\Delta\)CFI = +.014, \(\Delta\)SRMR = \(-\).003), indicating that the instrument functions equivalently even when groups are defined by the ideology facet most proximal to the scenario content. Full fit statistics for this supplementary analysis are available in the OSF repository.
+To verify that invariance findings were not an artefact of the
+composite ideology grouping variable, we repeated the MG-CFA using
+groups defined by the NS facet alone (National Socialist
+sympathy/relativisation), which represents the most direct theoretical
+operationalisation of content congruence with the Weimar scenario. With
+the NS tertile split, group sizes were \emph{n} = 126 (Low) and
+\emph{n} = 125 (High). The supplementary analysis largely supported
+scalar invariance (configural CFI = .960, RMSEA = .050, SRMR = .070;
+metric \(\Delta\)CFI = +.002, \(\Delta\)SRMR = +.006; scalar
+\(\Delta\)CFI = +.014, \(\Delta\)SRMR = $-$.003). The scalar
+\(\Delta\)CFI of .014 marginally exceeds the conventional \(\leq\)
+.01 threshold \citep{Chen2007}, indicating that full scalar invariance is
+not unambiguously confirmed for the NS-only grouping. The
+\(\Delta\)RMSEA remained within acceptable bounds, and the direction
+of CFI change was positive (improved fit), which is atypical for
+genuine invariance violations. Nevertheless, given that the NS facet
+is the most theoretically proximal grouping variable and the larger
+per-group sample sizes (\emph{n} = 126/125) make the criterion breach
+more interpretable, partial scalar invariance---with possible
+threshold non-equivalence for individual items---cannot be ruled out.
+Full fit statistics for this supplementary analysis are available in
+the OSF repository.
 
 \hypertarget{convergent-validity}{%
 \subsubsection{4.9 Convergent Validity}\label{convergent-validity}}
 
-Historical knowledge correlated positively with all HPT outcomes, providing convergent validity evidence consistent with the theoretical expectation that HPT is a knowledge-dependent competence: \emph{r} = .34 (HPT\_CTX6), \emph{r} = .22 (CONT), \emph{r} = .32 (POP\_rev). These moderate correlations indicate that students with stronger knowledge of the relevant historical period scored higher on HPT, while also demonstrating that HPT is not reducible to knowledge alone---the shared variance (approximately 5--12\%) leaves substantial HPT variance attributable to reasoning processes beyond factual recall. A caveat is warranted: the KN items were written to cover content directly relevant to the HPT scenario, so the correlation may partly reflect shared specific-content knowledge rather than the broader ``knowledge-dependent competence'' relationship posited theoretically. A general historical knowledge measure would provide a stronger convergent validity test.
+Scenario-relevant historical knowledge correlated positively with all
+HPT outcomes: \emph{r} = .34 (HPT\_CTX6), \emph{r} = .22 (CONT),
+\emph{r} = .32 (POP\_rev). These moderate correlations indicate that
+students with stronger knowledge of the relevant historical period
+scored higher on HPT, while also demonstrating that HPT is not
+reducible to knowledge alone---the shared variance (approximately
+5--12\%) leaves substantial HPT variance attributable to reasoning
+processes beyond factual recall. A limitation of this evidence is that
+the KN items were written to cover content directly relevant to the
+HPT scenario, so the correlation may partly reflect shared
+specific-content activation rather than the broader
+``knowledge-dependent competence'' relationship posited theoretically.
+A general historical knowledge measure would provide a stronger
+convergent validity test.
 
-History grade also correlated with HPT\_CTX6 (\emph{r} = \(-\).153, \emph{p} = .010; negative sign reflects the Czech scale where 1 = excellent). By contrast, ideology measures showed negligible correlations with HPT (FR-LF--HPT\_CTX6: \emph{r} = \(-\).05), and social desirability was unrelated (\emph{r} = \(-\).02 to .01). This pattern---significant knowledge correlations, null ideology and social desirability correlations---is consistent with an instrument that measures disciplinary reasoning rather than attitudes or impression management.
+History grade also correlated with HPT\_CTX6 (\emph{r} = $-$.153, \emph{p} = .010; negative sign reflects the Czech scale where 1 = excellent). By contrast, ideology measures showed negligible correlations with HPT (FR-LF--HPT\_CTX6: \emph{r} = $-$.05), and social desirability was unrelated (\emph{r} = $-$.02 to .01). This pattern---significant knowledge correlations, null ideology and social desirability correlations---is consistent with an instrument that measures disciplinary reasoning rather than attitudes or impression management.
 
 \textbf{Table 7.} \emph{Zero-Order Pearson Correlations Among Key Variables}
 
-\begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1154}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1154}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1154}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1731}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1154}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1346}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1154}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1154}}@{}}
-\toprule\noalign{}
-\begin{minipage}[b]{\linewidth}\raggedright
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-CTX6
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-CONT
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-POP\_rev
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-KN
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-FR-LF
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-KSA
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-SDR
-\end{minipage} \\
-\midrule\noalign{}
+\begin{longtable}[]{@{}lrrrrrrr@{}}
+\toprule
+ & CTX6 & CONT & POP\_rev & KN & FR-LF & KSA & SDR \\
+\midrule
 \endhead
-\bottomrule\noalign{}
+\bottomrule
 \endlastfoot
 HPT CTX6 & --- & & & & & & \\
 HPT CONT & .82*** & --- & & & & & \\
 HPT POP\_rev & .76*** & .26*** & --- & & & & \\
 KN Total & .34*** & .22*** & .32*** & --- & & & \\
-FR-LF Total & \(-\).05 & .01 & \(-\).09 & \(-\).10 & --- & & \\
-KSA-3 Total & \(-\).03 & .07 & \(-\).13* & .05 & .52*** & --- & \\
-SDR-5 Total & \(-\).02 & .01 & \(-\).05 & .03 & \(-\).19** & \(-\).15* & --- \\
+FR-LF Total & $-$.05 & .01 & $-$.09 & $-$.10 & --- & & \\
+KSA-3 Total & $-$.03 & .07 & $-$.13* & .05 & .52*** & --- & \\
+SDR-5 Total & $-$.02 & .01 & $-$.05 & .03 & $-$.19** & $-$.15* & --- \\
 \end{longtable}
 
-\emph{Note.} Pairwise complete observations (\emph{n} = 276--287). HPT POP is reverse-scored. KN = historical knowledge (0--6 sum); FR-LF = right-authoritarian ideology (1--5); KSA-3 = authoritarianism (1--5); SDR-5 = social desirability (1--5). *** \emph{p} \textless{} .001. ** \emph{p} \textless{} .01. * \emph{p} \textless{} .05.
+\emph{Note.} Pairwise complete observations (\emph{n} = 276--287). HPT POP is reverse-scored. KN = historical knowledge (0--6 sum); FR-LF = right-authoritarian ideology (1--5); KSA-3 = authoritarianism (1--5); SDR-5 = social desirability (1--5). *** \emph{p} $<$ .001. ** \emph{p} $<$ .01. * \emph{p} $<$ .05.
 
 \hypertarget{substantive-context-ideology-hpt-relationships}{%
 \subsubsection{4.10 Substantive Context: Ideology-HPT Relationships}\label{substantive-context-ideology-hpt-relationships}}
 
 Ideology was unrelated to HPT scores across all model
 specifications: FR-LF \(\beta\) = 0.012, \emph{SE} = 0.067, 95\%
-CI [\(-\)0.120, 0.143], \emph{p} = .863 for the primary outcome
+CI [$-$0.120, 0.143], \emph{p} = .863 for the primary outcome
 (HPT\_CTX6). Historical knowledge was the only consistent
-predictor (\(\beta\) = 0.21--0.34, \emph{p} \textless{} .001).
-Post hoc equivalence tests used the Two One-Sided Tests (TOST)
-procedure, which reverses the logic of null-hypothesis testing by
-asking whether an effect is small enough to be declared practically
-negligible. The Smallest Effect Size Of Interest (SESOI) was set at
-\(\pm\) 0.20 standardized units, corresponding to Cohen's (1988)
-threshold for a ``small'' effect. A caveat: the preregistered power
-target of \(\beta\) \(\geq\) .15 was narrower than this SESOI,
-meaning that effects between .15 and .20 cannot be confidently
-excluded. With this boundary, the TOST results confirmed that
-ideology effects at or above \(\beta\) = .20 are statistically
-ruled out (all TOST \emph{p}s \textless{} .003; 90\% CI for the
-primary outcome [\(-\)0.10, 0.12], entirely within the \(\pm\)
-0.20 SESOI). The ideology coefficient remained non-significant
+predictor (\(\beta\) = 0.21--0.34, \emph{p} $<$ .001).
+As an exploratory sensitivity analysis, equivalence tests used the Two
+One-Sided Tests (TOST) procedure, which reverses the logic of
+null-hypothesis testing by asking whether an effect is small enough to
+be declared practically negligible. The Smallest Effect Size Of
+Interest (SESOI) was set post hoc at \(\pm\) 0.20 standardised units,
+corresponding to \citeauthor{Cohen1988}'s (\citeyear{Cohen1988}) threshold for a ``small'' effect.
+This SESOI is wider than the preregistered power target of \(\beta\)
+\(\geq\) .15, meaning that effects between .15 and .20 cannot be
+confidently excluded; the TOST results should therefore be treated as
+exploratory rather than confirmatory. With the \(\pm\) 0.20 boundary,
+the TOST results indicated that ideology effects at or above \(\beta\)
+= .20 are statistically ruled out (all TOST \emph{p}s $<$ .003; 90\%
+CI for the primary outcome [$-$0.10, 0.12], entirely within the
+\(\pm\) 0.20 SESOI). The ideology coefficient remained non-significant
 across all sensitivity checks, including alternative HPT scoring
 composites, different ideology operationalizations, exclusion of
 high social desirability responders, random-slope models, and
-school fixed-effects specifications (all \emph{p}s \textgreater{}
+school fixed-effects specifications (all \emph{p}s $>$
 .43). These substantive findings complement the measurement
 evidence: the instrument not only measures equivalently across
 ideology groups (DIF, invariance) but also yields scores that are
@@ -551,12 +721,14 @@ uncontaminated by political attitudes at the composite level.
 \hypertarget{summary-of-findings}{%
 \subsubsection{5.1 Summary of Findings}\label{summary-of-findings}}
 
-The HPT instrument survived every fairness test. Factor structure replicated, DIF was absent, scalar invariance held, and ideology predicted nothing. This is the first psychometric evaluation of a Czech adaptation of the Hartmann and Hasselhorn HPT instrument and the first investigation of ideological fairness for any HPT measure. The Czech adaptation demonstrated the theorized three-factor structure, acceptable reliability for three-item subscales, meaningful convergent validity with historical knowledge, and sensitivity to school-level variation. Historical knowledge was the only construct that predicted HPT scores; political ideology, authoritarianism, and social desirability were all unrelated.
+The HPT instrument passed every fairness test applied. Factor
+structure replicated, DIF was absent, scalar invariance held, and
+ideology did not predict HPT scores. This is the first psychometric evaluation of a Czech adaptation of the Hartmann and Hasselhorn HPT instrument and the first investigation of ideological fairness for any HPT measure. The Czech adaptation demonstrated the theorized three-factor structure, acceptable reliability for three-item subscales, meaningful convergent validity with historical knowledge, and sensitivity to school-level variation. Historical knowledge was the only construct that predicted HPT scores; political ideology, authoritarianism, and social desirability were all unrelated.
 
 \hypertarget{factor-structure-confirms-the-three-level-hpt-model}{%
 \subsubsection{5.2 Factor Structure Confirms the Three-Level HPT Model}\label{factor-structure-confirms-the-three-level-hpt-model}}
 
-The three-factor model (POP, ROA, CONT) fit substantially better than alternatives, confirming that the Czech adaptation preserves the dimensional structure of the original German instrument. This replication in a linguistically and educationally distinct context confirms that the item grouping holds in a Czech sample (Hambleton et al., 2005; International Test Commission, 2017), though with a near-saturated model the structural confirmation is relatively undemanding (see Section 4.1). CONT items loaded most consistently (.61--.72), while POP2 and ROA2 showed weaker loadings (.30); these were retained for comparability but are candidates for revision in future adaptations.
+The three-factor model (POP, ROA, CONT) fit substantially better than alternatives, confirming that the Czech adaptation preserves the dimensional structure of the original German instrument. This replication in a linguistically and educationally distinct context confirms that the item grouping holds in a Czech sample \citep{Hambleton2005,ITC2017}, though with a near-saturated model the structural confirmation is relatively undemanding (see Section 4.1). CONT items loaded most consistently (.61--.72), while POP2 and ROA2 showed weaker loadings (.30); these were retained for comparability but are candidates for revision in future adaptations.
 
 \hypertarget{addressing-modest-reliability}{%
 \subsubsection{5.3 Addressing Modest Reliability}\label{addressing-modest-reliability}}
@@ -566,9 +738,40 @@ The subscale reliabilities (\(\alpha\) = .47--.64; \(\omega\) = .55--.69) fall b
 \hypertarget{measurement-fairness-evidence}{%
 \subsubsection{5.4 Measurement Fairness Evidence}\label{measurement-fairness-evidence}}
 
-Full scalar invariance---confirmed through both the composite ideology grouping and the supplementary NS-only analysis---means that the HPT instrument imposes equivalent measurement demands on students regardless of their political attitudes. The DIF analysis complements this at the item level: no item exhibited differential functioning, which is particularly important for the CONT items most theoretically susceptible to ideological contamination. The correlation pattern---positive knowledge--HPT associations (Chapman, 2021; Hartmann \& Hasselhorn, 2008; Wineburg, 2001), null ideology correlations, null social desirability correlations---is consistent with the intended score interpretation (American Educational Research Association et al., 2014; Messick, 1995), though the convergent evidence is bounded by the scenario-proximal nature of the knowledge measure (see Section 4.9).
+Scalar invariance was confirmed for the composite ideology grouping
+and largely supported for the NS-only analysis (with the caveat that
+the NS scalar \(\Delta\)CFI marginally exceeded the conventional
+threshold; see Section 4.8). These results indicate that the HPT
+instrument imposes largely equivalent measurement demands on students
+regardless of their political attitudes. The DIF analysis complements
+this at the item level: no item exhibited differential functioning
+after Bonferroni correction, which is particularly important for the
+CONT items most theoretically susceptible to ideological
+contamination, though the clustering of near-significant raw
+\emph{p}-values warrants caution (see Section 4.6).
 
-The present fairness evidence applies to mainstream Czech adolescent samples with restricted ideological range. Users in contexts with greater political polarization should conduct their own DIF and invariance analyses before assuming equivalent measurement.
+The correlation pattern---positive scenario-relevant knowledge--HPT
+associations \citep{Chapman2021Introduction,Hartmann2008,Wineburg2001Historical}, null ideology correlations, null social desirability
+correlations---is consistent with the intended score interpretation
+\citep{AERA2014Standards,Messick1995Validity}. However, the convergent evidence is bounded by the
+scenario-proximal nature of the knowledge measure (see Section 4.9),
+which limits the strength of the knowledge-dependent competence claim.
+
+The near-zero ideology--HPT correlation (\emph{r} = $-$.05) should
+not be interpreted as conclusive evidence that ideology plays no role
+in HPT performance. As discussed in Section 2.3, two opposing
+pathways are theoretically plausible: a congruence pathway (whereby
+attitudinal alignment inflates scores) and a reduced integrative
+complexity pathway (whereby authoritarian cognition depresses
+contextualisation). If both pathways operate simultaneously, their
+effects could cancel, producing a near-zero net correlation that masks
+two moderate-sized opposing effects. The present data cannot
+distinguish a genuine null from cancelling pathways.
+
+The present fairness evidence applies to mainstream Czech adolescent
+samples with restricted ideological range. Users in contexts with
+greater political polarisation should conduct their own DIF and
+invariance analyses before assuming equivalent measurement.
 
 \hypertarget{implications-for-assessment-practice}{%
 \subsubsection{5.5 Implications for Assessment Practice}\label{implications-for-assessment-practice}}
@@ -592,14 +795,89 @@ The evaluation protocol used here provides an evidence-based model for evaluatin
   Examine convergent and discriminant correlations to verify that construct scores relate to theoretically expected variables and not to the attitudinal dimension.
 \end{enumerate}
 
-The format itself may be a fairness mechanism. If scenario-based formats channel deliberative processing and override automatic attitude-retrieval (Evans \& Stanovich, 2013), then the instrument format---not just the construct---buffers against motivated reasoning. However, this hypothesis has an important implication: if the format itself suppresses attitudinal responding, then the present fairness conclusion is conditional on the closed-ended Likert format and cannot be extended to open-ended HPT assessments where ideology could operate through different cognitive pathways.
+The format itself may be a fairness mechanism. If scenario-based formats channel deliberative processing and override automatic attitude-retrieval \citep{Evans2013}, then the instrument format---not just the construct---buffers against motivated reasoning. However, this hypothesis has an important implication: if the format itself suppresses attitudinal responding, then the present fairness conclusion is conditional on the closed-ended Likert format and cannot be extended to open-ended HPT assessments where ideology could operate through different cognitive pathways.
 
-Several design features may explain the instrument's resistance to attitudinal contamination: the scenario provides contextual information that channels deliberative processing, the Likert items require evaluating propositions about a historical figure rather than expressing personal attitudes, and the school assessment context may activate an academic frame. These are hypotheses, not conclusions---the present study was not designed to test them experimentally, and doing so would require comparing structured and open-ended formats using the same content.
+Several design features may explain the instrument's resistance to
+attitudinal contamination: the scenario provides contextual
+information that channels deliberative processing, the Likert items
+require evaluating propositions about a historical figure rather than
+expressing personal attitudes, and the school assessment context may
+activate an academic frame. These are hypotheses, not
+conclusions---the present study was not designed to test them
+experimentally, and doing so would require comparing structured and
+open-ended formats using the same content.
+
+An alternative explanation for the observed measurement equivalence
+deserves consideration. In a school context where the scenario
+involves a Nazi-adjacent historical figure, students may uniformly
+avoid endorsing presentist responses---not because they are engaging
+in genuine historical reasoning, but because contextualisation is the
+socially safe response regardless of one's actual political
+attitudes. If task-demand compliance produces equivalent response
+patterns across ideology groups, the resulting measurement invariance
+would reflect shared social desirability pressure rather than genuine
+absence of ideological influence on reasoning. The null SDR-5
+correlations provide partial evidence against this interpretation, but
+a brief self-report measure of social desirability may not capture the
+specific task demands operating in a classroom assessment of
+politically sensitive historical content.
 
 \hypertarget{limitations}{%
 \subsubsection{5.6 Limitations}\label{limitations}}
 
-Several limitations qualify these findings. First, the study uses a single country and scenario; whether the fairness findings generalize to other contexts remains to be established. Second, and most consequentially, the ideological range was restricted (only 17.7\% above the midpoint), so the DIF and invariance analyses compare moderately elevated to low ideology, not genuine political extremism. The null ideology finding should be interpreted as ``no evidence of CIV in this range-restricted sample'' rather than as a general demonstration that politically charged content is fair. Third, DIF power was limited: with \emph{n} \(\approx\) 96 per group, the analysis was powered primarily to detect moderate-to-large effects (\(\Delta\beta\) \(\geq\) 0.5 logits); weak DIF effects cannot be confidently excluded. A formal power simulation for the GRM likelihood-ratio test at Bonferroni-corrected \(\alpha\) was not conducted; future work should quantify the minimum detectable DIF magnitude for this design. Fourth, the sample was 65.5\% male. Gender is a documented moderator of authoritarian attitude endorsement in adolescent samples, and no DIF or sensitivity analysis by gender was conducted. If male students drive both ideology variance and the null finding, the fairness conclusion may not hold for more gender-balanced samples. Fifth, modest subscale reliability (\(\alpha\) = .47--.64) constrains individual-level score interpretations; future adaptations should consider expanding subscale length. Omega hierarchical (\(\omega_h\)) from the bifactor model was not computed; this index would clarify what proportion of subscale variance is attributable to the general HPT factor versus specific subscale factors. Sixth, all measures were self-report instruments administered in a single session, and the closed-ended Likert format may not generalize to open-ended HPT assessments where ideology could operate through different mechanisms (Smith, 2017; Smith et al., 2018). Finally, the study lacks response process evidence. The critical unanswered question is whether Czech students actually invoke historical reasoning when responding---or whether the structured format produces contextualizing responses through a different cognitive pathway. Cognitive interview studies could resolve this.
+Several limitations qualify these findings.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+
+\item \emph{Single country and scenario.} The study uses one national
+  context and one historical scenario; whether the fairness findings
+  generalise to other contexts remains to be established.
+
+\item \emph{Restricted ideological range.} Only 17.7\% of respondents
+  scored above the scale midpoint on ideology measures, so the DIF and
+  invariance analyses compare moderately elevated to low ideology, not
+  genuine political extremism. The null ideology finding should be
+  interpreted as ``no evidence of CIV in this range-restricted sample''
+  rather than as a general demonstration that politically charged
+  content is fair.
+
+\item \emph{Limited DIF power.} With \emph{n} \(\approx\) 96 per
+  group, the analysis was powered primarily to detect moderate-to-large
+  effects (\(\Delta\beta\) \(\geq\) 0.5 logits); weak DIF effects
+  cannot be confidently excluded. A formal power simulation for the
+  GRM likelihood-ratio test at Bonferroni-corrected \(\alpha\) was not
+  conducted; future work should quantify the minimum detectable DIF
+  magnitude for this design.
+
+\item \emph{Gender imbalance.} The sample was 65.5\% male. Gender is
+  a documented moderator of authoritarian attitude endorsement in
+  adolescent samples, and no DIF or sensitivity analysis by gender was
+  conducted. If male students drive both ideology variance and the null
+  finding, the fairness conclusion may not hold for more
+  gender-balanced samples.
+
+\item \emph{Modest reliability.} Subscale reliabilities (\(\alpha\) =
+  .47--.64) constrain individual-level score interpretations; future
+  adaptations should consider expanding subscale length. Omega
+  hierarchical (\(\omega_h\)) from the bifactor model was not
+  computed; this index would clarify what proportion of subscale
+  variance is attributable to the general HPT factor versus specific
+  subscale factors.
+
+\item \emph{Method and format constraints.} All measures were
+  self-report instruments administered in a single session. The
+  closed-ended Likert format may not generalise to open-ended HPT
+  assessments where ideology could operate through different cognitive
+  mechanisms \citep{Smith2017Cognitive,Smith_et_al2018History}.
+
+\item \emph{No response process evidence.} The critical unanswered
+  question is whether Czech students actually invoke historical
+  reasoning when responding---or whether the structured format produces
+  contextualising responses through a different cognitive pathway.
+  Cognitive interview studies could resolve this.
+
+\end{enumerate}
 
 \hypertarget{recommendations}{%
 \subsubsection{5.7 Recommendations}\label{recommendations}}
@@ -609,9 +887,26 @@ For researchers developing or adapting HPT instruments: (a) report \(\omega\) al
 \hypertarget{conclusion}{%
 \subsubsection{5.8 Conclusion}\label{conclusion}}
 
-The Czech adaptation of the Hartmann and Hasselhorn HPT instrument preserves the three-factor structure of the original, produces scores that relate to historical knowledge in theoretically expected ways, and functions with measurement equivalence across students with different political attitudes. The instrument measured what it claims to measure---and ideology had nothing to do with the score.
+The Czech adaptation of the Hartmann and Hasselhorn HPT instrument
+preserves the three-factor structure of the original, produces scores
+that relate to scenario-relevant historical knowledge in theoretically
+expected ways, and functions with largely equivalent measurement
+properties across students with different political attitudes. At the
+sensitivity levels afforded by the present sample and in the observed
+ideological range, political ideology was unrelated to HPT scores
+across all model specifications.
 
-For researchers and assessment developers, the practical implication is that structured scenario-based assessments can employ politically sensitive historical content without compromising fairness---at least in mainstream classroom settings with restricted ideological range. Whether this conclusion extends to more polarised populations, open-ended assessment formats, or different historical scenarios remains an open empirical question. The evaluation protocol demonstrated here---CFA, DIF, MG-CFA, and convergent/discriminant correlations---provides a replicable template for answering that question wherever attitudinally charged content meets competence assessment.
+For researchers and assessment developers, the practical implication
+is that structured scenario-based assessments can employ politically
+sensitive historical content without detectable measurement
+bias---at least in mainstream classroom settings with restricted
+ideological range. Whether this conclusion extends to more polarised
+populations, open-ended assessment formats, or different historical
+scenarios remains an open empirical question. The evaluation protocol
+demonstrated here---CFA, DIF, MG-CFA, and convergent/discriminant
+correlations---provides a replicable template for answering that
+question wherever attitudinally charged content meets competence
+assessment.
 
 \hypertarget{data-availability-statement}{%
 \subsection{Data Availability Statement}\label{data-availability-statement}}
@@ -643,135 +938,29 @@ Juda Kaleta: Conceptualization, Methodology, Software, Formal analysis, Investig
 
 The author thanks the participating schools, teachers, and students for their cooperation. The translation panel members and expert reviewers who contributed to the adaptation process are acknowledged with gratitude.
 
+\hypertarget{ai-use-disclosure}{%
+\subsection{AI Use Disclosure}\label{ai-use-disclosure}}
+
+The following AI tools were used during the preparation of this manuscript:
+
+\begin{itemize}
+\tightlist
+\item
+  \emph{Brainstorming and scripting assistance:} Claude (Anthropic) ---
+  used for exploring conceptual framing, structural alternatives, and
+  scripting support for data processing and analysis workflows.
+\item
+  \emph{Language editing:} Grammarly --- used for grammar and style
+  checking.
+\end{itemize}
+
+All research design decisions, analytical choices, theoretical interpretations, and the final text are solely the author's responsibility. The author reviewed, revised, and approved all content.
+
 \hypertarget{references}{%
 \subsection{References}\label{references}}
 
-\hypertarget{refs}{}
-\begin{CSLReferences}{1}{0}
-\leavevmode\vadjust pre{\hypertarget{ref-Alven2019}{}}%
-Alvén, F. L. (2019). Bias in teachers' assessments of students' historical narratives. \emph{History Education Research Journal}, \emph{16}(2). \url{https://doi.org/10.18546/HERJ.16.2.10}
-
-\leavevmode\vadjust pre{\hypertarget{ref-AERA2014}{}}%
-American Educational Research Association, American Psychological Association, \& National Council on Measurement in Education. (2014). \emph{Standards for educational and psychological testing}. American Educational Research Association. \url{https://www.testingstandards.net/open-access-files.html}
-
-\leavevmode\vadjust pre{\hypertarget{ref-Ashby1987}{}}%
-Ashby, R., \& Lee, P. (1987). Children's concepts of empathy and understanding in history. In \emph{The history curriculum for teachers} (pp. 62--88). Falmer Press.
-
-\leavevmode\vadjust pre{\hypertarget{ref-Badham2025}{}}%
-Badham, L., Meadows, M., \& Baird, J.-A. (2025). Construct comparability and the limits of post hoc modeling: Insights from {International Baccalaureate} multi-language assessments. \emph{Frontiers in Education}, \emph{10}, 1616879. \url{https://doi.org/10.3389/feduc.2025.1616879}
-
-\leavevmode\vadjust pre{\hypertarget{ref-Barton2004}{}}%
-Barton, K. C., \& Levstik, L. S. (2004). \emph{Teaching history for the common good}. Lawrence Erlbaum Associates. \url{https://doi.org/10.4324/9781410610508}
-
-\leavevmode\vadjust pre{\hypertarget{ref-Beierlein2014}{}}%
-Beierlein, C., Asbrock, F., Kauff, M., \& Schmidt, P. (2014). \emph{Die {Kurzskala Autoritarismus} ({KSA-3}): {Ein} {ö}konomisches {Messinstrument} zur {Erfassung} dreier {Subdimensionen} autorit{ä}rer {Einstellungen}} (\{GESIS\} Working Papers 2014/35). {GESIS} -- {Leibniz-Institut} f{ü}r {Sozialwissenschaften}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-Breakstone2014}{}}%
-Breakstone, J. (2014). Try, try, try again: The process of designing new history assessments. \emph{Theory \& Research in Social Education}, \emph{42}(4), 453--485. \url{https://doi.org/10.1080/00933104.2014.965860}
-
-\leavevmode\vadjust pre{\hypertarget{ref-Chapman2021}{}}%
-Chapman, A. (2021). Introduction: Historical knowing and the {``knowledge turn.''} In A. Chapman (Ed.), \emph{Knowing history in schools: Powerful knowledge and the powers of knowledge} (pp. 1--31). UCL Press. \url{https://doi.org/10.14324/111.9781787357303}
-
-\leavevmode\vadjust pre{\hypertarget{ref-Chen2007}{}}%
-Chen, F. F. (2007). Sensitivity of goodness of fit indexes to lack of measurement invariance. \emph{Structural Equation Modeling: A Multidisciplinary Journal}, \emph{14}(3), 464--504. \url{https://doi.org/10.1080/10705510701301834}
-
-\leavevmode\vadjust pre{\hypertarget{ref-Cheung2002}{}}%
-Cheung, G. W., \& Rensvold, R. B. (2002). Evaluating goodness-of-fit indexes for testing measurement invariance. \emph{Structural Equation Modeling: A Multidisciplinary Journal}, \emph{9}(2), 233--255. \url{https://doi.org/10.1207/S15328007SEM0902_5}
-
-\leavevmode\vadjust pre{\hypertarget{ref-Cinatl2021}{}}%
-Činátl, K., Najbert, J., \& Ripka, V. (2021). Historick{á} gramotnost v aplikaci {HistoryLab}---{Realistick{ý}} p{ř}{í}stup k osvojov{á}n{í} didaktick{é} teorie d{ě}jepisu. \emph{Historie -- Ot{á}zky -- Probl{é}my}, \emph{13}(2), 50--70.
-
-\leavevmode\vadjust pre{\hypertarget{ref-Decker2013}{}}%
-Decker, O., Kiess, J., \& Brähler, E. (2013). \emph{Rechtsextremismus der mitte: Eine sozialpsychologische gegenwartsdiagnose}. Psychosozial-Verlag. \url{https://doi.org/10.30820/9783837966367}
-
-\leavevmode\vadjust pre{\hypertarget{ref-vanDrie2007}{}}%
-Drie, J. van, \& Boxtel, C. van. (2007). Historical reasoning: Towards a framework for analyzing students' reasoning about the past. \emph{Educational Psychology Review}, \emph{20}(2), 87--110. \url{https://doi.org/10.1007/s10648-007-9056-1}
-
-\leavevmode\vadjust pre{\hypertarget{ref-Duckitt2001}{}}%
-Duckitt, J. (2001). A dual-process cognitive-motivational theory of ideology and prejudice. In \emph{Advances in experimental social psychology} (Vol. 33, pp. 41--113). Elsevier. \url{https://doi.org/10.1016/S0065-2601(01)80004-6}
-
-\leavevmode\vadjust pre{\hypertarget{ref-Evans2013}{}}%
-Evans, J. St. B. T., \& Stanovich, K. E. (2013). Dual-process theories of higher cognition: Advancing the debate. \emph{Perspectives on Psychological Science}, \emph{8}(3), 223--241. \url{https://doi.org/10.1177/1745691612460685}
-
-\leavevmode\vadjust pre{\hypertarget{ref-Finch2005}{}}%
-Finch, H. (2005). The {MIMIC} model as a method for detecting {DIF}: Comparison with {Mantel-Haenszel}, {SIBTEST}, and the {IRT} likelihood ratio. \emph{Applied Psychological Measurement}, \emph{29}(4), 278--295. \url{https://doi.org/10.1177/0146621605275728}
-
-\leavevmode\vadjust pre{\hypertarget{ref-Flora2004}{}}%
-Flora, D. B., \& Curran, P. J. (2004). An empirical evaluation of alternative methods of estimation for confirmatory factor analysis with ordinal data. \emph{Psychological Methods}, \emph{9}(4), 466--491. \url{https://doi.org/10.1037/1082-989X.9.4.466}
-
-\leavevmode\vadjust pre{\hypertarget{ref-Hambleton2005}{}}%
-Hambleton, R. K., Merenda, P. F., \& Spielberger, C. D. (2005). \emph{Adapting educational and psychological tests for cross-cultural assessment}. Lawrence Erlbaum Associates. \url{https://doi.org/10.4324/9781410611758}
-
-\leavevmode\vadjust pre{\hypertarget{ref-Hartmann2008}{}}%
-Hartmann, U., \& Hasselhorn, M. (2008). Historical perspective taking: A standardized measure for an aspect of students' historical thinking. \emph{Learning and Individual Differences}, \emph{18}(2), 264--270. \url{https://doi.org/10.1016/j.lindif.2007.10.002}
-
-\leavevmode\vadjust pre{\hypertarget{ref-Hays1989}{}}%
-Hays, R. D., Hayashi, T., \& Stewart, A. L. (1989). A five-item measure of socially desirable response set. \emph{Educational and Psychological Measurement}, \emph{49}(3), 629--636. \url{https://doi.org/10.1177/001316448904900315}
-
-\leavevmode\vadjust pre{\hypertarget{ref-Huijgen2014}{}}%
-Huijgen, T., Boxtel, C. van, Grift, W. van de, \& Holthuis, P. (2014). Testing elementary and secondary school students' ability to perform historical perspective taking: The constructing of valid and reliable measure instruments. \emph{European Journal of Psychology of Education}, \emph{29}(4), 653--672. \url{https://doi.org/10.1007/s10212-014-0219-4}
-
-\leavevmode\vadjust pre{\hypertarget{ref-Huijgen2017}{}}%
-Huijgen, T., Van Boxtel, C., Van De Grift, W., \& Holthuis, P. (2017). Toward historical perspective taking: Students' reasoning when contextualizing the actions of people in the past. \emph{Theory \& Research in Social Education}, \emph{45}(1), 110--144. \url{https://doi.org/10.1080/00933104.2016.1208597}
-
-\leavevmode\vadjust pre{\hypertarget{ref-ITC2017}{}}%
-International Test Commission. (2017). \emph{{ITC} guidelines for translating and adapting tests (second edition)}. International Test Commission. \url{https://www.intestcom.org/files/guideline_test_adaptation_2ed.pdf}
-
-\leavevmode\vadjust pre{\hypertarget{ref-Jost2003}{}}%
-Jost, J. T., Glaser, J., Kruglanski, A. W., \& Sulloway, F. J. (2003). Political conservatism as motivated social cognition. \emph{Psychological Bulletin}, \emph{129}(3), 339--375. \url{https://doi.org/10.1037/0033-2909.129.3.339}
-
-\leavevmode\vadjust pre{\hypertarget{ref-Kahan2017}{}}%
-Kahan, D. M., Peters, E., Dawson, E. C., \& Slovic, P. (2017). Motivated numeracy and enlightened self-government. \emph{Behavioural Public Policy}, \emph{1}(1), 54--86. \url{https://doi.org/10.1017/bpp.2016.2}
-
-\leavevmode\vadjust pre{\hypertarget{ref-Lee2001}{}}%
-Lee, P., \& Ashby, R. (2001). Empathy, perspective taking, and rational understanding. In \emph{Historical empathy and perspective taking in the social studies} (pp. 21--50). Rowman \& Littlefield.
-
-\leavevmode\vadjust pre{\hypertarget{ref-Maas2005}{}}%
-Maas, C. J. M., \& Hox, J. J. (2005). Sufficient sample sizes for multilevel modeling. \emph{Methodology}, \emph{1}(3), 86--92. \url{https://doi.org/10.1027/1614-2241.1.3.86}
-
-\leavevmode\vadjust pre{\hypertarget{ref-Messick1995}{}}%
-Messick, S. (1995). Validity of psychological assessment: Validation of inferences from persons' responses and performances as scientific inquiry into score meaning. \emph{American Psychologist}, \emph{50}(9), 741--749. \url{https://doi.org/10.1037/0003-066x.50.9.741}
-
-\leavevmode\vadjust pre{\hypertarget{ref-Munich2023}{}}%
-Münich, J., Najbert, J., Ondrouchová, M., Pinka, J., Ripka, V., Sedlák, P., Spousta, P., \& Veselá, M. (2023). \emph{Z{á}v{ě}re{č}n{á} zpr{á}va projektu {D{ě}jepis+}: Vyhodnocen{í} pokusn{é}ho ov{ě}{ř}ov{á}n{í} {Prom{ě}na} v{ý}uky d{ě}jin 20. Stol. Na {č}esk{ý}ch z{á}kladn{í}ch {š}kol{á}ch ({{``SINUS CZ''}})}. N{á}rodn{í} pedagogick{ý} institut {Č}esk{é} republiky. \url{https://dejepisplus.npi.cz/wp-content/uploads/2024/01/zaverecna-zprava-d-web.pdf}
-
-\leavevmode\vadjust pre{\hypertarget{ref-Putnick2016}{}}%
-Putnick, D. L., \& Bornstein, M. H. (2016). Measurement invariance conventions and reporting: The state of the art and future directions for psychological research. \emph{Developmental Review}, \emph{41}, 71--90. \url{https://doi.org/10.1016/j.dr.2016.06.004}
-
-\leavevmode\vadjust pre{\hypertarget{ref-Ripka2024}{}}%
-Ripka, V., Sýkorová, P., Münich, J., \& Chvojka, E. (2024). Epistemic cognition triangulated: {What} can we learn about the theory of epistemic beliefs in history from reassessment of its measurement. In H. Åström Elmersjö \& P. Zanazanian (Eds.), \emph{Teachers and the epistemology of history} (pp. 307--324). Springer Nature Switzerland. \url{https://doi.org/10.1007/978-3-031-58056-7_17}
-
-\leavevmode\vadjust pre{\hypertarget{ref-Seixas2015b}{}}%
-Seixas, P., Gibson, L., \& Ercikan, K. (2015). A design process for assessing historical thinking: The case of a one-hour test. In \emph{New directions in assessing historical thinking} (pp. 102--116). Taylor \& Francis.
-
-\leavevmode\vadjust pre{\hypertarget{ref-Seixas2013}{}}%
-Seixas, P., \& Morton, T. (2013). \emph{The big six -- historical thinking concepts}. Nelson Education. \url{https://archive.org/embed/bigsixhistorical0000seix}
-
-\leavevmode\vadjust pre{\hypertarget{ref-Shemilt1984}{}}%
-Shemilt, D. (1984). Beauty and the philosopher: Empathy in history and classroom. In A. K. Dickinson, P. J. Lee, \& P. J. Rogers (Eds.), \emph{Learning history} (pp. 39--84). Heinemann Educational Books.
-
-\leavevmode\vadjust pre{\hypertarget{ref-Smith2017}{}}%
-Smith, M. (2017). Cognitive validity: Can multiple-choice items tap historical thinking processes? \emph{American Educational Research Journal}, \emph{54}(10), 1256--1287. \url{https://doi.org/10.3102/0002831217717949}
-
-\leavevmode\vadjust pre{\hypertarget{ref-Smith2018}{}}%
-Smith, M., Breakstone, J., \& Wineburg, S. (2018). History assessments of thinking: A validity study. \emph{Cognition and Instruction}, \emph{37}(1), 118--144. \url{https://doi.org/10.1080/07370008.2018.1499646}
-
-\leavevmode\vadjust pre{\hypertarget{ref-Suedfeld1977}{}}%
-Suedfeld, P., \& Tetlock, P. (1977). Integrative complexity of communications in international crises. \emph{Journal of Conflict Resolution}, \emph{21}(1), 169--184. \url{https://doi.org/10.1177/002200277702100108}
-
-\leavevmode\vadjust pre{\hypertarget{ref-VanBoxtel2018}{}}%
-Van Boxtel, C., \& Van Drie, J. (2018). Historical reasoning: Conceptualizations and educational applications. In S. A. Metzger \& L. M. Harris (Eds.), \emph{The wiley international handbook of history teaching and learning} (1st ed., pp. 149--176). Wiley. \url{https://doi.org/10.1002/9781119100812.ch6}
-
-\leavevmode\vadjust pre{\hypertarget{ref-VanSledright2014}{}}%
-VanSledright, B. A. (2014). \emph{Assessing historical thinking and understanding: Innovative designs for new standards}. Routledge. \url{https://doi.org/10.4324/9781315732879}
-
-\leavevmode\vadjust pre{\hypertarget{ref-Wineburg2001}{}}%
-Wineburg, S. (2001). \emph{Historical thinking and other unnatural acts---charting the future of teaching the past}. Temple University Press.
-
-\leavevmode\vadjust pre{\hypertarget{ref-Woods2009}{}}%
-Woods, C. M. (2009). Empirical selection of anchors for tests of differential item functioning. \emph{Applied Psychological Measurement}, \emph{33}(1), 42--57. \url{https://doi.org/10.1177/0146621607314044}
-
-\end{CSLReferences}
+\bibliographystyle{apacite}
+\bibliography{bibliography,extras}
 
 \newpage
 
@@ -788,7 +977,7 @@ Transparency and Openness Promotion (TOP) Guidelines disclosure following PCI Ps
   >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.2439}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.1707}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.5854}}@{}}
-\toprule\noalign{}
+\toprule
 \begin{minipage}[b]{\linewidth}\raggedright
 Standard
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
@@ -796,15 +985,15 @@ Level
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
 Description / Location
 \end{minipage} \\
-\midrule\noalign{}
+\midrule
 \endhead
-\bottomrule\noalign{}
+\bottomrule
 \endlastfoot
 Citation & Level 2 & All references include DOIs where available; full bibliography in \texttt{references.bib} \\
 Data transparency & Level 3 & De-identified data publicly available on OSF: \url{https://doi.org/10.17605/OSF.IO/YNG37} in both RDS and xlsx formats with a full variable codebook (PDF) \\
 Analytic code transparency & Level 3 & All analysis scripts publicly available on OSF: \url{https://doi.org/10.17605/OSF.IO/YNG37} (7 R Markdown pipeline scripts, 4 figure R scripts, 2 supplementary analysis R scripts, 1 Makefile) \\
 Research materials transparency & Level 3 & Complete instrument battery (Czech-language versions of HPT, FR-LF, KSA-3, SDR-5, and historical knowledge test) publicly available on OSF: \url{https://doi.org/10.17605/OSF.IO/YNG37} \\
-Design transparency & Level 2 & Study design fully described in manuscript Method section (Sections 3.1--3.6); deviations from original instrument documented in OSF repository \\
+Design transparency & Level 2 & Study design fully described in manuscript Method section (Sections 3.1--3.4); deviations from original instrument documented in OSF repository \\
 Preregistration of studies & Level 2 & Study preregistered on OSF prior to data collection: \url{https://doi.org/10.17605/OSF.IO/YNG37} \\
 Preregistration of analysis plan & Level 2 & Analysis plan (hypotheses, statistical models, sample size justification) preregistered on OSF: \url{https://doi.org/10.17605/OSF.IO/YNG37} \\
 Replication & N/A & This is the first Czech adaptation of the HPT instrument; direct replication is not applicable \\
@@ -818,7 +1007,7 @@ Replication & N/A & This is the first Czech adaptation of the HPT instrument; di
 \item
   \textbf{Data format:} The de-identified dataset is provided in two formats: \texttt{.RDS} (native R serialisation) and \texttt{.xlsx} (Excel) to ensure accessibility for users of different software environments.
 \item
-  \textbf{Code functionality:} All R Markdown scripts render to PDF reports included in the \texttt{outputs/} directory. Scripts can be executed sequentially (01 through 07) or via the included Makefile (\texttt{make\ all}). A reproducibility report (\texttt{07\_reproducibility\_report.Rmd}) documents the exact R version and package versions used.
+  \textbf{Code functionality:} All R Markdown scripts render to PDF reports included in the \texttt{outputs/} directory. Scripts can be executed sequentially (01 through 07) or via the included Makefile (\texttt{make~all}). A reproducibility report (\texttt{07\_reproducibility\_\allowbreak report.Rmd}) documents the exact R version and package versions used.
 \item
   \textbf{README documentation:} A detailed \texttt{README.md} in the OSF repository explains the directory structure, execution order, software requirements, and mapping of scripts to manuscript tables and figures.
 \end{itemize}
