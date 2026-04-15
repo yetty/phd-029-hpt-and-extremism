@@ -1,7 +1,7 @@
 # Status: phd-029-hpt-and-extremism
 
 **Stage:** Paper A under review; Paper B submitted to PCI Psychology
-**Updated:** 2026-04-14
+**Updated:** 2026-04-15
 
 ## Current State
 
