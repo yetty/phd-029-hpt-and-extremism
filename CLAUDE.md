@@ -176,9 +176,9 @@ In osf_storage, data files are renamed to `student_responses.*` and scripts use 
 - **Output directory**: All generated reports go to `outputs/`
 - **Manuscript style**: APA 7th edition, American English, Taylor & Francis template
 
-## Code Review via GitHub PRs
+## No GitHub PRs
 
-For non-trivial tasks (analysis code, multi-file changes), use branch + PR workflow. See root `~/PhD/CLAUDE.md` → "Code Review via GitHub PRs" for full protocol. Branch naming: `claude/<short-description>`. Create draft PR with `gh pr create --draft`, announce URL, and wait for review.
+**Never open GitHub pull requests.** Commit directly to `main`. For parallel Claude sessions, use git worktrees on `claude/<slug>` branches (see root `~/PhD/CLAUDE.md` → "Multi-Session Safety" and "No GitHub PRs"). If the user wants to review, they read the diff locally — do not open a PR, even a draft.
 
 ## Important Notes
 
