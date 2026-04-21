@@ -964,52 +964,179 @@ All research design decisions, analytical choices, theoretical interpretations, 
 
 \newpage
 
-\hypertarget{top-disclosure-table}{%
-\section{TOP Disclosure Table}\label{top-disclosure-table}}
+\hypertarget{top-checklist}{%
+\section*{TOP Checklist and Disclosures Form}\label{top-checklist}}
 
-\textbf{Cross-Cultural Validation and Ideological Fairness of a Historical Perspective Taking Instrument: Evidence from Czech Secondary Students}
+This checklist must be completed and included as an appendix at the end of your preprint prior to submission to PCI Psychology. Manuscripts without this document included as an appendix will be returned to authors without review.
 
-Juda Kaleta
+The policy of PCI Psychology is to recommend papers only if the data, methods used in the analysis, and any digital materials used to conduct the research are clearly and precisely documented and are maximally available to any researcher for purposes of reproducing the results or replicating the procedure. PCI Psych follows the principle of ``as open as possible, as closed as necessary.''
 
-Transparency and Openness Promotion (TOP) Guidelines disclosure following PCI Psychology requirements.
+\bigskip
 
-\begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.2439}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.1707}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.5854}}@{}}
-\toprule
-\begin{minipage}[b]{\linewidth}\raggedright
-Standard
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Level
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Description / Location
-\end{minipage} \\
-\midrule
-\endhead
-\bottomrule
-\endlastfoot
-Citation & Level 2 & All references include DOIs where available; full bibliography in \texttt{references.bib} \\
-Data transparency & Level 3 & De-identified data publicly available on OSF: \url{https://doi.org/10.17605/OSF.IO/YNG37} in both RDS and xlsx formats with a full variable codebook (PDF) \\
-Analytic code transparency & Level 3 & All analysis scripts publicly available on OSF: \url{https://doi.org/10.17605/OSF.IO/YNG37} (7 R Markdown pipeline scripts, 4 figure R scripts, 2 supplementary analysis R scripts, 1 Makefile) \\
-Research materials transparency & Level 3 & Complete instrument battery (Czech-language versions of HPT, FR-LF, KSA-3, SDR-5, and historical knowledge test) publicly available on OSF: \url{https://doi.org/10.17605/OSF.IO/YNG37} \\
-Design transparency & Level 2 & Study design fully described in manuscript Method section (Sections 3.1--3.4); deviations from original instrument documented in OSF repository \\
-Preregistration of studies & Level 2 & Study preregistered on OSF prior to data collection: \url{https://doi.org/10.17605/OSF.IO/YNG37} \\
-Preregistration of analysis plan & Level 2 & Analysis plan (hypotheses, statistical models, sample size justification) preregistered on OSF: \url{https://doi.org/10.17605/OSF.IO/YNG37} \\
-Replication & N/A & This is the first Czech adaptation of the HPT instrument; direct replication is not applicable \\
-\end{longtable}
+\textbf{First author name (last/family, first/given):} Kaleta, Juda
 
-\hypertarget{notes}{%
-\subsection{Notes}\label{notes}}
+\textbf{Preprint DOI or URL:} \url{https://doi.org/10.17605/OSF.IO/YNG37}
 
-\begin{itemize}
-\tightlist
-\item
-  \textbf{Data format:} The de-identified dataset is provided in two formats: \texttt{.RDS} (native R serialisation) and \texttt{.xlsx} (Excel) to ensure accessibility for users of different software environments.
-\item
-  \textbf{Code functionality:} All R Markdown scripts render to PDF reports included in the \texttt{outputs/} directory. Scripts can be executed sequentially (01 through 07) or via the included Makefile (\texttt{make~all}). A reproducibility report (\texttt{07\_reproducibility\_\allowbreak report.Rmd}) documents the exact R version and package versions used.
-\item
-  \textbf{README documentation:} A detailed \texttt{README.md} in the OSF repository explains the directory structure, execution order, software requirements, and mapping of scripts to manuscript tables and figures.
-\end{itemize}
+\bigskip
+
+\hypertarget{section-1-data}{%
+\subsection*{Section 1: Data}\label{section-1-data}}
+
+\textbf{Does your manuscript contain reports of any data?}
+
+\textbf{[X] Yes} (continue with next question)
+
+\quad $\square$ No (skip to Section 2)
+
+\bigskip
+
+\textbf{Are appropriately anonymised raw data available within a trusted digital repository?}
+
+\textbf{[X] Yes, available at this link:} \url{https://doi.org/10.17605/OSF.IO/YNG37}
+
+\quad $\square$ No, justification:
+
+\bigskip
+
+\textbf{Are third-party data cited in the manuscript, with a DOI?} (e.g., for preexisting data, data deposited in a repository)
+
+\quad $\square$ Yes, the DOI is as follows:
+
+\textbf{[X] No, justification:} The data were collected specifically for this study; no third-party datasets were used.
+
+\bigskip
+
+\textbf{Is there a data dictionary and/or readme file included with the data to make it interpretable?}
+
+\textbf{[X] Yes, available at this link:} \url{https://doi.org/10.17605/OSF.IO/YNG37} (full variable codebook in PDF and README file)
+
+\quad $\square$ No, justification:
+
+\bigskip
+
+\textbf{Do you indicate in the manuscript how the sample size was determined?}
+
+\textbf{[X] Yes.} (Section 3.4: a priori power analysis targeting 80\% power to detect $\beta \geq .15$)
+
+\quad $\square$ No, justification:
+
+\bigskip
+
+\textbf{Do you report all data exclusions (e.g., outliers, careless responders)?}
+
+\textbf{[X] Yes.} (Section 3.4 and 4.6: middle ideology tertile excluded for DIF extreme-group design; all exclusions reported)
+
+\quad $\square$ No, justification:
+
+\bigskip
+
+\textbf{Do you report all inclusion/exclusion criteria and when they were established?}
+
+\textbf{[X] Yes.} (Inclusion/exclusion criteria are described in Sections 3.4--3.5 and were preregistered prior to data collection)
+
+\quad $\square$ No, justification:
+
+\bigskip
+
+\textbf{Are all measures, questions, and/or conditions used in the study described in the manuscript or available in the supplemental material?}
+
+\textbf{[X] Yes.} (All instruments described in Sections 3.1--3.3; full Czech-language instrument battery available on OSF: \url{https://doi.org/10.17605/OSF.IO/YNG37})
+
+\quad $\square$ No, justification:
+
+\bigskip
+
+\hypertarget{section-2-analysis}{%
+\subsection*{Section 2: Analysis Scripts/Code/Codebooks}\label{section-2-analysis}}
+
+\textbf{Does your manuscript contain any analysis of quantitative or qualitative data?}
+
+\textbf{[X] Yes} (continue with next question)
+
+\quad $\square$ No (skip to Section 3)
+
+\bigskip
+
+\textbf{Are third-party analysis scripts/code (e.g., R, Stata), codebooks, or other relevant documentation available within a trusted digital repository?}
+
+\textbf{[X] Yes, available at this link:} \url{https://doi.org/10.17605/OSF.IO/YNG37} (7 R Markdown pipeline scripts, 4 figure scripts, 2 supplementary analysis scripts, and a Makefile)
+
+\quad $\square$ No, justification:
+
+\bigskip
+
+\textbf{Are the analysis scripts/code (e.g., R, Stata), codebooks, or other relevant documentation cited in the manuscript, with a DOI?}
+
+\textbf{[X] Yes, the DOI is as follows:} \url{https://doi.org/10.17605/OSF.IO/YNG37}
+
+\quad $\square$ No, justification:
+
+\bigskip
+
+\hypertarget{section-3-materials}{%
+\subsection*{Section 3: Study Materials}\label{section-3-materials}}
+
+\textbf{Does your manuscript contain any research materials (e.g., stimuli, programming code, questionnaires, interview protocols)?}
+
+\textbf{[X] Yes} (continue with next question)
+
+\quad $\square$ No (skip to Section 4)
+
+\bigskip
+
+\textbf{Are all study materials and descriptions of study procedures available within a trusted digital repository?}
+
+\textbf{[X] Yes, available at this link:} \url{https://doi.org/10.17605/OSF.IO/YNG37} (Czech-language versions of all questionnaires: HPT, FR-LF, KSA-3, SDR-5, and historical knowledge test)
+
+\quad $\square$ No, justification:
+
+\bigskip
+
+\textbf{Are all third-party study materials, descriptions of study procedures, or other relevant documents cited in the manuscript, with a DOI?}
+
+\quad $\square$ Yes, the DOI is as follows:
+
+\textbf{[X] No, justification:} Third-party instruments (HPT, FR-LF, KSA-3, SDR-5) are cited via standard bibliography references (Hartmann \& Hasselhorn, 2008; Becker et al., 2020; Lederer, 2002; Stöber, 2001); DOIs are included where available. The adapted Czech versions are deposited on OSF (\url{https://doi.org/10.17605/OSF.IO/YNG37}).
+
+\bigskip
+
+\hypertarget{section-4-preregistration}{%
+\subsection*{Section 4: Preregistration}\label{section-4-preregistration}}
+
+\textbf{Were any aspects of your manuscript preregistered?}
+
+\textbf{[X] Yes} (continue with next question)
+
+\quad $\square$ No (do not complete the rest of the form)
+
+\bigskip
+
+\textbf{Does the manuscript contain an accessible link to the preregistration?}
+
+\textbf{[X] Yes, available at this link:} \url{https://osf.io/zsngy}
+
+\quad $\square$ No, justification:
+
+\bigskip
+
+\textbf{Do you clearly indicate in the manuscript which parts were preregistered and which parts were not?}
+
+\textbf{[X] Yes.} (Preregistered components include hypotheses H1--H2, primary multilevel models, DIF/MG-CFA analyses, and sample size determination; the TOST equivalence analysis is explicitly labelled ``exploratory'' in Section 4.10 as it used a post-hoc SESOI wider than the preregistered power target)
+
+\quad $\square$ No, justification:
+
+\bigskip
+
+\textbf{Are all preregistered analyses reported in the text or linked in the supplemental material?}
+
+\textbf{[X] Yes.} (All preregistered hypotheses and analyses are reported in Sections 4.1--4.10 and the supplementary materials)
+
+\quad $\square$ No, justification:
+
+\bigskip
+
+\textbf{Are all deviations from the preregistration plan clearly disclosed in the manuscript (either in text or in a table)?}
+
+\textbf{[X] Yes.} (One deviation: TOST SESOI set post hoc at $\pm$0.20 instead of the preregistered power target of $\beta \geq .15$; disclosed in Section 4.10 and the analysis is labelled exploratory)
 
 \end{document}
