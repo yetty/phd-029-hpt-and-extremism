@@ -29,15 +29,9 @@ Exceptions: tables, URLs, code blocks, YAML frontmatter.
 
 ## Status Tracking
 
-Two files track project state. **Read both at the start of every session.**
-
-- **`status.md`** — Short current-state snapshot (~30 lines). Contains 3-5 active items per phase and points to the latest plan file. Tells you "where are we right now."
-- **`project_status.md`** — Running log (100-200 lines). Tracks overall project state across time. Past completed work is compacted to 1-2 line summaries to stay lean.
-
-**Maintenance rules:**
-1. After completing a task, update `status.md` to reflect the new current state.
-2. After completing a milestone or phase, update `project_status.md`: move finished items to Completed Milestones (as a compact summary) and update Active Work.
-3. Keep `status.md` under ~30 lines and `project_status.md` under ~200 lines.
+See root CLAUDE.md §7 Status Tracking for the full convention. Short summary:
+`status.md` — current snapshot (≤30 lines, update after each task).
+`project_status.md` — running milestone log (≤200 lines, update after milestones/phases).
 
 ## Reference Verification
 
