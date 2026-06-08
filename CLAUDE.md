@@ -172,7 +172,11 @@ In osf_storage, data files are renamed to `student_responses.*` and scripts use 
 
 ## No GitHub PRs
 
-**Never open GitHub pull requests.** Commit directly to `main`. For parallel Claude sessions, use git worktrees on `claude/<slug>` branches (see root `~/PhD/CLAUDE.md` → "Multi-Session Safety" and "No GitHub PRs"). If the user wants to review, they read the diff locally — do not open a PR, even a draft.
+**Never open GitHub pull requests.** Commit directly to `main`. Git
+worktrees are strictly prohibited for parallel Claude sessions or any
+other workflow (see root `~/PhD/AGENTS.md` → "Multi-Session Safety"
+and "Worktree Prohibition"). If the user wants to review, they read
+the diff locally — do not open a PR, even a draft.
 
 ## Important Notes
 
