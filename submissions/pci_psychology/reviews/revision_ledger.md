@@ -81,6 +81,15 @@ deciding which party to vote for. Section 3.1 simultaneously says that no item
 required substantive modification and that the original structure was
 preserved.
 
+**User decision (2026-09-10):** **Audit all versions before editing.** Compare
+the exact wording in the German source instrument, the English journal article
+(especially page 266), the Czech instrument actually administered, and the
+OSF adaptation/deviation record. Determine whether the discrepancy reflects
+source variation, translation drift, substantive adaptation, a scenario that
+contains both actions, or only an inaccurate manuscript paraphrase. Then apply
+one evidence-based description consistently and disclose any substantive
+adaptation.
+
 **Recommended refinement:** Compare the German source, published English
 version, administered Czech instrument, and OSF adaptation record. If the task
 is voting, correct every joining reference. If the Czech task genuinely
@@ -189,6 +198,17 @@ the small, heterogeneous follow-up literature, including transfer problems.
 **Baseline status:** **Unresolved.** Section 1 retains "among the most
 extensively validated" and mentions Dutch applications without describing the
 limited evidence base or reported vulnerabilities.
+
+**User decision (2026-09-10):** **Build a concise, balanced, field-contextual
+evidence map.** Remove the unsupported absolute superlative, verify and
+classify direct validations, re-adaptations, and related HPT tasks, and report
+both successful reuse and measurement vulnerabilities. Contextualise this
+record against the sparse reuse of standardised instruments in history
+education. Specifically test, rather than assume, the narrower comparative
+claim that this HPT instrument has been validated or re-adapted more often than
+is usual in the field, with the Beliefs about History Questionnaire as a
+possible comparator. Retain that relative claim only if a transparent search
+and verified evidence support it.
 
 **Recommended refinement:** Replace the superlative with a descriptive claim:
 the measure has an original German validation and a small set of adaptations
@@ -358,6 +378,13 @@ invariance, DIF, knowledge, and ideology findings, but gives no effect sizes or
 uncertainty and uses several technical labels in quick succession. This may
 explain why the reviewer did not experience it as a clear findings summary.
 
+**User decision (2026-09-10):** **Make a targeted final revision.** Revise the
+abstract once the substantive and statistical items are settled. Add the focal
+ideology estimate and interval, use sensitivity-bounded DIF language, qualify
+the invariance result, and replace the broad transferability ending with a
+bounded implication that acknowledges the single-scenario design. Avoid a
+full rewrite or exhaustive model list.
+
 **Recommended refinement:** State the primary numerical ideology result and
 its interval, the bounded DIF conclusion (no moderate-to-large DIF detected),
 the qualified invariance result, and the knowledge association in plain
@@ -413,6 +440,13 @@ reduced-integrative-complexity pathways. Section 2.1 contrasts cognitive
 reconstruction with affective engagement. The two discussions are not joined,
 so it remains unclear whether moral or affective engagement is target variance,
 construct-irrelevant variance, or a competing construct definition.
+
+**User decision (2026-09-10):** **Add a concise synthesis.** Insert one
+construct-boundary paragraph connecting ideological congruence, reduced
+integrative complexity, moral judgement, affective engagement, and contextual
+reasoning. Define CIV relative to the instrument's rational-reconstruction
+model, retain both pathways as hypotheses, verify affective-HPT sources before
+attribution, and avoid a full theoretical-review expansion.
 
 **Recommended refinement:** Add a synthesis paragraph distinguishing three
 possibilities: ideological sympathy may lower endorsement effort; rigid
@@ -592,6 +626,15 @@ the journal article. The canonical article key is
 title-as-author problem despite the source appearing to use author-date LaTeX
 commands.
 
+**User decision (2026-09-10):** **Use both sources by function.** Identify the
+German version as the source instrument because the Czech adaptation was
+translated from German, not English. Use the English-language Hartmann and
+Hasselhorn journal article for published validation, construct, and other
+claims that it supports. Compare both sources with the administered Czech
+instrument when resolving the voting-versus-joining drift in R1-07. The final
+prose must make this source lineage explicit rather than silently replacing
+the German source.
+
 **Recommended refinement:** Replace instrument-source uses of `Hartmann2008`
 with the canonical global key `Hartmann_Hasselhorn2008Historical`. Retain the
 article as the principal instrument source and confirm that the compiled
@@ -617,6 +660,14 @@ the canonical global key. The canonical keys are
 `Hartmann_Hasselhorn2008Historical` and `Lee_Ashby2001Empathy`; the current
 compiled output therefore renders titles rather than the intended authors.
 
+**User decision (2026-09-10):** **Repair metadata and separate source roles.**
+Inspect the German source's title page and correct its literature-note metadata
+before regenerating and validating the global bibliography. Cite the German
+source specifically as the origin of the Czech translation, use the English
+journal article for published validation and other supported claims, and
+replace `Lee2001Empathy` with `Lee_Ashby2001Empathy`. Verify all affected prose
+and references in the rebuilt PDF.
+
 **Recommended refinement:** Correct both keys, preserve author-date prose, and
 inspect the rebuilt PDF. Do not use the unused local `references.bib` to verify
 active citations; the manuscript builds against the global bibliography and
@@ -641,6 +692,13 @@ paper.
 contribution and appears as a five-step list in Section 5.5. However, the
 abstract calls it transferable without the single-scenario boundary, while
 Sections 5.4-5.5 devote substantial space to untested pathways.
+
+**User decision (2026-09-10):** **Apply targeted rebalancing.** Make the Czech
+adaptation evidence and fairness-validation protocol the organising spine
+across the contribution statement, research-question roadmap, discussion, and
+conclusion. Consolidate the untested pathways as secondary explanations and
+future response-process questions. Avoid a major structural rewrite and
+implement this together with REC-01, R1-03, and R1-13.
 
 **Recommended refinement:** Use the two research questions as the paper's
 spine: adaptation evidence first, fairness protocol second. Keep the pathways
