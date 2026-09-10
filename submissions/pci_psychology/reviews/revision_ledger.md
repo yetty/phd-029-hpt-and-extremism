@@ -457,6 +457,16 @@ the preregistered ideology H1/H2 where appropriate, and mark competing
 mechanisms accurately. Use the same labels in Results and Discussion and align
 the hierarchy with R1-02.
 
+**Audit outcome (2026-09-10):** The immutable registration contains H1-H6, not
+H1-H2. It preregisters directional effects on CONT, raw POP, and total HPT;
+positive DIF on CONT; two knowledge interactions; and a comparative
+correlation test. The manuscript's psychometric RQ1 was not the registered
+primary question, and its invariance prediction reverses registered H4. Several
+registered analyses are absent or incomplete, while several central analyses
+are post-registration additions. See `preregistration_audit.md`. A substantive
+decision about restoring and running H1-H6 versus disclosing and bounding the
+deviations is required before manuscript integration.
+
 **Recommended refinement:** Label the two questions `RQ1` and `RQ2`, then list
 the associated predictions under each. State which predictions were
 preregistered, which direction was uncertain, and which analyses are

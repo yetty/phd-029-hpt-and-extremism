@@ -6,9 +6,10 @@
 ## Current State
 
 PCI Psychology invited a revision after two reviews and the recommender's
-independent assessment. This is the project's only active submission path; no
-other manuscript is under review. The main concern is content validity arising
-from a single historical scenario.
+independent assessment. This is the project's only active submission path. A
+source audit resolved the scenario as voting, not joining. An OSF audit found
+that the manuscript's current RQ structure does not faithfully report the
+registered H1-H6 family and omits several registered analyses.
 
 ## Manuscripts
 
@@ -18,7 +19,8 @@ from a single historical scenario.
 
 ## Next Steps
 
-- [ ] Resolve PCI revision ledger items in priority order
+- [ ] Decide whether to run omitted H1-H6 analyses or disclose deviations
+- [ ] Resolve the remaining PCI revision ledger items
 - [ ] Rebuild and independently validate the revised manuscript
 - [ ] Prepare a point-by-point response to the recommender and reviewers
 

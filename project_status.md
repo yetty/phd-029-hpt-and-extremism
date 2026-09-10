@@ -122,14 +122,21 @@
   curriculum context, and follow-up literature.
 - Original feedback and a comment-level validation ledger are stored in
   `submissions/pci_psychology/reviews/`.
+- Source and preregistration audits established that the scenario concerns
+  voting rather than joining and that the current manuscript does not
+  faithfully map its RQ structure to registered H1-H6. Several registered
+  analyses remain absent or incomplete; the audit is in
+  `submissions/pci_psychology/reviews/preregistration_audit.md`.
 
 ---
 
 ## Current Work
 
-**Phase:** Revision at PCI Psychology, the only active submission path.
+**Phase:** Revision at PCI Psychology; preregistration-alignment decision
+required before substantive manuscript integration.
 
-- [ ] Resolve the PCI revision ledger and rerun required analyses
+- [ ] Decide whether to run omitted registered analyses or disclose deviations
+- [ ] Resolve the PCI revision ledger and rerun approved analyses
 - [ ] Rebuild and independently audit the revised manuscript
 - [ ] Submit the point-by-point response and revised preprint
 
