@@ -90,6 +90,16 @@ contains both actions, or only an inaccurate manuscript paraphrase. Then apply
 one evidence-based description consistently and disclose any substantive
 adaptation.
 
+**Audit outcome (2026-09-10):** The administered Czech instrument and its OSF
+copy are byte-identical and repeatedly ask whether Hannes could **vote** for an
+anti-democratic party such as the NSDAP. Hartmann and Hasselhorn's English
+article states the same action on published page 266 and in its appendix. The
+German dissertation describes the tenth-grade task as a `Wahl-Szenario` and
+says that Hannes is deciding which party should receive his vote (pp. 73-74).
+None of these sources describes joining a movement. The discrepancy is an
+inaccurate manuscript paraphrase, not a Czech adaptation. The OSF
+adaptation/deviation record still requires a separate audit.
+
 **Recommended refinement:** Compare the German source, published English
 version, administered Czech instrument, and OSF adaptation record. If the task
 is voting, correct every joining reference. If the Czech task genuinely
@@ -757,6 +767,14 @@ source specifically as the origin of the Czech translation, use the English
 journal article for published validation and other supported claims, and
 replace `Lee2001Empathy` with `Lee_Ashby2001Empathy`. Verify all affected prose
 and references in the rebuilt PDF.
+
+**Metadata audit outcome (2026-09-10):** DNB and Crossref identify
+`Hartmann2008` as Ulrike Hartmann's 2008 doctoral dissertation at
+Georg-August-Universität Göttingen, DOI `10.53846/goediss-290`. The literature
+note and generated global bibliography were corrected accordingly. The
+repository API supplies a repository publisher absent from the dissertation
+record and omits the year, so deep metadata verification retains a documented
+API mismatch rather than overwriting the authoritative thesis metadata.
 
 **Recommended refinement:** Correct both keys, preserve author-date prose, and
 inspect the rebuilt PDF. Do not use the unused local `references.bib` to verify
