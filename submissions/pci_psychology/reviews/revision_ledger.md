@@ -40,6 +40,12 @@ single country and a single scenario in two sentences. It does not discuss
 content representation, domain sampling, or the boundary between evidence for
 this task and evidence for HPT more broadly.
 
+**User decision (2026-09-10):** **Accept stronger revision.** Add a dedicated
+content-based validity limitation and bound claims consistently across the
+abstract, discussion, recommendations, and conclusion. Include a future
+multi-scenario content blueprint. No new analysis or data collection is
+required.
+
 **Recommended refinement:** Give content validity its own limitation. State
 that repeated ratings of one vignette increase item count without broadening
 the sampled content domain. Bound score interpretations to the Weimar task or
@@ -103,6 +109,15 @@ discriminant validity is supported because all factor correlations are below
 .85. Section 5.5 labels the proposed correlation step "convergent and
 discriminant" without requiring external criteria.
 
+**User decision (2026-09-10):** **Downgrade the claim and run exploratory
+analyses.** Replace the current discriminant-validity conclusion with bounded
+internal-structure language. Separately test whether POP, ROA, and CONT show
+different relations with the available historical-knowledge and history-grade
+criteria. Run those analyses for diagnostic interest, not as confirmatory
+validity evidence. Defer the decision about reporting their results in the
+manuscript until the estimates, uncertainty, and interpretability have been
+reviewed.
+
 **Recommended refinement:** Recast the current evidence as preliminary
 internal-structure evidence that the dimensions are empirically separable.
 Avoid the word "confirming." State that stronger discriminant or nomological
@@ -135,6 +150,14 @@ However, Section 5.3 still opens with failure against conventional benchmarks,
 does not cite Loevinger, and claims the observed correlations demonstrate
 "genuine psychometric signal." The reliability of the ideology composite is
 also unreported, weakening the disattenuated estimate.
+
+**User decision (2026-09-10):** **Verify, then cite Loevinger.** Retrieve and
+read the relevant source or a reliable modern treatment before adding the
+citation. Reframe the discussion around the construct-breadth versus
+score-precision trade-off, distinguish that paradox from ordinary statistical
+attenuation, and compute reliability for FR-LF, KSA-3, and the combined
+ideology score. Retain the disattenuated estimate only if it is reproducible
+and defensible after those checks.
 
 **Recommended refinement:** Verify and read an appropriate source before
 citing the attenuation paradox; the local Loevinger note is currently only a
@@ -194,6 +217,12 @@ section rather than relying on scale abbreviations.
 FR-LF, KSA, and SDR as column labels. Results prose frequently relies on these
 abbreviations.
 
+**User decision (2026-09-10):** **Rename the table and prose.** Use concise,
+readable construct names in Table 7 and in the Results interpretation, while
+retaining abbreviations secondarily where they connect the manuscript to the
+analysis scripts and supplements. Rebuild the PDF and manually verify the
+table layout.
+
 **Recommended refinement:** Use short plain-language labels such as
 "HPT composite," "Contextualisation," "Reversed presentism," "Historical
 knowledge," "Right-authoritarian attitudes," "Authoritarianism," and
@@ -214,6 +243,12 @@ where needed for reproducibility.
 
 **Baseline status:** **Unresolved.** Table 7 gives zero-order Pearson
 correlations and significance stars but no intervals.
+
+**User decision (2026-09-10):** **Use upper-triangle intervals.** Retain the
+correlations below the diagonal and place each matching 95% confidence
+interval above the diagonal. Compute the intervals reproducibly from the same
+pairwise observations, document the interval method in the table note, and
+manually check the rebuilt table layout.
 
 **Recommended refinement:** Clarify in the response that Table 7 contains
 correlations, then provide 95% confidence intervals for each reported
