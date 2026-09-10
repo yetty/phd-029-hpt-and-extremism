@@ -1,0 +1,63 @@
+Title and abstract
+Does the title clearly reflect the content of the article? [X ] Yes, [ ] No (please explain), [ ] I don't know
+Does the abstract present the main findings of the study? [ ] Yes, [x ] No (please explain), [ ] I don't know
+Introduction
+Are the research questions/hypotheses/predictions clearly presented? [ X] Yes, [ ] No (please explain), [ ] I don't know
+Does the introduction build on relevant research in the field? [ X] Yes, [ ] No (please explain), [ ] I don't know
+Materials and methods
+Are the methods and analyses sufficiently detailed to allow replication by other researchers? [ X] Yes, [ ] No (please explain), [ ] I don't know
+If applicable (for empirical studies), are sample sizes are clearly justified? [X ] Yes, [ ] No (please explain), [ ] I don't know
+Are the methods and statistical analyses appropriate and well described? [ ] Yes, [ ] No (please explain), [X] I don't know
+Results
+In the case of negative results, is there a statistical power analysis (or an adequate Bayesian analysis or equivalence testing)? [ ] Yes, [ ] No (please explain), [X ] I don't know
+Are the results described and interpreted correctly?[ X] Yes, [ ] No (please explain), [ ] I don't know
+Discussion
+Have the authors appropriately emphasized the strengths and limitations of their study/theory/methods/argument? [X ] Yes, [ ] No (please explain), [ ] I don't know
+Are the conclusions adequately supported by the results (without overstating the implications of the findings)? [ X] Yes, [ ] No (please explain), [ ] I don't know
+
+
+This is an interesting study that reproduces the study by Hartman & Hasselhorn in a different context and also adds thought-provoking assumptions. The instrument has already been used in the Dutch context, and  also there issues emerged regarding the validity and reliability of the scale, and, for example, there was no significant correlation with school achievement in history.
+
+Overall, I find this to be a readable and relevant article, and I recommend publication. There are, however, some minor points that I would like to raise with the authors to make the article somewhat more accessible for readers (it's quite a multidimensional paper).  In addition, my own expertise is mainly in qualitative methods and less in statistics, so I do not feel fully equipped to provide extensive feedback on that part of the paper. I do, however, welcome the fact that the article provides a protocol for this type of cross-cultural validation. Maybe the focus could be more on that aspect of the paper than on the different pathways disucssed at page 34.
+
+The theoretical framework discusses several theoretical predictions:
+
+1. Cross-cultural expectations: does the instrument measure the same construct in other cultural contexts?
+
+2. Construct-irrelevant variance: the idea that test scores are influenced by respondents' positionality and could lead to two pathways: lower cognitive effort, making the instrument less effective in capturing a cognitive skill. Another interesting possibility is that the scores are influenced by authoritarianism. This latter aspect could be explained more clearly in the theoretical framework. What exactly makes the HPT instrument more difficult for these students? Perhaps the authors could also make the connection here with researchers who regard the moral and affective dimensions of HPT as an indispensable part of the construct, and the link with political attitudes could also be elaborated somewhat more explicitly on a conceptual level (also because of the instruments used in the methods
+
+On page 2, refer to the Hartmann & Hasselhorn publication instead of, or in combination with, the German-language dissertation (in APA format).
+
+Pp. 5 and 6: use Hartmann & Hasselhorn (2008) and Lee & Ashby (2001) instead of the titles.
+
+L. 41: "The instrument developed by *Perspektivenübernahme als eine Kompetenz historischen Verstehens* (2008) is among the most extensively validated standardized HPT measures in European research." I am not sure this is true. I know of some Turkish work and some work in the Netherlands. The literature contains only a small, methodologically heterogeneous follow-up tradition surrounding the HPT of Hartmann and Hasselhorn. The German standardization positions historical perspective taking as a context-dependent competence, whereas Turkish and Dutch-oriented applications mainly reveal the transferability-but also the vulnerability-of the measurement. Some studies report validity issues and indicate that the method of measurement cannot always be transferred to other substantive contexts.
+
+Page 3, l. 61: "The scenario describes a young man in the Weimar Republic deliberating whether to join an extremist political movement." I believe this is not correct. The original scenario by Hartmann & Hasselhorn states: "The scenario we developed presents a young man (Hannes) in the Weimar Republic in Germany, thinking about which party to vote for in the 1930 election" (p. 266). Voting is something different from joining. Has the scenario been changed for the Czech audience? Is this an example of the "cross-cultural adaptation" of this item?
+
+Could it be possible to provide more information about the history education context in the Czech Republic? Is HPT part of the curriculum? Is history a compulsory subject in school, etc.?
+
+Methods: p. 15, could it be possible to report the internal consistency of these scales as well? I assume these are validated scales. Were they suitable for this target group?
+
+Results: As a non-statistical expert, I think the authors did a good job of presenting the results. Perhaps there could be more focus on the main outcomes, and some tables could be moved to an appendix.
+
+P. 36, l. 680: I believe Huijgen already used such an approach; comparing a closed and an open format (and thinking aloud).
+
+P. 37, l. 708: "gender...samples", please provide a reference for this claim.
+
+Discussion
+
+It is interesting that the issues with reliability are still present.
+
+P. 34, regarding the different pathways: wouldn't it be an option to investigate these pathways in a more qualitative manner (thinking aloud?).
+
+L. 45: "employed in comparative studies in historical reasoning" (please name those studies).
+
+Refs:
+
+Hartmann, U., & Hasselhorn, M. (2008). Historical perspective taking: A standardized measure for an aspect of student's historical thinking. Learning and Individual Differences, 18(2), 264-270. https://doi.org/10.1016/j.lindif.2007.10.002
+
+Huijgen, T., van Boxtel, C., van de Grift, W., & Holthuis, P. (2017). Toward Historical Perspective Taking: Students' Reasoning When Contextualizing the Actions of People in the Past. Theory & Research in Social Education, 45(1), 110-144. https://doi.org/10.1080/00933104.2016.1208597
+
+Aktın, K., Sarıçiçek, A., Karaçalı Taze, H., & Sağlam Tekir, H. (2026). Taking a historical perspective: students' understanding of the Turkish Alphabet Reform (November 1928). Innovation: The European Journal of Social Science Research, 1-35. https://doi.org/10.1080/13511610.2026.2630018
+
+Wilschut, A., & Schiphorst, K. (2019). "One has to take leave as much as possible of one's own standards and values": Improving and measuring historical empathy and perspective reconstruction. History Education Research Journal, 16(1). https://doi.org/10.18546/herj.16.1.07

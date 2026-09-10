@@ -1,0 +1,69 @@
+Overall, this is a quite thorough and well done development and validation of the historical
+perspective taking (HPT) index translated and applied to the Czech context. To be honest,
+as a researcher of U.S. political behavior that uses quite di erent methodologies and
+statistical approaches to analysis, there is not much I can weigh in on regarding the
+analysis provided. I encourage the author to seek out critique from reviewers with greater
+knowledge in the methodology employed. The results section, again, is quite thorough, and
+the methods sections adequate describe how the data and analytical approach can a)
+validate the Czech HPT index, and b) assess if any variance in response across ideology
+(even though there was not) is a result of construct-irrelevant variance - ideological
+sympathy with the scenario presented, rather than nuanced and non-'presentist' historical
+reasoning. The study also did well in emphasizing that the author's approach can extend
+beyond HPT and the Czech context; a similar methodology can be used by researchers and
+practioners seeking to validate any measure that contains political or moral content.
+I have two quite small suggestions to o er (again, I would find other reviewers that could
+dig into the methodology and technical aspects of the results more). First, in describing the
+participants on pg. 13, I would provide more descriptive data on the students and schools.
+For instance, what is the ideological distribution of the students? It is only mentioned in the
+Discussion section (which 17% of students having above average right-wing sympathies),
+but should be included earlier. It's the key independent variable being examined, so it
+needs more discussion of its distribution up front. In addition, there is a mention of the
+most recent history grade, but more detail on the distribution of students' historical
+knowledge would be good to have. In addition, what is the socioeconomic background of
+the schools sampled? Given that this is not a representative sample, that would be a good
+statistic to include, in addition to the region and funding source of the schools.
+Second, and this could be due to my lack of technical knowledge, but adding some simpler
+presentations of the relationship between ideology and HPT, and historical knowledge and
+HPT, would help (in addition to, not in replacement of, the great work done in the Methods
+section). There are CFA scores, DIF scores, betas from regression models, etc. But just add
+something more descriptive as well - a mean score for each ideology group, a data plot
+with a fit line illustrating the relationshiop between HPT and ideology and/or knowledge,
+etc. Adding a more 'naïve' or baseline representation of these key relationships could help
+orient the reader as they dig into the more technical statistical analysis.
+Again, this looks like fantastic work, and I enjoyed reading it!
+Title and abstract
+o Does the title clearly reflect the content of the article? [ X] Yes, [ ] No (please
+explain), [ ] I don't know
+o Does the abstract present the main findings of the study? [X ] Yes, [ ] No
+(please explain), [ ] I don't know
+ Introduction
+o Are the research questions/hypotheses/predictions clearly presented? [ ]
+Yes, [X ] No (please explain), [ ] I don't know
+o Does the introduction build on relevant research in the field? [X ] Yes, [ ] No
+(please explain), [ ] I don't know
+ Materials and methods
+o Are the methods and analyses su iciently detailed to allow replication by
+other researchers? [X ] Yes, [ ] No (please explain), [ ] I don't know
+o If applicable (for empirical studies), are sample sizes are clearly justified? [X
+] Yes, [ ] No (please explain), [ ] I don't know
+ The author does a good job justifying the small sample size employed,
+but also qualifying it, and the non-representativeness of the sample,
+in the discussion
+o Are the methods and statistical analyses appropriate and well described? [
+X] Yes, [ ] No (please explain), [ ] I don't know
+ Results
+o In the case of negative results, is there a statistical power analysis (or an
+adequate Bayesian analysis or equivalence testing)? [ X] Yes, [ ] No (please
+explain), [ ] I don't know
+ There was a power analysis to justify the goal sample size, and the
+analysis employed Bonferri corrections in assessing significance of
+resuls
+o Are the results described and interpreted correctly? [ X] Yes, [ ] No (please
+explain), [ ] I don't know
+ Discussion
+o Have the authors appropriately emphasized the strengths and limitations of
+their study/theory/methods/argument? [X ] Yes, [ ] No (please explain), [ ] I
+don't know
+o Are the conclusions adequately supported by the results (without overstating
+the implications of the findings)? [ X] Yes, [ ] No (please explain), [ ] I don't
+know

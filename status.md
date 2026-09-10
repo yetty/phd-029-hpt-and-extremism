@@ -1,36 +1,29 @@
 # Status: phd-029-hpt-and-extremism
 
-**Stage:** Paper A under review; Paper B submitted to PCI Psychology
-**Updated:** 2026-04-21
+**Stage:** Paper A under review; Paper B invited to revise at PCI Psychology
+**Updated:** 2026-09-10
 
 ## Current State
 
-Paper A under review at SPE (submitted ~Mar 19). Paper B
-submitted to PCI Psychology on 2026-04-14. Awaiting managing
-board triage (~20 days) and recommender assignment.
+Paper A remains under review at SPE. PCI Psychology invited a revision of
+Paper B after two reviews and the recommender's independent assessment. The
+main concern is content validity arising from a single historical scenario.
 
 ## Manuscripts
 
 | Paper | Target | Status |
 |-------|--------|--------|
 | **A** | Social Psychology of Education (Q1, Springer) | **Under review** (~Mar 19) |
-| **B** | PCI Psychology → Peer Community Journal | **Submitted** (2026-04-14) |
+| **B** | PCI Psychology -> Peer Community Journal | **Revise invited** |
 
 ## Next Steps
 
-- [ ] Monitor PCI Psychology dashboard for triage decision
 - [ ] Monitor SPE for Paper A decision
-- [ ] Respond to any desk revision requests from PCI
+- [ ] Resolve PCI revision ledger items in priority order
+- [ ] Rebuild and independently validate the revised manuscript
+- [ ] Prepare a point-by-point response to the recommender and reviewers
 
-## Key Result
-
-Null ideology effects across all analyses. Historical knowledge
-is the only consistent predictor of HPT scores.
-
-## Files
+## Revision files
 
 - Manuscript: `submissions/pci_psychology/manuscript.tex`
-- Cover letter: `submissions/pci_psychology/cover_letter.md`
-- Submission checklist: `submissions/pci_psychology/submission_checklist.md`
-- Iteration log: `submissions/pci_psychology/iteration_log.md`
-- Submission plan: `submissions/pci_psychology_submission_plan.md`
+- Feedback and ledger: `submissions/pci_psychology/reviews/`

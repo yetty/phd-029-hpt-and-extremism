@@ -8,7 +8,7 @@
   (desk-rejected 2026-03-20), IJT IJT260038 (desk-rejected
   2026-04-11)
 **Preregistration:** https://osf.io/yng37/
-**Last updated:** 2026-04-13
+**Last updated:** 2026-09-10
 
 ---
 
@@ -44,7 +44,7 @@
 - Switched target from TRSE to EJPE. Converted manuscript from Markdown/DOCX to LaTeX using `sn-jnl.cls` (Springer Nature template with `sn-apa` style). Created blinded manuscript (`manuscript_blinded.tex`) and separate title page (`title_page.tex`). Upload package assembled in `ejpe_submission/UPLOAD_PACKAGE_EUPE/`.
 
 ### EJPE Submission (EUPE-D-26-00272)
-- Submitted 2026-03-05 via Editorial Manager. Preview PDF revealed broken title page — `sn-jnl.cls` calls `\allowdisplaybreaks` at `\begin{document}` which requires `amsmath`, but `title_page.tex` didn't load it. Fixed by adding `\usepackage{amsmath}`. Merged two upload folders into single `UPLOAD_PACKAGE_EUPE/`.
+- Submitted 2026-03-05 via Editorial Manager. Preview PDF revealed broken title page - `sn-jnl.cls` calls `\allowdisplaybreaks` at `\begin{document}` which requires `amsmath`, but `title_page.tex` didn't load it. Fixed by adding `\usepackage{amsmath}`. Merged two upload folders into single `UPLOAD_PACKAGE_EUPE/`.
 
 ---
 
@@ -56,8 +56,8 @@
 ### Two-Paper Reframe and Submission Preparation (2026-03-18 → 2026-03-19)
 - Deep journal research with desk-reviewer simulations (`journal_target_analysis.md`). Identified SPE and AME as optimal targets.
 - Split single manuscript into two papers targeting different audiences:
-  - **Paper A** (SPE): Focuses on null ideology–HPT relationship (social psychology angle)
-  - **Paper B** (AME): Focuses on measurement quality — DIF, invariance, bifactor models (psychometric angle)
+  - **Paper A** (SPE): Focuses on null ideology-HPT relationship (social psychology angle)
+  - **Paper B** (AME): Focuses on measurement quality - DIF, invariance, bifactor models (psychometric angle)
 - R analyses run to fill all [TO BE COMPUTED] placeholders in Paper B. Quality review and fixes applied to both papers.
 - Paper A converted to Springer LaTeX (`sn-jnl.cls`), built to PDF with separate title page. Paper B built to anonymous and authored DOCX via `build_docx.py`.
 - Cover letters written for both journals. Abstract and keywords extracted for SPE submission portal.
@@ -103,7 +103,7 @@
   sample unless the measure is widely used with profound
   implications. HPT + Czech sample too narrow for IJT's
   "international generalizability" scope. Fourth desk rejection
-  for Paper B — AME editor's recommended target path exhausted.
+  for Paper B - AME editor's recommended target path exhausted.
 
 ### Venue Strategy Pivot: PCI Psychology (2026-04-13)
 - Four desk rejections reveal a structural journal-fit problem:
@@ -119,15 +119,26 @@
   if recommended, publish in Peer Community Journal.
 - Fallbacks: JPA (SAGE, CzechELib), PTAD (Hogrefe, EUR 1,950 APC).
 
+### PCI Psychology Revision Invitation (2026-09-10)
+- Recommender Chris Hopwood invited a revision after two external reviews and
+  an independent reading. The central issue is content validity: one Weimar
+  scenario cannot represent the broader HPT domain. Additional requests cover
+  discriminant-validity claims, reliability framing, confidence intervals,
+  readable construct labels, participant descriptives, baseline plots, theory,
+  curriculum context, and follow-up literature.
+- Original feedback and a comment-level validation ledger are stored in
+  `submissions/pci_psychology/reviews/`.
+
 ---
 
 ## Current Work
 
-**Phase:** Paper A under review; Paper B venue pivot.
+**Phase:** Paper A under review; Paper B revision at PCI Psychology.
 
 - [ ] Wait for SPE decision on Paper A
-- [ ] Post Paper B preprint on PsyArXiv
-- [ ] Submit Paper B to PCI Psychology (Quantitative Psychology)
+- [ ] Resolve the PCI revision ledger and rerun required analyses
+- [ ] Rebuild and independently audit the revised manuscript
+- [ ] Submit the point-by-point response and revised preprint
 
 ---
 

@@ -1,0 +1,19 @@
+Dear Dr. Kaleta
+
+Thank you for submitting your paper to PCI Psych. I am sorry about the delay; i found it very difficult to obtain reviews for your paper. I was fortunate to receive two reviews, which you can find appended to this letter. Based on the reviews and my independent reading, i am inviting you to revise your paper for further consideration. My specific comments are below. Please let me know if you have any questions.
+
+The biggest limitation to me is content validity of the instrument. The measure presents only one scenario from one historical and sociopolitical context. Although multiple items are rated about that scenario, it is difficult to know how much the content of the scenario itself represents the underlying construct of interest. A measure in which these items were applied to multiple scenarios that span time and place would be much stronger. You list this as a limitation, but the limitation is currently included with sampling in one brief sentence. It should elaborated in terms of the more general issue of content validity.
+
+You say discriminant validity is supported based on better fit of the three factor model and factor correlations below .85, but this is a weak standard. Evidence that the scales differentially predict external outcomes would be more convincing, and that should be listed as a question for further research.
+
+I recommend using construct names rather than scale abbreviations in table 7 and the results section to improve readability.
+
+You should add confidence intervals to the effects presented in Table 7.
+
+I agree with your framing of internal consistency for brief scales in the discussion. You could cite Loevinger's attenuation paradox rather than framing this as a deficiency relative to standard benchmarks. At the same time, you should acknowledge that this will constrain validity estimates.
+
+I look forward to receiving your revision.
+
+Sincerely,
+
+Chris Hopwood
