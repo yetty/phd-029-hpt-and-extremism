@@ -298,6 +298,17 @@ ranges. The 17.7% above-midpoint statistic appears only in the limitations.
 No school-level socioeconomic variable was found in the manuscript or project
 documentation inspected for this ledger.
 
+**User decision (2026-09-10):** **Run a full descriptive and SES audit.**
+Recompute participant ideology, knowledge, and grade or ISCED distributions,
+including verification of the 17.7% threshold and denominator. Audit the
+confidential recruitment records for a defensible school linkage and examine
+Datapaq (https://datapaq.cz/) for an appropriate school- or area-level SES
+indicator. Use external context only if the linkage, reference period,
+construct meaning, and aggregation are defensible; do not disclose school
+identities or merge identifiable school information into public data. If no
+valid indicator can be obtained safely, report SES characterisation as
+unavailable.
+
 **Recommended refinement:** Add a concise participant-level distribution
 summary in Section 3.2: means, spread, range or quantiles, and the proportion
 above the ideology midpoint; add the knowledge distribution and relevant
@@ -325,6 +336,14 @@ descriptives and Table 7 provides correlations. Existing analysis code already
 computes HPT and knowledge means by ideology tertile, and existing figure code
 plots score distributions. The manuscript does not present group means or a
 simple relationship plot.
+
+**User decision (2026-09-10):** **Add a two-panel continuous relationship
+figure.** Plot ideology against the primary HPT composite and historical
+knowledge against the same composite using transparent jittered observations
+or defensible binning, unadjusted fit lines, and 95% confidence bands. Report
+panel-specific sample sizes, use construct names, label the display as
+descriptive rather than confirmatory, and check grayscale accessibility and
+final-size legibility.
 
 **Recommended refinement:** Add one compact figure with raw observations
 (jittered or binned as appropriate), an unadjusted fit line, and uncertainty
@@ -419,6 +438,14 @@ questions and a prediction paragraph. However, the distinction between
 adaptation evidence, fairness tests, the congruence prediction, and the
 opposing integrative-complexity prediction is spread across Sections 2.3 and
 2.5.
+
+**User decision (2026-09-10):** **Create an explicit hierarchy after an OSF
+audit.** Verify every confirmatory, directional, nondirectional, and
+exploratory label against the preregistration. Then label RQ1 and RQ2 visibly,
+place the associated predictions and evidential criteria beneath each, restore
+the preregistered ideology H1/H2 where appropriate, and mark competing
+mechanisms accurately. Use the same labels in Results and Discussion and align
+the hierarchy with R1-02.
 
 **Recommended refinement:** Label the two questions `RQ1` and `RQ2`, then list
 the associated predictions under each. State which predictions were
@@ -794,6 +821,13 @@ neither anonymous reviewer felt able to evaluate the technical analyses deeply.
 simulated psychometric and methodological audit, and many caveats were added.
 That does not substitute for checking the revised analysis and response package
 against the recommender's requests.
+
+**User decision (2026-09-10):** **Use a two-stage independent audit.** After
+freezing and reproducing the revised analysis package, commission separate
+methodological and psychometric agent audits against focused checklists. Log
+and resolve every discrepancy, then seek targeted human specialist review of
+remaining model-choice or interpretive issues and the final package. Map every
+newly reported number to a reproducible script output.
 
 **Recommended refinement:** Before resubmission, conduct a focused independent
 audit of CFA identification, DIF grouping and anchor strategy, interval
