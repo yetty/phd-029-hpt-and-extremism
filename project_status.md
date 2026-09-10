@@ -1,8 +1,7 @@
 # Project Status Log: phd-029-hpt-and-extremism
 
 **Title:** Stress-Testing Historical Perspective Taking: Ideological Attitudes and Disciplinary Reasoning in Czech Adolescents
-**Target journals:** Social Psychology of Education (Paper A),
-  PCI Psychology → Peer Community Journal (Paper B)
+**Active venue:** PCI Psychology -> Peer Community Journal
 **Previous submissions:** TRSE (desk-rejected 2026-02-25), EJPE
   EUPE-D-26-00272 (desk-rejected 2026-03-18), AME HAME-2026-0087
   (desk-rejected 2026-03-20), IJT IJT260038 (desk-rejected
@@ -68,11 +67,6 @@
 ### AME Desk Rejection (2026-03-20)
 - Paper B (HAME-2026-0087) desk-rejected by Joel Puchalla (Editorial Assistant). Reason: "AME does not publish studies on specific instruments." Suggested alternative: International Journal of Testing. Third desk rejection overall for phd-029 manuscripts.
 
-### Paper A Submitted to SPE (~2026-03-19)
-- Paper A submitted to Social Psychology of Education via Springer Editorial Manager. Awaiting decision.
-
----
-
 ### Paper B Journal-Fit Analysis and IJT Preparation (2026-03-23 → 2026-04-03)
 - Evaluated 6 journals via desk-reviewer simulations
   (`submissions/paper_b_journal_fit.md`). IJT selected as primary
@@ -133,9 +127,8 @@
 
 ## Current Work
 
-**Phase:** Paper A under review; Paper B revision at PCI Psychology.
+**Phase:** Revision at PCI Psychology, the only active submission path.
 
-- [ ] Wait for SPE decision on Paper A
 - [ ] Resolve the PCI revision ledger and rerun required analyses
 - [ ] Rebuild and independently audit the revised manuscript
 - [ ] Submit the point-by-point response and revised preprint

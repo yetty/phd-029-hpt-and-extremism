@@ -6,17 +6,15 @@ This is a quantitative research project for a manuscript titled _"Do Political A
 
 ## Publication Venue
 
-**Paper A:** Social Psychology of Education (Springer, Q1) —
-under review since ~Mar 2026.
-
-**Paper B:** PCI Psychology → Peer Community Journal (diamond OA,
+**Sole active route:** PCI Psychology → Peer Community Journal (diamond OA,
 WoS + Scopus indexed, IF 2.0, no fees). Submit preprint to
 PsyArXiv, then submit to PCI Psychology for peer review under
 Quantitative Psychology / Educational Psychology scope.
 
-**Paper B fallbacks:** Journal of Psychoeducational Assessment
+No other manuscript submission is underway. Possible fallbacks, if needed,
+are Journal of Psychoeducational Assessment
 (JPA, SAGE), Psychological Test Adaptation and Development
-(PTAD, Hogrefe — EUR 1,950 APC).
+(PTAD, Hogrefe - EUR 1,950 APC).
 
 Hypotheses, instruments, and analysis plan were preregistered on the Open Science Framework (https://osf.io/yng37/).
 
@@ -30,8 +28,8 @@ Exceptions: tables, URLs, code blocks, YAML frontmatter.
 ## Status Tracking
 
 See root CLAUDE.md §7 Status Tracking for the full convention. Short summary:
-`status.md` — current snapshot (≤30 lines, update after each task).
-`project_status.md` — running milestone log (≤200 lines, update after milestones/phases).
+`status.md` - current snapshot (≤30 lines, update after each task).
+`project_status.md` - running milestone log (≤200 lines, update after milestones/phases).
 
 ## Reference Verification
 
@@ -72,9 +70,9 @@ See root CLAUDE.md §7 Status Tracking for the full convention. Short summary:
 
 ### Manuscript
 
-- `trse_outputs/manuscript.md` — Main manuscript (Markdown source)
-- `trse_outputs/manuscript.docx` — DOCX output (built via pandoc with T&F template)
-- `templates/TF_Template_Word_Windows_2016.dotx` — Taylor & Francis Word template
+- `trse_outputs/manuscript.md` - Main manuscript (Markdown source)
+- `trse_outputs/manuscript.docx` - DOCX output (built via pandoc with T&F template)
+- `templates/TF_Template_Word_Windows_2016.dotx` - Taylor & Francis Word template
 
 Build command:
 ```bash
@@ -87,15 +85,15 @@ pandoc trse_outputs/manuscript.md -o trse_outputs/manuscript.docx --reference-do
 - `fig03_score_distributions.R` → Figure 2 (HPT/ideology/knowledge distributions)
 - `fig04_coefficient_plot.R` → Figure 3 (multilevel model coefficients)
 - `fig05_marginal_effects.R` → Figure 4 (marginal effects)
-- `supplementary_analyses.R` — Additional models for appendix
-- `tost_and_mundlak.R` — TOST equivalence tests + Mundlak decomposition
+- `supplementary_analyses.R` - Additional models for appendix
+- `tost_and_mundlak.R` - TOST equivalence tests + Mundlak decomposition
 
-Note: Script filenames use the original numbering (fig02–fig05) but manuscript figures are numbered 1–4.
+Note: Script filenames use the original numbering (fig02-fig05) but manuscript figures are numbered 1-4.
 
 ### Data
 
-- `normalised_responses.RData` / `.RDS` / `.xlsx` — De-identified student responses (293 × 52 variables)
-- `normalised_responses_codebook.tex` / `.pdf` — Full variable codebook
+- `normalised_responses.RData` / `.RDS` / `.xlsx` - De-identified student responses (293 × 52 variables)
+- `normalised_responses_codebook.tex` / `.pdf` - Full variable codebook
 
 ### Analysis Pipeline
 
@@ -110,26 +108,26 @@ outputs/ (PDF, Markdown, LaTeX reports)
 
 ### Numbered Analysis Reports (Rmd files)
 
-1. **01_measurement-checks.Rmd** — Reliability (α, ω), CFA dimensionality, ICCs, floor/ceiling
-2. **02_descriptives-and-zero-order.Rmd** — Distributions, correlations, school/class variation
-3. **03_multilevel-models-hypothesis-tests.Rmd** — Main H1/H2 multilevel models (lme4/lmerTest)
-4. **04_dif-and-mg-cfa-hpt-bias.Rmd** — DIF analysis (mirt) and multi-group CFA (lavaan) for measurement invariance
-5. **05_sensitivity-analyses.Rmd** — Robustness checks (scoring, operationalisation, exclusions, random slopes, attenuation correction)
-6. **06_appendix-tables-and-figures.Rmd** — Publication-ready appendix tables and figures
-7. **07_reproducibility-report.Rmd** — Session info, data provenance, file map
+1. **01_measurement-checks.Rmd** - Reliability (α, ω), CFA dimensionality, ICCs, floor/ceiling
+2. **02_descriptives-and-zero-order.Rmd** - Distributions, correlations, school/class variation
+3. **03_multilevel-models-hypothesis-tests.Rmd** - Main H1/H2 multilevel models (lme4/lmerTest)
+4. **04_dif-and-mg-cfa-hpt-bias.Rmd** - DIF analysis (mirt) and multi-group CFA (lavaan) for measurement invariance
+5. **05_sensitivity-analyses.Rmd** - Robustness checks (scoring, operationalisation, exclusions, random slopes, attenuation correction)
+6. **06_appendix-tables-and-figures.Rmd** - Publication-ready appendix tables and figures
+7. **07_reproducibility-report.Rmd** - Session info, data provenance, file map
 
 ### Exploratory R Scripts
 
-- `compute_instruments_validity.R` — Reliability coefficients for all instruments
-- `factor_and_invariance.R` — Factor structure and measurement invariance tests
-- `H1_ideology_elevates_HPT.R` — Quick H1 test without controls
-- `multilevel_and_DIF.R` — Full multilevel models and DIF analysis
-- `teacher_report.Rmd` — Parametrised individual teacher feedback reports (CONFIDENTIAL)
+- `compute_instruments_validity.R` - Reliability coefficients for all instruments
+- `factor_and_invariance.R` - Factor structure and measurement invariance tests
+- `H1_ideology_elevates_HPT.R` - Quick H1 test without controls
+- `multilevel_and_DIF.R` - Full multilevel models and DIF analysis
+- `teacher_report.Rmd` - Parametrised individual teacher feedback reports (CONFIDENTIAL)
 
 ### Build System (Makefile)
 
-- `make all` — Render all main reports (01–05) to PDF/MD/TeX
-- `make codebook` — Build data codebook PDF from LaTeX
+- `make all` - Render all main reports (01-05) to PDF/MD/TeX
+- `make codebook` - Build data codebook PDF from LaTeX
 - Each Rmd renders to PDF, Markdown, and LaTeX simultaneously
 
 ### OSF Replication Package
@@ -156,8 +154,8 @@ In osf_storage, data files are renamed to `student_responses.*` and scripts use 
 
 ### Checklists
 
-- `checklist.md` — General academic manuscript quality audit (27 categories)
-- `trse_checklist.md` — TRSE journal-specific compliance checklist
+- `checklist.md` - General academic manuscript quality audit (27 categories)
+- `trse_checklist.md` - TRSE journal-specific compliance checklist
 
 ## Coding Conventions
 
@@ -176,7 +174,7 @@ In osf_storage, data files are renamed to `student_responses.*` and scripts use 
 worktrees are strictly prohibited for parallel Claude sessions or any
 other workflow (see root `~/PhD/AGENTS.md` → "Multi-Session Safety"
 and "Worktree Prohibition"). If the user wants to review, they read
-the diff locally — do not open a PR, even a draft.
+the diff locally - do not open a PR, even a draft.
 
 ## Important Notes
 
@@ -184,6 +182,6 @@ the diff locally — do not open a PR, even a draft.
 - The `.gitignore` also excludes `.gdoc`, `.gform`, and `.DS_Store` files.
 - Teacher reports and individual teacher data are confidential and should never be shared or committed.
 - The manuscript uses "Institute of History, Faculty of Arts, Charles University" as the author affiliation.
-- Figures in the manuscript are numbered 1–4 (not matching the fig02–fig05 script filenames).
+- Figures in the manuscript are numbered 1-4 (not matching the fig02-fig05 script filenames).
 - The study was preregistered on OSF (not a Registered Report). Do not use "Stage 1," "Stage 2," or "Registered Report" language.
 - The sample includes both lower-secondary (základní školy) and upper-secondary schools. Do not specify the type of upper-secondary schools (do not write "gymnázia").
