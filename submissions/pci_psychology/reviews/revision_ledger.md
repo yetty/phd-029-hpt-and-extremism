@@ -353,6 +353,14 @@ moving secondary tables to an appendix.
 but ten subsections and seven main-text tables make the paper demanding. The
 main fairness result is not synthesised until Sections 4.10 and 5.1.
 
+**User decision (2026-09-10):** **Move detailed diagnostics.** Relocate the
+full factor-loading table and the expanded reliability table to the
+supplement, while retaining key ranges, weak items, and reliability caveats in
+main-text prose. Keep model-fit, participant-descriptive, DIF, invariance, and
+focal-relationship evidence visible. Add a short Results roadmap and
+plain-language takeaways, then repair and validate all numbering and
+cross-references.
+
 **Recommended refinement:** Retain tables necessary to establish factor
 structure, DIF, invariance, and primary relations. Move detailed loadings,
 reliability diagnostics, or full correlations to the supplement if doing so
@@ -476,6 +484,15 @@ that the interwar unit is taught and refer generally to Czech curriculum
 reform, but they do not give readers a compact account of subject status,
 curriculum expectations, or when students encounter this content.
 
+**User decision (2026-09-10):** **User will write a concise context.** Use
+`Kaleta2025Sticking` as the principal reference and data source, supplemented
+by the user's knowledge of official curriculum documents, the participating
+History+ teachers, the historical-thinking movement, and the actual research
+sample. Keep the passage concise and distinguish published evidence, official
+requirements, sample-specific teacher context, and the author's contextual
+knowledge. Automated support may integrate and check the paragraph, but the
+substantive account is manual author work.
+
 **Recommended refinement:** Add a short, sourced context paragraph covering
 compulsory history provision at ISCED 2 and 3, curricular treatment of the
 interwar period, and whether HPT is named directly or represented through
@@ -501,6 +518,15 @@ explain whether they are suitable for Czech secondary students.
 KSA-3, knowledge, and social desirability measures but do not report sample
 reliability or adolescent validation evidence. Section 4.3 reports only HPT
 subscales.
+
+**User decision (2026-09-10):** **Create a supplementary reliability table and
+audit source populations.** Compute complete, appropriate reliability results
+for the non-HPT scales and combined ideology score, report the full table in
+the supplement, and keep the main-text summary concise. Automatically inspect
+the cited source materials for participant age or at least school grade and
+for the instrument language or translation. Treat language as unknown unless
+the source establishes it, and send ambiguous source evidence for manual
+review rather than inferring suitability.
 
 **Recommended refinement:** Report alpha and omega, with confidence intervals
 where feasible, for FR-LF, its relevant facets, KSA-3, SDR-5, and the composite
@@ -530,6 +556,13 @@ comparisons of formats and cognitive interviews. However, both local Huijgen
 notes are unread stubs, so they cannot establish which paper used open/closed
 formats, which used verbal protocols, or whether both occurred in one design.
 
+**User decision (2026-09-10):** **Verify and credit the precedent.** Obtain and
+read both Huijgen studies, identify exactly which response formats and verbal
+protocols each used, and establish their relation to the Hartmann instrument.
+Cite only the study that supports the method claim and describe the proposed
+future work explicitly as replication, extension, or a different design. Keep
+the resulting manuscript addition concise.
+
 **Recommended refinement:** Treat Reviewer 1's attribution as a lead, not as
 verified evidence. Read and propagate the relevant Huijgen work, identify
 precisely which study used each method, and explain how the proposed study
@@ -556,6 +589,15 @@ identify the absence of cognitive interviews, and Sections 5.5-5.6 recommend
 format comparisons and response-process work. The manuscript does not specify
 how observations would discriminate the competing pathways.
 
+**User decision (2026-09-10):** **Add a concise operational design.** In one
+future-study paragraph, specify sampling across the ideology range, response
+elicitation on the same HPT items, coding categories, and observable evidence
+that would distinguish contextual reconstruction, attitude-congruent
+endorsement, reduced integrative complexity, task-demand shortcuts, and moral
+or affective evaluation. Align terminology and novelty with the verified
+Huijgen precedent and do not imply that the present study supplies this
+response-process evidence.
+
 **Recommended refinement:** Turn the generic future-work statement into a
 design: sample students across the ideology range, collect concurrent or
 retrospective verbal protocols for the same items, code contextual evidence,
@@ -579,6 +621,12 @@ comparative studies in historical reasoning."
 **Baseline status:** **Unresolved.** Section 1 retains the phrase without
 naming studies beyond two Dutch citations in the preceding clause.
 
+**User decision (2026-09-10):** **Name verified studies.** Resolve this within
+the R1-06 evidence map. Name and briefly describe only studies that directly
+used the relevant Hartmann instrument in a genuine comparative design. Do not
+let adjacent citations imply support they do not provide; delete the phrase if
+no candidate survives source verification.
+
 **Recommended refinement:** Either name and cite verified comparative studies
 and state what was compared, or delete the phrase. Do not use adjacent Dutch
 citations to imply evidence they do not contain.
@@ -599,6 +647,21 @@ samples.
 **Baseline status:** **Unresolved.** Section 5.6 states that gender is a
 documented moderator of adolescent authoritarian attitudes but gives no
 citation.
+
+**User decision (2026-09-10):** **Attempt a quick automated source search,
+then default to removal.** Search for a direct source showing that gender
+moderates authoritarian attitudes in adolescent samples, distinguishing true
+moderation from mean gender differences. If a clearly applicable source is
+not found easily, remove the unsupported general claim and state only that the
+sample imbalance limits assessment of gender heterogeneity and that no gender
+interaction or DIF analysis was conducted.
+
+**Search outcome (2026-09-10):** The targeted knowledge-base search found no
+direct adolescent study testing a gender moderation effect. The closest
+sources concerned scale development, adolescent political attitudes, or mean
+associations rather than a gender-by-predictor interaction. Apply the default:
+remove the unsupported empirical generalisation and use the design-specific
+limitation.
 
 **Recommended refinement:** Add a directly supporting adolescent study, with
 population and construct sufficiently close to this sample. If no adequate
@@ -699,6 +762,12 @@ across the contribution statement, research-question roadmap, discussion, and
 conclusion. Consolidate the untested pathways as secondary explanations and
 future response-process questions. Avoid a major structural rewrite and
 implement this together with REC-01, R1-03, and R1-13.
+
+**Follow-up editorial decision (2026-09-10):** Apply targeted Discussion
+consolidation within this rebalancing: give each subsection one function,
+remove repeated null-effect explanations, calibrate causal, fairness, and
+diagnostic claims, treat correlations as descriptive evidence within the
+staged protocol, and keep proposed mechanisms hypothetical.
 
 **Recommended refinement:** Use the two research questions as the paper's
 spine: adaptation evidence first, fairness protocol second. Keep the pathways
