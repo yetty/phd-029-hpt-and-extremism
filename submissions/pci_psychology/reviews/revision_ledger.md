@@ -24,6 +24,24 @@ passes in the rebuilt manuscript.
   cannot be established from current project files. The revision must state
   that transparently rather than inventing evidence.
 
+## Current implementation status (2026-09-10)
+
+The rebuilt manuscript and `response_to_reviewers.md` implement all 22
+recommender and reviewer items. The item-level acceptance boxes below remain
+the detailed final inspection checklist rather than an implementation counter.
+
+| Status | Items |
+|---|---|
+| Implemented and represented in response draft | REC-01, REC-02, REC-03, REC-04, REC-05; R1-01 through R1-14; R2-01 through R2-03 |
+| Partly complete | META-01: independent agent audits and reproducibility checks completed; targeted human specialist review remains pending |
+
+Additional technical corrections from the independent audits are recorded in
+the response under META-01. The current manuscript removes the incorrect
+design-effect defense, treats the all-item GRM as a post-registration
+unidimensional sensitivity model, describes its item tests as omnibus, and
+does not claim scalar invariance from the inadmissible composite-group MG-CFA
+sequence.
+
 ## Priority 1: Validity claims and factual accuracy
 
 ### REC-01 - Treat the single scenario as a content-validity limitation

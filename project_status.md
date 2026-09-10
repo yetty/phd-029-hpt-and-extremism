@@ -128,16 +128,32 @@
   analyses remain absent or incomplete; the audit is in
   `submissions/pci_psychology/reviews/preregistration_audit.md`.
 
+### PCI Psychology Revision Draft (2026-09-10)
+- Implemented all 22 substantive recommender/reviewer items and drafted the
+  point-by-point response. Added reproducible reliability, interval,
+  descriptive, sample-flow, and relationship-display reporting.
+- Source audits corrected the scenario action, German dissertation metadata,
+  Hartmann/Hasselhorn evidence roles, Huijgen precedent, scale-population
+  limits, and Czech curriculum context.
+- Independent technical audits removed the incorrect design-effect defense,
+  corrected the omnibus DIF and raw-POP descriptions, and downgraded the
+  inadmissible composite-group MG-CFA sequence from scalar confirmation to
+  descriptive fit-index evidence. Omitted registered analyses are disclosed
+  rather than retrospectively presented as confirmatory.
+- Rebuilt the 55-page preprint and five-page supplement. Remaining gates are
+  reference propagation/read status, targeted human psychometric review, and
+  final rendered-package inspection.
+
 ---
 
 ## Current Work
 
-**Phase:** Revision at PCI Psychology; preregistration-alignment decision
-required before substantive manuscript integration.
+**Phase:** Final quality gates for the PCI Psychology revision package.
 
-- [ ] Decide whether to run omitted registered analyses or disclose deviations
-- [ ] Resolve the PCI revision ledger and rerun approved analyses
-- [ ] Rebuild and independently audit the revised manuscript
+- [x] Disclose omitted registered analyses and post-registration additions
+- [x] Resolve substantive ledger items and rerun approved analyses
+- [x] Rebuild and independently audit the revised manuscript
+- [ ] Complete reference propagation and targeted human review
 - [ ] Submit the point-by-point response and revised preprint
 
 ---
