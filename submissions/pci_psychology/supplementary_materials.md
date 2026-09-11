@@ -27,15 +27,15 @@ ideology groups.
 
 | Item  | Subscale          | $a_1$  | $d_1$  | $d_2$  | $d_3$  |
 |-------|-------------------|--------|--------|--------|--------|
-| CONT1 | Contextualization |  1.864 |  2.812 |  0.718 | -1.964 |
-| CONT2 | Contextualization |  1.382 |  2.082 |  0.728 | -1.273 |
-| CONT3 | Contextualization |  1.364 |  2.763 |  0.768 | -1.324 |
-| POP1  | Present-oriented perspective | -1.016 |  0.207 | -1.345 | -2.674 |
-| POP2  | Present-oriented perspective | -0.355 |  0.903 | -0.843 | -2.217 |
-| POP3  | Present-oriented perspective | -0.630 |  0.683 | -1.068 | -2.727 |
-| ROA1  | Role of historical agent |  1.193 |  2.633 |  1.175 | -0.804 |
-| ROA2  | Role of historical agent |  0.719 |  2.159 |  0.481 | -1.777 |
-| ROA3  | Role of historical agent |  1.430 |  2.706 |  1.313 | -0.953 |
+| CONT1 | Contextualization |  1.853 |  2.801 |  0.733 | -1.958 |
+| CONT2 | Contextualization |  1.414 |  2.098 |  0.728 | -1.311 |
+| CONT3 | Contextualization |  1.359 |  2.755 |  0.755 | -1.319 |
+| POP1  | Present-oriented perspective | -1.017 |  0.198 | -1.369 | -2.671 |
+| POP2  | Present-oriented perspective | -0.351 |  0.896 | -0.860 | -2.210 |
+| POP3  | Present-oriented perspective | -0.643 |  0.702 | -1.063 | -2.728 |
+| ROA1  | Role of historical agent |  1.181 |  2.620 |  1.192 | -0.796 |
+| ROA2  | Role of historical agent |  0.708 |  2.148 |  0.492 | -1.770 |
+| ROA3  | Role of historical agent |  1.416 |  2.690 |  1.297 | -0.946 |
 
 *Note.* $a_1$ = item discrimination; $d_1$, $d_2$, $d_3$ =
 category intercepts in `mirt`'s default parameterization. Raw POP
@@ -138,8 +138,9 @@ population portability.
 | SDR-5 descriptives | 283 |
 | Reliability | 267-287, by complete item set (Table S3) |
 | Pairwise correlations | 282-287 (Table S3b) |
-| Composite-ideology DIF/MG-CFA groups | 96 low, 96 high; 101 middle excluded |
-| NS-only MG-CFA groups | 126 low, 125 high; 42 middle excluded |
+| Composite-ideology DIF groups | 96 low, 95 high; 92 middle excluded; 10 missing ideology score |
+| Composite-ideology MG-CFA | 92 low, 90 high after listwise exclusion of incomplete HPT item responses |
+| NS-only MG-CFA groups | 126 low, 123 high; 37 middle excluded; 7 missing NS scores |
 
 The differences arise from item nonresponse, the scale-specific
 minimum-answer rules described in the manuscript, listwise-complete

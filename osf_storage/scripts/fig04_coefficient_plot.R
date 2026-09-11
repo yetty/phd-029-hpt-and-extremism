@@ -17,6 +17,7 @@ library(lme4)
 library(lmerTest)
 library(broom.mixed)
 library(janitor)
+source("scoring_helpers.R")
 
 dir.create("../figures", showWarnings = FALSE)
 # ---- 1. Data preparation (mirrors 03_multilevel_models_hypothesis_tests.Rmd)
@@ -60,16 +61,13 @@ z <- function(x) as.numeric(scale(x))
 
 dat <- dat_raw |>
   mutate(
-    hpt_cont    = rowMeans(across(all_of(cont_items)),       na.rm = TRUE),
-    hpt_pop_rev = rowMeans(across(paste0(pop_items, "_rev")), na.rm = TRUE),
-    hpt_total   = rowMeans(cbind(hpt_pop_rev, hpt_cont),     na.rm = TRUE),
-    frlf_tot    = rowMeans(cbind(
-      rowMeans(across(all_of(rd_items)), na.rm = TRUE),
-      rowMeans(across(all_of(ns_items)), na.rm = TRUE)
-    ), na.rm = TRUE),
-    ksa3_tot    = rowMeans(across(all_of(ksa_items)), na.rm = TRUE),
+    hpt_cont    = scale_mean(dat_raw, cont_items, 2),
+    hpt_pop_rev = scale_mean(dat_raw, paste0(pop_items, "_rev"), 2),
+    hpt_total   = rowMeans(cbind(hpt_pop_rev, hpt_cont), na.rm = FALSE),
+    frlf_tot    = scale_mean(dat_raw, c(rd_items, ns_items), 4),
+    ksa3_tot    = scale_mean(dat_raw, ksa_items, 7),
     kn_total    = rowSums(across(all_of(kn_items)),   na.rm = TRUE),
-    sdr5_tot    = rowMeans(across(all_of(sdr_items)), na.rm = TRUE)
+    sdr5_tot    = scale_mean(dat_raw, sdr_items, 4)
   ) |>
   mutate(
     z_hpt_total = z(hpt_total),

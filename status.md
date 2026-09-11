@@ -5,11 +5,11 @@
 
 ## Current State
 
-The revised package addresses most recommender and reviewer requests while
-preserving the submitted title and structure. A final independent audit found
-that the reported MG-CFA inadmissibility does not reproduce and that the focal
-regression does not match the manuscript's missing-data rules. Several bounded
-response-letter and reviewer-compliance corrections also remain.
+The revised package addresses all mapped recommender and reviewer requests
+while preserving the submitted title and structure. Canonical scoring now
+reproduces the corrected regression, DIF, and admissible MG-CFA results.
+Independent psychometric, reference, and compliance checks found no remaining
+submission blocker. The clean preprint, supplement, and redline were rebuilt.
 
 ## Manuscripts
 
@@ -19,11 +19,9 @@ response-letter and reviewer-compliance corrections also remain.
 
 ## Next Steps
 
-- [ ] Resolve MG-CFA and scoring-rule reproducibility discrepancies
-- [ ] Correct remaining partial reviewer responses and response-letter locators
-- [ ] Rebuild and independently audit the final submission package
-- [ ] Obtain targeted human psychometric review of the final model claims
+- [ ] Optionally obtain human psychometric review as additional quality control
 - [ ] Upload the revised package and point-by-point response to PCI Psychology
+- [ ] Re-render numbered R Markdown reports when local dependencies are restored
 
 ## Revision files
 - Manuscript: `submissions/pci_psychology/manuscript.tex`

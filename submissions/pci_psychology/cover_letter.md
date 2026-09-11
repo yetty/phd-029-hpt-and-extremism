@@ -16,10 +16,13 @@ rather than because they reason historically.
 The revised manuscript presents qualified evidence rather than a definitive
 fairness conclusion. No differential item functioning was detected with the
 available sample and procedure. Multi-group confirmatory factor analysis
-produced fit-index changes compatible with scalar invariance, but inadmissible
-baseline solutions prevent a firm equivalence claim. Multilevel models found
-no association between ideology and scores after adjustment for historical
-knowledge and social desirability. Historical knowledge was positively
+produced admissible solutions and fit-index changes compatible with scalar
+invariance, although small extreme groups and unmodelled clustering prevent a
+firm equivalence claim. Multilevel models found no association between
+right-authoritarian attitudes and the primary composite after adjustment for
+historical knowledge, authoritarianism, and social desirability. An exploratory
+authoritarianism association with one subscale was unadjusted and not subjected
+to the preregistered multiplicity procedure. Historical knowledge was positively
 associated with performance, although the cross-sectional design precludes a
 causal interpretation.
 

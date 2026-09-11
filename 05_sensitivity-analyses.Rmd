@@ -1,5 +1,5 @@
 ---
-title: "Sensitivity analyses — HPT (Czech data)"
+title: "Sensitivity analyses -- HPT (Czech data)"
 subtitle: "Robustness checks for scoring, ideology operationalisation, exclusions, and random-slopes"
 author: "HPT and Extremism project"
 date: "`r format(Sys.Date())`"
@@ -45,9 +45,9 @@ header-includes:
 
 # Purpose and scope
 
-This file documents **exploratory robustness checks** of our main results. We vary how HPT is scored, how ideology is operationalised, which observations are included, and whether class-level **random slopes** are needed. The goal is to see if substantive conclusions survive reasonable perturbations—**not** to hunt for significance.
+This file documents **exploratory robustness checks** of our main results. We vary how HPT is scored, how ideology is operationalised, which observations are included, and whether class-level **random slopes** are needed. The goal is to see if substantive conclusions survive reasonable perturbations--**not** to hunt for significance.
 
-HPT scoring follows the Hartmann–Hasselhorn / Huijgen instrument logic; note earlier reports that ROA items can behave inconsistently across samples, motivating ROA-free alternatives here. We also leverage the FR-LF dimensions RD and NS for ideology variants. All results explicitly use **reversed POP items** so that higher scores mean **more contextualised/agent-aware** reasoning.
+HPT scoring follows the Hartmann-Hasselhorn / Huijgen instrument logic; note earlier reports that ROA items can behave inconsistently across samples, motivating ROA-free alternatives here. We also leverage the FR-LF dimensions RD and NS for ideology variants. All results explicitly use **reversed POP items** so that higher scores mean **more contextualised/agent-aware** reasoning.
 
 ## Setup
 ```{r setup, message=FALSE, warning=FALSE}
@@ -60,6 +60,7 @@ library(broom.mixed)
 library(performance)
 library(glue)
 library(gt)
+source("submissions/pci_psychology/scoring_helpers.R")
 
 # Nice printing
 theme_set(theme_bw())
@@ -86,12 +87,13 @@ POP_rev_items <- paste0("POP", 1:3)
 dat_raw <- dat_raw %>%
   mutate(across(all_of(POP_rev_items), ~ 5 - as.numeric(.), .names = "{.col}_rev")) %>%
   mutate(
-    HPT_POP_rev = rowMeans(across(paste0(POP_rev_items, "_rev")), na.rm = TRUE),
-    HPT_CONT    = rowMeans(across(CONT1:CONT3), na.rm = TRUE),
-    HPT_ROA     = rowMeans(across(ROA1:ROA3),   na.rm = TRUE),
+    HPT_POP_rev = scale_mean(., paste0(POP_rev_items, "_rev"), 2),
+    HPT_CONT    = scale_mean(., paste0("CONT", 1:3), 2),
+    HPT_ROA     = scale_mean(., paste0("ROA", 1:3), 2),
     # Canonical composites
-    HPT_CTX6    = rowMeans(cbind(HPT_POP_rev, HPT_CONT), na.rm = TRUE),
-    HPT_TOT9    = rowMeans(cbind(HPT_POP_rev, HPT_CONT, HPT_ROA), na.rm = TRUE)
+    HPT_CTX6    = rowMeans(cbind(HPT_POP_rev, HPT_CONT), na.rm = FALSE),
+    HPT_TOT9    = rowMeans(cbind(HPT_POP_rev, HPT_CONT, HPT_ROA),
+                           na.rm = FALSE)
   )
 ```
 
@@ -104,9 +106,11 @@ dat_raw <- dat_raw %>%
 
 dat <- dat_raw %>%
   mutate(
-    HPT_total_9 = rowMeans(across(c(paste0("POP",1:3, "_rev"), ROA1:ROA3, CONT1:CONT3)), na.rm = TRUE),
-    HPT_total_8 = rowMeans(across(c(paste0("POP",1:3, "_rev"), ROA2:ROA3, CONT1:CONT3)), na.rm = TRUE), # drop ROA1
-    HPT_total_6 = rowMeans(across(c(paste0("POP",1:3, "_rev"), CONT1:CONT3)), na.rm = TRUE)             # no ROA
+    HPT_total_9 = HPT_TOT9,
+    HPT_total_8 = scale_mean(., c(paste0("POP", 1:3, "_rev"),
+                                  paste0("ROA", 2:3),
+                                  paste0("CONT", 1:3)), 5),
+    HPT_total_6 = HPT_CTX6
   )
 
 # Means & SDs so the reader sees scale location and spread
@@ -141,14 +145,16 @@ hpt_desc_tbl %>%
 dat <- dat %>%
   mutate(
     KN_total   = rowSums(across(KN1:KN6), na.rm = TRUE),
-    SDR_total  = rowSums(across(starts_with("SDR")), na.rm = TRUE),
-    NS_sum     = rowSums(across(NS1:NS3), na.rm = TRUE),
-    RD_sum     = rowSums(across(RD1:RD3), na.rm = TRUE),
-    FRLF_mini  = NS_sum + RD_sum,
-    KSA_A      = rowSums(across(A1:A3), na.rm = TRUE),
-    KSA_U      = rowSums(across(U1:U3), na.rm = TRUE),
-    KSA_K      = rowSums(across(K1:K3), na.rm = TRUE),
-    KSA_total  = KSA_A + KSA_U + KSA_K
+    SDR_total  = scale_mean(., paste0("SDR", 1:5), 4),
+    NS_sum     = scale_mean(., paste0("NS", 1:3), 2),
+    RD_sum     = scale_mean(., paste0("RD", 1:3), 2),
+    FRLF_mini  = scale_mean(., c(paste0("NS", 1:3),
+                                 paste0("RD", 1:3)), 4),
+    KSA_A      = scale_mean(., paste0("A", 1:3), 2),
+    KSA_U      = scale_mean(., paste0("U", 1:3), 2),
+    KSA_K      = scale_mean(., paste0("K", 1:3), 2),
+    KSA_total  = scale_mean(., c(paste0("A", 1:3), paste0("U", 1:3),
+                                 paste0("K", 1:3)), 7)
   ) %>%
   mutate(across(c(NS_sum, RD_sum, FRLF_mini, KSA_total, KN_total, SDR_total), scale, .names = "{.col}_z"))
 

@@ -16,13 +16,15 @@
 ### Data Collection
 - Collected N=293 responses from 20 classrooms across 10 Czech secondary schools (ISCED 2 and 3). Instruments: HPT (9 items), FR-LF mini (6 items), KSA-3 (9 items), historical knowledge (6 items), SDR-5 (5 items). Data de-identified at point of entry via Google Sheets, normalised with `pull_and_normalize_data_CONFIDENTAL.R`.
 
-### Analysis Pipeline (7 Rmd Reports)
+### Analysis Pipeline (7 Rmd Reports; original results later corrected)
 - **01 Measurement checks:** Reliability (alpha, omega), CFA dimensionality, ICCs, floor/ceiling effects for all instruments.
 - **02 Descriptives and zero-order correlations:** Sample demographics, distributions, correlation matrix, school/class variation.
-- **03 Multilevel models (H1/H2):** Two-level random-intercept models (lme4/lmerTest). Neither ideology predictor (FR-LF, KSA) significant. Historical knowledge is the only consistent predictor.
+- **03 Multilevel models (H1/H2):** Random-intercept models with school and
+  classroom terms (lme4/lmerTest). Neither ideology predictor (FR-LF, KSA) was
+  significant. Historical knowledge was the only consistent predictor.
 - **04 DIF and MG-CFA:** Differential item functioning (mirt, graded response
-  model) and multi-group CFA (lavaan, WLSMV). No DIF was detected, but
-  inadmissible MG-CFA baselines prevent a scalar-invariance conclusion.
+  model) and multi-group CFA (lavaan, WLSMV). The original inadmissibility
+  report was superseded by the reproducibility correction documented below.
 - **05 Sensitivity analyses:** Alternative composites, exclusion rules, random-slope models, fixed-effects models, attenuation correction. Results stable across all specifications.
 - **06 Appendix tables and figures:** Publication-ready supplementary materials.
 - **07 Reproducibility report:** Session info, package versions, random-seed confirmation.
@@ -164,18 +166,27 @@
   focal regression differed across the manuscript, current script, and stated
   missing-data rules. Several bounded reviewer-response corrections remain.
 
----
+### PCI Psychology Revision Package Completed (2026-09-11)
+- Centralized minimum-answer scoring and reproduced corrected regression, DIF,
+  TOST, and admissible MG-CFA results without changing the main conclusions.
+- Updated the manuscript, supplement, response, cover letter, and revision
+  ledger; rebuilt the clean preprint and redline against submitted commit
+  `c952aa5`.
+- Independent psychometric, reference, and compliance checks found no remaining
+  submission blocker. Human specialist review remains optional quality control.
 
+---
 ## Current Work
 
-**Phase:** Resolve final audit findings before PCI resubmission.
+**Phase:** Final package ready for PCI resubmission.
 
 - [x] Disclose omitted registered analyses and post-registration additions
 - [x] Resolve substantive ledger items and rerun approved analyses
 - [x] Reduce the broad draft to a request-mapped minor revision
-- [ ] Resolve MG-CFA and score-construction reproducibility discrepancies
-- [ ] Correct remaining partial responses and rebuild the package
-- [ ] Complete targeted human psychometric review
+- [x] Resolve MG-CFA and score-construction reproducibility discrepancies
+- [x] Correct remaining partial responses and rebuild the package
+- [x] Complete independent psychometric and reference verification
+- [ ] Optionally obtain targeted human psychometric review
 - [ ] Submit the point-by-point response and revised preprint
 
 ---

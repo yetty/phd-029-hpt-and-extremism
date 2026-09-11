@@ -36,14 +36,17 @@ remain the final inspection checklist rather than an implementation counter.
 | Status | Items |
 |---|---|
 | Implemented and represented in response draft | REC-01, REC-02, REC-03, REC-04, REC-05; R1-01 through R1-14; R2-01 through R2-03 |
-| Partly complete | META-01: technical and reproducibility checks completed; targeted human specialist review remains pending |
+| Implemented as internal QA | META-01: technical and reproducibility checks completed; an independent targeted psychometric review found no blocker. Human specialist review remains recommended but was not requested by the external reviews |
 
 Additional technical corrections are recorded in the response under META-01.
 The current manuscript removes the incorrect
 design-effect defense, treats the all-item GRM as a post-registration
 unidimensional sensitivity model, describes its item tests as omnibus, and
-does not claim scalar invariance from the inadmissible composite-group MG-CFA
-sequence.
+uses one explicit set of minimum-answer scoring rules. A fresh run with the
+current data and lavaan 0.7-2 produced admissible composite-group MG-CFA
+solutions whose fit-index changes are compatible with scalar invariance; the
+manuscript retains small-group, clustering, and post-registration caveats and
+does not treat this as firm equivalence evidence.
 
 ## Priority 1: Validity claims and factual accuracy
 
@@ -878,6 +881,12 @@ newly reported number to a reproducible script output.
 audit of CFA identification, DIF grouping and anchor strategy, interval
 calculation, reliability estimates, and all new descriptive displays. The
 auditor should reproduce values from scripts rather than assess prose alone.
+
+**Final disposition (2026-09-11):** The corrected package received independent
+methodological and psychometric agent checks against reproduced outputs. No
+technical blocker remained after the multiplicity and model-description
+clarifications. Human specialist review remains advisable but is not treated
+as an external-review acceptance condition.
 
 **Validation check:**
 

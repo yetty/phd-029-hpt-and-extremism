@@ -21,7 +21,7 @@ using a sample of 293 Czech secondary students (20 classrooms, 10 schools).
 
 The analytic approach combines:
 - Multilevel models with school and classroom random intercepts (lme4/lmerTest)
-- Formal TOST equivalence testing (SESOI = β ±0.20)
+- Exploratory TOST equivalence testing (post hoc SESOI = β ±0.20)
 - Multi-group confirmatory factor analysis (MG-CFA; lavaan, WLSMV estimator)
 - Differential Item Functioning analysis (DIF; mirt, graded response model)
 - Mundlak within/between classroom ideology decomposition
@@ -57,13 +57,13 @@ school names are included. Schools are identified only by anonymised codes.
 
 **Key variables (see codebook for full list):**
 
-- `pop1`–`pop3`: HPT Perspective-on-the-Past subscale items (reverse-scored in analysis)
-- `cont1`–`cont3`: HPT Contextualization subscale items
-- `rd1`–`rd3`: FR-LF Right-wing Dictatorship endorsement facet
-- `ns1`–`ns3`: FR-LF National Socialist relativization facet
-- `a1`–`a3`, `u1`–`u3`, `k1`–`k3`: KSA-3 authoritarianism subscales (aggression, submission, conventionalism)
-- `kn1`–`kn6`: Historical knowledge test items (0/1 scored)
-- `sdr1`–`sdr5`: Social Desirability Rating items
+- `pop1`-`pop3`: HPT Perspective-on-the-Past subscale items (reverse-scored in analysis)
+- `cont1`-`cont3`: HPT Contextualization subscale items
+- `rd1`-`rd3`: FR-LF Right-wing Dictatorship endorsement facet
+- `ns1`-`ns3`: FR-LF National Socialist relativization facet
+- `a1`-`a3`, `u1`-`u3`, `k1`-`k3`: KSA-3 authoritarianism subscales (aggression, submission, conventionalism)
+- `kn1`-`kn6`: Historical knowledge test items (0/1 scored)
+- `sdr1`-`sdr5`: Social Desirability Rating items
 - `school_id`, `classroom_label`: Anonymised clustering identifiers
 - `school_level`: `lower_secondary` (základní škola, ISCED 2) or `upper_secondary` (gymnázium, ISCED 3)
 - `school_type`: `public`, `private`, or `church`
@@ -75,7 +75,7 @@ school names are included. Schools are identified only by anonymised codes.
 ## scripts/
 
 All scripts expect `student_responses.RDS` to be in the **working directory** (or one level up,
-depending on the script — see each file header). The simplest approach is to copy
+depending on the script -- see each file header). The simplest approach is to copy
 `data/student_responses.RDS` to the same directory as the scripts before running.
 
 ### Main analysis pipeline (R Markdown, numbered sequence)
@@ -87,11 +87,13 @@ or wherever `output_dir` is set in the Makefile/render call).
 |--------|----------|
 | `01_measurement_checks.Rmd` | Instrument reliability (α, ω), EFA/CFA factor structure, descriptive item statistics, floor/ceiling checks |
 | `02_descriptives_and_zero_order_correlations.Rmd` | Sample descriptives, zero-order correlation matrix, group distribution plots |
-| `03_multilevel_models_hypothesis_tests.Rmd` | Main hypothesis tests (H1, H2): 2-level random-intercept models predicting HPT from ideology, knowledge, SDR |
+| `03_multilevel_models_hypothesis_tests.Rmd` | Main hypothesis tests (H1, H2): random-intercept models predicting HPT from ideology, knowledge, SDR, with school and classroom intercepts |
 | `04_dif_and_mg_cfa_measurement_bias.Rmd` | DIF analysis (graded response model, Bonferroni α = .01) and MG-CFA scalar invariance tests across ideology groups |
 | `05_sensitivity_analyses.Rmd` | Robustness checks: alternative composites, exclusion rules, random-slope models, fixed-effects models, attenuation correction |
 | `06_appendix_tables_and_figures.Rmd` | Appendix tables and supplementary figures cited in manuscript |
 | `07_reproducibility_report.Rmd` | Session info, package versions, random-seed confirmation |
+| `scoring_helpers.R` | Shared minimum-answer rules used by all current scoring, figure, and supplementary scripts |
+| `revision_reporting_analyses.R` | Reliability intervals, participant descriptives, correlation intervals, sample-size tables, and the manuscript relationship figure |
 
 **To run the full pipeline:**
 ```r
@@ -99,6 +101,7 @@ or wherever `output_dir` is set in the Makefile/render call).
 rmarkdown::render("01_measurement_checks.Rmd", output_dir = "../outputs")
 rmarkdown::render("02_descriptives_and_zero_order_correlations.Rmd", output_dir = "../outputs")
 # ... etc., or use the Makefile (see below)
+source("revision_reporting_analyses.R"); main()
 ```
 
 Or using **make** (requires R and latexmk):
@@ -117,29 +120,27 @@ scripts) takes approximately 10--15 minutes on a standard laptop
 
 | Manuscript element | Source script |
 |--------------------|--------------|
-| Table 1 (Sample descriptives) | `02_descriptives_and_zero_order_correlations.Rmd` |
-| Table 2 (Reliability and CFA fit) | `01_measurement_checks.Rmd` |
-| Table 3 (Zero-order correlations) | `02_descriptives_and_zero_order_correlations.Rmd` |
-| Table 4 (Multilevel model results) | `03_multilevel_models_hypothesis_tests.Rmd` |
-| Table 5 (MG-CFA invariance) | `04_dif_and_mg_cfa_measurement_bias.Rmd` |
-| Table 6 (Sensitivity analyses) | `05_sensitivity_analyses.Rmd` |
+| Table 1 (CFA fit) | `01_measurement_checks.Rmd` |
+| Table 2 (factor loadings) | `01_measurement_checks.Rmd` |
+| Table 3 (reliability summary) | `revision_reporting_analyses.R` |
+| Table 4 (study-variable descriptives) | `revision_reporting_analyses.R` |
+| Table 5 (DIF tests) | `04_dif_and_mg_cfa_measurement_bias.Rmd` |
+| Table 6 (MG-CFA invariance) | `04_dif_and_mg_cfa_measurement_bias.Rmd` |
+| Table 7 (zero-order correlations) | `revision_reporting_analyses.R` |
 | Table S1 (GRM item parameters) | `04_dif_and_mg_cfa_measurement_bias.Rmd` |
-| Figure 1 (MG-CFA + DIF) | `fig02_measurement_invariance_and_dif.R` |
-| Figure 2 (Score distributions) | `fig03_score_distributions.R` |
-| Figure 3 (Coefficient plot) | `fig04_coefficient_plot.R` |
-| Figure 4 (Marginal effects) | `fig05_marginal_effects.R` |
+| Figure 1 (observed relationships) | `revision_reporting_analyses.R` |
 
-### Manuscript figure scripts
+### Additional figure scripts
 
-Standalone R scripts that regenerate the four main manuscript figures.
+Standalone R scripts retained to regenerate additional analysis figures.
 Each loads `student_responses.RDS` from the working directory and saves output to `../figures/`.
 
 | Script | Figure |
 |--------|--------|
-| `fig02_measurement_invariance_and_dif.R` | Fig. 2 — MG-CFA factor loadings and DIF test statistics by ideology group |
-| `fig03_score_distributions.R` | Fig. 3 — Distribution of HPT subscale scores across ideology tertiles |
-| `fig04_coefficient_plot.R` | Fig. 4 — Multilevel model coefficient plot (standardised β with 95% CIs) |
-| `fig05_marginal_effects.R` | Fig. 5 — Marginal effects of knowledge on HPT across ideology levels |
+| `fig02_measurement_invariance_and_dif.R` | MG-CFA factor loadings and DIF test statistics by ideology group |
+| `fig03_score_distributions.R` | Distribution of HPT subscale scores across ideology tertiles |
+| `fig04_coefficient_plot.R` | Multilevel model coefficient plot (standardised β with 95% CIs) |
+| `fig05_marginal_effects.R` | Marginal effects of knowledge on HPT across ideology levels |
 
 ### Supplementary analysis scripts
 
@@ -230,6 +231,7 @@ janitor              # data cleaning
 TOSTER               # TOST equivalence tests (or manual computation as in scripts)
 ggplot2              # figures
 patchwork            # figure composition
+broom.mixed          # multilevel-model coefficient extraction
 knitr, rmarkdown     # report rendering
 ```
 
@@ -241,10 +243,10 @@ R version used: see `07_reproducibility_report.Rmd` output for exact session inf
 
 The following files are excluded from this package on confidentiality grounds:
 
-- **Individual teacher response files** — raw Google Forms exports linked to specific teachers and schools by name. These cannot be shared without violating data protection agreements (GDPR, Regulation 2016/679/EU) and participant consent terms.
-- **Individual teacher feedback reports** — personalised reports sent to participating teachers, which contain school-identifiable information.
-- **Data collection script** (`pull_and_normalize_data_CONFIDENTAL.R`) — the script that retrieved raw data from Google Sheets and normalised it. It contains API credentials and school-identifiable mapping tables.
-- **Teacher participation tracking spreadsheet** — contains teacher names, school names, and contact information.
+- **Individual teacher response files** -- raw Google Forms exports linked to specific teachers and schools by name. These cannot be shared without violating data protection agreements (GDPR, Regulation 2016/679/EU) and participant consent terms.
+- **Individual teacher feedback reports** -- personalised reports sent to participating teachers, which contain school-identifiable information.
+- **Data collection script** (`pull_and_normalize_data_CONFIDENTAL.R`) -- the script that retrieved raw data from Google Sheets and normalised it. It contains API credentials and school-identifiable mapping tables.
+- **Teacher participation tracking spreadsheet** -- contains teacher names, school names, and contact information.
 
 The `data/student_responses.*` files are the fully de-identified, analysis-ready output
 of that pipeline. They contain no individual names, no school names, and no information

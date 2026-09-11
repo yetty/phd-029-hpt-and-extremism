@@ -19,6 +19,7 @@ suppressPackageStartupMessages({
   library(janitor)
   library(psych)
 })
+source("scoring_helpers.R")
 
 normalised_responses <- readRDS("student_responses.RDS")
 dat_raw <- normalised_responses |> clean_names()
@@ -52,18 +53,15 @@ z <- function(x) as.numeric(scale(x))
 
 dat <- dat_raw |>
   mutate(
-    hpt_cont    = rowMeans(across(all_of(cont_items)),       na.rm = TRUE),
-    hpt_pop_rev = rowMeans(across(paste0(pop_items, "_rev")), na.rm = TRUE),
-    hpt_ctx6    = rowMeans(cbind(hpt_pop_rev, hpt_cont),     na.rm = TRUE),
-    frlf_tot    = rowMeans(cbind(
-      rowMeans(across(all_of(rd_items)), na.rm = TRUE),
-      rowMeans(across(all_of(ns_items)), na.rm = TRUE)
-    ), na.rm = TRUE),
-    ns_tot      = rowMeans(across(all_of(ns_items)),  na.rm = TRUE),
-    rd_tot      = rowMeans(across(all_of(rd_items)),  na.rm = TRUE),
-    ksa3_tot    = rowMeans(across(all_of(ksa_items)), na.rm = TRUE),
+    hpt_cont    = scale_mean(dat_raw, cont_items, 2),
+    hpt_pop_rev = scale_mean(dat_raw, paste0(pop_items, "_rev"), 2),
+    hpt_ctx6    = rowMeans(cbind(hpt_pop_rev, hpt_cont), na.rm = FALSE),
+    frlf_tot    = scale_mean(dat_raw, c(rd_items, ns_items), 4),
+    ns_tot      = scale_mean(dat_raw, ns_items, 2),
+    rd_tot      = scale_mean(dat_raw, rd_items, 2),
+    ksa3_tot    = scale_mean(dat_raw, ksa_items, 7),
     kn_total    = rowSums(across(all_of(kn_items)),   na.rm = TRUE),
-    sdr5_tot    = rowMeans(across(all_of(sdr_items)), na.rm = TRUE)
+    sdr5_tot    = scale_mean(dat_raw, sdr_items, 4)
   ) |>
   mutate(
     z_hpt_ctx6  = z(hpt_ctx6),
@@ -107,6 +105,7 @@ dat <- dat |>
 qs <- quantile(dat$ideo_z, probs = c(1/3, 2/3), na.rm = TRUE)
 dat <- dat |>
   mutate(ideology_group = case_when(
+    is.na(ideo_z) ~ NA_character_,
     ideo_z <= qs[1] ~ "Low",
     ideo_z >= qs[2] ~ "High",
     TRUE ~ "Mid"
@@ -221,10 +220,12 @@ cat(strrep("=", 70), "\n")
 qs_ns <- quantile(dat$ns_tot, probs = c(1/3, 2/3), na.rm = TRUE)
 dat <- dat |>
   mutate(ns_group = case_when(
+    is.na(ns_tot) ~ NA_character_,
     ns_tot <= qs_ns[1] ~ "Low",
     ns_tot >= qs_ns[2] ~ "High",
     TRUE ~ "Mid"
   ))
+print(table(dat$ns_group, useNA = "ifany"))
 
 cfad_ns <- dat |>
   filter(ns_group %in% c("Low", "High")) |>
@@ -255,16 +256,18 @@ fit_scal_ns <- cfa(model_3f, data = cfad_ns, group = "ns_group",
                    group.equal = c("loadings", "thresholds"))
 
 extract_fit <- function(m, label) {
-  f <- lavaan::fitmeasures(m, c("cfi", "rmsea", "srmr"))
+  f <- lavaan::fitmeasures(m, c("cfi.scaled", "rmsea.scaled", "srmr"))
   cat(sprintf("%-20s CFI = %.3f, RMSEA = %.3f, SRMR = %.3f\n",
-              label, f["cfi"], f["rmsea"], f["srmr"]))
+              label, f["cfi.scaled"], f["rmsea.scaled"], f["srmr"]))
 }
 cat("NS-only grouping:\n")
 extract_fit(fit_conf_ns, "Configural")
 extract_fit(fit_metr_ns, "Metric")
 extract_fit(fit_scal_ns, "Scalar")
 cat(sprintf("Metric ΔCFI = %.3f, Scalar ΔCFI = %.3f\n",
-            lavaan::fitmeasures(fit_metr_ns, "cfi") - lavaan::fitmeasures(fit_conf_ns, "cfi"),
-            lavaan::fitmeasures(fit_scal_ns, "cfi") - lavaan::fitmeasures(fit_metr_ns, "cfi")))
+            lavaan::fitmeasures(fit_metr_ns, "cfi.scaled") -
+              lavaan::fitmeasures(fit_conf_ns, "cfi.scaled"),
+            lavaan::fitmeasures(fit_scal_ns, "cfi.scaled") -
+              lavaan::fitmeasures(fit_metr_ns, "cfi.scaled")))
 
 cat("\nDone. All supplementary analyses complete.\n")

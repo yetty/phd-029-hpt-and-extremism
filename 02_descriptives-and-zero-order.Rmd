@@ -1,5 +1,5 @@
 ---
-title: "Descriptives & Zero-order associations — HPT (Czech data)"
+title: "Descriptives & Zero-order associations -- HPT (Czech data)"
 subtitle: "Means/SDs, distributions, correlations, and school/class variation"
 author: "HPT and Extremism project"
 date: "`r format(Sys.Date())`"
@@ -47,7 +47,7 @@ header-includes:
 
 # Purpose
 
-This file establishes transparent baseline patterns—distributions, scale descriptives, zero-order correlations, and between-group variation—before any modeling. It follows the HPT framework (POP/ROA/CONT) and scoring conventions used in prior work, but with an explicit **presentism reversal** so that **higher HPT scores reflect better contextualization/agent-sensitive reasoning**. FR-LF and KSA reflect ideological/authoritarian agreement; SDR reflects social-desirability responding. These descriptives document the empirical landscape your hypotheses build on.
+This file establishes transparent baseline patterns--distributions, scale descriptives, zero-order correlations, and between-group variation--before any modeling. It follows the HPT framework (POP/ROA/CONT) and scoring conventions used in prior work, but with an explicit **presentism reversal** so that **higher HPT scores reflect better contextualization/agent-sensitive reasoning**. FR-LF and KSA reflect ideological/authoritarian agreement; SDR reflects social-desirability responding. These descriptives document the empirical landscape your hypotheses build on.
 *Interpretation cheatsheet appears under each table/figure.*
 
 ```{r,setup, include=FALSE}
@@ -66,6 +66,7 @@ library(psych)           # corr.test
 # Multilevel & ICC
 library(lme4)            # lmer
 suppressPackageStartupMessages(library(performance)) # icc()
+source("submissions/pci_psychology/scoring_helpers.R")
 
 theme_set(theme_minimal(base_size = 11))
 ```
@@ -83,14 +84,8 @@ stopifnot(all(POP_rev_items %in% names(all_data)))
 
 all_data <- all_data %>%
   mutate(
-    across(all_of(POP_rev_items), ~ 5 - suppressWarnings(as.numeric(.)), .names = "{.col}_rev"),
-    HPT_POP_raw = rowMeans(across(all_of(POP_rev_items)), na.rm = TRUE),             # presentism, higher = worse
-    HPT_POP_rev = rowMeans(across(all_of(paste0(POP_rev_items, "_rev"))), na.rm = TRUE),  # higher = better
-    HPT_CONT    = rowMeans(across(CONT1:CONT3), na.rm = TRUE),
-    HPT_ROA     = rowMeans(across(ROA1:ROA3),   na.rm = TRUE),
-    # Canonical composites (report BOTH; use CTX6 as primary)
-    HPT_CTX6 = rowMeans(cbind(HPT_POP_rev, HPT_CONT), na.rm = TRUE),                 # no ROA (stable default)
-    HPT_TOT9 = rowMeans(cbind(HPT_POP_rev, HPT_CONT, HPT_ROA), na.rm = TRUE)         # includes ROA
+    across(all_of(POP_rev_items), ~ 5 - suppressWarnings(as.numeric(.)),
+           .names = "{.col}_rev")
   )
 
 # Ensure factors as in codebook and build unique class_id
@@ -109,15 +104,6 @@ all_data <- all_data %>%
 ## 2) Scoring: constructs & subscores
 
 ```{r,score-scales}
-# Convenience scorer: mean across items with minimum answered requirement
-scale_mean <- function(df, items, min_n = ceiling(length(items)/2), na.rm = TRUE) {
-  x <- df[, items]
-  ok <- rowSums(!is.na(x)) >= min_n
-  out <- rowMeans(x, na.rm = na.rm)
-  out[!ok] <- NA_real_
-  out
-}
-
 # HPT (1-4): subscores and totals (explicitly using REVERSED POP)
 hpt_pop_items_rev  <- paste0("POP", 1:3, "_rev")   # reversed presentism
 hpt_roa_items      <- c("ROA1","ROA2","ROA3")
@@ -139,26 +125,27 @@ sdr_items <- paste0("SDR", 1:5)
 # Build scores (HPT_TOTAL := CTX6 as primary; also keep HPT_TOT9 for reference)
 dat <- all_data %>%
   mutate(
-    HPT_POP    = scale_mean(., hpt_pop_items_rev,  min_n = 2),        # already reversed
-    HPT_ROA    = scale_mean(., hpt_roa_items,      min_n = 2),
-    HPT_CONT   = scale_mean(., hpt_cont_items,     min_n = 2),
-    HPT_TOTAL  = scale_mean(., c(hpt_pop_items_rev, hpt_roa_items, hpt_cont_items), min_n = 5),
-    # Also expose explicit composites computed above
-    HPT_CTX6   = HPT_CTX6,
-    HPT_TOT9   = HPT_TOT9,
+    HPT_POP_raw = scale_mean(., POP_rev_items, min_answered = 2),
+    HPT_POP    = scale_mean(., hpt_pop_items_rev, min_answered = 2),
+    HPT_ROA    = scale_mean(., hpt_roa_items, min_answered = 2),
+    HPT_CONT   = scale_mean(., hpt_cont_items, min_answered = 2),
+    HPT_CTX6   = rowMeans(cbind(HPT_POP, HPT_CONT), na.rm = FALSE),
+    HPT_TOT9   = rowMeans(cbind(HPT_POP, HPT_CONT, HPT_ROA),
+                          na.rm = FALSE),
+    HPT_TOTAL  = HPT_TOT9,
     KN_TOTAL   = rowSums(dplyr::select(., all_of(kn_items)), na.rm = TRUE),
-    FRLF_RD    = scale_mean(., frlf_rd, min_n = 2),
-    FRLF_NS    = scale_mean(., frlf_ns, min_n = 2),
-    FRLF_MINI  = scale_mean(., c(frlf_rd, frlf_ns), min_n = 4),
-    KSA_TOTAL  = scale_mean(., ksa_items, min_n = 7),
-    SDR_TOTAL  = scale_mean(., sdr_items, min_n = 4)
+    FRLF_RD    = scale_mean(., frlf_rd, min_answered = 2),
+    FRLF_NS    = scale_mean(., frlf_ns, min_answered = 2),
+    FRLF_MINI  = scale_mean(., c(frlf_rd, frlf_ns), min_answered = 4),
+    KSA_TOTAL  = scale_mean(., ksa_items, min_answered = 7),
+    SDR_TOTAL  = scale_mean(., sdr_items, min_answered = 4)
   )
 ```
 
 > **How to read:**
 > • **HPT (HPT_TOTAL)** uses **reversed POP** by construction; higher = better contextualization. 
 > • **HPT_CTX6** (POP_rev + CONT) is our **primary descriptive score**; **HPT_TOT9** (adds ROA) is reported for reference.
-> • **Knowledge (KN_TOTAL)**: 0–6 correct. **FR-LF/KSA/SDR** follow codebook.
+> • **Knowledge (KN_TOTAL)**: 0-6 correct. **FR-LF/KSA/SDR** follow codebook.
 
 ## 3) Sample overview
 
@@ -201,7 +188,7 @@ kable(desc_tbl[order(desc_tbl$variable),], booktabs = TRUE, digits = 2,
   kable_styling(latex_options = c("striped","hold_position"), full_width = FALSE)
 ```
 
-> **Interpretation:** HPT scales should center above 2.5 if students generally avoid presentism and contextualize; FR-LF/KSA are not “good/bad” in isolation but provide ideological context for later modeling; SDR alerts to response bias.
+> **Interpretation:** HPT scales should center above 2.5 if students generally avoid presentism and contextualize; FR-LF/KSA are not "good/bad" in isolation but provide ideological context for later modeling; SDR alerts to response bias.
 
 ## 5) Distributions (histograms, same axes where possible)
 
@@ -216,7 +203,7 @@ ggplot(long_scales, aes(x = value)) +
   labs(title = "Distributions of scales", x = "Score", y = "Count")
 ```
 
-> **Interpretation:** Watch for spikes at bounds (e.g., KN at 0 or max), floor/ceiling on FR-LF/KSA, and skew in HPT subscores—useful cues for later transformation or robust modeling.
+> **Interpretation:** Watch for spikes at bounds (e.g., KN at 0 or max), floor/ceiling on FR-LF/KSA, and skew in HPT subscores--useful cues for later transformation or robust modeling.
 
 ## 6) Zero-order correlations (student level)
 
@@ -235,7 +222,7 @@ kable(corr_tab, booktabs = TRUE, caption = "Zero-order Pearson correlations amon
   kable_styling(latex_options = c("hold_position"))
 ```
 
-> **Interpretation:** Correlations locate broad relationships your hypotheses rely on. For example, if **FRLF_MINI** correlates positively with **HPT_CTX6/HPT_TOT9**, this suggests possible ideological alignment inflating contextualization—an effect to test with controls in models (knowledge, SDR) and with item-level checks later.
+> **Interpretation:** Correlations locate broad relationships your hypotheses rely on. For example, if **FRLF_MINI** correlates positively with **HPT_CTX6/HPT_TOT9**, this suggests possible ideological alignment inflating contextualization--an effect to test with controls in models (knowledge, SDR) and with item-level checks later.
 
 ## 7) Between-group variation: school/class ICCs
 
@@ -351,7 +338,7 @@ sessionInfo()
 
 ### Notes & interpretation pointers
 
-* **HPT scales (1-4):** Higher indicates better contextualization/agent-sensitive reasoning—**after POP reversal**; we report CTX6 (primary) and TOT9 (with ROA) side-by-side.
+* **HPT scales (1-4):** Higher indicates better contextualization/agent-sensitive reasoning--**after POP reversal**; we report CTX6 (primary) and TOT9 (with ROA) side-by-side.
 * **FR-LF mini (1-5):** Short right-wing authoritarian/Nazi relativization composite; higher = stronger endorsement. Use primarily as a predictor/covariate and for DIF checks later.
 * **Knowledge:** Treat as a covariate; it often shows small but non-zero links to HPT.
 * **SDR:** Use to check attenuation/amplification of sensitive attitudes.

@@ -2,9 +2,9 @@
 # TOST EQUIVALENCE TESTS + MUNDLAK WITHIN/BETWEEN IDEOLOGY DECOMPOSITION
 #
 # Addresses v3 reviewer concerns:
-#   1. Formal equivalence tests (TOST) for ideology -> HPT outcomes
-#      SESOI = beta +/- 0.20 (pre-specified in manuscript as "smallest effect
-#      of educational interest" based on ~4% variance explained, Cohen 1988)
+#   1. Exploratory equivalence tests (TOST) for ideology -> HPT outcomes
+#      SESOI = beta +/- 0.20 (selected post hoc using Cohen's conventional
+#      small-effect threshold; not preregistered)
 #   2. Mundlak model: within-class vs between-class ideology predicting HPT
 #      Tests classroom climate contamination pathway
 # =============================================================================
@@ -16,6 +16,7 @@ suppressPackageStartupMessages({
   library(lmerTest)
   library(janitor)
 })
+source("scoring_helpers.R")
 
 normalised_responses <- readRDS("student_responses.RDS")
 dat_raw <- normalised_responses |> clean_names()
@@ -49,16 +50,13 @@ z <- function(x) as.numeric(scale(x))
 
 dat <- dat_raw |>
   mutate(
-    hpt_cont    = rowMeans(across(all_of(cont_items)),        na.rm = TRUE),
-    hpt_pop_rev = rowMeans(across(paste0(pop_items, "_rev")), na.rm = TRUE),
-    hpt_ctx6    = rowMeans(cbind(hpt_pop_rev, hpt_cont),      na.rm = TRUE),
-    frlf_tot    = rowMeans(cbind(
-      rowMeans(across(all_of(rd_items)), na.rm = TRUE),
-      rowMeans(across(all_of(ns_items)), na.rm = TRUE)
-    ), na.rm = TRUE),
-    ksa3_tot    = rowMeans(across(all_of(ksa_items)), na.rm = TRUE),
+    hpt_cont    = scale_mean(dat_raw, cont_items, 2),
+    hpt_pop_rev = scale_mean(dat_raw, paste0(pop_items, "_rev"), 2),
+    hpt_ctx6    = rowMeans(cbind(hpt_pop_rev, hpt_cont), na.rm = FALSE),
+    frlf_tot    = scale_mean(dat_raw, c(rd_items, ns_items), 4),
+    ksa3_tot    = scale_mean(dat_raw, ksa_items, 7),
     kn_total    = rowSums(across(all_of(kn_items)),   na.rm = TRUE),
-    sdr5_tot    = rowMeans(across(all_of(sdr_items)), na.rm = TRUE)
+    sdr5_tot    = scale_mean(dat_raw, sdr_items, 4)
   ) |>
   mutate(
     z_hpt_ctx6  = z(hpt_ctx6),
@@ -72,7 +70,7 @@ dat <- dat_raw |>
   drop_na(all_of(c(school_var, "class_id")))
 
 # ---- 1. TOST EQUIVALENCE TESTS -----------------------------------------------
-# SESOI = beta = 0.20 (defined as smallest effect of educational interest)
+# SESOI = beta = 0.20 (post hoc exploratory boundary)
 # TOST: two one-sided tests at alpha = .05
 #   H_low:  beta > -SESOI  (test that effect is not meaningfully negative)
 #   H_high: beta <  SESOI  (test that effect is not meaningfully positive)

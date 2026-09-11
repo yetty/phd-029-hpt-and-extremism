@@ -19,6 +19,7 @@ library(ggplot2)
 library(lme4)
 library(lmerTest)
 library(janitor)
+source("scoring_helpers.R")
 
 dir.create("../figures", showWarnings = FALSE)
 # ---- 1. Data preparation (mirrors 03_multilevel_models_hypothesis_tests.Rmd)
@@ -60,14 +61,11 @@ dat_raw <- dat_raw |>
 # Score constructs on ORIGINAL scales (not z-scored)
 dat <- dat_raw |>
   mutate(
-    hpt_cont = rowMeans(across(all_of(cont_items)), na.rm = TRUE),
-    frlf_tot = rowMeans(cbind(
-      rowMeans(across(all_of(rd_items)), na.rm = TRUE),
-      rowMeans(across(all_of(ns_items)), na.rm = TRUE)
-    ), na.rm = TRUE),
-    ksa3_tot = rowMeans(across(all_of(ksa_items)), na.rm = TRUE),
+    hpt_cont = scale_mean(dat_raw, cont_items, 2),
+    frlf_tot = scale_mean(dat_raw, c(rd_items, ns_items), 4),
+    ksa3_tot = scale_mean(dat_raw, ksa_items, 7),
     kn_total = rowSums(across(all_of(kn_items)), na.rm = TRUE),
-    sdr5_tot = rowMeans(across(all_of(sdr_items)), na.rm = TRUE)
+    sdr5_tot = scale_mean(dat_raw, sdr_items, 4)
   ) |>
   drop_na(all_of(c(school_var, "class_id")))
 

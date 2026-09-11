@@ -1,6 +1,6 @@
 ---
-title: "Hypothesis tests — HPT (Czech data)"
-subtitle: "Multilevel models for H1–H2"
+title: "Hypothesis tests -- HPT (Czech data)"
+subtitle: "Multilevel models for H1-H2"
 author: "HPT and Extremism project"
 date: "`r format(Sys.Date())`"
 always_allow_html: true
@@ -53,7 +53,7 @@ This document runs the **main confirmatory analyses** for:
 Notes on constructs and scoring:
 
 * HPT subscores (POP, ROA, CONT) follow Hartmann & Hasselhorn / Huijgen et al. We treat **POP items as presentist** and therefore **reverse-score POP** so that **higher = more contextualised reasoning**. DVs used here are **HPT total (CTX6: POP_rev+CONT)**, **CONT**, and **POP_rev**.
-* FR-LF-mini uses **RD1–RD3** and **NS1–NS3**; we analyse **total** and **RD/NS facets**.
+* FR-LF-mini uses **RD1-RD3** and **NS1-NS3**; we analyse **total** and **RD/NS facets**.
 * KSA-3 (9 items; aggression, submission, conventionalism) is included as a convergent authoritarian predictor. (Registered.)
 
 # 2. Data, variables, and preprocessing
@@ -83,6 +83,7 @@ options(
   modelsummary_format = "latex",
   modelsummary_factory_latex = "kableExtra"
 )
+source("submissions/pci_psychology/scoring_helpers.R")
 ```
 
 ```{r,load-data}
@@ -132,31 +133,32 @@ dat_raw <- dat_raw %>%
 # ---- Knowledge ----
 kn_items <- paste0("kn", 1:6)
 
-dat <- dat_raw |>
+dat <- dat_raw %>%
   mutate(
     kn_total = rowSums(across(all_of(kn_items)), na.rm = TRUE)
   )
 
 # ---- HPT (use reversed POP) ----
-dat <- dat |>
+dat <- dat %>%
   mutate(
-    hpt_pop_rev = rowMeans(across(paste0(pop_items, "_rev")), na.rm = TRUE),
-    hpt_cont    = rowMeans(across(all_of(cont_items)),       na.rm = TRUE),
-    hpt_roa     = rowMeans(across(all_of(roa_items)),        na.rm = TRUE),
+    hpt_pop_rev = scale_mean(., paste0(pop_items, "_rev"), 2),
+    hpt_cont    = scale_mean(., cont_items, 2),
+    hpt_roa     = scale_mean(., roa_items, 2),
     # Primary total (CTX6 = POP_rev + CONT); keep 9-item as sensitivity if needed
-    hpt_total   = rowMeans(cbind(hpt_pop_rev, hpt_cont), na.rm = TRUE),
-    hpt_total9  = rowMeans(cbind(hpt_pop_rev, hpt_cont, hpt_roa), na.rm = TRUE)
+    hpt_total   = rowMeans(cbind(hpt_pop_rev, hpt_cont), na.rm = FALSE),
+    hpt_total9  = rowMeans(cbind(hpt_pop_rev, hpt_cont, hpt_roa),
+                           na.rm = FALSE)
   )
 
 # ---- FR-LF mini ----
 rd_items <- paste0("rd", 1:3)
 ns_items <- paste0("ns", 1:3)
 
-dat <- dat |>
+dat <- dat %>%
   mutate(
-    frlf_rd  = rowMeans(across(all_of(rd_items)), na.rm = TRUE),
-    frlf_ns  = rowMeans(across(all_of(ns_items)), na.rm = TRUE),
-    frlf_tot = rowMeans(cbind(frlf_rd, frlf_ns),  na.rm = TRUE)
+    frlf_rd  = scale_mean(., rd_items, 2),
+    frlf_ns  = scale_mean(., ns_items, 2),
+    frlf_tot = scale_mean(., c(rd_items, ns_items), 4)
   )
 
 # ---- KSA-3 ----
@@ -165,20 +167,20 @@ u_items   <- paste0("u", 1:3)
 k_items   <- paste0("k", 1:3)
 ksa_items <- c(a_items, u_items, k_items)
 
-dat <- dat |>
+dat <- dat %>%
   mutate(
-    ksa3_a   = rowMeans(across(all_of(a_items)),   na.rm = TRUE),
-    ksa3_u   = rowMeans(across(all_of(u_items)),   na.rm = TRUE),
-    ksa3_k   = rowMeans(across(all_of(k_items)),   na.rm = TRUE),
-    ksa3_tot = rowMeans(across(all_of(ksa_items)), na.rm = TRUE)
+    ksa3_a   = scale_mean(., a_items, 2),
+    ksa3_u   = scale_mean(., u_items, 2),
+    ksa3_k   = scale_mean(., k_items, 2),
+    ksa3_tot = scale_mean(., ksa_items, 7)
   )
 
 # ---- SDR-5 ----
 sdr_items <- paste0("sdr", 1:5)
 
-dat <- dat |>
+dat <- dat %>%
   mutate(
-    sdr5_tot = rowMeans(across(all_of(sdr_items)), na.rm = TRUE)
+    sdr5_tot = scale_mean(., sdr_items, 4)
   )
 ```
 
@@ -246,9 +248,9 @@ for (dv in dv_list) {
 ```{r,model-summaries}
 msummary(
   list(
-    "HPT total (CTX6) — Base"  = fits$z_hpt_total$base,
-    "HPT total (CTX6) — Facet" = fits$z_hpt_total$facet,
-    "HPT total (CTX6) — Int."  = fits$z_hpt_total$int
+    "HPT total (CTX6) -- Base"  = fits$z_hpt_total$base,
+    "HPT total (CTX6) -- Facet" = fits$z_hpt_total$facet,
+    "HPT total (CTX6) -- Int."  = fits$z_hpt_total$int
   ),
   statistic = "({std.error})",
   gof_omit = "IC|Log|AIC|BIC",
@@ -257,9 +259,9 @@ msummary(
 
 msummary(
   list(
-    "CONT — Base"  = fits$z_hpt_cont$base,
-    "CONT — Facet" = fits$z_hpt_cont$facet,
-    "CONT — Int."  = fits$z_hpt_cont$int
+    "CONT -- Base"  = fits$z_hpt_cont$base,
+    "CONT -- Facet" = fits$z_hpt_cont$facet,
+    "CONT -- Int."  = fits$z_hpt_cont$int
   ),
   statistic = "({std.error})",
   gof_omit = "IC|Log|AIC|BIC",
@@ -268,9 +270,9 @@ msummary(
 
 msummary(
   list(
-    "POP_rev — Base"  = fits$z_hpt_pop$base,
-    "POP_rev — Facet" = fits$z_hpt_pop$facet,
-    "POP_rev — Int."  = fits$z_hpt_pop$int
+    "POP_rev -- Base"  = fits$z_hpt_pop$base,
+    "POP_rev -- Facet" = fits$z_hpt_pop$facet,
+    "POP_rev -- Int."  = fits$z_hpt_pop$int
   ),
   statistic = "({std.error})",
   gof_omit = "IC|Log|AIC|BIC",
@@ -299,15 +301,15 @@ collect_metrics <- function(m) {
 
 metrics <- dplyr::bind_rows(
   list(
-    `HPT total (CTX6) — Base`  = collect_metrics(fits$z_hpt_total$base),
-    `HPT total (CTX6) — Facet` = collect_metrics(fits$z_hpt_total$facet),
-    `HPT total (CTX6) — Int.`  = collect_metrics(fits$z_hpt_total$int),
-    `CONT — Base`               = collect_metrics(fits$z_hpt_cont$base),
-    `CONT — Facet`              = collect_metrics(fits$z_hpt_cont$facet),
-    `CONT — Int.`               = collect_metrics(fits$z_hpt_cont$int),
-    `POP_rev — Base`            = collect_metrics(fits$z_hpt_pop$base),
-    `POP_rev — Facet`           = collect_metrics(fits$z_hpt_pop$facet),
-    `POP_rev — Int.`            = collect_metrics(fits$z_hpt_pop$int)
+    `HPT total (CTX6) -- Base`  = collect_metrics(fits$z_hpt_total$base),
+    `HPT total (CTX6) -- Facet` = collect_metrics(fits$z_hpt_total$facet),
+    `HPT total (CTX6) -- Int.`  = collect_metrics(fits$z_hpt_total$int),
+    `CONT -- Base`               = collect_metrics(fits$z_hpt_cont$base),
+    `CONT -- Facet`              = collect_metrics(fits$z_hpt_cont$facet),
+    `CONT -- Int.`               = collect_metrics(fits$z_hpt_cont$int),
+    `POP_rev -- Base`            = collect_metrics(fits$z_hpt_pop$base),
+    `POP_rev -- Facet`           = collect_metrics(fits$z_hpt_pop$facet),
+    `POP_rev -- Int.`            = collect_metrics(fits$z_hpt_pop$int)
   ),
   .id = "Model"
 )
@@ -339,18 +341,18 @@ knitr::kable(
 )
 ```
 
-# 4. Results — decision rules
+# 4. Results -- decision rules
 
 Interpret **only the preregistered tests**:
 
 * **H1 supported** if the coefficient for **FR-LF** (either `z_frlf_tot` in Base/Int. or `z_frlf_rd`/`z_frlf_ns` in Facet) is **> 0 and p < .05** for **HPT total (CTX6)** and/or **CONT**.
-* **H2 supported** if the same holds **after** adding controls (**KN**, **SDR-5**) and **KSA-3** (already included), and — if preregistered — the **FR-LF × KN** interaction is **not necessary** for the main effect to persist (or, if hypothesised, is significant in the expected direction).
+* **H2 supported** if the same holds **after** adding controls (**KN**, **SDR-5**) and **KSA-3** (already included), and -- if preregistered -- the **FR-LF × KN** interaction is **not necessary** for the main effect to persist (or, if hypothesised, is significant in the expected direction).
 
 **Reading POP_rev.** Because POP is reversed, higher **POP_rev** means **less presentism / more contextualised fit** on items that originally cued presentist endorsements. Interpret alongside **CONT**.
 
 # 5. Brief interpretation guide (for the write-up)
 
-* **Effect size:** Coefficients are **standardised** (β). Values around 0.10 are small, 0.20–0.30 moderate for individual-level predictors in multilevel models; report 95% CIs.
+* **Effect size:** Coefficients are **standardised** (β). Values around 0.10 are small, 0.20-0.30 moderate for individual-level predictors in multilevel models; report 95% CIs.
 * **Clustering:** Report **ICC** to show class-level variance.
 * **Model fit:** Report marginal and conditional R² and compare Base vs. Facet vs. Interaction.
 * **Substantive meaning:** A **positive FR-LF** effect on **HPT total / CONT** suggests that ideological affinity **elevates apparent contextualisation**, consistent with the contamination concern.

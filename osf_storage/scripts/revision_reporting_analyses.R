@@ -1,8 +1,9 @@
 # Reviewer-requested reporting analyses for the PCI Psychology revision.
-# Run from the project root:
-#   Rscript submissions/pci_psychology/revision_reporting_analyses.R
+# Run from the osf_storage/scripts directory after copying
+# student_responses.RDS into it:
+#   Rscript revision_reporting_analyses.R
 
-source("submissions/pci_psychology/scoring_helpers.R")
+source("scoring_helpers.R")
 
 fisher_ci <- function(r, n, conf_level = 0.95) {
   if (!is.finite(r) || n <= 3) {
@@ -335,9 +336,8 @@ main <- function() {
     library(psych)
     library(ggplot2)
   })
-  load("normalised_responses.RData")
-  stopifnot(exists("normalised_responses"))
-  output_dir <- "submissions/pci_psychology/revision_outputs"
+  normalised_responses <- readRDS("student_responses.RDS")
+  output_dir <- "../outputs/revision"
   dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
   write_reliability_outputs(normalised_responses, output_dir)
   write_correlation_outputs(normalised_responses, output_dir)

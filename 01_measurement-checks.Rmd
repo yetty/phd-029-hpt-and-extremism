@@ -1,5 +1,5 @@
 ---
-title: "Measurement checks — HPT (Czech data)"
+title: "Measurement checks -- HPT (Czech data)"
 subtitle: "Reliability, dimensionality, presentism-contextualization contrast, and ICCs"
 author: "HPT and Extremism project"
 date: "`r format(Sys.Date())`"
@@ -50,9 +50,9 @@ This report checks whether our **Historical Perspective-Taking (HPT)** instrumen
 
 We do four things:
 
-1. **Reliability:** Are the HPT subscales internally consistent? We report **Cronbach’s alpha (\(\alpha\))** and **McDonald’s omega (\(\omega\))** for **POP**, **ROA**, **CONT** (three items each; 1–4).
+1. **Reliability:** Are the HPT subscales internally consistent? We report **Cronbach's alpha (\(\alpha\))** and **McDonald's omega (\(\omega\))** for **POP**, **ROA**, **CONT** (three items each; 1-4).
 2. **Dimensionality (CFA/EFA):** Does the **factor structure** match prior research (e.g., **POP+CONT** vs **ROA**, or three correlated factors)?
-3. **Presentism–contextualization contrast:** Do **POP** (presentist) and **CONT** (contextualization) show the expected contrast?
+3. **Presentism-contextualization contrast:** Do **POP** (presentist) and **CONT** (contextualization) show the expected contrast?
 4. **Clustering (ICCs):** Are scores clustered by **school** and **class-within-school**?
 
 > **Composite scores used** (for descriptives/ICCs and later files):
@@ -83,6 +83,7 @@ library(knitr)
 # Make kableExtra use longtable/booktabs and avoid loading tabu
 options(kableExtra.latex.load_packages = FALSE)
 library(kableExtra)
+source("submissions/pci_psychology/scoring_helpers.R")
 
 # Load the dataset created in 00_data-preparation
 load("normalised_responses.RData")
@@ -101,7 +102,7 @@ dat <- dat %>%
 # POP reversed item-wise and subscale helper
 POP_rev_items <- paste0("POP", 1:3)
 
-# Reverse POP items (1–4)
+# Reverse POP items (1-4)
 dat <- dat %>%
   mutate(
     across(
@@ -111,12 +112,13 @@ dat <- dat %>%
     )
   ) %>%
   mutate(
-    HPT_POP_raw = rowMeans(across(all_of(POP_rev_items)), na.rm = TRUE),
-    HPT_POP_rev = rowMeans(across(all_of(paste0(POP_rev_items, "_rev"))), na.rm = TRUE),
-    HPT_CONT    = rowMeans(across(CONT1:CONT3), na.rm = TRUE),
-    HPT_ROA     = rowMeans(across(ROA1:ROA3),   na.rm = TRUE),
-    HPT_CTX6    = rowMeans(cbind(HPT_POP_rev, HPT_CONT), na.rm = TRUE),
-    HPT_TOT9    = rowMeans(cbind(HPT_POP_rev, HPT_CONT, HPT_ROA), na.rm = TRUE)
+    HPT_POP_raw = scale_mean(., POP_rev_items, 2),
+    HPT_POP_rev = scale_mean(., paste0(POP_rev_items, "_rev"), 2),
+    HPT_CONT    = scale_mean(., paste0("CONT", 1:3), 2),
+    HPT_ROA     = scale_mean(., paste0("ROA", 1:3), 2),
+    HPT_CTX6    = rowMeans(cbind(HPT_POP_rev, HPT_CONT), na.rm = FALSE),
+    HPT_TOT9    = rowMeans(cbind(HPT_POP_rev, HPT_CONT, HPT_ROA),
+                           na.rm = FALSE)
   )
 
 print_tbl <- function(df, caption, digits = 3, escape = TRUE) {
@@ -146,7 +148,7 @@ cat("Rows in full data: ", nrow_all,  "\n",
     "Rows kept (complete HPT + class_label + school_id): ", nrow_keep, "\n", sep = "")
 ```
 
-# Step 1 — Descriptives and scale construction
+# Step 1 -- Descriptives and scale construction
 
 **Why:** Simple summaries catch obvious data problems and help readers develop intuition.
 
@@ -170,7 +172,7 @@ summary(select(hpt_scores, POP_raw, POP_rev, ROA, CONT, HPT_CTX6, HPT_TOT9))
 cor(select(hpt_scores, POP_raw, ROA, CONT, HPT_CTX6, HPT_TOT9), use = "pairwise.complete.obs")
 ```
 
-# Step 2 — Reliability: \(\alpha\) and \(\omega\) for POP–ROA–CONT
+# Step 2 -- Reliability: \(\alpha\) and \(\omega\) for POP-ROA-CONT
 
 ```{r,reliability,warning=FALSE}
 alpha_poly <- function(x) {
@@ -205,7 +207,7 @@ rel_table <- purrr::imap_dfr(subsets, function(df, nm){
 print_tbl(rel_table, digits = 3, caption = "Reliability of HPT subscales (alpha and omega).")
 ```
 
-# Step 3 — Dimensionality (CFA/EFA)
+# Step 3 -- Dimensionality (CFA/EFA)
 
 ```{r,cfa-setup,warning=FALSE}
 hpt_ord <- hpt_items  # treat items as ordered
@@ -269,7 +271,7 @@ cat("\nEFA (3 factors):\n")
 print(efa3$loadings, cutoff = 0.25)
 ```
 
-# Step 4 — Presentism–contextualization contrast (POP vs CONT)
+# Step 4 -- Presentism-contextualization contrast (POP vs CONT)
 
 ```{r,pop-cont-contrast}
 contrast_tbl <- hpt_scores %>%
@@ -285,7 +287,7 @@ t_test <- t.test(hpt_scores$POP_raw, hpt_scores$CONT, paired = TRUE)
 t_test
 ```
 
-# Step 5 — Distribution checks
+# Step 5 -- Distribution checks
 
 ```{r,distributions}
 # Item distributions
@@ -308,7 +310,7 @@ ggplot(long_scales, aes(x = score)) +
   labs(title = "Subscales and composites", x = "Mean score", y = "Count")
 ```
 
-# Step 6 — Class-level ICCs (multilevel warranted?)
+# Step 6 -- Class-level ICCs (multilevel warranted?)
 
 ```{r,icc}
 # Build the DV frame from analysis_df (items) and compute subscales/composites here
@@ -348,14 +350,14 @@ icc_tbl <- purrr::map_dfr(c("HPT_CTX6","HPT_TOT9","POP_raw","ROA","CONT"), mk_ic
 print_tbl(icc_tbl, digits = 3, caption = "ICCs: school and class-within-school (HPT composites and subscales).")
 ```
 
-# Step 7 — Knowledge mini-test (KN1–KN6)
+# Step 7 -- Knowledge mini-test (KN1-KN6)
 
 ```{r,kn-items,warning=FALSE}
 kn_cols <- paste0("KN", 1:6)
 has_kn  <- all(kn_cols %in% names(dat))
 
 if (!has_kn) {
-  cat("\n**Knowledge section skipped:** KN1–KN6 not found in data.\n")
+  cat("\n**Knowledge section skipped:** KN1-KN6 not found in data.\n")
 } else {
   kn_items <- dat[keep, kn_cols]  # align to analysis_df rows via 'keep'
   # Basic sanity: coerce to numeric 0/1
@@ -384,7 +386,7 @@ if (!has_kn) {
 }
 ```
 
-# Step 8 — Ideology batteries (FR-LF mini, KSA-3) and Social Desirability (SDR-5)
+# Step 8 -- Ideology batteries (FR-LF mini, KSA-3) and Social Desirability (SDR-5)
 
 ```{r,ideology-batteries-helpers,warning=FALSE}
 # Helper: reliability table for Likert batteries (polychoric + omega total)
@@ -399,14 +401,14 @@ omega_total_poly_likert <- function(x) {
 }
 ```
 
-## FR-LF mini (RD1–RD3, NS1–NS3)
+## FR-LF mini (RD1-RD3, NS1-NS3)
 
 ```{r,fr-lf-mini,warning=FALSE}
 fr_cols <- c(paste0("RD", 1:3), paste0("NS", 1:3))
 has_fr  <- all(fr_cols %in% names(dat))
 
 if (!has_fr) {
-  cat("\n**FR-LF mini section skipped:** RD1–3 and/or NS1–3 not found.\n")
+  cat("\n**FR-LF mini section skipped:** RD1-3 and/or NS1-3 not found.\n")
 } else {
   fr_df <- dat[keep, fr_cols] %>% as_tibble()
   RD <- fr_df %>% select(starts_with("RD"))
@@ -447,14 +449,14 @@ if (!has_fr) {
 }
 ```
 
-## KSA-3 (A1–A3, U1–U3, K1–K3)
+## KSA-3 (A1-A3, U1-U3, K1-K3)
 
 ```{r,ksa-3,warning=FALSE}
 ksa_cols <- c(paste0("A",1:3), paste0("U",1:3), paste0("K",1:3))
 has_ksa  <- all(ksa_cols %in% names(dat))
 
 if (!has_ksa) {
-  cat("\n**KSA-3 section skipped:** A1–A3, U1–U3, and/or K1–K3 not found.\n")
+  cat("\n**KSA-3 section skipped:** A1-A3, U1-U3, and/or K1-K3 not found.\n")
 } else {
   ksa_df <- dat[keep, ksa_cols] %>% as_tibble()
   A <- ksa_df %>% select(starts_with("A"))
@@ -503,14 +505,14 @@ if (!has_ksa) {
 }
 ```
 
-## SDR-5 (SDR1–SDR5)
+## SDR-5 (SDR1-SDR5)
 
 ```{r,sdr-5,warning=FALSE}
 sdr_cols <- paste0("SDR", 1:5)
 has_sdr  <- all(sdr_cols %in% names(dat))
 
 if (!has_sdr) {
-  cat("\n**SDR-5 section skipped:** SDR1–SDR5 not found.\n")
+  cat("\n**SDR-5 section skipped:** SDR1-SDR5 not found.\n")
 } else {
   sdr_df <- dat[keep, sdr_cols] %>% as_tibble()
   a_sdr  <- psych::alpha(sdr_df)
@@ -536,7 +538,7 @@ if (!has_sdr) {
 }
 ```
 
-# Step 9 — Cross-construct correlations (HPT, KN, FR-LF, KSA-3, SDR-5)
+# Step 9 -- Cross-construct correlations (HPT, KN, FR-LF, KSA-3, SDR-5)
 
 ```{r,cross-construct-correlations}
 # Build scale scores that exist in your data (gracefully skipping any missing block)
@@ -560,22 +562,22 @@ if (has_kn) {
 
 if (has_fr) {
   fr_df <- dat[keep, fr_cols]
-  scales_list$FR_RD     <- rowMeans(fr_df[, paste0("RD",1:3)], na.rm = TRUE)
-  scales_list$FR_NS     <- rowMeans(fr_df[, paste0("NS",1:3)], na.rm = TRUE)
-  scales_list$FR_total  <- rowMeans(fr_df, na.rm = TRUE)
+  scales_list$FR_RD     <- scale_mean(fr_df, paste0("RD", 1:3), 2)
+  scales_list$FR_NS     <- scale_mean(fr_df, paste0("NS", 1:3), 2)
+  scales_list$FR_total  <- scale_mean(fr_df, fr_cols, 4)
 }
 
 if (has_ksa) {
   ksa_df <- dat[keep, ksa_cols]
-  scales_list$KSA_A     <- rowMeans(ksa_df[, paste0("A",1:3)], na.rm = TRUE)
-  scales_list$KSA_U     <- rowMeans(ksa_df[, paste0("U",1:3)], na.rm = TRUE)
-  scales_list$KSA_K     <- rowMeans(ksa_df[, paste0("K",1:3)], na.rm = TRUE)
-  scales_list$KSA_total <- rowMeans(ksa_df, na.rm = TRUE)
+  scales_list$KSA_A     <- scale_mean(ksa_df, paste0("A", 1:3), 2)
+  scales_list$KSA_U     <- scale_mean(ksa_df, paste0("U", 1:3), 2)
+  scales_list$KSA_K     <- scale_mean(ksa_df, paste0("K", 1:3), 2)
+  scales_list$KSA_total <- scale_mean(ksa_df, ksa_cols, 7)
 }
 
 if (has_sdr) {
   sdr_df <- dat[keep, sdr_cols]
-  scales_list$SDR_total <- rowMeans(sdr_df, na.rm = TRUE)
+  scales_list$SDR_total <- scale_mean(sdr_df, sdr_cols, 4)
 }
 
 scales_df <- as_tibble(scales_list)

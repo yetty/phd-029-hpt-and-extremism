@@ -15,10 +15,11 @@
 suppressPackageStartupMessages({
   library(dplyr)
   library(tidyr)
-  library(mirt)
-  library(lavaan)
-  library(lme4)
-  library(lmerTest)
+library(mirt)
+library(lavaan)
+library(lme4)
+library(lmerTest)
+source("submissions/pci_psychology/scoring_helpers.R")
   library(janitor)
 })
 
@@ -46,13 +47,12 @@ dat_raw <- dat_raw %>%
   mutate(across(all_of(POP_rev_items),
                 ~ 5 - ., .names = "{.col}_rev")) %>%
   mutate(
-    HPT_POP_rev = rowMeans(across(paste0(POP_rev_items, "_rev")),
-                           na.rm = TRUE),
-    HPT_CONT = rowMeans(across(CONT1:CONT3), na.rm = TRUE),
-    HPT_ROA  = rowMeans(across(ROA1:ROA3), na.rm = TRUE),
-    HPT_CTX6 = rowMeans(cbind(HPT_POP_rev, HPT_CONT), na.rm = TRUE),
+    HPT_POP_rev = scale_mean(., paste0(POP_rev_items, "_rev"), 2),
+    HPT_CONT = scale_mean(., paste0("CONT", 1:3), 2),
+    HPT_ROA  = scale_mean(., paste0("ROA", 1:3), 2),
+    HPT_CTX6 = rowMeans(cbind(HPT_POP_rev, HPT_CONT), na.rm = FALSE),
     HPT_TOT9 = rowMeans(cbind(HPT_POP_rev, HPT_CONT, HPT_ROA),
-                        na.rm = TRUE)
+                         na.rm = FALSE)
   )
 
 # Scoring
@@ -67,15 +67,13 @@ num_blocks <- c(frlf_items, ksa_items, kn_items, sdr_items)
 dat <- dat_raw %>%
   mutate(across(all_of(num_blocks),
                 ~ suppressWarnings(as.numeric(.)))) %>%
-  rowwise() %>%
   mutate(
-    FRLF_mean = mean(c_across(all_of(frlf_items)), na.rm = TRUE),
-    KSA_mean  = mean(c_across(all_of(ksa_items)), na.rm = TRUE),
-    KN_sum    = sum(c_across(all_of(kn_items)), na.rm = TRUE),
-    SDR_mean  = mean(c_across(all_of(sdr_items)), na.rm = TRUE),
-    NS_mean   = mean(c_across(c("NS1", "NS2", "NS3")), na.rm = TRUE)
+    FRLF_mean = scale_mean(., frlf_items, 4),
+    KSA_mean  = scale_mean(., ksa_items, 7),
+    KN_sum    = rowSums(across(all_of(kn_items)), na.rm = TRUE),
+    SDR_mean  = scale_mean(., sdr_items, 4),
+    NS_mean   = scale_mean(., paste0("NS", 1:3), 2)
   ) %>%
-  ungroup() %>%
   mutate(
     FRLF_z = as.numeric(scale(FRLF_mean)),
     KSA_z  = as.numeric(scale(KSA_mean)),
@@ -89,7 +87,7 @@ dat <- dat %>%
     ideology_group = case_when(
       IDEO_Z <= qs[1] ~ "Low",
       IDEO_Z >= qs[2] ~ "High",
-      TRUE ~ "Mid"
+      !is.na(IDEO_Z) ~ "Mid"
     )
   )
 
@@ -192,6 +190,8 @@ z <- function(x) as.numeric(scale(x))
 dat_tost <- dat %>%
   mutate(
     z_hpt_ctx6 = z(HPT_CTX6),
+    z_hpt_cont = z(HPT_CONT),
+    z_hpt_pop = z(HPT_POP_rev),
     z_frlf_tot = z(FRLF_mean),
     z_ksa3_tot = z(KSA_mean),
     z_kn_total = z(KN_sum),
@@ -238,6 +238,31 @@ cat(sprintf("  Equivalence: %s\n",
 cat(sprintf("  90%% CI within SESOI: %s\n",
             ifelse(ci90_lo > -SESOI & ci90_hi < SESOI, "YES", "NO")))
 
+cat("\nCanonical base models for all HPT outcomes:\n")
+for (outcome in c("z_hpt_ctx6", "z_hpt_cont", "z_hpt_pop")) {
+  model <- lmer(
+    as.formula(paste0(
+      outcome,
+      " ~ z_frlf_tot + z_ksa3_tot + z_kn_total + z_sdr5_tot + ",
+      "(1 | school_id) + (1 | class_id)"
+    )),
+    data = dat_tost,
+    REML = TRUE
+  )
+  coefficients <- coef(summary(model))
+  for (term in c("z_frlf_tot", "z_ksa3_tot", "z_kn_total", "z_sdr5_tot")) {
+    cat(sprintf(
+      "  %s / %s: beta=%.4f, SE=%.4f, p=%.4f, N=%d\n",
+      outcome,
+      term,
+      coefficients[term, "Estimate"],
+      coefficients[term, "Std. Error"],
+      coefficients[term, "Pr(>|t|)"],
+      nobs(model)
+    ))
+  }
+}
+
 # =============================================================================
 # STEP 3: NS-ONLY MG-CFA SRMR VALUES
 # =============================================================================
@@ -250,13 +275,14 @@ cat(strrep("=", 70), "\n")
 qs_ns <- quantile(dat$NS_mean, probs = c(1/3, 2/3), na.rm = TRUE)
 dat <- dat %>%
   mutate(ns_group = case_when(
+    is.na(NS_mean) ~ NA_character_,
     NS_mean <= qs_ns[1] ~ "Low",
     NS_mean >= qs_ns[2] ~ "High",
     TRUE ~ "Mid"
   ))
 
 cat("NS-only group sizes:\n")
-print(table(dat$ns_group))
+print(table(dat$ns_group, useNA = "ifany"))
 
 cfad_ns <- dat %>%
   filter(ns_group %in% c("Low", "High")) %>%
@@ -316,11 +342,11 @@ cat(sprintf("  dCFI = %.3f, dRMSEA = %.3f, dSRMR = %.3f\n",
             f_scal["srmr"] - f_metr["srmr"]))
 
 # =============================================================================
-# STEP 4: METRIC STEP LARGEST MODIFICATION INDEX (MAIN MG-CFA)
+# STEP 4: MAIN MG-CFA ADMISSIBILITY AND LOCAL FIT
 # =============================================================================
 
 cat("\n", strrep("=", 70), "\n")
-cat("STEP 4: METRIC STEP LARGEST MODIFICATION INDEX\n")
+cat("STEP 4: MAIN MG-CFA ADMISSIBILITY AND LOCAL FIT\n")
 cat(strrep("=", 70), "\n")
 
 # Main ideology MG-CFA (rerun)
@@ -339,18 +365,52 @@ cfad_main <- dat %>%
 
 ord_items_main <- setdiff(names(cfad_main), "ideology_group")
 
+fit_conf_main <- cfa(model_3f, data = cfad_main,
+                     group = "ideology_group",
+                     ordered = ord_items_main,
+                     estimator = "WLSMV")
 fit_metr_main <- cfa(model_3f, data = cfad_main,
                      group = "ideology_group",
                      ordered = ord_items_main,
                      estimator = "WLSMV",
-                     group.equal = c("loadings"))
+                     group.equal = "loadings")
+fit_scal_main <- cfa(model_3f, data = cfad_main,
+                     group = "ideology_group",
+                     ordered = ord_items_main,
+                     estimator = "WLSMV",
+                     group.equal = c("loadings", "thresholds"))
+
+main_fits <- list(
+  Configural = fit_conf_main,
+  Metric = fit_metr_main,
+  Scalar = fit_scal_main
+)
+
+cat("\nComplete item-response cases by group:\n")
+print(table(cfad_main$ideology_group,
+            complete.cases(cfad_main[ord_items_main])))
+
+for (fit_name in names(main_fits)) {
+  fit <- main_fits[[fit_name]]
+  theta <- lavInspect(fit, "theta")
+  negative_residuals <- sum(unlist(lapply(theta, diag)) < 0)
+  cat(sprintf(
+    "%s: converged=%s, post.check=%s, negative residuals=%d\n",
+    fit_name,
+    lavInspect(fit, "converged"),
+    lavInspect(fit, "post.check"),
+    negative_residuals
+  ))
+  print(fitMeasures(fit, c("cfi.scaled", "rmsea.scaled", "srmr")))
+}
 
 mi <- modificationIndices(fit_metr_main, sort. = TRUE)
-cat("\nTop 10 modification indices (metric model):\n")
+cat("\nTop 10 local modification indices (metric model):\n")
 print(head(mi, 10))
 
-cat(sprintf("\nLargest MI: %.2f (op: %s, lhs: %s, rhs: %s, group: %d)\n",
+cat(sprintf("\nLargest local MI: %.2f (op: %s, lhs: %s, rhs: %s, group: %d)\n",
             mi$mi[1], mi$op[1], mi$lhs[1], mi$rhs[1], mi$group[1]))
+cat("Ordinary modification indices do not test loading-equality constraints.\n")
 
 # =============================================================================
 # STEP 5: TABLE S1 — GRM ITEM PARAMETERS BY GROUP

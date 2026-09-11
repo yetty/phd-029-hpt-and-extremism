@@ -1,3 +1,4 @@
+source("submissions/pci_psychology/scoring_helpers.R")
 source("submissions/pci_psychology/revision_reporting_analyses.R")
 
 x <- data.frame(a = c(1, 2, NA), b = c(3, NA, NA), c = c(5, 6, 7))
@@ -30,5 +31,28 @@ complete_alpha <- psych::alpha(
 alpha_result <- alpha_summary(alpha_data, ordinal = FALSE)
 stopifnot(alpha_result[["n"]] == 3)
 stopifnot(abs(alpha_result[["alpha_raw"]] - complete_alpha) < 1e-10)
+
+osf_scoring_scripts <- c(
+  "01_measurement_checks.Rmd",
+  "02_descriptives_and_zero_order_correlations.Rmd",
+  "03_multilevel_models_hypothesis_tests.Rmd",
+  "04_dif_and_mg_cfa_measurement_bias.Rmd",
+  "05_sensitivity_analyses.Rmd",
+  "fig02_measurement_invariance_and_dif.R",
+  "fig03_score_distributions.R",
+  "fig04_coefficient_plot.R",
+  "fig05_marginal_effects.R",
+  "supplementary_analyses.R",
+  "tost_equivalence_tests_and_mundlak.R",
+  "revision_reporting_analyses.R"
+)
+for (script in osf_scoring_scripts) {
+  path <- file.path("osf_storage/scripts", script)
+  stopifnot(file.exists(path))
+  stopifnot(any(grepl(
+    'source("scoring_helpers.R")', readLines(path), fixed = TRUE
+  )))
+  stopifnot(!any(grepl("min_n =", readLines(path), fixed = TRUE)))
+}
 
 cat("revision reporting analysis helper tests passed\n")

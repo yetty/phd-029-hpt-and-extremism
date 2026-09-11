@@ -16,6 +16,7 @@ library(ggplot2)
 library(lavaan)
 library(mirt)
 library(patchwork)
+source("scoring_helpers.R")
 
 dir.create("../figures", showWarnings = FALSE)
 # ---- 1. Data preparation (mirrors 04_dif_and_mg_cfa_measurement_bias.Rmd) --
@@ -42,13 +43,9 @@ dat_raw <- dat_raw %>%
 
 # Ideology composite and tertile split
 dat <- dat_raw %>%
-  rowwise() %>%
   mutate(
-    FRLF_mean = mean(c_across(all_of(frlf_items)), na.rm = TRUE),
-    KSA_mean  = mean(c_across(all_of(ksa_items)),  na.rm = TRUE)
-  ) %>%
-  ungroup() %>%
-  mutate(
+    FRLF_mean = scale_mean(dat_raw, frlf_items, 4),
+    KSA_mean  = scale_mean(dat_raw, ksa_items, 7),
     FRLF_z = as.numeric(scale(FRLF_mean)),
     KSA_z  = as.numeric(scale(KSA_mean)),
     IDEO_Z = (FRLF_z + KSA_z) / 2
@@ -57,6 +54,7 @@ dat <- dat_raw %>%
 qs <- quantile(dat$IDEO_Z, probs = c(.3334, .6666), na.rm = TRUE)
 dat <- dat %>%
   mutate(ideology_group = case_when(
+    is.na(IDEO_Z) ~ NA_character_,
     IDEO_Z <= qs[1] ~ "Low",
     IDEO_Z >= qs[2] ~ "High",
     TRUE ~ "Mid"

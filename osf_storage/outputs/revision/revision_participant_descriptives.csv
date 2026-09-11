@@ -1,0 +1,6 @@
+"variable","n","mean","sd","min","q25","median","q75","max","floor_percent","ceiling_percent"
+"Combined ideology (standardized)",283,-0.001,0.872,-2.48,-0.489,0.012,0.47,3.397,0.707,0.353
+"FR-LF attitudes",284,2.485,0.747,1,2,2.333,3,5,1.408,0.352
+"KSA-3 authoritarianism",283,2.858,0.625,1,2.528,2.889,3.222,5,0.707,0.353
+"Historical knowledge",293,3.038,1.622,0,2,3,4,6,4.096,8.874
+"History grade",289,1.706,0.92,1,1,1,2,5,53.633,1.384

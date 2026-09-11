@@ -14,6 +14,7 @@ library(tidyr)
 library(ggplot2)
 library(janitor)
 library(patchwork)
+source("scoring_helpers.R")
 
 dir.create("../figures", showWarnings = FALSE)
 # ---- 1. Data preparation (mirrors 02_descriptives_and_zero_order_correlations.Rmd) -
@@ -55,17 +56,14 @@ dat_raw <- dat_raw |>
 # Score constructs
 dat <- dat_raw |>
   mutate(
-    hpt_pop_rev = rowMeans(across(paste0(pop_items, "_rev")), na.rm = TRUE),
-    hpt_roa     = rowMeans(across(all_of(roa_items)),        na.rm = TRUE),
-    hpt_cont    = rowMeans(across(all_of(cont_items)),       na.rm = TRUE),
-    hpt_ctx6    = rowMeans(cbind(hpt_pop_rev, hpt_cont),     na.rm = TRUE),
-    frlf_tot    = rowMeans(cbind(
-      rowMeans(across(all_of(rd_items)), na.rm = TRUE),
-      rowMeans(across(all_of(ns_items)), na.rm = TRUE)
-    ), na.rm = TRUE),
-    ksa3_tot    = rowMeans(across(all_of(ksa_items)), na.rm = TRUE),
+    hpt_pop_rev = scale_mean(dat_raw, paste0(pop_items, "_rev"), 2),
+    hpt_roa     = scale_mean(dat_raw, roa_items, 2),
+    hpt_cont    = scale_mean(dat_raw, cont_items, 2),
+    hpt_ctx6    = rowMeans(cbind(hpt_pop_rev, hpt_cont), na.rm = FALSE),
+    frlf_tot    = scale_mean(dat_raw, c(rd_items, ns_items), 4),
+    ksa3_tot    = scale_mean(dat_raw, ksa_items, 7),
     kn_total    = rowSums(across(all_of(kn_items)),   na.rm = TRUE),
-    sdr5_tot    = rowMeans(across(all_of(sdr_items)), na.rm = TRUE)
+    sdr5_tot    = scale_mean(dat_raw, sdr_items, 4)
   )
 
 # ---- 2. Reshape for plotting ------------------------------------------------
