@@ -1,7 +1,7 @@
 # Supplementary Materials
 
-**Czech Adaptation and Initial Validation of a Historical Perspective
-Taking Instrument: Ideological Fairness Evidence**
+**Cross-Cultural Validation and Ideological Fairness of a Historical
+Perspective Taking Instrument: Evidence from Czech Secondary Students**
 
 Juda Kaleta
 
@@ -166,21 +166,6 @@ The immutable OSF registration `zsngy` was registered on 27 November
 | Two-level class random-intercept models | Three-level and school-level specifications were added post-registration |
 | Grade level, gender, history grade, knowledge, and SDR-5 covariates | The complete registered covariate set was not used in all reported models |
 | One-tailed tests and Benjamini-Hochberg correction | Reported tests are two-tailed and do not implement the registered correction family |
-| Registered missing-data rule | The registered listwise-deletion/MICE decision rule was not implemented; the score-specific rules used for revision reporting are documented in Section 3.4 |
+| Registered missing-data rule | The registered listwise-deletion/MICE decision rule was not implemented; the score-specific rules used in the manuscript are documented in Section 3.4 |
 | HPT response scale 0-3; two ROA items; approximately ten knowledge items | Administered battery used 1-4 HPT responses, three ROA items, and six knowledge items |
 | CFA-focused validation, bifactor model, NS-only invariance, TOST, and alternative exclusions | Added after registration and treated as exploratory or descriptive |
-
-## Supplementary Method S1: Response-Process Follow-up Design
-
-A follow-up study should purposively sample students from low, middle,
-and high HPT-score ranges and include variation in ideology and school
-level. Students would complete the scenario while thinking aloud and
-then participate in retrospective item-by-item probing. Coding would
-distinguish comprehension of the scenario, use of supplied historical
-evidence, mobilization of prior knowledge, present-day moral judgment,
-attitude-congruent endorsement, and reconstruction of the actor's
-historical situation. Independent coders would classify whether each
-verbalized process matches the intended POP, ROA, or CONT level and
-identify response options reached through unintended pathways. This
-would test the response-process interpretation directly rather than
-inferring it from internal structure alone.

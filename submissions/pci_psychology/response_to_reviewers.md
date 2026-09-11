@@ -1,18 +1,18 @@
 # Response to the recommender and reviewers
 
-**Manuscript:** *Czech Adaptation and Initial Validation of a Historical
-Perspective Taking Instrument: Ideological Fairness Evidence*
+**Manuscript:** *Cross-Cultural Validation and Ideological Fairness of a
+Historical Perspective Taking Instrument: Evidence from Czech Secondary
+Students*
 
 Dear Recommender and Reviewers,
 
 Thank you for the careful and constructive reviews. The manuscript has been
 revised to sharpen its measurement focus, add the requested reporting, and
 bound its claims to the single scenario, item format, sample, and ideological
-range studied. We also conducted independent methodological, psychometric,
-editorial, and reference audits. Those audits identified additional issues in
-the earlier draft, including an incorrect design-effect calculation,
-inadmissible multi-group CFA baselines, and ambiguity in the DIF description.
-We corrected these issues rather than retaining the stronger conclusions.
+range studied. Additional checks identified an incorrect design-effect
+calculation, inadmissible multi-group CFA baselines, and ambiguity in the DIF
+description. We corrected these issues rather than retaining the stronger
+conclusions.
 
 The responses below use the identifiers in the revision ledger. Section,
 table, and figure references refer to the revised manuscript and supplement.
@@ -22,21 +22,21 @@ table, and figure references refer to the revised manuscript and supplement.
 | Location | Revised PDF page(s) |
 |---|---:|
 | Abstract | 1 |
-| Sections 1 and 2.1 | 3-7 |
+| Sections 1 and 2.1 | 2-8 |
 | Section 2.2 | 8-9 |
-| Section 2.3 | 9-10 |
+| Section 2.3 | 9-11 |
 | Section 2.5 | 12 |
 | Sections 3.1-3.3 | 13-17 |
-| Section 3.4 | 17-19 |
-| Sections 4.1-4.4 | 20-25 |
-| Sections 4.6-4.8 | 26-30 |
-| Sections 4.9-4.10 | 30-32 |
-| Sections 5.2-5.8 | 33-40 |
+| Section 3.4 | 17-20 |
+| Sections 4.1-4.4 | 20-24 |
+| Sections 4.6-4.8 | 25-29 |
+| Sections 4.9-4.10 | 29-32 |
+| Sections 5.2-5.8 | 32-39 |
 | References | 42-46 |
 | Tables S1-S2 | Supplement 1 |
 | Tables S3-S3b | Supplement 2-3 |
 | Tables S4-S4b | Supplement 3-4 |
-| Table S5 and Supplementary Method S1 | Supplement 4-5 |
+| Table S5 | Supplement 4-5 |
 
 ## Recommender
 
@@ -45,10 +45,9 @@ table, and figure references refer to the revised manuscript and supplement.
 **Response:** We agree. Section 5.6 now distinguishes nine item responses from
 nine independent samples of HPT content and limits interpretation to the
 Weimar voting scenario. It identifies scenario-specific knowledge and moral
-valence as plausible sources of score variance and proposes a multi-scenario
-blueprint crossing historical period, actor position, action type, moral
-valence, and knowledge demand. The abstract and conclusion carry the same
-boundary.
+salience as plausible sources of score variance and recommends testing
+multiple scenarios across periods, places, and political contexts. The
+abstract and conclusion carry the same boundary.
 
 ### REC-02: Discriminant-validity claims
 
@@ -166,9 +165,8 @@ and Figure 1 foreground the two principal relationships.
 
 **Response:** Section 2.1 now credits Huijgen and colleagues' Dutch
 topic-comparison work and their later combination of item ratings with
-think-alouds. The response-process proposal in Section 5.6 and Supplementary
-Method S1 is described as a replication and extension of that precedent, not
-as an entirely new method.
+think-alouds. Section 5.6 recommends extending that precedent rather than
+presenting response-process work as an entirely new method.
 
 ### R1-12: Gender-moderation claim
 
@@ -179,11 +177,10 @@ gender interaction or gender DIF analysis was conducted.
 
 ### R1-13: Qualitative response-process design
 
-**Response:** Section 5.6 and Supplementary Method S1 now specify sampling
-across the ideology distribution, concurrent or retrospective verbal
-protocols, and coding for contextual evidence, prior-knowledge use,
-present-day moral judgment, affective engagement, option matching, and
-attitude-congruent endorsement.
+**Response:** Section 5.6 now recommends think-aloud or cognitive-interview
+work that tests whether students use the intended historical reasoning rather
+than attitude-congruent or task-demand shortcuts. We kept this proposal brief
+because the present article does not report qualitative data.
 
 ### R1-14: Comparative studies
 
@@ -215,13 +212,13 @@ and Figure 1 displays continuous ideology-HPT and knowledge-HPT relationships
 with sample sizes and uncertainty. The Results distinguish these descriptive
 patterns from adjusted multilevel models.
 
-## Additional technical audit
+## Additional technical corrections
 
-### META-01: Independent technical review
+### META-01: Technical checks conducted during revision
 
-**Response:** Independent methodological and psychometric audits reproduced the
-new values and identified issues not raised in the initial reviews. We removed
-an incorrect design-effect argument that used classroom size with school ICCs;
+**Response:** Technical checks conducted during revision identified issues not
+raised in the reviews. We removed an incorrect design-effect argument that
+used classroom size with school ICCs;
 stated that unadjusted item and correlation analyses may understate
 uncertainty; corrected the DIF analysis from uniform/non-uniform to an omnibus
 joint parameter test; disclosed that raw POP responses entered the GRM; and

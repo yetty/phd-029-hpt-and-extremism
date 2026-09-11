@@ -7,7 +7,7 @@
   (desk-rejected 2026-03-20), IJT IJT260038 (desk-rejected
   2026-04-11)
 **Preregistration:** https://osf.io/yng37/
-**Last updated:** 2026-09-10
+**Last updated:** 2026-09-11
 
 ---
 
@@ -20,13 +20,17 @@
 - **01 Measurement checks:** Reliability (alpha, omega), CFA dimensionality, ICCs, floor/ceiling effects for all instruments.
 - **02 Descriptives and zero-order correlations:** Sample demographics, distributions, correlation matrix, school/class variation.
 - **03 Multilevel models (H1/H2):** Two-level random-intercept models (lme4/lmerTest). Neither ideology predictor (FR-LF, KSA) significant. Historical knowledge is the only consistent predictor.
-- **04 DIF and MG-CFA:** Differential item functioning (mirt, graded response model) and multi-group CFA scalar invariance (lavaan, WLSMV). No ideological measurement bias detected.
+- **04 DIF and MG-CFA:** Differential item functioning (mirt, graded response
+  model) and multi-group CFA (lavaan, WLSMV). No DIF was detected, but
+  inadmissible MG-CFA baselines prevent a scalar-invariance conclusion.
 - **05 Sensitivity analyses:** Alternative composites, exclusion rules, random-slope models, fixed-effects models, attenuation correction. Results stable across all specifications.
 - **06 Appendix tables and figures:** Publication-ready supplementary materials.
 - **07 Reproducibility report:** Session info, package versions, random-seed confirmation.
 
 ### Supplementary Analyses
-- TOST equivalence tests (SESOI = beta +/-0.20) confirm ideology effects are practically negligible. Mundlak within/between classroom ideology decomposition shows no contextual effects.
+- Exploratory TOST equivalence tests used a post hoc SESOI of beta +/-0.20.
+  Mundlak within/between classroom ideology decomposition found no detectable
+  contextual effects.
 
 ### Manuscript Drafting
 - Full manuscript drafted in `trse_outputs/manuscript.md` with pandoc build to DOCX using T&F template. Four manuscript figures produced (MG-CFA/DIF, score distributions, coefficient plot, marginal effects) in PDF and PNG.
@@ -144,15 +148,26 @@
   reference propagation/read status, targeted human psychometric review, and
   final rendered-package inspection.
 
+### Minimal-Scope Revision Rollback (2026-09-11)
+- Restored the submitted title and retained the submitted structure and wording
+  wherever a reviewer request or critical correction did not require a change.
+- Retained requested confidence intervals, reliability and participant
+  reporting, construct labels, the descriptive figure, verified literature and
+  curriculum context, and concise content-validity and response-process limits.
+- Removed the supplementary qualitative protocol and reduced unnecessary
+  methodological detail while preserving corrections to the scenario, DIF,
+  clustering, factor-structure, reliability, and MG-CFA interpretations.
+
 ---
 
 ## Current Work
 
-**Phase:** Final quality gates for the PCI Psychology revision package.
+**Phase:** Rebuild and final quality gates for the minimal PCI revision.
 
 - [x] Disclose omitted registered analyses and post-registration additions
 - [x] Resolve substantive ledger items and rerun approved analyses
-- [x] Rebuild and independently audit the revised manuscript
+- [x] Reduce the broad draft to a request-mapped minor revision
+- [ ] Rebuild and inspect the revised manuscript, supplement, and redline
 - [ ] Complete reference propagation and targeted human review
 - [ ] Submit the point-by-point response and revised preprint
 

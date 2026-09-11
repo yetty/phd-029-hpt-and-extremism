@@ -3,7 +3,7 @@
 **Decision:** Revise for further consideration
 **Recommender:** Chris Hopwood
 **Reviewers:** Anonymous Reviewer 1 and Anonymous Reviewer 2
-**Ledger prepared:** 2026-09-10
+**Ledger prepared:** 2026-09-10; minimal-scope review 2026-09-11
 **Validation baseline:** Current working copy of
 `../manuscript.tex`, inspected on 2026-09-10
 
@@ -24,19 +24,22 @@ passes in the rebuilt manuscript.
   cannot be established from current project files. The revision must state
   that transparently rather than inventing evidence.
 
-## Current implementation status (2026-09-10)
+## Current implementation status (2026-09-11)
 
-The rebuilt manuscript and `response_to_reviewers.md` implement all 22
-recommender and reviewer items. The item-level acceptance boxes below remain
-the detailed final inspection checklist rather than an implementation counter.
+The manuscript and `response_to_reviewers.md` address all 22 recommender and
+reviewer items. On 11 September, the author directed that the revision remain
+minor: the submitted title and well-functioning submitted text were restored,
+while only request-mapped changes and corrections needed for factual or
+statistical accuracy were retained. The item-level acceptance boxes below
+remain the final inspection checklist rather than an implementation counter.
 
 | Status | Items |
 |---|---|
 | Implemented and represented in response draft | REC-01, REC-02, REC-03, REC-04, REC-05; R1-01 through R1-14; R2-01 through R2-03 |
-| Partly complete | META-01: independent agent audits and reproducibility checks completed; targeted human specialist review remains pending |
+| Partly complete | META-01: technical and reproducibility checks completed; targeted human specialist review remains pending |
 
-Additional technical corrections from the independent audits are recorded in
-the response under META-01. The current manuscript removes the incorrect
+Additional technical corrections are recorded in the response under META-01.
+The current manuscript removes the incorrect
 design-effect defense, treats the all-item GRM as a post-registration
 unidimensional sensitivity model, describes its item tests as omnibus, and
 does not claim scalar invariance from the inadmissible composite-group MG-CFA
@@ -58,11 +61,10 @@ single country and a single scenario in two sentences. It does not discuss
 content representation, domain sampling, or the boundary between evidence for
 this task and evidence for HPT more broadly.
 
-**User decision (2026-09-10):** **Accept stronger revision.** Add a dedicated
-content-based validity limitation and bound claims consistently across the
-abstract, discussion, recommendations, and conclusion. Include a future
-multi-scenario content blueprint. No new analysis or data collection is
-required.
+**Final scope decision (2026-09-11):** **Apply the smallest sufficient
+revision.** Keep a dedicated limitation distinguishing nine ratings from nine
+content samples and recommend multiple scenarios across periods, places, and
+political contexts. Do not add a detailed blueprint or new modelling proposal.
 
 **Recommended refinement:** Give content validity its own limitation. State
 that repeated ratings of one vignette increase item count without broadening
@@ -654,14 +656,11 @@ identify the absence of cognitive interviews, and Sections 5.5-5.6 recommend
 format comparisons and response-process work. The manuscript does not specify
 how observations would discriminate the competing pathways.
 
-**User decision (2026-09-10):** **Add a concise operational design.** In one
-future-study paragraph, specify sampling across the ideology range, response
-elicitation on the same HPT items, coding categories, and observable evidence
-that would distinguish contextual reconstruction, attitude-congruent
-endorsement, reduced integrative complexity, task-demand shortcuts, and moral
-or affective evaluation. Align terminology and novelty with the verified
-Huijgen precedent and do not imply that the present study supplies this
-response-process evidence.
+**Final scope decision (2026-09-11):** **Keep a concise recommendation.** Name
+think-aloud or cognitive-interview methods and the processes they should test,
+but do not add a supplementary qualitative protocol to a quantitative minor
+revision. Credit the verified Huijgen precedent and do not imply that the
+present study supplies response-process evidence.
 
 **Recommended refinement:** Turn the generic future-work statement into a
 design: sample students across the ideology range, collect concurrent or

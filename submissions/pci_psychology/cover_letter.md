@@ -1,9 +1,9 @@
 Dear Managing Board of PCI Psychology,
 
-I submit the revised preprint "Czech Adaptation and Initial Validation of a
-Historical Perspective Taking Instrument: Ideological Fairness Evidence" for
-evaluation under the Quantitative Psychology and Educational Psychology
-thematic fields.
+I submit the revised preprint "Cross-Cultural Validation and Ideological
+Fairness of a Historical Perspective Taking Instrument: Evidence from Czech
+Secondary Students" for evaluation under the Quantitative Psychology and
+Educational Psychology thematic fields.
 
 The study examines whether a politically charged historical scenario
 introduces construct-irrelevant variance when students' ideological attitudes
