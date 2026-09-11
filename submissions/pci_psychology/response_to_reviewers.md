@@ -60,8 +60,9 @@ differential prediction of external criteria.
 ### REC-03: Construct names in results
 
 **Response:** Tables 2, 4, and 7 and the Results narrative now use readable
-construct names. Variable abbreviations are retained only where they are
-needed to connect the text to the archived scripts.
+construct names. Code-like composite labels have also been replaced by
+descriptions throughout the manuscript. Scale abbreviations are retained only
+where they identify named instruments or connect the text to archived scripts.
 
 ### REC-04: Confidence intervals
 
@@ -192,10 +193,10 @@ by direct use of the instrument were removed.
 
 ### R2-01: Research questions and predictions
 
-**Response:** Section 2.5 now presents two explicit measurement questions.
-The following paragraph summarizes all six registered hypotheses, states that
-invariance was not preregistered, and identifies post-registration additions
-and omitted registered tests. Table S5 provides the full mapping.
+**Response:** Section 2.5 now presents two explicit measurement questions. A
+concise disclosure identifies post-registration additions and omitted
+registered tests without reproducing the full preregistration. Table S5
+provides the full mapping of the six registered hypotheses.
 
 ### R2-02: Participant and school descriptives
 

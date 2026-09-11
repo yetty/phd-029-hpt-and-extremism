@@ -8,9 +8,9 @@
 PCI Psychology invited a revision after two reviews and the recommender's
 assessment. The revision addresses all 22 substantive ledger items while
 preserving the submitted title and structure. It adds the requested reporting,
-discloses omitted registered H1-H6 analyses, and corrects the DIF and
-inadmissible MG-CFA interpretations. An over-developed response-process
-protocol and unrelated expansion were removed before the final rebuild.
+discloses omitted registered analyses, and corrects the DIF and inadmissible
+MG-CFA interpretations. Reader-facing analysis codes were replaced with
+construct descriptions, and the rebuilt manuscript and redline were inspected.
 
 ## Manuscripts
 
@@ -22,7 +22,7 @@ protocol and unrelated expansion were removed before the final rebuild.
 
 - [ ] Complete final reference/read-status checks and source propagation
 - [ ] Obtain targeted human psychometric review of the qualified model claims
-- [ ] Rebuild and inspect the preprint, supplement, redline, and response letter
+- [x] Rebuild and inspect the preprint and redline
 - [ ] Upload the revised package and point-by-point response to PCI Psychology
 
 ## Revision files
