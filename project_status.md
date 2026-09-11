@@ -158,17 +158,24 @@
   methodological detail while preserving corrections to the scenario, DIF,
   clustering, factor-structure, reliability, and MG-CFA interpretations.
 
+### Final Revision Audit (2026-09-11)
+- A nine-perspective requirements audit found the package not yet ready for
+  resubmission. The reported MG-CFA inadmissibility did not reproduce, and the
+  focal regression differed across the manuscript, current script, and stated
+  missing-data rules. Several bounded reviewer-response corrections remain.
+
 ---
 
 ## Current Work
 
-**Phase:** Rebuild and final quality gates for the minimal PCI revision.
+**Phase:** Resolve final audit findings before PCI resubmission.
 
 - [x] Disclose omitted registered analyses and post-registration additions
 - [x] Resolve substantive ledger items and rerun approved analyses
 - [x] Reduce the broad draft to a request-mapped minor revision
-- [ ] Rebuild and inspect the revised manuscript, supplement, and redline
-- [ ] Complete reference propagation and targeted human review
+- [ ] Resolve MG-CFA and score-construction reproducibility discrepancies
+- [ ] Correct remaining partial responses and rebuild the package
+- [ ] Complete targeted human psychometric review
 - [ ] Submit the point-by-point response and revised preprint
 
 ---

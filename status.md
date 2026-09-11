@@ -5,12 +5,11 @@
 
 ## Current State
 
-PCI Psychology invited a revision after two reviews and the recommender's
-assessment. The revision addresses all 22 substantive ledger items while
-preserving the submitted title and structure. It adds the requested reporting,
-discloses omitted registered analyses, and corrects the DIF and inadmissible
-MG-CFA interpretations. Reader-facing analysis codes were replaced with
-construct descriptions, and the rebuilt manuscript and redline were inspected.
+The revised package addresses most recommender and reviewer requests while
+preserving the submitted title and structure. A final independent audit found
+that the reported MG-CFA inadmissibility does not reproduce and that the focal
+regression does not match the manuscript's missing-data rules. Several bounded
+response-letter and reviewer-compliance corrections also remain.
 
 ## Manuscripts
 
@@ -20,13 +19,12 @@ construct descriptions, and the rebuilt manuscript and redline were inspected.
 
 ## Next Steps
 
-- [ ] Complete final reference/read-status checks and source propagation
-- [ ] Obtain targeted human psychometric review of the qualified model claims
-- [x] Rebuild and inspect the preprint and redline
+- [ ] Resolve MG-CFA and scoring-rule reproducibility discrepancies
+- [ ] Correct remaining partial reviewer responses and response-letter locators
+- [ ] Rebuild and independently audit the final submission package
+- [ ] Obtain targeted human psychometric review of the final model claims
 - [ ] Upload the revised package and point-by-point response to PCI Psychology
 
 ## Revision files
-
 - Manuscript: `submissions/pci_psychology/manuscript.tex`
-- Feedback and ledger: `submissions/pci_psychology/reviews/`
-- Response: `submissions/pci_psychology/response_to_reviewers.md`
+- Audit: `docs/reviews/2026-09-11-pci-revision-requirements-review.md`
