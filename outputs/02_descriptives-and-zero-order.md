@@ -1,8 +1,8 @@
 # Purpose
 
-This file establishes transparent baseline patterns---distributions,
+This file establishes transparent baseline patterns--distributions,
 scale descriptives, zero-order correlations, and between-group
-variation---before any modeling. It follows the HPT framework
+variation--before any modeling. It follows the HPT framework
 (POP/ROA/CONT) and scoring conventions used in prior work, but with an
 explicit **presentism reversal** so that **higher HPT scores reflect
 better contextualization/agent-sensitive reasoning**. FR-LF and KSA
@@ -22,7 +22,7 @@ library(knitr); library(kableExtra); library(ggplot2); library(scales)
 library(psych)           # corr.test
 # Multilevel & ICC
 library(lme4)            # lmer
-suppressPackageStartupMessages(library(performance)) # icc()
+source("submissions/pci_psychology/scoring_helpers.R")
 
 theme_set(theme_minimal(base_size = 11))
 ```
@@ -40,14 +40,8 @@ stopifnot(all(POP_rev_items %in% names(all_data)))
 
 all_data <- all_data %>%
   mutate(
-    across(all_of(POP_rev_items), ~ 5 - suppressWarnings(as.numeric(.)), .names = "{.col}_rev"),
-    HPT_POP_raw = rowMeans(across(all_of(POP_rev_items)), na.rm = TRUE),             # presentism, higher = worse
-    HPT_POP_rev = rowMeans(across(all_of(paste0(POP_rev_items, "_rev"))), na.rm = TRUE),  # higher = better
-    HPT_CONT    = rowMeans(across(CONT1:CONT3), na.rm = TRUE),
-    HPT_ROA     = rowMeans(across(ROA1:ROA3),   na.rm = TRUE),
-    # Canonical composites (report BOTH; use CTX6 as primary)
-    HPT_CTX6 = rowMeans(cbind(HPT_POP_rev, HPT_CONT), na.rm = TRUE),                 # no ROA (stable default)
-    HPT_TOT9 = rowMeans(cbind(HPT_POP_rev, HPT_CONT, HPT_ROA), na.rm = TRUE)         # includes ROA
+    across(all_of(POP_rev_items), ~ 5 - suppressWarnings(as.numeric(.)),
+           .names = "{.col}_rev")
   )
 
 # Ensure factors as in codebook and build unique class_id
@@ -66,15 +60,6 @@ all_data <- all_data %>%
 ## 2) Scoring: constructs & subscores
 
 ``` r
-# Convenience scorer: mean across items with minimum answered requirement
-scale_mean <- function(df, items, min_n = ceiling(length(items)/2), na.rm = TRUE) {
-  x <- df[, items]
-  ok <- rowSums(!is.na(x)) >= min_n
-  out <- rowMeans(x, na.rm = na.rm)
-  out[!ok] <- NA_real_
-  out
-}
-
 # HPT (1-4): subscores and totals (explicitly using REVERSED POP)
 hpt_pop_items_rev  <- paste0("POP", 1:3, "_rev")   # reversed presentism
 hpt_roa_items      <- c("ROA1","ROA2","ROA3")
@@ -96,26 +81,27 @@ sdr_items <- paste0("SDR", 1:5)
 # Build scores (HPT_TOTAL := CTX6 as primary; also keep HPT_TOT9 for reference)
 dat <- all_data %>%
   mutate(
-    HPT_POP    = scale_mean(., hpt_pop_items_rev,  min_n = 2),        # already reversed
-    HPT_ROA    = scale_mean(., hpt_roa_items,      min_n = 2),
-    HPT_CONT   = scale_mean(., hpt_cont_items,     min_n = 2),
-    HPT_TOTAL  = scale_mean(., c(hpt_pop_items_rev, hpt_roa_items, hpt_cont_items), min_n = 5),
-    # Also expose explicit composites computed above
-    HPT_CTX6   = HPT_CTX6,
-    HPT_TOT9   = HPT_TOT9,
+    HPT_POP_raw = scale_mean(., POP_rev_items, min_answered = 2),
+    HPT_POP    = scale_mean(., hpt_pop_items_rev, min_answered = 2),
+    HPT_ROA    = scale_mean(., hpt_roa_items, min_answered = 2),
+    HPT_CONT   = scale_mean(., hpt_cont_items, min_answered = 2),
+    HPT_CTX6   = rowMeans(cbind(HPT_POP, HPT_CONT), na.rm = FALSE),
+    HPT_TOT9   = rowMeans(cbind(HPT_POP, HPT_CONT, HPT_ROA),
+                          na.rm = FALSE),
+    HPT_TOTAL  = HPT_TOT9,
     KN_TOTAL   = rowSums(dplyr::select(., all_of(kn_items)), na.rm = TRUE),
-    FRLF_RD    = scale_mean(., frlf_rd, min_n = 2),
-    FRLF_NS    = scale_mean(., frlf_ns, min_n = 2),
-    FRLF_MINI  = scale_mean(., c(frlf_rd, frlf_ns), min_n = 4),
-    KSA_TOTAL  = scale_mean(., ksa_items, min_n = 7),
-    SDR_TOTAL  = scale_mean(., sdr_items, min_n = 4)
+    FRLF_RD    = scale_mean(., frlf_rd, min_answered = 2),
+    FRLF_NS    = scale_mean(., frlf_ns, min_answered = 2),
+    FRLF_MINI  = scale_mean(., c(frlf_rd, frlf_ns), min_answered = 4),
+    KSA_TOTAL  = scale_mean(., ksa_items, min_answered = 7),
+    SDR_TOTAL  = scale_mean(., sdr_items, min_answered = 4)
   )
 ```
 
 > **How to read:** • **HPT (HPT_TOTAL)** uses **reversed POP** by
 > construction; higher = better contextualization. • **HPT_CTX6**
 > (POP_rev + CONT) is our **primary descriptive score**; **HPT_TOT9**
-> (adds ROA) is reported for reference. • **Knowledge (KN_TOTAL)**: 0--6
+> (adds ROA) is reported for reference. • **Knowledge (KN_TOTAL)**: 0-6
 > correct. **FR-LF/KSA/SDR** follow codebook.
 
 ## 3) Sample overview
@@ -871,11 +857,11 @@ ggplot(long_scales, aes(x = value)) +
   labs(title = "Distributions of scales", x = "Score", y = "Count")
 ```
 
-`<img src="/home/yetty/Projects/phd-029-hpt-and-extremism/outputs/02_descriptives-and-zero-order_files/figure-markdown/hists-1.png" width="95%" style="display: block; margin: auto;" />`{=html}
+`<img src="/home/yetty/PhD/projects/phd-029-hpt-and-extremism/outputs/02_descriptives-and-zero-order_files/figure-markdown/hists-1.png" alt="" width="95%" style="display: block; margin: auto;" />`{=html}
 
 > **Interpretation:** Watch for spikes at bounds (e.g., KN at 0 or max),
-> floor/ceiling on FR-LF/KSA, and skew in HPT subscores---useful cues
-> for later transformation or robust modeling.
+> floor/ceiling on FR-LF/KSA, and skew in HPT subscores--useful cues for
+> later transformation or robust modeling.
 
 ## 6) Zero-order correlations (student level)
 
@@ -2110,7 +2096,7 @@ SDR_TOTAL
 > **Interpretation:** Correlations locate broad relationships your
 > hypotheses rely on. For example, if **FRLF_MINI** correlates
 > positively with **HPT_CTX6/HPT_TOT9**, this suggests possible
-> ideological alignment inflating contextualization---an effect to test
+> ideological alignment inflating contextualization--an effect to test
 > with controls in models (knowledge, SDR) and with item-level checks
 > later.
 
@@ -2121,66 +2107,59 @@ random-intercept models. ICC ≈ proportion of total variance that is
 between clusters.
 
 ``` r
-# --- Robust ICC helpers ---
-get_icc_value <- function(ic) {
-  if (is.null(ic)) return(NA_real_)
-  if (is.data.frame(ic)) {
-    if ("ICC_adjusted" %in% names(ic)) return(suppressWarnings(as.numeric(ic$ICC_adjusted[1])))
-    if ("ICC" %in% names(ic))          return(suppressWarnings(as.numeric(ic$ICC[1])))
-    num_cols <- which(vapply(ic, is.numeric, logical(1)))
-    if (length(num_cols)) return(as.numeric(ic[[ num_cols[1] ]][1]))
-    return(NA_real_)
-  }
-  if (is.list(ic)) {
-    if (!is.null(ic$ICC_adjusted)) return(suppressWarnings(as.numeric(ic$ICC_adjusted)))
-    if (!is.null(ic$ICC))          return(suppressWarnings(as.numeric(ic$ICC)))
-    nums <- unlist(ic[ vapply(ic, is.numeric, logical(1)) ], use.names = FALSE)
-    if (length(nums)) return(as.numeric(nums[1]))
-    return(NA_real_)
-  }
-  if (is.atomic(ic) && is.numeric(ic)) return(as.numeric(ic[1]))
-  NA_real_
-}
-
 fit_icc <- function(v) {
   if (!v %in% names(dat)) return(NULL)
-  f_cls <- as.formula(paste0(v, " ~ 1 + (1|school_id) + (1|class_id)"))
-  f_sch <- as.formula(paste0(v, " ~ 1 + (1|school_id)"))
-  list(
-    class_in_school = tryCatch(lme4::lmer(f_cls, data = dat, REML = TRUE, na.action = na.omit),
-                               error = function(e) NULL),
-    school_only     = tryCatch(lme4::lmer(f_sch, data = dat, REML = TRUE, na.action = na.omit),
-                               error = function(e) NULL)
+  formula <- as.formula(paste0(
+    v, " ~ 1 + (1 | school_id) + (1 | school_id:class_label)"
+  ))
+  tryCatch(
+    lme4::lmer(formula, data = dat, REML = TRUE, na.action = na.omit),
+    error = function(e) NULL
   )
 }
 
 extract_icc <- function(fm) {
-  if (is.null(fm)) return(list(ICC = NA_real_, N = NA_integer_, clusters = NA_integer_))
-  ic <- tryCatch(performance::icc(fm), error = function(e) NULL)
-  icc_val <- get_icc_value(ic)
-  N <- tryCatch(nobs(fm), error = function(e) NA_integer_)
-  clusters <- tryCatch({
-    fl <- lme4::getME(fm, "flist")
-    length(levels(fl[[1]]))
-  }, error = function(e) NA_integer_)
-  list(ICC = icc_val, N = N, clusters = clusters)
+  empty <- list(
+    ICC_school = NA_real_, ICC_class_within_school = NA_real_,
+    ICC_total_cluster = NA_real_, N = NA_integer_, n_schools = NA_integer_,
+    n_classes = NA_integer_
+  )
+  if (is.null(fm)) return(empty)
+
+  variances <- as.data.frame(lme4::VarCorr(fm))
+  variance_for <- function(group) {
+    value <- variances$vcov[variances$grp == group]
+    if (length(value) == 1L) value else NA_real_
+  }
+  school_variance <- variance_for("school_id")
+  class_variance <- variance_for("school_id:class_label")
+  residual_variance <- variance_for("Residual")
+  total_variance <- school_variance + class_variance + residual_variance
+  flist <- lme4::getME(fm, "flist")
+
+  list(
+    ICC_school = school_variance / total_variance,
+    ICC_class_within_school = class_variance / total_variance,
+    ICC_total_cluster = (school_variance + class_variance) / total_variance,
+    N = as.integer(stats::nobs(fm)),
+    n_schools = nlevels(flist$school_id),
+    n_classes = nlevels(flist[["school_id:class_label"]])
+  )
 }
 
 targets <- c("HPT_CTX6","HPT_TOT9","HPT_POP","HPT_ROA","HPT_CONT",
              "FRLF_MINI","KSA_TOTAL","KN_TOTAL","SDR_TOTAL")
 
 icc_rows <- purrr::map(targets, function(sc) {
-  mods <- fit_icc(sc)
-  cls <- extract_icc(mods$class_in_school)
-  sch <- extract_icc(mods$school_only)
+  components <- extract_icc(fit_icc(sc))
   data.frame(
     scale = sc,
-    ICC_class_in_school = round(cls$ICC, 3),
-    N_class_in_school   = as.integer(cls$N),
-    clusters_classes    = as.integer(cls$clusters),
-    ICC_school_only     = round(sch$ICC, 3),
-    N_school_only       = as.integer(sch$N),
-    clusters_schools    = as.integer(sch$clusters)
+    ICC_school = round(components$ICC_school, 3),
+    ICC_class_within_school = round(components$ICC_class_within_school, 3),
+    ICC_total_cluster = round(components$ICC_total_cluster, 3),
+    N = components$N,
+    n_schools = components$n_schools,
+    n_classes = components$n_classes
   )
 })
 icc_res <- dplyr::bind_rows(icc_rows)
@@ -2188,7 +2167,7 @@ icc_res <- dplyr::bind_rows(icc_rows)
 
 ``` r
 kable(icc_res, booktabs = TRUE,
-      caption = "Intraclass correlations (ICCs): class (nested in school) and school.") %>%
+      caption = "Intraclass correlations from nested school/class models.") %>%
   kable_styling(latex_options = c("striped","hold_position"), full_width = FALSE)
 ```
 
@@ -2198,7 +2177,7 @@ kable(icc_res, booktabs = TRUE,
 ```{=html}
 <caption>
 ```
-Intraclass correlations (ICCs): class (nested in school) and school.
+Intraclass correlations from nested school/class models.
 ```{=html}
 </caption>
 ```
@@ -2218,42 +2197,42 @@ scale
 ```{=html}
 <th style="text-align:right;">
 ```
-ICC_class_in_school
+ICC_school
 ```{=html}
 </th>
 ```
 ```{=html}
 <th style="text-align:right;">
 ```
-N_class_in_school
+ICC_class_within_school
 ```{=html}
 </th>
 ```
 ```{=html}
 <th style="text-align:right;">
 ```
-clusters_classes
+ICC_total_cluster
 ```{=html}
 </th>
 ```
 ```{=html}
 <th style="text-align:right;">
 ```
-ICC_school_only
+N
 ```{=html}
 </th>
 ```
 ```{=html}
 <th style="text-align:right;">
 ```
-N_school_only
+n_schools
 ```{=html}
 </th>
 ```
 ```{=html}
 <th style="text-align:right;">
 ```
-clusters_schools
+n_classes
 ```{=html}
 </th>
 ```
@@ -2279,21 +2258,14 @@ HPT_CTX6
 ```{=html}
 <td style="text-align:right;">
 ```
-NA
+0.041
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-287
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-20
+0.000
 ```{=html}
 </td>
 ```
@@ -2319,6 +2291,13 @@ NA
 </td>
 ```
 ```{=html}
+<td style="text-align:right;">
+```
+20
+```{=html}
+</td>
+```
+```{=html}
 </tr>
 ```
 ```{=html}
@@ -2334,21 +2313,14 @@ HPT_TOT9
 ```{=html}
 <td style="text-align:right;">
 ```
-NA
+0.085
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-287
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-20
+0.000
 ```{=html}
 </td>
 ```
@@ -2374,6 +2346,13 @@ NA
 </td>
 ```
 ```{=html}
+<td style="text-align:right;">
+```
+20
+```{=html}
+</td>
+```
+```{=html}
 </tr>
 ```
 ```{=html}
@@ -2389,21 +2368,14 @@ HPT_POP
 ```{=html}
 <td style="text-align:right;">
 ```
-NA
+0.025
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-287
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-20
+0.000
 ```{=html}
 </td>
 ```
@@ -2429,6 +2401,13 @@ NA
 </td>
 ```
 ```{=html}
+<td style="text-align:right;">
+```
+20
+```{=html}
+</td>
+```
+```{=html}
 </tr>
 ```
 ```{=html}
@@ -2438,6 +2417,20 @@ NA
 <td style="text-align:left;">
 ```
 HPT_ROA
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.092
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.011
 ```{=html}
 </td>
 ```
@@ -2458,28 +2451,14 @@ HPT_ROA
 ```{=html}
 <td style="text-align:right;">
 ```
-20
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.102
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-287
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
 10
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+20
 ```{=html}
 </td>
 ```
@@ -2493,6 +2472,20 @@ HPT_ROA
 <td style="text-align:left;">
 ```
 HPT_CONT
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.026
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.007
 ```{=html}
 </td>
 ```
@@ -2513,28 +2506,14 @@ HPT_CONT
 ```{=html}
 <td style="text-align:right;">
 ```
-20
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.030
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-287
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
 10
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+20
 ```{=html}
 </td>
 ```
@@ -2548,6 +2527,20 @@ HPT_CONT
 <td style="text-align:left;">
 ```
 FRLF_MINI
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.055
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.015
 ```{=html}
 </td>
 ```
@@ -2568,28 +2561,14 @@ FRLF_MINI
 ```{=html}
 <td style="text-align:right;">
 ```
-20
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.062
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-284
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
 10
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+20
 ```{=html}
 </td>
 ```
@@ -2603,6 +2582,20 @@ FRLF_MINI
 <td style="text-align:left;">
 ```
 KSA_TOTAL
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.057
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+0.042
 ```{=html}
 </td>
 ```
@@ -2623,28 +2616,14 @@ KSA_TOTAL
 ```{=html}
 <td style="text-align:right;">
 ```
-20
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-0.076
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-283
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
 10
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+20
 ```{=html}
 </td>
 ```
@@ -2664,21 +2643,14 @@ KN_TOTAL
 ```{=html}
 <td style="text-align:right;">
 ```
-NA
+0.053
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-293
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-20
+0.000
 ```{=html}
 </td>
 ```
@@ -2704,6 +2676,13 @@ NA
 </td>
 ```
 ```{=html}
+<td style="text-align:right;">
+```
+20
+```{=html}
+</td>
+```
+```{=html}
 </tr>
 ```
 ```{=html}
@@ -2719,28 +2698,21 @@ SDR_TOTAL
 ```{=html}
 <td style="text-align:right;">
 ```
-NA
+0.000
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-283
+0.000
 ```{=html}
 </td>
 ```
 ```{=html}
 <td style="text-align:right;">
 ```
-20
-```{=html}
-</td>
-```
-```{=html}
-<td style="text-align:right;">
-```
-NA
+0.000
 ```{=html}
 </td>
 ```
@@ -2755,6 +2727,13 @@ NA
 <td style="text-align:right;">
 ```
 10
+```{=html}
+</td>
+```
+```{=html}
+<td style="text-align:right;">
+```
+20
 ```{=html}
 </td>
 ```
@@ -2794,7 +2773,7 @@ p1 <- dat %>%
 p1
 ```
 
-`<img src="/home/yetty/Projects/phd-029-hpt-and-extremism/outputs/02_descriptives-and-zero-order_files/figure-markdown/group-plots-1.png" width="95%" style="display: block; margin: auto;" />`{=html}
+`<img src="/home/yetty/PhD/projects/phd-029-hpt-and-extremism/outputs/02_descriptives-and-zero-order_files/figure-markdown/group-plots-1.png" alt="" width="95%" style="display: block; margin: auto;" />`{=html}
 
 > **Interpretation:** Visual check for unusually high/low classes can
 > inform later sensitivity checks (e.g., re-running models without
@@ -2806,57 +2785,55 @@ p1
 sessionInfo()
 ```
 
-    ## R version 4.4.2 (2024-10-31)
+    ## R version 4.6.1 (2026-06-24)
     ## Platform: x86_64-pc-linux-gnu
-    ## Running under: Ubuntu 24.04.3 LTS
-    ## 
+    ## Running under: Ubuntu 24.04.5 LTS
+    ##
     ## Matrix products: default
-    ## BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.12.0 
-    ## LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.12.0
-    ## 
+    ## BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.12.0
+    ## LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.12.0  LAPACK version 3.12.0
+    ##
     ## locale:
-    ##  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
-    ##  [3] LC_TIME=cs_CZ.UTF-8        LC_COLLATE=en_US.UTF-8    
-    ##  [5] LC_MONETARY=cs_CZ.UTF-8    LC_MESSAGES=en_US.UTF-8   
-    ##  [7] LC_PAPER=cs_CZ.UTF-8       LC_NAME=C                 
-    ##  [9] LC_ADDRESS=C               LC_TELEPHONE=C            
-    ## [11] LC_MEASUREMENT=cs_CZ.UTF-8 LC_IDENTIFICATION=C       
-    ## 
+    ##  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C
+    ##  [3] LC_TIME=cs_CZ.UTF-8        LC_COLLATE=en_US.UTF-8
+    ##  [5] LC_MONETARY=cs_CZ.UTF-8    LC_MESSAGES=en_US.UTF-8
+    ##  [7] LC_PAPER=cs_CZ.UTF-8       LC_NAME=C
+    ##  [9] LC_ADDRESS=C               LC_TELEPHONE=C
+    ## [11] LC_MEASUREMENT=cs_CZ.UTF-8 LC_IDENTIFICATION=C
+    ##
     ## time zone: Europe/Prague
     ## tzcode source: system (glibc)
-    ## 
+    ##
     ## attached base packages:
-    ## [1] stats     graphics  grDevices utils     datasets  methods   base     
-    ## 
+    ## [1] stats     graphics  grDevices utils     datasets  methods   base
+    ##
     ## other attached packages:
-    ##  [1] performance_0.15.1 lme4_1.1-38        Matrix_1.7-1       psych_2.4.12      
-    ##  [5] scales_1.4.0       ggplot2_4.0.1      kableExtra_1.4.0   knitr_1.50        
-    ##  [9] readxl_1.4.3       purrr_1.1.0        tidyr_1.3.1        stringr_1.5.1     
-    ## [13] dplyr_1.1.4       
-    ## 
+    ##  [1] lme4_2.0-6       Matrix_1.7-6     psych_2.6.5      scales_1.4.0
+    ##  [5] ggplot2_4.0.3    kableExtra_1.4.1 knitr_1.51       readxl_1.5.0.1
+    ##  [9] purrr_1.2.2      tidyr_1.3.2      stringr_1.6.0    dplyr_1.2.1
+    ##
     ## loaded via a namespace (and not attached):
-    ##  [1] generics_0.1.3     xml2_1.3.6         stringi_1.8.4      lattice_0.22-5    
-    ##  [5] digest_0.6.37      magrittr_2.0.3     evaluate_1.0.5     grid_4.4.2        
-    ##  [9] RColorBrewer_1.1-3 fastmap_1.2.0      cellranger_1.1.0   tinytex_0.54      
-    ## [13] viridisLite_0.4.2  textshaping_0.4.1  reformulas_0.4.1   Rdpack_2.6.4      
-    ## [17] mnormt_2.1.1       cli_3.6.5          rlang_1.1.6        rbibutils_2.3     
-    ## [21] splines_4.4.2      withr_3.0.2        yaml_2.3.10        tools_4.4.2       
-    ## [25] parallel_4.4.2     nloptr_2.2.1       minqa_1.2.8        boot_1.3-31       
-    ## [29] vctrs_0.6.5        R6_2.6.1           lifecycle_1.0.4    MASS_7.3-61       
-    ## [33] insight_1.4.2      pkgconfig_2.0.3    pillar_1.10.0      gtable_0.3.6      
-    ## [37] Rcpp_1.0.13-1      glue_1.8.0         systemfonts_1.3.1  xfun_0.54         
-    ## [41] tibble_3.2.1       tidyselect_1.2.1   rstudioapi_0.17.1  farver_2.1.2      
-    ## [45] htmltools_0.5.8.1  nlme_3.1-166       labeling_0.4.3     rmarkdown_2.29    
-    ## [49] svglite_2.2.2      compiler_4.4.2     S7_0.2.1
+    ##  [1] generics_0.1.4     xml2_1.6.0         stringi_1.8.7      lattice_0.23-1
+    ##  [5] digest_0.6.39      magrittr_2.0.5     evaluate_1.0.5     grid_4.6.1
+    ##  [9] RColorBrewer_1.1-3 fastmap_1.2.0      cellranger_1.1.0   tinytex_0.61
+    ## [13] viridisLite_0.4.3  textshaping_1.0.5  reformulas_0.4.4   Rdpack_2.6.6
+    ## [17] mnormt_2.1.2       cli_3.6.6          rlang_1.3.0        rbibutils_2.4.1
+    ## [21] splines_4.6.1      withr_3.0.3        yaml_2.3.12        otel_0.2.0
+    ## [25] tools_4.6.1        parallel_4.6.1     nloptr_2.2.1       minqa_1.2.8
+    ## [29] boot_1.3-32        vctrs_0.7.3        R6_2.6.1           lifecycle_1.0.5
+    ## [33] MASS_7.3-66        pkgconfig_2.0.3    pillar_1.11.1      gtable_0.3.6
+    ## [37] Rcpp_1.1.2         glue_1.8.1         systemfonts_1.3.2  xfun_0.60
+    ## [41] tibble_3.3.1       tidyselect_1.2.1   rstudioapi_0.19.0  farver_2.1.2
+    ## [45] htmltools_0.5.9    nlme_3.1-171       labeling_0.4.3     rmarkdown_2.32
+    ## [49] svglite_2.2.2      compiler_4.6.1     S7_0.2.2
 
 ------------------------------------------------------------------------
 
 ### Notes & interpretation pointers
 
 -   **HPT scales (1-4):** Higher indicates better
-    contextualization/agent-sensitive reasoning---**after POP
-    reversal**; we report CTX6 (primary) and TOT9 (with ROA)
-    side-by-side.
+    contextualization/agent-sensitive reasoning--**after POP reversal**;
+    we report CTX6 (primary) and TOT9 (with ROA) side-by-side.
 -   **FR-LF mini (1-5):** Short right-wing authoritarian/Nazi
     relativization composite; higher = stronger endorsement. Use
     primarily as a predictor/covariate and for DIF checks later.

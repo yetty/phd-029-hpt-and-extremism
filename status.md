@@ -7,27 +7,22 @@
 
 The final reporting correction restores the verified post-registration bifactor
 result while preserving the submitted title, ethics text, and main conclusion.
-The repository-neutral replication package now contains the supplement,
-adaptation/deviation record, refreshed README, and documentation reports.
-All OSF analytic, documentation, and revision outputs have been refreshed.
-The regression suite passes. The packaged DIF report now uses `mirt` 1.47 joint
-omnibus item tests with familywise alpha = .05, and its constrained-GRM Table S1
-export matches the supplement. Root manuscript and preprint rebuilds remain
-Task 6 work.
-Task 5 quality cleanup removed stale package claims and development outputs,
-rebuilt Reports 03-04, the four retained figures, and synchronized public
-codebooks with anonymized education-level and class-code descriptions.
-
+The complete source/build package is current: root Reports 01-07, the OSF
+reports, supplement, manuscript/preprint, and a c952aa5-baseline redline all
+rendered successfully. The regression suite passes; the PDF audit confirms the
+current identifiers, fit/ICC anchors, familywise alpha = .05, Turkish source,
+and absence of stale PCI-RR/Stage language. The supplement source/PDF is
+synchronized with `osf_storage/`; manuscript and preprint PDFs are byte-
+identical. The public package remains prepared for, but has not been uploaded
+to, Zenodo.
 ## Manuscripts
-
 | Target | Status |
 |--------|--------|
 | PCI Psychology -> Peer Community Journal | **Revise invited** |
-
 ## Next Steps
 
 - [ ] Optionally obtain human psychometric review as additional quality control
-- [ ] Rebuild the manuscript and preprint package in Task 6
+- [x] Rebuild and audit the manuscript and preprint package in Task 6
 - [ ] Upload the revised package and point-by-point response to PCI Psychology
 
 ## Revision files

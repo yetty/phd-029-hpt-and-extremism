@@ -1,5 +1,4 @@
 # Project Status Log: phd-029-hpt-and-extremism
-
 **Title:** Stress-Testing Historical Perspective Taking: Ideological Attitudes and Disciplinary Reasoning in Czech Adolescents
 **Active venue:** PCI Psychology -> Peer Community Journal
 **Previous submissions:** TRSE (desk-rejected 2026-02-25), EJPE
@@ -10,12 +9,9 @@
 **Last updated:** 2026-10-02
 
 ---
-
 ## Completed Milestones
-
 ### Data Collection
 - Collected N=293 responses from 20 classrooms across 10 Czech secondary schools (ISCED 2 and 3). Instruments: HPT (9 items), FR-LF mini (6 items), KSA-3 (9 items), historical knowledge (6 items), SDR-5 (5 items). Data de-identified at point of entry via Google Sheets, normalised with `pull_and_normalize_data_CONFIDENTAL.R`.
-
 ### Analysis Pipeline (7 Rmd Reports; original results later corrected)
 - **01 Measurement checks:** Reliability (alpha, omega), CFA dimensionality, ICCs, floor/ceiling effects for all instruments.
 - **02 Descriptives and zero-order correlations:** Sample demographics, distributions, correlation matrix, school/class variation.
@@ -28,7 +24,6 @@
 - **05 Sensitivity analyses:** Alternative composites, exclusion rules, random-slope models, fixed-effects models, attenuation correction. Results stable across all specifications.
 - **06 Appendix tables and figures:** Publication-ready supplementary materials.
 - **07 Reproducibility report:** Session info, package versions, random-seed confirmation.
-
 ### Supplementary Analyses
 - Exploratory TOST equivalence tests used a post hoc SESOI of beta +/-0.20.
   Mundlak within/between classroom ideology decomposition found no detectable
@@ -36,7 +31,6 @@
 
 ### Manuscript Drafting
 - Full manuscript drafted in `trse_outputs/manuscript.md` with pandoc build to DOCX using T&F template. Four manuscript figures produced (MG-CFA/DIF, score distributions, coefficient plot, marginal effects) in PDF and PNG.
-
 ### OSF Replication Package
 - Complete package in `osf_storage/`: de-identified data (RDS + XLSX), codebook (PDF + LaTeX source), all 7 analysis scripts, 4 figure scripts, 2 supplementary scripts, 4 exploratory scripts, Makefile, pre-rendered PDF outputs, high-resolution figures, Czech-language instruments. README documents full reproduction workflow.
 ### Quality Audit
@@ -44,7 +38,6 @@
 ---
 ### EJPE Submission Preparation
 - Switched target from TRSE to EJPE. Converted manuscript from Markdown/DOCX to LaTeX using `sn-jnl.cls` (Springer Nature template with `sn-apa` style). Created blinded manuscript (`manuscript_blinded.tex`) and separate title page (`title_page.tex`). Upload package assembled in `ejpe_submission/UPLOAD_PACKAGE_EUPE/`.
-
 ### EJPE Submission (EUPE-D-26-00272)
 - Submitted 2026-03-05 via Editorial Manager. Preview PDF revealed broken title page - `sn-jnl.cls` calls `\allowdisplaybreaks` at `\begin{document}` which requires `amsmath`, but `title_page.tex` didn't load it. Fixed by adding `\usepackage{amsmath}`. Merged two upload folders into single `UPLOAD_PACKAGE_EUPE/`.
 ---
@@ -63,7 +56,6 @@
 ---
 ### AME Desk Rejection (2026-03-20)
 - Paper B (HAME-2026-0087) desk-rejected by Joel Puchalla (Editorial Assistant). Reason: "AME does not publish studies on specific instruments." Suggested alternative: International Journal of Testing. Third desk rejection overall for phd-029 manuscripts.
-
 ### Paper B Journal-Fit Analysis and IJT Preparation (2026-03-23 → 2026-04-03)
 - Evaluated 6 journals via desk-reviewer simulations
   (`submissions/paper_b_journal_fit.md`). IJT selected as primary
@@ -79,15 +71,12 @@
 - IJT cover letter written mentioning AME editor recommendation.
 - Separate title page with running head, word count, submission
   date, and mailing address created per IJT author instructions.
-
 ### Paper B Submitted to IJT (2026-04-03)
 - Submitted via ScholarOne (Traditional Submission). Files:
   `manuscript_anonymous.docx` (Main Document),
   `title_page.docx` (Title Page), `cover_letter.docx`.
   CzechELib OA agreement selected.
-
 ---
-
 ### IJT Desk Rejection (2026-04-11)
 - Paper B (IJT260038) desk-rejected by Editor Christopher D. Nye.
   IJT does not publish studies on a specific measure or specific
@@ -157,14 +146,15 @@
   focal regression differed across the manuscript, current script, and stated
   missing-data rules. Several bounded reviewer-response corrections remain.
 
-### PCI Psychology Revision Package Completed (2026-10-02)
+### PCI Psychology Revision Source Package (2026-10-02)
 - Centralized minimum-answer scoring and reproduced corrected regression, DIF,
   TOST, and admissible MG-CFA results without changing the main conclusions.
 - Updated the manuscript, supplement, response, cover letter, and revision
   ledger. Restored the verified post-registration bifactor model transparently,
   while retaining theory- and continuity-based primary subscale reporting.
-- Independent psychometric, reference, and compliance checks found no remaining
-  submission blocker. Human specialist review remains optional quality control.
+- Project-source analytical and rendered-package checks found no blocker. The
+  broader knowledge-base audit retains inherited metadata and reading-status
+  issues for older cited notes; human specialist review remains optional.
 
 ### Replication Package Refresh (2026-10-02)
 - Refreshed the repository-neutral OSF replication package for a later Zenodo
@@ -172,14 +162,16 @@
   supplement, adaptation/deviation documentation, a corrected README, and
   minimal supplement-inventory and reproducibility reports.
 - Restored the missing direct CRAN dependencies to the user R 4.6 library and
-  refreshed all five analytic PDFs through the OSF Makefile. The regression
+  refreshed all five OSF analytic PDFs and root Reports 01-07. The regression
   suite passes; the refreshed PDFs report scaled CFA indices and nested ICCs.
 - Aligned the packaged DIF report with `mirt` 1.47 joint omnibus item tests,
   familywise alpha = .05, and the constrained-GRM Table S1 export. The current
   supplement PDF and OSF copy were rebuilt from the same Markdown source.
 - Removed stale PCI-RR, alpha=.01, output-path, and confirmatory claims from
-  current package materials; rebuilt Reports 03-04, the retained figure pairs,
-  and synchronized the public codebooks with anonymized level and class codes.
+  current package materials; rebuilt the supplement, byte-identical
+  manuscript/preprint, and 69-page c952aa5 redline, and synchronized public
+  codebooks with anonymized level and class codes. Zenodo upload is out of
+  scope; PCI upload and optional human review remain outstanding.
 
 ---
 ## Current Work
@@ -191,15 +183,13 @@
 - [x] Reduce the broad draft to a request-mapped minor revision
 - [x] Resolve MG-CFA and score-construction reproducibility discrepancies
 - [x] Correct remaining partial responses and rebuild the package
-- [x] Complete independent psychometric and reference verification
-- [x] Restore the local R dependencies and refresh OSF analytic reports 01-05
+- [x] Complete project-source psychometric and rendered-package verification
+- [x] Rebuild and audit root/OSF reports and the final submission PDF package
 - [ ] Optionally obtain targeted human psychometric review
 - [ ] Submit the point-by-point response and revised preprint
 
 ---
-
 ## Upcoming
-
 - Transfer project outputs to knowledge base
   (`/project-to-knowledge` workflow).
 - Create literature note for preprint/publication in

@@ -5,11 +5,16 @@ the HPT items **even at equal underlying HPT competence**. Concretely:
 
 -   Create **low/high ideology** groups from FR-LF-mini and KSA-3 (see
     codebook).\
--   Run **item-level DIF** (ordinal logistic) for each HPT item.
+-   Run **joint omnibus GRM DIF** tests for each HPT item.
 -   Run **multi-group CFA** (configural → metric → scalar).
--   **Interpretation:** If we find pervasive DIF and/or scalar
-    non-invariance, this supports the PCI RR H1 that HPT scores can be
-    ideologically contaminated.
+-   The registered H4 concerned positive ideology-related DIF on CONT
+    items, evaluated with a continuous-ideology MIMIC analysis. The
+    current joint omnibus GRM DIF and MG-CFA analyses are
+    post-registration and do not implement the registered
+    continuous-ideology MIMIC analysis. Evidence of DIF or scalar
+    non-invariance would indicate measurement noninvariance between the
+    extreme ideology groups, limiting score comparability without itself
+    establishing a directional contamination mechanism.
 
 # Setup
 
@@ -27,6 +32,7 @@ library(lavaan)      # CFA / invariance
 library(semTools)    # helpers
 library(car)         # recode
 library(mirt)
+source("submissions/pci_psychology/scoring_helpers.R")
 ```
 
 # Data
@@ -54,14 +60,15 @@ POP_rev_items <- paste0("POP", 1:3)
 dat_raw <- dat_raw %>%
   mutate(across(all_of(POP_rev_items), ~ 5 - ., .names = "{.col}_rev")) %>%
   mutate(
-    HPT_POP_raw = rowMeans(across(POP1:POP3), na.rm = TRUE),           # presentism, higher = worse
-    HPT_POP_rev = rowMeans(across(paste0(POP_rev_items, "_rev")), na.rm = TRUE),  # higher = better
-    HPT_CONT    = rowMeans(across(CONT1:CONT3), na.rm = TRUE),
-    HPT_ROA     = rowMeans(across(ROA1:ROA3),   na.rm = TRUE),
+    HPT_POP_raw = scale_mean(., POP_rev_items, min_answered = 2),
+    HPT_POP_rev = scale_mean(., paste0(POP_rev_items, "_rev"), min_answered = 2),
+    HPT_CONT    = scale_mean(., paste0("CONT", 1:3), min_answered = 2),
+    HPT_ROA     = scale_mean(., paste0("ROA", 1:3), min_answered = 2),
 
     # Canonical composites (CTX6 is our stable default)
-    HPT_CTX6 = rowMeans(cbind(HPT_POP_rev, HPT_CONT), na.rm = TRUE),
-    HPT_TOT9 = rowMeans(cbind(HPT_POP_rev, HPT_CONT, HPT_ROA), na.rm = TRUE)
+    HPT_CTX6 = rowMeans(cbind(HPT_POP_rev, HPT_CONT), na.rm = FALSE),
+    HPT_TOT9 = rowMeans(cbind(HPT_POP_rev, HPT_CONT, HPT_ROA),
+                        na.rm = FALSE)
   )
 ```
 
@@ -80,7 +87,7 @@ A1-A3, U1-U3, K1-K3; SDR1-SDR5).
     **IDEO_Z**. *Low* = bottom 33%, *High* = top 33% (middle third
     excluded to sharpen contrasts).
 -   **Controls**: prior knowledge (sum KN1-KN6), social desirability
-    (SDR1-SDR5; note SDR2--SDR4 are already reversed upstream per
+    (SDR1-SDR5; note SDR2-SDR4 are already reversed upstream per
     codebook).
 
 ``` r
@@ -96,18 +103,14 @@ num_blocks <- c(frlf_items, ksa_items, kn_items, sdr_items)
 dat <- dat_raw %>%
   mutate(across(all_of(num_blocks), ~ suppressWarnings(as.numeric(.)))) %>%
   # Scale scores
-  rowwise() %>%
   mutate(
-    HPT_total = mean(c_across(c(paste0("POP",1:3,"_rev"), ROA1:ROA3, CONT1:CONT3)), na.rm = TRUE),
-    HPT_CONT  = mean(c_across(CONT1:CONT3), na.rm = TRUE),
-    HPT_ROA   = mean(c_across(ROA1:ROA3), na.rm = TRUE),
-    HPT_POPR  = mean(c_across(paste0("POP",1:3,"_rev")), na.rm = TRUE),
-    FRLF_mean = mean(c_across(all_of(frlf_items)), na.rm = TRUE),
-    KSA_mean  = mean(c_across(all_of(ksa_items)),  na.rm = TRUE),
-    KN_sum    = sum(c_across(all_of(kn_items)),    na.rm = TRUE),
-    SDR_mean  = mean(c_across(all_of(sdr_items)),  na.rm = TRUE)
+    HPT_total = HPT_TOT9,
+    HPT_POPR  = HPT_POP_rev,
+    FRLF_mean = scale_mean(., frlf_items, min_answered = 4),
+    KSA_mean  = scale_mean(., ksa_items, min_answered = 7),
+    KN_sum    = rowSums(across(all_of(kn_items)), na.rm = TRUE),
+    SDR_mean  = scale_mean(., sdr_items, min_answered = 4)
   ) %>%
-  ungroup() %>%
   mutate(
     FRLF_z = as.numeric(scale(FRLF_mean)),
     KSA_z  = as.numeric(scale(KSA_mean)),
@@ -121,18 +124,19 @@ dat <- dat %>%
     ideology_group = case_when(
       IDEO_Z <= qs[1] ~ "Low",
       IDEO_Z >= qs[2] ~ "High",
-      TRUE ~ "Mid"
+      !is.na(IDEO_Z) ~ "Mid"
     )
   )
 
 kable(dat %>% count(ideology_group), caption = "Group sizes (Low/High ideology; Mid excluded from group-wise tests)")
 ```
 
-  ideology_group       n
-  ---------------- -----
-  High                96
-  Low                 96
-  Mid                101
+  ideology_group      n
+  ---------------- ----
+  High               95
+  Low                96
+  Mid                92
+  NA                 10
 
   : Group sizes (Low/High ideology; Mid excluded from group-wise tests)
 
@@ -152,20 +156,22 @@ desc_tbl <- dat %>%
 kable(desc_tbl, digits = 2, caption = "Descriptives by ideology group (means)")
 ```
 
-  ideology_group       n   HPT_total   KN_sum   SDR_mean
-  ---------------- ----- ----------- -------- ----------
-  Low                 96        2.89     3.33       3.16
-  Mid                101        2.83     2.85       2.99
-  High                96        2.76     2.94       2.88
+  ideology_group      n   HPT_total   KN_sum   SDR_mean
+  ---------------- ---- ----------- -------- ----------
+  Low                96        2.89     3.33       3.16
+  Mid                92        2.84     2.89       3.00
+  High               95        2.76     2.96       2.88
+  NA                 10        2.67     2.30        NaN
 
   : Descriptives by ideology group (means)
 
 # DIF analysis (ordinal, item-by-item)
 
-**Goal.** At *equal HPT ability*, do Low/High ideology groups respond
-differently to specific items? We match on total HPT (item-rest) and
-test both uniform and non-uniform DIF per item (α = .01, Bonferroni
-adjusted).
+**Goal.** Do Low/High ideology groups differ on individual HPT items in
+a joint omnibus likelihood-ratio DIF test? Each test jointly releases
+that item's slope and threshold constraints. Raw *p*-values are
+Bonferroni-adjusted across the nine items and evaluated at familywise
+alpha = .05 (equivalent per-test alpha = .0056).
 
 ``` r
 ## Keep only Low/High groups
@@ -192,8 +198,8 @@ print(table(grp))
 ```
 
     ## grp
-    ##  Low High 
-    ##   96   96
+    ##  Low High
+    ##   96   95
 
 ``` r
 # Constrained multi-group graded model, then DIF with scheme="drop"
@@ -204,16 +210,14 @@ mod_base <- multipleGroup(
   itemtype   = "graded",
   invariance = c("slopes", "intercepts", "free_means", "free_var")
 )
-```
 
-``` r
 params_all <- mirt::mod2values(mod_base)$name
 unique_pars <- unique(params_all)
-pars_slope <- grep("^a", unique_pars, value = TRUE)
-pars_thr   <- grep("^d\\d+$", unique_pars, value = TRUE)
-stopifnot(length(pars_slope) > 0, length(pars_thr) > 0)
-
-pars_to_test <- c(pars_slope, pars_thr)
+pars_to_test <- c(
+  grep("^a", unique_pars, value = TRUE),
+  grep("^d\\d+$", unique_pars, value = TRUE)
+)
+stopifnot(length(pars_to_test) > 0)
 
 dif_out <- DIF(
   mod_base,
@@ -224,57 +228,92 @@ dif_out <- DIF(
   verbose     = FALSE
 )
 
-res_tbl <- as.data.frame(dif_out)
-res_tbl$Item <- rownames(res_tbl)
+res_tbl <- as.data.frame(dif_out) %>%
+  tibble::rownames_to_column("Item") %>%
+  transmute(
+    Item,
+    X2,
+    df,
+    p,
+    adj_p,
+    Flag = ifelse(adj_p < .05, "YES", "no")
+  )
 
-get_min_p <- function(df, prefix_list) {
-  cols <- unlist(lapply(prefix_list, function(p) grep(paste0("^p\\.", p, "$"), names(df), value=TRUE)))
-  if (length(cols) == 0) return(rep(NA, nrow(df)))
-  apply(df[, cols, drop=FALSE], 1, min, na.rm = TRUE)
-}
-
-alpha <- 0.01
-
-res_tbl <- res_tbl %>%
-  mutate(
-    p_nonuniform = get_min_p(cur_data(), pars_slope),
-    p_uniform    = get_min_p(cur_data(), pars_thr),
-    Flag_nonuniform = ifelse(!is.na(p_nonuniform) & p_nonuniform < alpha, "YES", "no"),
-    Flag_uniform    = ifelse(!is.na(p_uniform)    & p_uniform    < alpha, "YES", "no")
-  ) %>%
-  select(Item, p_nonuniform, p_uniform, Flag_nonuniform, Flag_uniform)
-
-kable(res_tbl, digits = 4,
-      caption = "DIF per item (mirt; graded). Non-uniform = Slope (a1); Uniform = Any Threshold (d1-dK). Bonferroni alpha = 0.01.")
+kable(res_tbl, digits = 3,
+      caption = "DIF omnibus item tests (mirt; graded). Each test jointly releases slope and threshold constraints. Raw p-values and Bonferroni-adjusted p-values are shown; familywise alpha = .05 (per-test alpha = .0056).")
 ```
 
-          Item    p_nonuniform   p_uniform   Flag_nonuniform   Flag_uniform
-  ------- ------- -------------- ----------- ----------------- --------------
-  POP1    POP1    NA             NA          no                no
-  POP2    POP2    NA             NA          no                no
-  POP3    POP3    NA             NA          no                no
-  ROA1    ROA1    NA             NA          no                no
-  ROA2    ROA2    NA             NA          no                no
-  ROA3    ROA3    NA             NA          no                no
-  CONT1   CONT1   NA             NA          no                no
-  CONT2   CONT2   NA             NA          no                no
-  CONT3   CONT3   NA             NA          no                no
+  Item          X2   df       p   adj_p Flag
+  ------- -------- ---- ------- ------- ------
+  POP1      10.464    4   0.033   0.300 no
+  POP2       9.012    4   0.061   0.547 no
+  POP3       9.723    4   0.045   0.408 no
+  ROA1       9.585    4   0.048   0.432 no
+  ROA2       3.133    4   0.536   1.000 no
+  ROA3       8.254    4   0.083   0.744 no
+  CONT1      1.509    4   0.825   1.000 no
+  CONT2      3.602    4   0.462   1.000 no
+  CONT3      9.631    4   0.047   0.424 no
 
-  : DIF per item (mirt; graded). Non-uniform = Slope (a1); Uniform = Any
-  Threshold (d1-dK). Bonferroni alpha = 0.01.
+  : DIF omnibus item tests (mirt; graded). Each test jointly releases
+  slope and threshold constraints. Raw p-values and Bonferroni-adjusted
+  p-values are shown; familywise alpha = .05 (per-test alpha = .0056).
 
 ``` r
-flagged <- with(res_tbl, Item[Flag_uniform == "YES" | Flag_nonuniform == "YES"])
+flagged <- res_tbl$Item[res_tbl$Flag == "YES"]
 if (length(flagged) > 0) {
   which_item <- which(colnames(hpt_mat) == flagged[1])
   plot(mod_base, type = "trace", which.items = which_item,
        facet_items = FALSE, groups = levels(grp))
 } else {
-  plot.new(); text(0.5, 0.5, "No DIF-flagged item at alpha = 0.01.")
+  plot.new(); text(0.5, 0.5,
+                   "No omnibus DIF item was flagged after Bonferroni adjustment (familywise alpha = .05).")
 }
 ```
 
-![](/home/yetty/Projects/phd-029-hpt-and-extremism/outputs/04_dif-and-mg-cfa-hpt-bias_files/figure-markdown/DIF-plot-1.png)
+![](/home/yetty/PhD/projects/phd-029-hpt-and-extremism/outputs/04_dif-and-mg-cfa-hpt-bias_files/figure-markdown/DIF-plot-1.png)
+
+``` r
+grm_coefficients <- coef(mod_base, IRTpars = FALSE, simplify = TRUE)
+stopifnot(isTRUE(all.equal(
+  grm_coefficients$Low$items,
+  grm_coefficients$High$items,
+  check.attributes = FALSE
+)))
+
+table_s1_for_group <- function(group) {
+  as.data.frame(grm_coefficients[[group]]$items) %>%
+    tibble::rownames_to_column("Item") %>%
+    transmute(Item, a1, d1, d2, d3)
+}
+
+table_s1 <- bind_rows(
+  High = table_s1_for_group("High"),
+  Low = table_s1_for_group("Low"),
+  .id = "Group"
+) %>%
+  arrange(Item, factor(Group, levels = c("High", "Low"))) %>%
+  mutate(across(c(a1, d1, d2, d3), ~ round(.x, 3)))
+
+write.csv(table_s1, "outputs/table_s1_irt_parameters.csv", row.names = FALSE)
+kable(filter(table_s1, Group == "High") %>% select(-Group), digits = 3,
+      caption = "Table S1 source: constrained multi-group GRM item parameters from mod_base. Parameters are equal across Low and High ideology groups.")
+```
+
+  Item          a1      d1       d2       d3
+  ------- -------- ------- -------- --------
+  CONT1      1.853   2.801    0.733   -1.958
+  CONT2      1.414   2.098    0.728   -1.311
+  CONT3      1.359   2.755    0.755   -1.319
+  POP1      -1.017   0.198   -1.369   -2.671
+  POP2      -0.351   0.896   -0.860   -2.210
+  POP3      -0.643   0.702   -1.063   -2.728
+  ROA1       1.181   2.620    1.192   -0.796
+  ROA2       0.708   2.148    0.492   -1.770
+  ROA3       1.416   2.690    1.297   -0.946
+
+  : Table S1 source: constrained multi-group GRM item parameters from
+  mod_base. Parameters are equal across Low and High ideology groups.
 
 # Multi-group CFA (configural → metric → scalar)
 
@@ -348,11 +387,11 @@ fits %>% mutate(across(where(is.numeric), round, 3)) %>%
   -------------------------------------------------------------------------------------------
   Model          chisq.scaled   df.scaled   pvalue.scaled   cfi.scaled   rmsea.scaled    srmr
   ------------ -------------- ----------- --------------- ------------ -------------- -------
-  Configural           55.939          48           0.201        0.978          0.043   0.074
+  Configural           56.436          48           0.189        0.977          0.044   0.074
 
-  Metric               62.140          54           0.209        0.978          0.041   0.081
+  Metric               62.857          54           0.191        0.976          0.043   0.081
 
-  Scalar               70.106          63           0.252        0.980          0.035   0.076
+  Scalar               69.871          63           0.258        0.981          0.035   0.076
   -------------------------------------------------------------------------------------------
 
   : MG-CFA fit indices by invariance level (WLSMV).
@@ -370,14 +409,16 @@ deltas %>% mutate(across(where(is.numeric), round, 3)) %>%
 
   step                        dCFI   dRMSEA
   ----------------------- -------- --------
-  Configural -\> Metric     -0.001   -0.002
-  Metric -\> Scalar          0.003   -0.006
+  Configural -\> Metric     -0.001   -0.001
+  Metric -\> Scalar          0.005   -0.008
 
   : Delta fit (CFI, RMSEA) across steps.
 
 > **How to read this.** If **metric holds** (small ΔCFI/ΔRMSEA),
-> loadings are equivalent. If **scalar fails**, thresholds differ →
-> **biased group mean comparisons**, supporting H1.
+> loadings are equivalent. If **scalar fails**, thresholds differ and
+> group-mean comparisons are measurement-noninvariant; this warrants
+> cautious interpretation but does not itself establish a directional
+> ideological effect.
 
 # (Optional) Two-factor robustness check
 
@@ -399,17 +440,17 @@ measurementInvariance(model_2f, data = cfad, group = "ideology_group",
 kable(res_tbl, caption = "DIF results (for reference in text).")
 ```
 
-          Item    p_nonuniform   p_uniform   Flag_nonuniform   Flag_uniform
-  ------- ------- -------------- ----------- ----------------- --------------
-  POP1    POP1    NA             NA          no                no
-  POP2    POP2    NA             NA          no                no
-  POP3    POP3    NA             NA          no                no
-  ROA1    ROA1    NA             NA          no                no
-  ROA2    ROA2    NA             NA          no                no
-  ROA3    ROA3    NA             NA          no                no
-  CONT1   CONT1   NA             NA          no                no
-  CONT2   CONT2   NA             NA          no                no
-  CONT3   CONT3   NA             NA          no                no
+  Item             X2   df           p       adj_p Flag
+  ------- ----------- ---- ----------- ----------- ------
+  POP1      10.464417    4   0.0332907   0.2996161 no
+  POP2       9.012104    4   0.0607976   0.5471788 no
+  POP3       9.723491    4   0.0453521   0.4081691 no
+  ROA1       9.585251    4   0.0480247   0.4322223 no
+  ROA2       3.133315    4   0.5357685   1.0000000 no
+  ROA3       8.254446    4   0.0826898   0.7442083 no
+  CONT1      1.509152    4   0.8250191   1.0000000 no
+  CONT2      3.602325    4   0.4624911   1.0000000 no
+  CONT3      9.631130    4   0.0471214   0.4240930 no
 
   : DIF results (for reference in text).
 
@@ -423,24 +464,24 @@ kable(fits %>% mutate(across(where(is.numeric), round, 3)),
   -------------------------------------------------------------------------------------------
   Model          chisq.scaled   df.scaled   pvalue.scaled   cfi.scaled   rmsea.scaled    srmr
   ------------ -------------- ----------- --------------- ------------ -------------- -------
-  Configural           55.939          48           0.201        0.978          0.043   0.074
+  Configural           56.436          48           0.189        0.977          0.044   0.074
 
-  Metric               62.140          54           0.209        0.978          0.041   0.081
+  Metric               62.857          54           0.191        0.976          0.043   0.081
 
-  Scalar               70.106          63           0.252        0.980          0.035   0.076
+  Scalar               69.871          63           0.258        0.981          0.035   0.076
   -------------------------------------------------------------------------------------------
 
   : MG-CFA fit to reference in text.
 
 ``` r
-kable(deltas %>% mutate(across(where(is.numeric), round, 3)), 
+kable(deltas %>% mutate(across(where(is.numeric), round, 3)),
       caption = "Delta fit (CFI, RMSEA) thresholds.")
 ```
 
   step                        dCFI   dRMSEA
   ----------------------- -------- --------
-  Configural -\> Metric     -0.001   -0.002
-  Metric -\> Scalar          0.003   -0.006
+  Configural -\> Metric     -0.001   -0.001
+  Metric -\> Scalar          0.005   -0.008
 
   : Delta fit (CFI, RMSEA) thresholds.
 
@@ -450,51 +491,50 @@ kable(deltas %>% mutate(across(where(is.numeric), round, 3)),
 sessionInfo()
 ```
 
-    ## R version 4.4.2 (2024-10-31)
+    ## R version 4.6.1 (2026-06-24)
     ## Platform: x86_64-pc-linux-gnu
-    ## Running under: Ubuntu 24.04.3 LTS
-    ## 
+    ## Running under: Ubuntu 24.04.5 LTS
+    ##
     ## Matrix products: default
-    ## BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.12.0 
-    ## LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.12.0
-    ## 
+    ## BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.12.0
+    ## LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.12.0  LAPACK version 3.12.0
+    ##
     ## locale:
-    ##  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C               LC_TIME=cs_CZ.UTF-8        LC_COLLATE=en_US.UTF-8    
-    ##  [5] LC_MONETARY=cs_CZ.UTF-8    LC_MESSAGES=en_US.UTF-8    LC_PAPER=cs_CZ.UTF-8       LC_NAME=C                 
-    ##  [9] LC_ADDRESS=C               LC_TELEPHONE=C             LC_MEASUREMENT=cs_CZ.UTF-8 LC_IDENTIFICATION=C       
-    ## 
+    ##  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C               LC_TIME=cs_CZ.UTF-8        LC_COLLATE=en_US.UTF-8
+    ##  [5] LC_MONETARY=cs_CZ.UTF-8    LC_MESSAGES=en_US.UTF-8    LC_PAPER=cs_CZ.UTF-8       LC_NAME=C
+    ##  [9] LC_ADDRESS=C               LC_TELEPHONE=C             LC_MEASUREMENT=cs_CZ.UTF-8 LC_IDENTIFICATION=C
+    ##
     ## time zone: Europe/Prague
     ## tzcode source: system (glibc)
-    ## 
+    ##
     ## attached base packages:
-    ## [1] stats4    stats     graphics  grDevices utils     datasets  methods   base     
-    ## 
+    ## [1] stats4    stats     graphics  grDevices utils     datasets  methods   base
+    ##
     ## other attached packages:
-    ##  [1] mirt_1.45.1    lattice_0.22-5 car_3.1-3      carData_3.0-5  semTools_0.5-7 lavaan_0.6-20  difR_6.1.0    
-    ##  [8] janitor_2.2.1  stringr_1.5.1  knitr_1.50     psych_2.4.12   ggplot2_4.0.1  tidyr_1.3.1    dplyr_1.1.4   
-    ## 
+    ##  [1] mirt_1.47      lattice_0.23-1 car_3.1-5      carData_3.0-6  semTools_0.5-9 lavaan_0.7-2   difR_6.1.0
+    ##  [8] janitor_2.2.1  stringr_1.6.0  knitr_1.51     psych_2.6.5    ggplot2_4.0.3  tidyr_1.3.2    dplyr_1.2.1
+    ##
     ## loaded via a namespace (and not attached):
-    ##   [1] RColorBrewer_1.1-3   rstudioapi_0.17.1    audio_0.1-11         shape_1.4.6.1        magrittr_2.0.3      
-    ##   [6] TH.data_1.1-4        estimability_1.5.1   farver_2.1.2         nloptr_2.2.1         rmarkdown_2.29      
-    ##  [11] fs_1.6.5             vctrs_0.6.5          minqa_1.2.8          tinytex_0.54         htmltools_0.5.8.1   
-    ##  [16] forcats_1.0.0        haven_2.5.4          cellranger_1.1.0     Formula_1.2-5        dcurver_0.9.3       
-    ##  [21] parallelly_1.45.1    testthat_3.3.1       sandwich_3.1-1       emmeans_1.10.6       rootSolve_1.8.2.4   
-    ##  [26] zoo_1.8-14           lubridate_1.9.4      admisc_0.39          lifecycle_1.0.4      iterators_1.0.14    
-    ##  [31] pkgconfig_2.0.3      Matrix_1.7-1         R6_2.6.1             fastmap_1.2.0        rbibutils_2.3       
-    ##  [36] future_1.68.0        snakecase_0.11.1     digest_0.6.37        Exact_3.3            vegan_2.7-2         
-    ##  [41] progressr_0.18.0     timechange_0.3.0     abind_1.4-8          httr_1.4.7           mgcv_1.9-1          
-    ##  [46] compiler_4.4.2       proxy_0.4-27         withr_3.0.2          S7_0.2.1             R.utils_2.13.0      
-    ##  [51] MASS_7.3-61          sessioninfo_1.2.3    GPArotation_2024.3-1 permute_0.9-8        gld_2.6.7           
-    ##  [56] tools_4.4.2          pbivnorm_0.6.0       future.apply_1.20.0  clipr_0.8.0          R.oo_1.27.1         
-    ##  [61] glue_1.8.0           quadprog_1.5-8       nlme_3.1-166         grid_4.4.2           cluster_2.1.8       
-    ##  [66] generics_0.1.3       gtable_0.3.6         tzdb_0.5.0           R.methodsS3_1.8.2    class_7.3-22        
-    ##  [71] data.table_1.17.8    lmom_3.2             hms_1.1.3            Deriv_4.1.6          foreach_1.5.2       
-    ##  [76] pillar_1.10.0        splines_4.4.2        survival_3.7-0       tidyselect_1.2.1     pbapply_1.7-4       
-    ##  [81] reformulas_0.4.1     gridExtra_2.3        deltaPlotR_1.6       xfun_0.54            expm_1.0-0          
-    ##  [86] brio_1.1.5           stringi_1.8.4        VGAM_1.1-14          yaml_2.3.10          boot_1.3-31         
-    ##  [91] evaluate_1.0.5       codetools_0.2-20     beepr_2.0            msm_1.8.2            tibble_3.2.1        
-    ##  [96] cli_3.6.5            xtable_1.8-4         DescTools_0.99.60    Rdpack_2.6.4         Rcpp_1.0.13-1       
-    ## [101] readxl_1.4.3         globals_0.18.0       polycor_0.8-1        coda_0.19-4.1        parallel_4.4.2      
-    ## [106] readr_2.1.5          lme4_1.1-38          listenv_0.10.0       glmnet_4.1-10        mvtnorm_1.3-2       
-    ## [111] SimDesign_2.21       scales_1.4.0         e1071_1.7-16         purrr_1.1.0          rlang_1.1.6         
-    ## [116] multcomp_1.4-28      mnormt_2.1.1         ltm_1.2-0
+    ##   [1] RColorBrewer_1.1-3   rstudioapi_0.19.0    audio_0.1-12         shape_1.4.6.1        magrittr_2.0.5
+    ##   [6] farver_2.1.2         nloptr_2.2.1         rmarkdown_2.32       fs_2.1.0             vctrs_0.7.3
+    ##  [11] splines2_0.5.4       minqa_1.2.8          tinytex_0.61         htmltools_0.5.9      forcats_1.0.1
+    ##  [16] haven_2.5.5          cellranger_1.1.0     Formula_1.2-6        dcurver_0.9.3        parallelly_1.48.0
+    ##  [21] testthat_3.3.2       rootSolve_1.8.2.4    lubridate_1.9.5      admisc_0.41          lifecycle_1.0.5
+    ##  [26] iterators_1.0.14     pkgconfig_2.0.3      Matrix_1.7-6         R6_2.6.1             fastmap_1.2.0
+    ##  [31] rbibutils_2.4.1      future_1.75.0        snakecase_0.11.1     digest_0.6.39        Exact_3.3
+    ##  [36] vegan_2.7-6          progressr_1.0.0      timechange_0.4.0     httr_1.4.9           abind_1.4-8
+    ##  [41] mgcv_1.9-4           compiler_4.6.1       proxy_0.4-29         withr_3.0.3          S7_0.2.2
+    ##  [46] R.utils_2.13.0       MASS_7.3-66          sessioninfo_1.2.4    GPArotation_2026.8-2 permute_0.9-10
+    ##  [51] gld_2.6.8            tools_4.6.1          pbivnorm_0.6.0       otel_0.2.0           future.apply_1.20.2
+    ##  [56] clipr_0.8.1          R.oo_1.27.1          glue_1.8.1           quadprog_1.5-8       nlme_3.1-171
+    ##  [61] grid_4.6.1           cluster_2.1.8.2      generics_0.1.4       gtable_0.3.6         tzdb_0.5.0
+    ##  [66] R.methodsS3_1.8.2    class_7.3-24         data.table_1.18.6.1  lmom_3.3             hms_1.1.4
+    ##  [71] stringfish_0.19.2    Deriv_4.3.5          foreach_1.5.2        pillar_1.11.1        splines_4.6.1
+    ##  [76] survival_3.8-12      tidyselect_1.2.1     pbapply_1.7-5        reformulas_0.4.4     gridExtra_2.3.1
+    ##  [81] deltaPlotR_1.9       xfun_0.60            expm_1.0-1           brio_1.1.5           stringi_1.8.7
+    ##  [86] VGAM_1.1-14          yaml_2.3.12          boot_1.3-32          evaluate_1.0.5       codetools_0.2-20
+    ##  [91] beepr_2.0            msm_1.8.2            tibble_3.3.1         cli_3.6.6            RcppParallel_6.2.1
+    ##  [96] DescTools_0.99.60    Rdpack_2.6.6         Rcpp_1.1.2           readxl_1.5.0.1       globals_0.19.1
+    ## [101] polycor_0.8-2        parallel_4.6.1       readr_2.2.0          lme4_2.0-6           listenv_1.0.0
+    ## [106] glmnet_5.1           mvtnorm_1.4-2        SimDesign_2.27       scales_1.4.0         e1071_1.7-17
+    ## [111] purrr_1.2.2          rlang_1.3.0          qs2_0.3.1            mnormt_2.1.2         ltm_1.2-0

@@ -43,7 +43,7 @@ abstract and conclusion carry the same boundary.
 **Response:** We replaced the former below-.85 rule with bounded
 internal-structure language. Section 4.1 reports the factor correlations as
 evidence that the item sets are distinguishable in this sample, while stating
-that this does not establish discriminant validity. Section 5.6 calls for
+that this does not establish discriminant validity. Section 5.5 calls for
 differential prediction of external criteria.
 
 ### REC-03: Construct names in results

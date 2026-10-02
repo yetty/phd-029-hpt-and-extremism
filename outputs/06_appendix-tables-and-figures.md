@@ -1,83 +1,53 @@
-``` r
-library(dplyr)
-library(ggplot2)
-```
+# Purpose
 
-``` r
-# Load the dataset created in 00_data-preparation
-load("normalised_responses.RData")
-stopifnot(exists("normalised_responses"))
-dat <- normalised_responses
+This documentation report inventories the current supplementary tables
+and figures and identifies their reproducible source files. It does not
+analyse confidential source data.
 
-# Ensure clustering identifiers and unique class id
-stopifnot(all(c("school_id","class_label") %in% names(dat)))
-dat <- dat %>%
-  mutate(
-    school_id   = as.factor(school_id),
-    class_label = as.factor(class_label),
-    class_id    = interaction(school_id, class_label, drop = TRUE)
-  )
+# Supplement tables
 
-# POP reversed item-wise and subscale helper
-POP_rev_items <- paste0("POP", 1:3)
+  ------------------------------------------------------------------------
+  Element       Source
+  ------------- ----------------------------------------------------------
+  Table S1      04_dif-and-mg-cfa-hpt-bias.Rmd -\>
+                outputs/table_s1_irt_parameters.csv
 
-# Reverse POP items (1–4)
-dat <- dat %>%
-  mutate(
-    across(
-      all_of(POP_rev_items),
-      ~ 5 - suppressWarnings(as.numeric(.)),
-      .names = "{.col}_rev"     # <<< THIS was the culprit
-    )
-  ) %>%
-  mutate(
-    HPT_POP_raw = rowMeans(across(all_of(POP_rev_items)), na.rm = TRUE),
-    HPT_POP_rev = rowMeans(across(all_of(paste0(POP_rev_items, "_rev"))), na.rm = TRUE),
-    HPT_CONT    = rowMeans(across(CONT1:CONT3), na.rm = TRUE),
-    HPT_ROA     = rowMeans(across(ROA1:ROA3),   na.rm = TRUE),
-    HPT_CTX6    = rowMeans(cbind(HPT_POP_rev, HPT_CONT), na.rm = TRUE),
-    HPT_TOT9    = rowMeans(cbind(HPT_POP_rev, HPT_CONT, HPT_ROA), na.rm = TRUE)
-  )
-```
+  Table S2      01_measurement-checks.Rmd
 
-# CONT x POP_rev correlation
+  Table S3 and  submissions/pci_psychology/revision_reporting_analyses.R
+  S3b
 
-Following figure visualises the association between students'
-contextualisation scores (CONT) and reversed populist reasoning
-(POP_rev). Because both constructs are based on aggregated Likert-type
-items, they take on a limited number of discrete values, which results
-in many students sharing identical score combinations. To account for
-this, the figure uses a frequency-aware scatterplot in which circle size
-represents the number of students with the same pair of scores. The
-solid line depicts the linear association estimated by ordinary least
-squares, and the shaded band indicates the corresponding 95% confidence
-interval. Overall, the figure shows a modest positive relationship:
-higher levels of anti-populist reasoning tend to be associated with
-higher levels of contextualisation, while substantial overlap across the
-score range indicates considerable within-level variability.
+  Table S4      submissions/pci_psychology/supplementary_materials.md
 
-![](/home/yetty/Projects/phd-029-hpt-and-extremism/outputs/06_appendix-tables-and-figures_files/figure-markdown/fig-cont-poprev-1.png)
+  Table S4b     submissions/pci_psychology/revision_reporting_analyses.R
 
-``` r
-ggplot(plot_dat, aes(x = HPT_POP_rev, y = HPT_CONT)) +
-  geom_jitter(width = 0.06, height = 0.06, alpha = 0.35) +
-  geom_smooth(method = "lm", se = TRUE) +
-  labs(x = "POP (reversed; higher = less populist reasoning)",
-       y = "CONT (higher = more contextualization)") +
-  theme_minimal()
-```
+  Table S5      submissions/pci_psychology/supplementary_materials.md
+  ------------------------------------------------------------------------
 
-    ## `geom_smooth()` using formula = 'y ~ x'
+  : Current supplementary-table inventory
 
-![](/home/yetty/Projects/phd-029-hpt-and-extremism/outputs/06_appendix-tables-and-figures_files/figure-markdown/jitterplot-1.png)
+# Figures and revision outputs
 
-06_appendix-tables-and-figures.Rmd
+  ---------------------------------------------------------------------------------
+  Element              Source
+  -------------------- ------------------------------------------------------------
+  Revision             submissions/pci_psychology/revision_reporting_analyses.R -\>
+  relationship figure  revision_outputs/
 
-Purpose: Produce clean publication-ready outputs. Content:
+  Measurement          osf_storage/scripts/fig02_measurement_invariance_and_dif.R
+  invariance and DIF
 
-Tables for reliability, CFA, model summaries.
+  Score distributions  osf_storage/scripts/fig03_score_distributions.R
 
-Plots of HPT score distributions, ideology distributions, predicted
-effects.
+  Coefficient plot     osf_storage/scripts/fig04_coefficient_plot.R
 
-Item characteristic curves for DIF findings.
+  Marginal effects     osf_storage/scripts/fig05_marginal_effects.R
+  ---------------------------------------------------------------------------------
+
+  : Current figure and revision-output inventory
+
+# Scope note
+
+The markdown and PDF supplement are the presentation source for Tables
+S1-S5. This report is an inventory, not a second presentation of the
+estimates.

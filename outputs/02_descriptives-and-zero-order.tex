@@ -115,7 +115,8 @@
 \usepackage{float}
 \usepackage{colortbl}
 \usepackage{pdflscape}
-\usepackage{tabu}
+\usepackage{tabularx}
+\usepackage{xltabular}
 \usepackage{threeparttable}
 \usepackage{threeparttablex}
 \usepackage[normalem]{ulem}
@@ -128,12 +129,12 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same}
 \hypersetup{
-  pdftitle={Descriptives \& Zero-order associations --- HPT (Czech data)},
+  pdftitle={Descriptives \& Zero-order associations -- HPT (Czech data)},
   pdfauthor={HPT and Extremism project},
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
 
-\title{Descriptives \& Zero-order associations --- HPT (Czech data)}
+\title{Descriptives \& Zero-order associations -- HPT (Czech data)}
 \usepackage{etoolbox}
 \makeatletter
 \providecommand{\subtitle}[1]{% add subtitle to \maketitle
@@ -143,7 +144,7 @@
 \subtitle{Means/SDs, distributions, correlations, and school/class
 variation}
 \author{HPT and Extremism project}
-\date{2025-12-22}
+\date{2026-10-02}
 
 \begin{document}
 \maketitle
@@ -155,9 +156,9 @@ variation}
 \hypertarget{purpose}{%
 \section{Purpose}\label{purpose}}
 
-This file establishes transparent baseline patterns---distributions,
+This file establishes transparent baseline patterns--distributions,
 scale descriptives, zero-order correlations, and between-group
-variation---before any modeling. It follows the HPT framework
+variation--before any modeling. It follows the HPT framework
 (POP/ROA/CONT) and scoring conventions used in prior work, but with an
 explicit \textbf{presentism reversal} so that \textbf{higher HPT scores
 reflect better contextualization/agent-sensitive reasoning}. FR-LF and
@@ -179,7 +180,7 @@ cheatsheet appears under each table/figure.}
 \FunctionTok{library}\NormalTok{(psych)           }\CommentTok{\# corr.test}
 \CommentTok{\# Multilevel \& ICC}
 \FunctionTok{library}\NormalTok{(lme4)            }\CommentTok{\# lmer}
-\FunctionTok{suppressPackageStartupMessages}\NormalTok{(}\FunctionTok{library}\NormalTok{(performance)) }\CommentTok{\# icc()}
+\FunctionTok{source}\NormalTok{(}\StringTok{"submissions/pci\_psychology/scoring\_helpers.R"}\NormalTok{)}
 
 \FunctionTok{theme\_set}\NormalTok{(}\FunctionTok{theme\_minimal}\NormalTok{(}\AttributeTok{base\_size =} \DecValTok{11}\NormalTok{))}
 \end{Highlighting}
@@ -199,14 +200,8 @@ cheatsheet appears under each table/figure.}
 
 \NormalTok{all\_data }\OtherTok{\textless{}{-}}\NormalTok{ all\_data }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{mutate}\NormalTok{(}
-    \FunctionTok{across}\NormalTok{(}\FunctionTok{all\_of}\NormalTok{(POP\_rev\_items), }\SpecialCharTok{\textasciitilde{}} \DecValTok{5} \SpecialCharTok{{-}} \FunctionTok{suppressWarnings}\NormalTok{(}\FunctionTok{as.numeric}\NormalTok{(.)), }\AttributeTok{.names =} \StringTok{"\{.col\}\_rev"}\NormalTok{),}
-    \AttributeTok{HPT\_POP\_raw =} \FunctionTok{rowMeans}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{all\_of}\NormalTok{(POP\_rev\_items)), }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),             }\CommentTok{\# presentism, higher = worse}
-    \AttributeTok{HPT\_POP\_rev =} \FunctionTok{rowMeans}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{all\_of}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(POP\_rev\_items, }\StringTok{"\_rev"}\NormalTok{))), }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),  }\CommentTok{\# higher = better}
-    \AttributeTok{HPT\_CONT    =} \FunctionTok{rowMeans}\NormalTok{(}\FunctionTok{across}\NormalTok{(CONT1}\SpecialCharTok{:}\NormalTok{CONT3), }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
-    \AttributeTok{HPT\_ROA     =} \FunctionTok{rowMeans}\NormalTok{(}\FunctionTok{across}\NormalTok{(ROA1}\SpecialCharTok{:}\NormalTok{ROA3),   }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
-    \CommentTok{\# Canonical composites (report BOTH; use CTX6 as primary)}
-    \AttributeTok{HPT\_CTX6 =} \FunctionTok{rowMeans}\NormalTok{(}\FunctionTok{cbind}\NormalTok{(HPT\_POP\_rev, HPT\_CONT), }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),                 }\CommentTok{\# no ROA (stable default)}
-    \AttributeTok{HPT\_TOT9 =} \FunctionTok{rowMeans}\NormalTok{(}\FunctionTok{cbind}\NormalTok{(HPT\_POP\_rev, HPT\_CONT, HPT\_ROA), }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)         }\CommentTok{\# includes ROA}
+    \FunctionTok{across}\NormalTok{(}\FunctionTok{all\_of}\NormalTok{(POP\_rev\_items), }\SpecialCharTok{\textasciitilde{}} \DecValTok{5} \SpecialCharTok{{-}} \FunctionTok{suppressWarnings}\NormalTok{(}\FunctionTok{as.numeric}\NormalTok{(.)),}
+           \AttributeTok{.names =} \StringTok{"\{.col\}\_rev"}\NormalTok{)}
 \NormalTok{  )}
 
 \CommentTok{\# Ensure factors as in codebook and build unique class\_id}
@@ -229,15 +224,6 @@ subscores}\label{scoring-constructs-subscores}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# Convenience scorer: mean across items with minimum answered requirement}
-\NormalTok{scale\_mean }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(df, items, }\AttributeTok{min\_n =} \FunctionTok{ceiling}\NormalTok{(}\FunctionTok{length}\NormalTok{(items)}\SpecialCharTok{/}\DecValTok{2}\NormalTok{), }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{) \{}
-\NormalTok{  x }\OtherTok{\textless{}{-}}\NormalTok{ df[, items]}
-\NormalTok{  ok }\OtherTok{\textless{}{-}} \FunctionTok{rowSums}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(x)) }\SpecialCharTok{\textgreater{}=}\NormalTok{ min\_n}
-\NormalTok{  out }\OtherTok{\textless{}{-}} \FunctionTok{rowMeans}\NormalTok{(x, }\AttributeTok{na.rm =}\NormalTok{ na.rm)}
-\NormalTok{  out[}\SpecialCharTok{!}\NormalTok{ok] }\OtherTok{\textless{}{-}} \ConstantTok{NA\_real\_}
-\NormalTok{  out}
-\NormalTok{\}}
-
 \CommentTok{\# HPT (1{-}4): subscores and totals (explicitly using REVERSED POP)}
 \NormalTok{hpt\_pop\_items\_rev  }\OtherTok{\textless{}{-}} \FunctionTok{paste0}\NormalTok{(}\StringTok{"POP"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{, }\StringTok{"\_rev"}\NormalTok{)   }\CommentTok{\# reversed presentism}
 \NormalTok{hpt\_roa\_items      }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"ROA1"}\NormalTok{,}\StringTok{"ROA2"}\NormalTok{,}\StringTok{"ROA3"}\NormalTok{)}
@@ -259,19 +245,20 @@ subscores}\label{scoring-constructs-subscores}}
 \CommentTok{\# Build scores (HPT\_TOTAL := CTX6 as primary; also keep HPT\_TOT9 for reference)}
 \NormalTok{dat }\OtherTok{\textless{}{-}}\NormalTok{ all\_data }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{mutate}\NormalTok{(}
-    \AttributeTok{HPT\_POP    =} \FunctionTok{scale\_mean}\NormalTok{(., hpt\_pop\_items\_rev,  }\AttributeTok{min\_n =} \DecValTok{2}\NormalTok{),        }\CommentTok{\# already reversed}
-    \AttributeTok{HPT\_ROA    =} \FunctionTok{scale\_mean}\NormalTok{(., hpt\_roa\_items,      }\AttributeTok{min\_n =} \DecValTok{2}\NormalTok{),}
-    \AttributeTok{HPT\_CONT   =} \FunctionTok{scale\_mean}\NormalTok{(., hpt\_cont\_items,     }\AttributeTok{min\_n =} \DecValTok{2}\NormalTok{),}
-    \AttributeTok{HPT\_TOTAL  =} \FunctionTok{scale\_mean}\NormalTok{(., }\FunctionTok{c}\NormalTok{(hpt\_pop\_items\_rev, hpt\_roa\_items, hpt\_cont\_items), }\AttributeTok{min\_n =} \DecValTok{5}\NormalTok{),}
-    \CommentTok{\# Also expose explicit composites computed above}
-    \AttributeTok{HPT\_CTX6   =}\NormalTok{ HPT\_CTX6,}
-    \AttributeTok{HPT\_TOT9   =}\NormalTok{ HPT\_TOT9,}
+    \AttributeTok{HPT\_POP\_raw =} \FunctionTok{scale\_mean}\NormalTok{(., POP\_rev\_items, }\AttributeTok{min\_answered =} \DecValTok{2}\NormalTok{),}
+    \AttributeTok{HPT\_POP    =} \FunctionTok{scale\_mean}\NormalTok{(., hpt\_pop\_items\_rev, }\AttributeTok{min\_answered =} \DecValTok{2}\NormalTok{),}
+    \AttributeTok{HPT\_ROA    =} \FunctionTok{scale\_mean}\NormalTok{(., hpt\_roa\_items, }\AttributeTok{min\_answered =} \DecValTok{2}\NormalTok{),}
+    \AttributeTok{HPT\_CONT   =} \FunctionTok{scale\_mean}\NormalTok{(., hpt\_cont\_items, }\AttributeTok{min\_answered =} \DecValTok{2}\NormalTok{),}
+    \AttributeTok{HPT\_CTX6   =} \FunctionTok{rowMeans}\NormalTok{(}\FunctionTok{cbind}\NormalTok{(HPT\_POP, HPT\_CONT), }\AttributeTok{na.rm =} \ConstantTok{FALSE}\NormalTok{),}
+    \AttributeTok{HPT\_TOT9   =} \FunctionTok{rowMeans}\NormalTok{(}\FunctionTok{cbind}\NormalTok{(HPT\_POP, HPT\_CONT, HPT\_ROA),}
+                          \AttributeTok{na.rm =} \ConstantTok{FALSE}\NormalTok{),}
+    \AttributeTok{HPT\_TOTAL  =}\NormalTok{ HPT\_TOT9,}
     \AttributeTok{KN\_TOTAL   =} \FunctionTok{rowSums}\NormalTok{(dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(., }\FunctionTok{all\_of}\NormalTok{(kn\_items)), }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
-    \AttributeTok{FRLF\_RD    =} \FunctionTok{scale\_mean}\NormalTok{(., frlf\_rd, }\AttributeTok{min\_n =} \DecValTok{2}\NormalTok{),}
-    \AttributeTok{FRLF\_NS    =} \FunctionTok{scale\_mean}\NormalTok{(., frlf\_ns, }\AttributeTok{min\_n =} \DecValTok{2}\NormalTok{),}
-    \AttributeTok{FRLF\_MINI  =} \FunctionTok{scale\_mean}\NormalTok{(., }\FunctionTok{c}\NormalTok{(frlf\_rd, frlf\_ns), }\AttributeTok{min\_n =} \DecValTok{4}\NormalTok{),}
-    \AttributeTok{KSA\_TOTAL  =} \FunctionTok{scale\_mean}\NormalTok{(., ksa\_items, }\AttributeTok{min\_n =} \DecValTok{7}\NormalTok{),}
-    \AttributeTok{SDR\_TOTAL  =} \FunctionTok{scale\_mean}\NormalTok{(., sdr\_items, }\AttributeTok{min\_n =} \DecValTok{4}\NormalTok{)}
+    \AttributeTok{FRLF\_RD    =} \FunctionTok{scale\_mean}\NormalTok{(., frlf\_rd, }\AttributeTok{min\_answered =} \DecValTok{2}\NormalTok{),}
+    \AttributeTok{FRLF\_NS    =} \FunctionTok{scale\_mean}\NormalTok{(., frlf\_ns, }\AttributeTok{min\_answered =} \DecValTok{2}\NormalTok{),}
+    \AttributeTok{FRLF\_MINI  =} \FunctionTok{scale\_mean}\NormalTok{(., }\FunctionTok{c}\NormalTok{(frlf\_rd, frlf\_ns), }\AttributeTok{min\_answered =} \DecValTok{4}\NormalTok{),}
+    \AttributeTok{KSA\_TOTAL  =} \FunctionTok{scale\_mean}\NormalTok{(., ksa\_items, }\AttributeTok{min\_answered =} \DecValTok{7}\NormalTok{),}
+    \AttributeTok{SDR\_TOTAL  =} \FunctionTok{scale\_mean}\NormalTok{(., sdr\_items, }\AttributeTok{min\_answered =} \DecValTok{4}\NormalTok{)}
 \NormalTok{  )}
 \end{Highlighting}
 \end{Shaded}
@@ -281,7 +268,7 @@ subscores}\label{scoring-constructs-subscores}}
 POP} by construction; higher = better contextualization. •
 \textbf{HPT\_CTX6} (POP\_rev + CONT) is our \textbf{primary descriptive
 score}; \textbf{HPT\_TOT9} (adds ROA) is reported for reference. •
-\textbf{Knowledge (KN\_TOTAL)}: 0--6 correct. \textbf{FR-LF/KSA/SDR}
+\textbf{Knowledge (KN\_TOTAL)}: 0-6 correct. \textbf{FR-LF/KSA/SDR}
 follow codebook.
 \end{quote}
 
@@ -387,12 +374,12 @@ possible)}\label{distributions-histograms-same-axes-where-possible}}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.95\linewidth]{/home/yetty/Projects/phd-029-hpt-and-extremism/outputs/02_descriptives-and-zero-order_files/figure-latex/hists-1} \end{center}
+\begin{center}\includegraphics[width=0.95\linewidth]{/home/yetty/PhD/projects/phd-029-hpt-and-extremism/outputs/02_descriptives-and-zero-order_files/figure-latex/hists-1} \end{center}
 
 \begin{quote}
 \textbf{Interpretation:} Watch for spikes at bounds (e.g., KN at 0 or
-max), floor/ceiling on FR-LF/KSA, and skew in HPT subscores---useful
-cues for later transformation or robust modeling.
+max), floor/ceiling on FR-LF/KSA, and skew in HPT subscores--useful cues
+for later transformation or robust modeling.
 \end{quote}
 
 \hypertarget{zero-order-correlations-student-level}{%
@@ -470,7 +457,7 @@ SDR\_TOTAL & SDR\_TOTAL & -0.05 & 0.01 & 0.01 & -0.02 & -0.01 & 0.03 & -0.07 & -
 \textbf{Interpretation:} Correlations locate broad relationships your
 hypotheses rely on. For example, if \textbf{FRLF\_MINI} correlates
 positively with \textbf{HPT\_CTX6/HPT\_TOT9}, this suggests possible
-ideological alignment inflating contextualization---an effect to test
+ideological alignment inflating contextualization--an effect to test
 with controls in models (knowledge, SDR) and with item-level checks
 later.
 \end{quote}
@@ -485,66 +472,59 @@ between clusters.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# {-}{-}{-} Robust ICC helpers {-}{-}{-}}
-\NormalTok{get\_icc\_value }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(ic) \{}
-  \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{is.null}\NormalTok{(ic)) }\FunctionTok{return}\NormalTok{(}\ConstantTok{NA\_real\_}\NormalTok{)}
-  \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{is.data.frame}\NormalTok{(ic)) \{}
-    \ControlFlowTok{if}\NormalTok{ (}\StringTok{"ICC\_adjusted"} \SpecialCharTok{\%in\%} \FunctionTok{names}\NormalTok{(ic)) }\FunctionTok{return}\NormalTok{(}\FunctionTok{suppressWarnings}\NormalTok{(}\FunctionTok{as.numeric}\NormalTok{(ic}\SpecialCharTok{$}\NormalTok{ICC\_adjusted[}\DecValTok{1}\NormalTok{])))}
-    \ControlFlowTok{if}\NormalTok{ (}\StringTok{"ICC"} \SpecialCharTok{\%in\%} \FunctionTok{names}\NormalTok{(ic))          }\FunctionTok{return}\NormalTok{(}\FunctionTok{suppressWarnings}\NormalTok{(}\FunctionTok{as.numeric}\NormalTok{(ic}\SpecialCharTok{$}\NormalTok{ICC[}\DecValTok{1}\NormalTok{])))}
-\NormalTok{    num\_cols }\OtherTok{\textless{}{-}} \FunctionTok{which}\NormalTok{(}\FunctionTok{vapply}\NormalTok{(ic, is.numeric, }\FunctionTok{logical}\NormalTok{(}\DecValTok{1}\NormalTok{)))}
-    \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{length}\NormalTok{(num\_cols)) }\FunctionTok{return}\NormalTok{(}\FunctionTok{as.numeric}\NormalTok{(ic[[ num\_cols[}\DecValTok{1}\NormalTok{] ]][}\DecValTok{1}\NormalTok{]))}
-    \FunctionTok{return}\NormalTok{(}\ConstantTok{NA\_real\_}\NormalTok{)}
-\NormalTok{  \}}
-  \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{is.list}\NormalTok{(ic)) \{}
-    \ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{is.null}\NormalTok{(ic}\SpecialCharTok{$}\NormalTok{ICC\_adjusted)) }\FunctionTok{return}\NormalTok{(}\FunctionTok{suppressWarnings}\NormalTok{(}\FunctionTok{as.numeric}\NormalTok{(ic}\SpecialCharTok{$}\NormalTok{ICC\_adjusted)))}
-    \ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{is.null}\NormalTok{(ic}\SpecialCharTok{$}\NormalTok{ICC))          }\FunctionTok{return}\NormalTok{(}\FunctionTok{suppressWarnings}\NormalTok{(}\FunctionTok{as.numeric}\NormalTok{(ic}\SpecialCharTok{$}\NormalTok{ICC)))}
-\NormalTok{    nums }\OtherTok{\textless{}{-}} \FunctionTok{unlist}\NormalTok{(ic[ }\FunctionTok{vapply}\NormalTok{(ic, is.numeric, }\FunctionTok{logical}\NormalTok{(}\DecValTok{1}\NormalTok{)) ], }\AttributeTok{use.names =} \ConstantTok{FALSE}\NormalTok{)}
-    \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{length}\NormalTok{(nums)) }\FunctionTok{return}\NormalTok{(}\FunctionTok{as.numeric}\NormalTok{(nums[}\DecValTok{1}\NormalTok{]))}
-    \FunctionTok{return}\NormalTok{(}\ConstantTok{NA\_real\_}\NormalTok{)}
-\NormalTok{  \}}
-  \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{is.atomic}\NormalTok{(ic) }\SpecialCharTok{\&\&} \FunctionTok{is.numeric}\NormalTok{(ic)) }\FunctionTok{return}\NormalTok{(}\FunctionTok{as.numeric}\NormalTok{(ic[}\DecValTok{1}\NormalTok{]))}
-  \ConstantTok{NA\_real\_}
-\NormalTok{\}}
-
 \NormalTok{fit\_icc }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(v) \{}
   \ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\NormalTok{v }\SpecialCharTok{\%in\%} \FunctionTok{names}\NormalTok{(dat)) }\FunctionTok{return}\NormalTok{(}\ConstantTok{NULL}\NormalTok{)}
-\NormalTok{  f\_cls }\OtherTok{\textless{}{-}} \FunctionTok{as.formula}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(v, }\StringTok{" \textasciitilde{} 1 + (1|school\_id) + (1|class\_id)"}\NormalTok{))}
-\NormalTok{  f\_sch }\OtherTok{\textless{}{-}} \FunctionTok{as.formula}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(v, }\StringTok{" \textasciitilde{} 1 + (1|school\_id)"}\NormalTok{))}
-  \FunctionTok{list}\NormalTok{(}
-    \AttributeTok{class\_in\_school =} \FunctionTok{tryCatch}\NormalTok{(lme4}\SpecialCharTok{::}\FunctionTok{lmer}\NormalTok{(f\_cls, }\AttributeTok{data =}\NormalTok{ dat, }\AttributeTok{REML =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{na.action =}\NormalTok{ na.omit),}
-                               \AttributeTok{error =} \ControlFlowTok{function}\NormalTok{(e) }\ConstantTok{NULL}\NormalTok{),}
-    \AttributeTok{school\_only     =} \FunctionTok{tryCatch}\NormalTok{(lme4}\SpecialCharTok{::}\FunctionTok{lmer}\NormalTok{(f\_sch, }\AttributeTok{data =}\NormalTok{ dat, }\AttributeTok{REML =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{na.action =}\NormalTok{ na.omit),}
-                               \AttributeTok{error =} \ControlFlowTok{function}\NormalTok{(e) }\ConstantTok{NULL}\NormalTok{)}
+\NormalTok{  formula }\OtherTok{\textless{}{-}} \FunctionTok{as.formula}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(}
+\NormalTok{    v, }\StringTok{" \textasciitilde{} 1 + (1 | school\_id) + (1 | school\_id:class\_label)"}
+\NormalTok{  ))}
+  \FunctionTok{tryCatch}\NormalTok{(}
+\NormalTok{    lme4}\SpecialCharTok{::}\FunctionTok{lmer}\NormalTok{(formula, }\AttributeTok{data =}\NormalTok{ dat, }\AttributeTok{REML =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{na.action =}\NormalTok{ na.omit),}
+    \AttributeTok{error =} \ControlFlowTok{function}\NormalTok{(e) }\ConstantTok{NULL}
 \NormalTok{  )}
 \NormalTok{\}}
 
 \NormalTok{extract\_icc }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(fm) \{}
-  \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{is.null}\NormalTok{(fm)) }\FunctionTok{return}\NormalTok{(}\FunctionTok{list}\NormalTok{(}\AttributeTok{ICC =} \ConstantTok{NA\_real\_}\NormalTok{, }\AttributeTok{N =} \ConstantTok{NA\_integer\_}\NormalTok{, }\AttributeTok{clusters =} \ConstantTok{NA\_integer\_}\NormalTok{))}
-\NormalTok{  ic }\OtherTok{\textless{}{-}} \FunctionTok{tryCatch}\NormalTok{(performance}\SpecialCharTok{::}\FunctionTok{icc}\NormalTok{(fm), }\AttributeTok{error =} \ControlFlowTok{function}\NormalTok{(e) }\ConstantTok{NULL}\NormalTok{)}
-\NormalTok{  icc\_val }\OtherTok{\textless{}{-}} \FunctionTok{get\_icc\_value}\NormalTok{(ic)}
-\NormalTok{  N }\OtherTok{\textless{}{-}} \FunctionTok{tryCatch}\NormalTok{(}\FunctionTok{nobs}\NormalTok{(fm), }\AttributeTok{error =} \ControlFlowTok{function}\NormalTok{(e) }\ConstantTok{NA\_integer\_}\NormalTok{)}
-\NormalTok{  clusters }\OtherTok{\textless{}{-}} \FunctionTok{tryCatch}\NormalTok{(\{}
-\NormalTok{    fl }\OtherTok{\textless{}{-}}\NormalTok{ lme4}\SpecialCharTok{::}\FunctionTok{getME}\NormalTok{(fm, }\StringTok{"flist"}\NormalTok{)}
-    \FunctionTok{length}\NormalTok{(}\FunctionTok{levels}\NormalTok{(fl[[}\DecValTok{1}\NormalTok{]]))}
-\NormalTok{  \}, }\AttributeTok{error =} \ControlFlowTok{function}\NormalTok{(e) }\ConstantTok{NA\_integer\_}\NormalTok{)}
-  \FunctionTok{list}\NormalTok{(}\AttributeTok{ICC =}\NormalTok{ icc\_val, }\AttributeTok{N =}\NormalTok{ N, }\AttributeTok{clusters =}\NormalTok{ clusters)}
+\NormalTok{  empty }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}
+    \AttributeTok{ICC\_school =} \ConstantTok{NA\_real\_}\NormalTok{, }\AttributeTok{ICC\_class\_within\_school =} \ConstantTok{NA\_real\_}\NormalTok{,}
+    \AttributeTok{ICC\_total\_cluster =} \ConstantTok{NA\_real\_}\NormalTok{, }\AttributeTok{N =} \ConstantTok{NA\_integer\_}\NormalTok{, }\AttributeTok{n\_schools =} \ConstantTok{NA\_integer\_}\NormalTok{,}
+    \AttributeTok{n\_classes =} \ConstantTok{NA\_integer\_}
+\NormalTok{  )}
+  \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{is.null}\NormalTok{(fm)) }\FunctionTok{return}\NormalTok{(empty)}
+
+\NormalTok{  variances }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(lme4}\SpecialCharTok{::}\FunctionTok{VarCorr}\NormalTok{(fm))}
+\NormalTok{  variance\_for }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(group) \{}
+\NormalTok{    value }\OtherTok{\textless{}{-}}\NormalTok{ variances}\SpecialCharTok{$}\NormalTok{vcov[variances}\SpecialCharTok{$}\NormalTok{grp }\SpecialCharTok{==}\NormalTok{ group]}
+    \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{length}\NormalTok{(value) }\SpecialCharTok{==} \DecValTok{1}\DataTypeTok{L}\NormalTok{) value }\ControlFlowTok{else} \ConstantTok{NA\_real\_}
+\NormalTok{  \}}
+\NormalTok{  school\_variance }\OtherTok{\textless{}{-}} \FunctionTok{variance\_for}\NormalTok{(}\StringTok{"school\_id"}\NormalTok{)}
+\NormalTok{  class\_variance }\OtherTok{\textless{}{-}} \FunctionTok{variance\_for}\NormalTok{(}\StringTok{"school\_id:class\_label"}\NormalTok{)}
+\NormalTok{  residual\_variance }\OtherTok{\textless{}{-}} \FunctionTok{variance\_for}\NormalTok{(}\StringTok{"Residual"}\NormalTok{)}
+\NormalTok{  total\_variance }\OtherTok{\textless{}{-}}\NormalTok{ school\_variance }\SpecialCharTok{+}\NormalTok{ class\_variance }\SpecialCharTok{+}\NormalTok{ residual\_variance}
+\NormalTok{  flist }\OtherTok{\textless{}{-}}\NormalTok{ lme4}\SpecialCharTok{::}\FunctionTok{getME}\NormalTok{(fm, }\StringTok{"flist"}\NormalTok{)}
+
+  \FunctionTok{list}\NormalTok{(}
+    \AttributeTok{ICC\_school =}\NormalTok{ school\_variance }\SpecialCharTok{/}\NormalTok{ total\_variance,}
+    \AttributeTok{ICC\_class\_within\_school =}\NormalTok{ class\_variance }\SpecialCharTok{/}\NormalTok{ total\_variance,}
+    \AttributeTok{ICC\_total\_cluster =}\NormalTok{ (school\_variance }\SpecialCharTok{+}\NormalTok{ class\_variance) }\SpecialCharTok{/}\NormalTok{ total\_variance,}
+    \AttributeTok{N =} \FunctionTok{as.integer}\NormalTok{(stats}\SpecialCharTok{::}\FunctionTok{nobs}\NormalTok{(fm)),}
+    \AttributeTok{n\_schools =} \FunctionTok{nlevels}\NormalTok{(flist}\SpecialCharTok{$}\NormalTok{school\_id),}
+    \AttributeTok{n\_classes =} \FunctionTok{nlevels}\NormalTok{(flist[[}\StringTok{"school\_id:class\_label"}\NormalTok{]])}
+\NormalTok{  )}
 \NormalTok{\}}
 
 \NormalTok{targets }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"HPT\_CTX6"}\NormalTok{,}\StringTok{"HPT\_TOT9"}\NormalTok{,}\StringTok{"HPT\_POP"}\NormalTok{,}\StringTok{"HPT\_ROA"}\NormalTok{,}\StringTok{"HPT\_CONT"}\NormalTok{,}
              \StringTok{"FRLF\_MINI"}\NormalTok{,}\StringTok{"KSA\_TOTAL"}\NormalTok{,}\StringTok{"KN\_TOTAL"}\NormalTok{,}\StringTok{"SDR\_TOTAL"}\NormalTok{)}
 
 \NormalTok{icc\_rows }\OtherTok{\textless{}{-}}\NormalTok{ purrr}\SpecialCharTok{::}\FunctionTok{map}\NormalTok{(targets, }\ControlFlowTok{function}\NormalTok{(sc) \{}
-\NormalTok{  mods }\OtherTok{\textless{}{-}} \FunctionTok{fit\_icc}\NormalTok{(sc)}
-\NormalTok{  cls }\OtherTok{\textless{}{-}} \FunctionTok{extract\_icc}\NormalTok{(mods}\SpecialCharTok{$}\NormalTok{class\_in\_school)}
-\NormalTok{  sch }\OtherTok{\textless{}{-}} \FunctionTok{extract\_icc}\NormalTok{(mods}\SpecialCharTok{$}\NormalTok{school\_only)}
+\NormalTok{  components }\OtherTok{\textless{}{-}} \FunctionTok{extract\_icc}\NormalTok{(}\FunctionTok{fit\_icc}\NormalTok{(sc))}
   \FunctionTok{data.frame}\NormalTok{(}
     \AttributeTok{scale =}\NormalTok{ sc,}
-    \AttributeTok{ICC\_class\_in\_school =} \FunctionTok{round}\NormalTok{(cls}\SpecialCharTok{$}\NormalTok{ICC, }\DecValTok{3}\NormalTok{),}
-    \AttributeTok{N\_class\_in\_school   =} \FunctionTok{as.integer}\NormalTok{(cls}\SpecialCharTok{$}\NormalTok{N),}
-    \AttributeTok{clusters\_classes    =} \FunctionTok{as.integer}\NormalTok{(cls}\SpecialCharTok{$}\NormalTok{clusters),}
-    \AttributeTok{ICC\_school\_only     =} \FunctionTok{round}\NormalTok{(sch}\SpecialCharTok{$}\NormalTok{ICC, }\DecValTok{3}\NormalTok{),}
-    \AttributeTok{N\_school\_only       =} \FunctionTok{as.integer}\NormalTok{(sch}\SpecialCharTok{$}\NormalTok{N),}
-    \AttributeTok{clusters\_schools    =} \FunctionTok{as.integer}\NormalTok{(sch}\SpecialCharTok{$}\NormalTok{clusters)}
+    \AttributeTok{ICC\_school =} \FunctionTok{round}\NormalTok{(components}\SpecialCharTok{$}\NormalTok{ICC\_school, }\DecValTok{3}\NormalTok{),}
+    \AttributeTok{ICC\_class\_within\_school =} \FunctionTok{round}\NormalTok{(components}\SpecialCharTok{$}\NormalTok{ICC\_class\_within\_school, }\DecValTok{3}\NormalTok{),}
+    \AttributeTok{ICC\_total\_cluster =} \FunctionTok{round}\NormalTok{(components}\SpecialCharTok{$}\NormalTok{ICC\_total\_cluster, }\DecValTok{3}\NormalTok{),}
+    \AttributeTok{N =}\NormalTok{ components}\SpecialCharTok{$}\NormalTok{N,}
+    \AttributeTok{n\_schools =}\NormalTok{ components}\SpecialCharTok{$}\NormalTok{n\_schools,}
+    \AttributeTok{n\_classes =}\NormalTok{ components}\SpecialCharTok{$}\NormalTok{n\_classes}
 \NormalTok{  )}
 \NormalTok{\})}
 \NormalTok{icc\_res }\OtherTok{\textless{}{-}}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{bind\_rows}\NormalTok{(icc\_rows)}
@@ -554,26 +534,26 @@ between clusters.
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{kable}\NormalTok{(icc\_res, }\AttributeTok{booktabs =} \ConstantTok{TRUE}\NormalTok{,}
-      \AttributeTok{caption =} \StringTok{"Intraclass correlations (ICCs): class (nested in school) and school."}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+      \AttributeTok{caption =} \StringTok{"Intraclass correlations from nested school/class models."}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{kable\_styling}\NormalTok{(}\AttributeTok{latex\_options =} \FunctionTok{c}\NormalTok{(}\StringTok{"striped"}\NormalTok{,}\StringTok{"hold\_position"}\NormalTok{), }\AttributeTok{full\_width =} \ConstantTok{FALSE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{longtable}[t]{lrrrrrr}
-\caption{\label{tab:icc-table}Intraclass correlations (ICCs): class (nested in school) and school.}\\
+\caption{\label{tab:icc-table}Intraclass correlations from nested school/class models.}\\
 \toprule
-scale & ICC\_class\_in\_school & N\_class\_in\_school & clusters\_classes & ICC\_school\_only & N\_school\_only & clusters\_schools\\
+scale & ICC\_school & ICC\_class\_within\_school & ICC\_total\_cluster & N & n\_schools & n\_classes\\
 \midrule
-\cellcolor{gray!10}{HPT\_CTX6} & \cellcolor{gray!10}{NA} & \cellcolor{gray!10}{287} & \cellcolor{gray!10}{20} & \cellcolor{gray!10}{0.041} & \cellcolor{gray!10}{287} & \cellcolor{gray!10}{10}\\
-HPT\_TOT9 & NA & 287 & 20 & 0.085 & 287 & 10\\
-\cellcolor{gray!10}{HPT\_POP} & \cellcolor{gray!10}{NA} & \cellcolor{gray!10}{287} & \cellcolor{gray!10}{20} & \cellcolor{gray!10}{0.025} & \cellcolor{gray!10}{287} & \cellcolor{gray!10}{10}\\
-HPT\_ROA & 0.104 & 287 & 20 & 0.102 & 287 & 10\\
-\cellcolor{gray!10}{HPT\_CONT} & \cellcolor{gray!10}{0.033} & \cellcolor{gray!10}{287} & \cellcolor{gray!10}{20} & \cellcolor{gray!10}{0.030} & \cellcolor{gray!10}{287} & \cellcolor{gray!10}{10}\\
+\cellcolor{gray!10}{HPT\_CTX6} & \cellcolor{gray!10}{0.041} & \cellcolor{gray!10}{0.000} & \cellcolor{gray!10}{0.041} & \cellcolor{gray!10}{287} & \cellcolor{gray!10}{10} & \cellcolor{gray!10}{20}\\
+HPT\_TOT9 & 0.085 & 0.000 & 0.085 & 287 & 10 & 20\\
+\cellcolor{gray!10}{HPT\_POP} & \cellcolor{gray!10}{0.025} & \cellcolor{gray!10}{0.000} & \cellcolor{gray!10}{0.025} & \cellcolor{gray!10}{287} & \cellcolor{gray!10}{10} & \cellcolor{gray!10}{20}\\
+HPT\_ROA & 0.092 & 0.011 & 0.104 & 287 & 10 & 20\\
+\cellcolor{gray!10}{HPT\_CONT} & \cellcolor{gray!10}{0.026} & \cellcolor{gray!10}{0.007} & \cellcolor{gray!10}{0.033} & \cellcolor{gray!10}{287} & \cellcolor{gray!10}{10} & \cellcolor{gray!10}{20}\\
 \addlinespace
-FRLF\_MINI & 0.070 & 284 & 20 & 0.062 & 284 & 10\\
-\cellcolor{gray!10}{KSA\_TOTAL} & \cellcolor{gray!10}{0.099} & \cellcolor{gray!10}{283} & \cellcolor{gray!10}{20} & \cellcolor{gray!10}{0.076} & \cellcolor{gray!10}{283} & \cellcolor{gray!10}{10}\\
-KN\_TOTAL & NA & 293 & 20 & 0.053 & 293 & 10\\
-\cellcolor{gray!10}{SDR\_TOTAL} & \cellcolor{gray!10}{NA} & \cellcolor{gray!10}{283} & \cellcolor{gray!10}{20} & \cellcolor{gray!10}{NA} & \cellcolor{gray!10}{283} & \cellcolor{gray!10}{10}\\
+FRLF\_MINI & 0.055 & 0.015 & 0.070 & 284 & 10 & 20\\
+\cellcolor{gray!10}{KSA\_TOTAL} & \cellcolor{gray!10}{0.057} & \cellcolor{gray!10}{0.042} & \cellcolor{gray!10}{0.099} & \cellcolor{gray!10}{283} & \cellcolor{gray!10}{10} & \cellcolor{gray!10}{20}\\
+KN\_TOTAL & 0.053 & 0.000 & 0.053 & 293 & 10 & 20\\
+\cellcolor{gray!10}{SDR\_TOTAL} & \cellcolor{gray!10}{0.000} & \cellcolor{gray!10}{0.000} & \cellcolor{gray!10}{0.000} & \cellcolor{gray!10}{283} & \cellcolor{gray!10}{10} & \cellcolor{gray!10}{20}\\
 \bottomrule
 \end{longtable}
 
@@ -611,7 +591,7 @@ milieu; larger ICCs for HPT may signal classroom task/context effects.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.95\linewidth]{/home/yetty/Projects/phd-029-hpt-and-extremism/outputs/02_descriptives-and-zero-order_files/figure-latex/group-plots-1} \end{center}
+\begin{center}\includegraphics[width=0.95\linewidth]{/home/yetty/PhD/projects/phd-029-hpt-and-extremism/outputs/02_descriptives-and-zero-order_files/figure-latex/group-plots-1} \end{center}
 
 \begin{quote}
 \textbf{Interpretation:} Visual check for unusually high/low classes can
@@ -630,48 +610,47 @@ appendix}\label{reproducibility-appendix}}
 \end{Shaded}
 
 \begin{verbatim}
-## R version 4.4.2 (2024-10-31)
+## R version 4.6.1 (2026-06-24)
 ## Platform: x86_64-pc-linux-gnu
-## Running under: Ubuntu 24.04.3 LTS
-## 
+## Running under: Ubuntu 24.04.5 LTS
+##
 ## Matrix products: default
-## BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.12.0 
-## LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.12.0
-## 
+## BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.12.0
+## LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.12.0  LAPACK version 3.12.0
+##
 ## locale:
-##  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
-##  [3] LC_TIME=cs_CZ.UTF-8        LC_COLLATE=en_US.UTF-8    
-##  [5] LC_MONETARY=cs_CZ.UTF-8    LC_MESSAGES=en_US.UTF-8   
-##  [7] LC_PAPER=cs_CZ.UTF-8       LC_NAME=C                 
-##  [9] LC_ADDRESS=C               LC_TELEPHONE=C            
-## [11] LC_MEASUREMENT=cs_CZ.UTF-8 LC_IDENTIFICATION=C       
-## 
+##  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C
+##  [3] LC_TIME=cs_CZ.UTF-8        LC_COLLATE=en_US.UTF-8
+##  [5] LC_MONETARY=cs_CZ.UTF-8    LC_MESSAGES=en_US.UTF-8
+##  [7] LC_PAPER=cs_CZ.UTF-8       LC_NAME=C
+##  [9] LC_ADDRESS=C               LC_TELEPHONE=C
+## [11] LC_MEASUREMENT=cs_CZ.UTF-8 LC_IDENTIFICATION=C
+##
 ## time zone: Europe/Prague
 ## tzcode source: system (glibc)
-## 
+##
 ## attached base packages:
-## [1] stats     graphics  grDevices utils     datasets  methods   base     
-## 
+## [1] stats     graphics  grDevices utils     datasets  methods   base
+##
 ## other attached packages:
-##  [1] performance_0.15.1 lme4_1.1-38        Matrix_1.7-1       psych_2.4.12      
-##  [5] scales_1.4.0       ggplot2_4.0.1      kableExtra_1.4.0   knitr_1.50        
-##  [9] readxl_1.4.3       purrr_1.1.0        tidyr_1.3.1        stringr_1.5.1     
-## [13] dplyr_1.1.4       
-## 
+##  [1] lme4_2.0-6       Matrix_1.7-6     psych_2.6.5      scales_1.4.0
+##  [5] ggplot2_4.0.3    kableExtra_1.4.1 knitr_1.51       readxl_1.5.0.1
+##  [9] purrr_1.2.2      tidyr_1.3.2      stringr_1.6.0    dplyr_1.2.1
+##
 ## loaded via a namespace (and not attached):
-##  [1] generics_0.1.3     xml2_1.3.6         stringi_1.8.4      lattice_0.22-5    
-##  [5] digest_0.6.37      magrittr_2.0.3     evaluate_1.0.5     grid_4.4.2        
-##  [9] RColorBrewer_1.1-3 fastmap_1.2.0      cellranger_1.1.0   viridisLite_0.4.2 
-## [13] textshaping_0.4.1  reformulas_0.4.1   Rdpack_2.6.4       mnormt_2.1.1      
-## [17] cli_3.6.5          rlang_1.1.6        rbibutils_2.3      splines_4.4.2     
-## [21] withr_3.0.2        yaml_2.3.10        tools_4.4.2        parallel_4.4.2    
-## [25] nloptr_2.2.1       minqa_1.2.8        boot_1.3-31        vctrs_0.6.5       
-## [29] R6_2.6.1           lifecycle_1.0.4    MASS_7.3-61        insight_1.4.2     
-## [33] pkgconfig_2.0.3    pillar_1.10.0      gtable_0.3.6       Rcpp_1.0.13-1     
-## [37] glue_1.8.0         systemfonts_1.3.1  xfun_0.54          tibble_3.2.1      
-## [41] tidyselect_1.2.1   rstudioapi_0.17.1  farver_2.1.2       htmltools_0.5.8.1 
-## [45] nlme_3.1-166       labeling_0.4.3     rmarkdown_2.29     svglite_2.2.2     
-## [49] compiler_4.4.2     S7_0.2.1
+##  [1] generics_0.1.4     xml2_1.6.0         stringi_1.8.7      lattice_0.23-1
+##  [5] digest_0.6.39      magrittr_2.0.5     evaluate_1.0.5     grid_4.6.1
+##  [9] RColorBrewer_1.1-3 fastmap_1.2.0      cellranger_1.1.0   tinytex_0.61
+## [13] viridisLite_0.4.3  textshaping_1.0.5  reformulas_0.4.4   Rdpack_2.6.6
+## [17] mnormt_2.1.2       cli_3.6.6          rlang_1.3.0        rbibutils_2.4.1
+## [21] splines_4.6.1      withr_3.0.3        yaml_2.3.12        otel_0.2.0
+## [25] tools_4.6.1        parallel_4.6.1     nloptr_2.2.1       minqa_1.2.8
+## [29] boot_1.3-32        vctrs_0.7.3        R6_2.6.1           lifecycle_1.0.5
+## [33] MASS_7.3-66        pkgconfig_2.0.3    pillar_1.11.1      gtable_0.3.6
+## [37] Rcpp_1.1.2         glue_1.8.1         systemfonts_1.3.2  xfun_0.60
+## [41] tibble_3.3.1       tidyselect_1.2.1   rstudioapi_0.19.0  farver_2.1.2
+## [45] htmltools_0.5.9    nlme_3.1-171       labeling_0.4.3     rmarkdown_2.32
+## [49] svglite_2.2.2      compiler_4.6.1     S7_0.2.2
 \end{verbatim}
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
@@ -684,7 +663,7 @@ pointers}\label{notes-interpretation-pointers}}
 \tightlist
 \item
   \textbf{HPT scales (1-4):} Higher indicates better
-  contextualization/agent-sensitive reasoning---\textbf{after POP
+  contextualization/agent-sensitive reasoning--\textbf{after POP
   reversal}; we report CTX6 (primary) and TOT9 (with ROA) side-by-side.
 \item
   \textbf{FR-LF mini (1-5):} Short right-wing authoritarian/Nazi

@@ -25,10 +25,10 @@ a substantive change.
 **Files:**
 - Modify: `submissions/pci_psychology/test_revision_reporting_analyses.R`
 
-- [ ] Add assertions for explicit score thresholds, robust/scaled CFA output,
+- [x] Add assertions for explicit score thresholds, robust/scaled CFA output,
   separate school and class-within-school ICCs, current preregistration and
   preprint identifiers, and required replication-package files.
-- [ ] Run the test and confirm that the new assertions fail for the current
+- [x] Run the test and confirm that the new assertions fail for the current
   CFA, ICC, identifier, or package state.
 
 ### Task 2: Correct CFA and ICC computation
@@ -40,13 +40,13 @@ a substantive change.
 - Modify: `osf_storage/scripts/02_descriptives_and_zero_order_correlations.Rmd`
 - Modify: `submissions/pci_psychology/verify_statistics.R`
 
-- [ ] Standardize single-group and multi-group categorical CFA reporting on
+- [x] Standardize single-group and multi-group categorical CFA reporting on
   robust/scaled WLSMV fit indices.
-- [ ] Compute school, class-within-school, and total-cluster ICCs directly from
+- [x] Compute school, class-within-school, and total-cluster ICCs directly from
   one nested random-intercept model rather than relabelling an aggregate ICC.
-- [ ] Rerun the focused verification and compare all corrected values with the
+- [x] Rerun the focused verification and compare all corrected values with the
   existing substantive findings.
-- [ ] Stop and report before changing conclusions if model preference, DIF,
+- [x] Stop and report before changing conclusions if model preference, DIF,
   invariance, focal regression, or the direction/significance of primary
   findings changes materially.
 
@@ -57,12 +57,12 @@ a substantive change.
 - Download: `/home/yetty/PhD/knowledge/L/<downloaded-pdf-name>.pdf`
 - Regenerate: `/home/yetty/PhD/bibliography.bib`
 
-- [ ] Download DOI `10.1080/13511610.2026.2630018` through the approved
+- [x] Download DOI `10.1080/13511610.2026.2630018` through the approved
   article-download workflow.
-- [ ] Verify from the full text whether the study administers the nine-item
+- [x] Verify from the full text whether the study administers the nine-item
   instrument or instead uses Hartmann and Hasselhorn's categories as an
   analytical framework.
-- [ ] Create and validate an R/ note with complete frontmatter, register it in
+- [x] Create and validate an R/ note with complete frontmatter, register it in
   `phd-reading`, regenerate the master bibliography, and run scoped metadata
   checks.
 
@@ -76,16 +76,16 @@ a substantive change.
 - Modify: `submissions/pci_psychology/reviews/revision_ledger.md`
 - Modify: `submissions/pci_psychology/top_disclosure_table.md`
 
-- [ ] Replace the OSF project DOI in the TOP preprint field with the verified
+- [x] Replace the OSF project DOI in the TOP preprint field with the verified
   PsyArXiv DOI, and use `zsngy` for the immutable preregistration.
-- [ ] Correct the HPT fit-to-situation response anchors.
-- [ ] Propagate corrected robust CFA and nested ICC values and interpretations.
-- [ ] Label the abstract statistic as right-authoritarian attitudes.
-- [ ] Add a bounded description of the Turkish qualitative application.
-- [ ] Simplify DIF multiplicity and preregistration wording without implying
+- [x] Correct the HPT fit-to-situation response anchors.
+- [x] Propagate corrected robust CFA and nested ICC values and interpretations.
+- [x] Label the abstract statistic as right-authoritarian attitudes.
+- [x] Add a bounded description of the Turkish qualitative application.
+- [x] Simplify DIF multiplicity and preregistration wording without implying
   that the registered BH procedure was implemented.
-- [ ] Align every response-letter claim and location with the final manuscript.
-- [ ] Apply only mechanical numeric, terminology, spelling, and reference-list
+- [x] Align every response-letter claim and location with the final manuscript.
+- [x] Apply only mechanical numeric, terminology, spelling, and reference-list
   corrections; retain the current title and substantive scope.
 
 ### Task 5: Refresh the future Zenodo replication package
@@ -96,14 +96,14 @@ a substantive change.
 - Modify: `osf_storage/outputs/*`
 - Add: current supplement and revision scripts/outputs as required
 
-- [ ] Correct the ethics statement in the public package to match the
+- [x] Correct the ethics statement in the public package to match the
   manuscript, as directed by the author.
-- [ ] Replace OSF-project language with repository-neutral replication-package
+- [x] Replace OSF-project language with repository-neutral replication-package
   language suitable for the planned Zenodo migration while preserving current
   identifiers as provenance.
-- [ ] Refresh scripts, outputs, supplement, title, affiliations, identifiers,
+- [x] Refresh scripts, outputs, supplement, title, affiliations, identifiers,
   execution order, and table/figure mappings.
-- [ ] Ensure the package contains every file promised by the manuscript's data
+- [x] Ensure the package contains every file promised by the manuscript's data
   availability statement.
 
 ### Task 6: Rebuild, audit, and publish
@@ -117,15 +117,17 @@ a substantive change.
 - Regenerate: `submissions/pci_psychology/manuscript_diff.tex`
 - Regenerate: `submissions/pci_psychology/manuscript_diff.pdf`
 
-- [ ] Run the full reporting and statistical verification suite.
-- [ ] Rebuild clean manuscript, supplement, and redline artifacts.
-- [ ] Verify references, PDF text, page locations, identifiers, ethics text,
+- [x] Run the full reporting and statistical verification suite.
+- [x] Rebuild clean manuscript, supplement, and redline artifacts.
+- [x] Verify references, PDF text, page locations, identifiers, ethics text,
   absence of unresolved citations/placeholders, and replication-package
   completeness.
-- [ ] Run a final citation/reference verification against the knowledge base.
-- [ ] Review explicit diffs and update status files with the verified state.
-- [ ] Commit and push the project, then commit and push only the project pointer
-  and regenerated root bibliography in the root repository.
+- [ ] Run a final citation/reference verification against the knowledge base
+  (scoped checks pass for Aktin; inherited metadata/read-status failures for
+  older cited R/ notes remain outside this project-only commit).
+- [x] Review explicit diffs and update status files with the verified state.
+- [x] Commit project-only changes. Do not push, stage the root repository, or
+  upload the prepared package to Zenodo; those operations are out of scope.
 
 ## Self-review
 
