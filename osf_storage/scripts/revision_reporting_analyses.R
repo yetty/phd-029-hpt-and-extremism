@@ -68,8 +68,8 @@ bootstrap_ideology_reliability <- function(data, fr_items, ksa_items,
     ksa_rel <- suppressWarnings(
       psych::alpha(sample[ksa_items], warnings = FALSE)$total$raw_alpha
     )
-    fr_score <- scale_mean(sample, fr_items, 4)
-    ksa_score <- scale_mean(sample, ksa_items, 7)
+    fr_score <- scale_mean(sample, fr_items, min_answered = 4)
+    ksa_score <- scale_mean(sample, ksa_items, min_answered = 7)
     component_r <- stats::cor(fr_score, ksa_score,
                               use = "pairwise.complete.obs")
     mosier_two_component(fr_rel, ksa_rel, component_r)
@@ -92,15 +92,15 @@ score_data <- function(data) {
 
   fr_items <- c(paste0("RD", 1:3), paste0("NS", 1:3))
   ksa_items <- c(paste0("A", 1:3), paste0("U", 1:3), paste0("K", 1:3))
-  data$HPT_composite <- scale_mean(data, paste0(pop, "_rev"), 2) / 2 +
-    scale_mean(data, paste0("CONT", 1:3), 2) / 2
-  data$Contextualization <- scale_mean(data, paste0("CONT", 1:3), 2)
-  data$Reversed_presentism <- scale_mean(data, paste0(pop, "_rev"), 2)
-  data$Role_of_agent <- scale_mean(data, paste0("ROA", 1:3), 2)
+  data$HPT_composite <- scale_mean(data, paste0(pop, "_rev"), min_answered = 2) / 2 +
+    scale_mean(data, paste0("CONT", 1:3), min_answered = 2) / 2
+  data$Contextualization <- scale_mean(data, paste0("CONT", 1:3), min_answered = 2)
+  data$Reversed_presentism <- scale_mean(data, paste0(pop, "_rev"), min_answered = 2)
+  data$Role_of_agent <- scale_mean(data, paste0("ROA", 1:3), min_answered = 2)
   data$Historical_knowledge <- sum_missing_as_zero(data[paste0("KN", 1:6)])
-  data$FR_LF <- scale_mean(data, fr_items, 4)
-  data$KSA_3 <- scale_mean(data, ksa_items, 7)
-  data$Social_desirability <- scale_mean(data, paste0("SDR", 1:5), 4)
+  data$FR_LF <- scale_mean(data, fr_items, min_answered = 4)
+  data$KSA_3 <- scale_mean(data, ksa_items, min_answered = 7)
+  data$Social_desirability <- scale_mean(data, paste0("SDR", 1:5), min_answered = 4)
   data$Ideology_composite <- rowMeans(
     cbind(as.numeric(scale(data$FR_LF)), as.numeric(scale(data$KSA_3))),
     na.rm = FALSE

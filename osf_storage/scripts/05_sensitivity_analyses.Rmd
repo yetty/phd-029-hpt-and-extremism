@@ -87,9 +87,9 @@ POP_rev_items <- paste0("POP", 1:3)
 dat_raw <- dat_raw %>%
   mutate(across(all_of(POP_rev_items), ~ 5 - as.numeric(.), .names = "{.col}_rev")) %>%
   mutate(
-    HPT_POP_rev = scale_mean(., paste0(POP_rev_items, "_rev"), 2),
-    HPT_CONT    = scale_mean(., paste0("CONT", 1:3), 2),
-    HPT_ROA     = scale_mean(., paste0("ROA", 1:3), 2),
+    HPT_POP_rev = scale_mean(., paste0(POP_rev_items, "_rev"), min_answered = 2),
+    HPT_CONT    = scale_mean(., paste0("CONT", 1:3), min_answered = 2),
+    HPT_ROA     = scale_mean(., paste0("ROA", 1:3), min_answered = 2),
     # Canonical composites
     HPT_CTX6    = rowMeans(cbind(HPT_POP_rev, HPT_CONT), na.rm = FALSE),
     HPT_TOT9    = rowMeans(cbind(HPT_POP_rev, HPT_CONT, HPT_ROA),
@@ -109,7 +109,7 @@ dat <- dat_raw %>%
     HPT_total_9 = HPT_TOT9,
     HPT_total_8 = scale_mean(., c(paste0("POP", 1:3, "_rev"),
                                   paste0("ROA", 2:3),
-                                  paste0("CONT", 1:3)), 5),
+                                  paste0("CONT", 1:3)), min_answered = 5),
     HPT_total_6 = HPT_CTX6
   )
 
@@ -145,16 +145,16 @@ hpt_desc_tbl %>%
 dat <- dat %>%
   mutate(
     KN_total   = rowSums(across(KN1:KN6), na.rm = TRUE),
-    SDR_total  = scale_mean(., paste0("SDR", 1:5), 4),
-    NS_sum     = scale_mean(., paste0("NS", 1:3), 2),
-    RD_sum     = scale_mean(., paste0("RD", 1:3), 2),
+    SDR_total  = scale_mean(., paste0("SDR", 1:5), min_answered = 4),
+    NS_sum     = scale_mean(., paste0("NS", 1:3), min_answered = 2),
+    RD_sum     = scale_mean(., paste0("RD", 1:3), min_answered = 2),
     FRLF_mini  = scale_mean(., c(paste0("NS", 1:3),
-                                 paste0("RD", 1:3)), 4),
-    KSA_A      = scale_mean(., paste0("A", 1:3), 2),
-    KSA_U      = scale_mean(., paste0("U", 1:3), 2),
-    KSA_K      = scale_mean(., paste0("K", 1:3), 2),
+                                 paste0("RD", 1:3)), min_answered = 4),
+    KSA_A      = scale_mean(., paste0("A", 1:3), min_answered = 2),
+    KSA_U      = scale_mean(., paste0("U", 1:3), min_answered = 2),
+    KSA_K      = scale_mean(., paste0("K", 1:3), min_answered = 2),
     KSA_total  = scale_mean(., c(paste0("A", 1:3), paste0("U", 1:3),
-                                 paste0("K", 1:3)), 7)
+                                 paste0("K", 1:3)), min_answered = 7)
   ) %>%
   mutate(across(c(NS_sum, RD_sum, FRLF_mini, KSA_total, KN_total, SDR_total), scale, .names = "{.col}_z"))
 

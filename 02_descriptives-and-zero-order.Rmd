@@ -65,7 +65,6 @@ library(knitr); library(kableExtra); library(ggplot2); library(scales)
 library(psych)           # corr.test
 # Multilevel & ICC
 library(lme4)            # lmer
-suppressPackageStartupMessages(library(performance)) # icc()
 source("submissions/pci_psychology/scoring_helpers.R")
 
 theme_set(theme_minimal(base_size = 11))
@@ -229,66 +228,59 @@ kable(corr_tab, booktabs = TRUE, caption = "Zero-order Pearson correlations amon
 We estimate the variance attributable to schools and classes with random-intercept models. ICC ≈ proportion of total variance that is between clusters.
 
 ```{r,icc-funs}
-# --- Robust ICC helpers ---
-get_icc_value <- function(ic) {
-  if (is.null(ic)) return(NA_real_)
-  if (is.data.frame(ic)) {
-    if ("ICC_adjusted" %in% names(ic)) return(suppressWarnings(as.numeric(ic$ICC_adjusted[1])))
-    if ("ICC" %in% names(ic))          return(suppressWarnings(as.numeric(ic$ICC[1])))
-    num_cols <- which(vapply(ic, is.numeric, logical(1)))
-    if (length(num_cols)) return(as.numeric(ic[[ num_cols[1] ]][1]))
-    return(NA_real_)
-  }
-  if (is.list(ic)) {
-    if (!is.null(ic$ICC_adjusted)) return(suppressWarnings(as.numeric(ic$ICC_adjusted)))
-    if (!is.null(ic$ICC))          return(suppressWarnings(as.numeric(ic$ICC)))
-    nums <- unlist(ic[ vapply(ic, is.numeric, logical(1)) ], use.names = FALSE)
-    if (length(nums)) return(as.numeric(nums[1]))
-    return(NA_real_)
-  }
-  if (is.atomic(ic) && is.numeric(ic)) return(as.numeric(ic[1]))
-  NA_real_
-}
-
 fit_icc <- function(v) {
   if (!v %in% names(dat)) return(NULL)
-  f_cls <- as.formula(paste0(v, " ~ 1 + (1|school_id) + (1|class_id)"))
-  f_sch <- as.formula(paste0(v, " ~ 1 + (1|school_id)"))
-  list(
-    class_in_school = tryCatch(lme4::lmer(f_cls, data = dat, REML = TRUE, na.action = na.omit),
-                               error = function(e) NULL),
-    school_only     = tryCatch(lme4::lmer(f_sch, data = dat, REML = TRUE, na.action = na.omit),
-                               error = function(e) NULL)
+  formula <- as.formula(paste0(
+    v, " ~ 1 + (1 | school_id) + (1 | school_id:class_label)"
+  ))
+  tryCatch(
+    lme4::lmer(formula, data = dat, REML = TRUE, na.action = na.omit),
+    error = function(e) NULL
   )
 }
 
 extract_icc <- function(fm) {
-  if (is.null(fm)) return(list(ICC = NA_real_, N = NA_integer_, clusters = NA_integer_))
-  ic <- tryCatch(performance::icc(fm), error = function(e) NULL)
-  icc_val <- get_icc_value(ic)
-  N <- tryCatch(nobs(fm), error = function(e) NA_integer_)
-  clusters <- tryCatch({
-    fl <- lme4::getME(fm, "flist")
-    length(levels(fl[[1]]))
-  }, error = function(e) NA_integer_)
-  list(ICC = icc_val, N = N, clusters = clusters)
+  empty <- list(
+    ICC_school = NA_real_, ICC_class_within_school = NA_real_,
+    ICC_total_cluster = NA_real_, N = NA_integer_, n_schools = NA_integer_,
+    n_classes = NA_integer_
+  )
+  if (is.null(fm)) return(empty)
+
+  variances <- as.data.frame(lme4::VarCorr(fm))
+  variance_for <- function(group) {
+    value <- variances$vcov[variances$grp == group]
+    if (length(value) == 1L) value else NA_real_
+  }
+  school_variance <- variance_for("school_id")
+  class_variance <- variance_for("school_id:class_label")
+  residual_variance <- variance_for("Residual")
+  total_variance <- school_variance + class_variance + residual_variance
+  flist <- lme4::getME(fm, "flist")
+
+  list(
+    ICC_school = school_variance / total_variance,
+    ICC_class_within_school = class_variance / total_variance,
+    ICC_total_cluster = (school_variance + class_variance) / total_variance,
+    N = as.integer(stats::nobs(fm)),
+    n_schools = nlevels(flist$school_id),
+    n_classes = nlevels(flist[["school_id:class_label"]])
+  )
 }
 
 targets <- c("HPT_CTX6","HPT_TOT9","HPT_POP","HPT_ROA","HPT_CONT",
              "FRLF_MINI","KSA_TOTAL","KN_TOTAL","SDR_TOTAL")
 
 icc_rows <- purrr::map(targets, function(sc) {
-  mods <- fit_icc(sc)
-  cls <- extract_icc(mods$class_in_school)
-  sch <- extract_icc(mods$school_only)
+  components <- extract_icc(fit_icc(sc))
   data.frame(
     scale = sc,
-    ICC_class_in_school = round(cls$ICC, 3),
-    N_class_in_school   = as.integer(cls$N),
-    clusters_classes    = as.integer(cls$clusters),
-    ICC_school_only     = round(sch$ICC, 3),
-    N_school_only       = as.integer(sch$N),
-    clusters_schools    = as.integer(sch$clusters)
+    ICC_school = round(components$ICC_school, 3),
+    ICC_class_within_school = round(components$ICC_class_within_school, 3),
+    ICC_total_cluster = round(components$ICC_total_cluster, 3),
+    N = components$N,
+    n_schools = components$n_schools,
+    n_classes = components$n_classes
   )
 })
 icc_res <- dplyr::bind_rows(icc_rows)
@@ -296,7 +288,7 @@ icc_res <- dplyr::bind_rows(icc_rows)
 
 ```{r,icc-table}
 kable(icc_res, booktabs = TRUE,
-      caption = "Intraclass correlations (ICCs): class (nested in school) and school.") %>%
+      caption = "Intraclass correlations from nested school/class models.") %>%
   kable_styling(latex_options = c("striped","hold_position"), full_width = FALSE)
 ```
 

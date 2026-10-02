@@ -97,10 +97,10 @@ POP_rev_items <- paste0("POP", 1:3)
 dat_raw <- dat_raw %>%
   mutate(across(all_of(POP_rev_items), ~ 5 - ., .names = "{.col}_rev")) %>%
   mutate(
-    HPT_POP_raw = scale_mean(., POP_rev_items, 2),
-    HPT_POP_rev = scale_mean(., paste0(POP_rev_items, "_rev"), 2),
-    HPT_CONT    = scale_mean(., paste0("CONT", 1:3), 2),
-    HPT_ROA     = scale_mean(., paste0("ROA", 1:3), 2),
+    HPT_POP_raw = scale_mean(., POP_rev_items, min_answered = 2),
+    HPT_POP_rev = scale_mean(., paste0(POP_rev_items, "_rev"), min_answered = 2),
+    HPT_CONT    = scale_mean(., paste0("CONT", 1:3), min_answered = 2),
+    HPT_ROA     = scale_mean(., paste0("ROA", 1:3), min_answered = 2),
 
     # Canonical composites (CTX6 is our stable default)
     HPT_CTX6 = rowMeans(cbind(HPT_POP_rev, HPT_CONT), na.rm = FALSE),
@@ -133,10 +133,10 @@ dat <- dat_raw %>%
   mutate(
     HPT_total = HPT_TOT9,
     HPT_POPR  = HPT_POP_rev,
-    FRLF_mean = scale_mean(., frlf_items, 4),
-    KSA_mean  = scale_mean(., ksa_items, 7),
+    FRLF_mean = scale_mean(., frlf_items, min_answered = 4),
+    KSA_mean  = scale_mean(., ksa_items, min_answered = 7),
     KN_sum    = rowSums(across(all_of(kn_items)), na.rm = TRUE),
-    SDR_mean  = scale_mean(., sdr_items, 4)
+    SDR_mean  = scale_mean(., sdr_items, min_answered = 4)
   ) %>%
   mutate(
     FRLF_z = as.numeric(scale(FRLF_mean)),

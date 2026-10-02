@@ -112,10 +112,10 @@ dat <- dat %>%
     )
   ) %>%
   mutate(
-    HPT_POP_raw = scale_mean(., POP_rev_items, 2),
-    HPT_POP_rev = scale_mean(., paste0(POP_rev_items, "_rev"), 2),
-    HPT_CONT    = scale_mean(., paste0("CONT", 1:3), 2),
-    HPT_ROA     = scale_mean(., paste0("ROA", 1:3), 2),
+    HPT_POP_raw = scale_mean(., POP_rev_items, min_answered = 2),
+    HPT_POP_rev = scale_mean(., paste0(POP_rev_items, "_rev"), min_answered = 2),
+    HPT_CONT    = scale_mean(., paste0("CONT", 1:3), min_answered = 2),
+    HPT_ROA     = scale_mean(., paste0("ROA", 1:3), min_answered = 2),
     HPT_CTX6    = rowMeans(cbind(HPT_POP_rev, HPT_CONT), na.rm = FALSE),
     HPT_TOT9    = rowMeans(cbind(HPT_POP_rev, HPT_CONT, HPT_ROA),
                            na.rm = FALSE)
@@ -239,7 +239,11 @@ semTools::compareFit(fit_2, fit_3, fit_1)
 ```{r,cfa-details}
 report_fit <- function(fit) {
   list(
-    indices = fitMeasures(fit, c("cfi","tli","rmsea","rmsea.ci.lower","rmsea.ci.upper","srmr")),
+    indices = fitMeasures(fit, c(
+      "chisq.scaled", "df.scaled", "pvalue.scaled", "cfi.scaled",
+      "tli.scaled", "rmsea.scaled", "rmsea.ci.lower.scaled",
+      "rmsea.ci.upper.scaled", "rmsea.pvalue.scaled", "srmr"
+    )),
     loadings = standardizedSolution(fit) %>% as_tibble() %>% filter(op == "=~")
   )
 }
@@ -442,7 +446,11 @@ if (!has_fr) {
   '
   fr_fit <- try(lavaan::cfa(fr_model, data = fr_df, ordered = colnames(fr_df), estimator = "WLSMV"), silent = TRUE)
   if (!inherits(fr_fit, "try-error")) {
-    print(fitMeasures(fr_fit, c("cfi","tli","rmsea","srmr")))
+    print(fitMeasures(fr_fit, c(
+      "chisq.scaled", "df.scaled", "pvalue.scaled", "cfi.scaled",
+      "tli.scaled", "rmsea.scaled", "rmsea.ci.lower.scaled",
+      "rmsea.ci.upper.scaled", "rmsea.pvalue.scaled", "srmr"
+    )))
   } else {
     cat("\nFR-LF CFA skipped (model failed to converge).\n")
   }
@@ -498,7 +506,11 @@ if (!has_ksa) {
   '
   ksa_fit <- try(lavaan::cfa(ksa_model, data = ksa_df, ordered = colnames(ksa_df), estimator = "WLSMV"), silent = TRUE)
   if (!inherits(ksa_fit, "try-error")) {
-    print(fitMeasures(ksa_fit, c("cfi","tli","rmsea","srmr")))
+    print(fitMeasures(ksa_fit, c(
+      "chisq.scaled", "df.scaled", "pvalue.scaled", "cfi.scaled",
+      "tli.scaled", "rmsea.scaled", "rmsea.ci.lower.scaled",
+      "rmsea.ci.upper.scaled", "rmsea.pvalue.scaled", "srmr"
+    )))
   } else {
     cat("\nKSA-3 CFA skipped (model failed to converge).\n")
   }
@@ -531,7 +543,11 @@ if (!has_sdr) {
   sdr_model <- 'SDR =~ SDR1 + SDR2 + SDR3 + SDR4 + SDR5'
   sdr_fit <- try(lavaan::cfa(sdr_model, data = sdr_df, ordered = colnames(sdr_df), estimator = "WLSMV"), silent = TRUE)
   if (!inherits(sdr_fit, "try-error")) {
-    print(fitMeasures(sdr_fit, c("cfi","tli","rmsea","srmr")))
+    print(fitMeasures(sdr_fit, c(
+      "chisq.scaled", "df.scaled", "pvalue.scaled", "cfi.scaled",
+      "tli.scaled", "rmsea.scaled", "rmsea.ci.lower.scaled",
+      "rmsea.ci.upper.scaled", "rmsea.pvalue.scaled", "srmr"
+    )))
   } else {
     cat("\nSDR-5 CFA skipped (model failed to converge).\n")
   }
@@ -562,22 +578,22 @@ if (has_kn) {
 
 if (has_fr) {
   fr_df <- dat[keep, fr_cols]
-  scales_list$FR_RD     <- scale_mean(fr_df, paste0("RD", 1:3), 2)
-  scales_list$FR_NS     <- scale_mean(fr_df, paste0("NS", 1:3), 2)
-  scales_list$FR_total  <- scale_mean(fr_df, fr_cols, 4)
+  scales_list$FR_RD     <- scale_mean(fr_df, paste0("RD", 1:3), min_answered = 2)
+  scales_list$FR_NS     <- scale_mean(fr_df, paste0("NS", 1:3), min_answered = 2)
+  scales_list$FR_total  <- scale_mean(fr_df, fr_cols, min_answered = 4)
 }
 
 if (has_ksa) {
   ksa_df <- dat[keep, ksa_cols]
-  scales_list$KSA_A     <- scale_mean(ksa_df, paste0("A", 1:3), 2)
-  scales_list$KSA_U     <- scale_mean(ksa_df, paste0("U", 1:3), 2)
-  scales_list$KSA_K     <- scale_mean(ksa_df, paste0("K", 1:3), 2)
-  scales_list$KSA_total <- scale_mean(ksa_df, ksa_cols, 7)
+  scales_list$KSA_A     <- scale_mean(ksa_df, paste0("A", 1:3), min_answered = 2)
+  scales_list$KSA_U     <- scale_mean(ksa_df, paste0("U", 1:3), min_answered = 2)
+  scales_list$KSA_K     <- scale_mean(ksa_df, paste0("K", 1:3), min_answered = 2)
+  scales_list$KSA_total <- scale_mean(ksa_df, ksa_cols, min_answered = 7)
 }
 
 if (has_sdr) {
   sdr_df <- dat[keep, sdr_cols]
-  scales_list$SDR_total <- scale_mean(sdr_df, sdr_cols, 4)
+  scales_list$SDR_total <- scale_mean(sdr_df, sdr_cols, min_answered = 4)
 }
 
 scales_df <- as_tibble(scales_list)

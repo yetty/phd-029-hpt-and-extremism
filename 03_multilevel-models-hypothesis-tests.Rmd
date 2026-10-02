@@ -141,9 +141,9 @@ dat <- dat_raw %>%
 # ---- HPT (use reversed POP) ----
 dat <- dat %>%
   mutate(
-    hpt_pop_rev = scale_mean(., paste0(pop_items, "_rev"), 2),
-    hpt_cont    = scale_mean(., cont_items, 2),
-    hpt_roa     = scale_mean(., roa_items, 2),
+    hpt_pop_rev = scale_mean(., paste0(pop_items, "_rev"), min_answered = 2),
+    hpt_cont    = scale_mean(., cont_items, min_answered = 2),
+    hpt_roa     = scale_mean(., roa_items, min_answered = 2),
     # Primary total (CTX6 = POP_rev + CONT); keep 9-item as sensitivity if needed
     hpt_total   = rowMeans(cbind(hpt_pop_rev, hpt_cont), na.rm = FALSE),
     hpt_total9  = rowMeans(cbind(hpt_pop_rev, hpt_cont, hpt_roa),
@@ -156,9 +156,9 @@ ns_items <- paste0("ns", 1:3)
 
 dat <- dat %>%
   mutate(
-    frlf_rd  = scale_mean(., rd_items, 2),
-    frlf_ns  = scale_mean(., ns_items, 2),
-    frlf_tot = scale_mean(., c(rd_items, ns_items), 4)
+    frlf_rd  = scale_mean(., rd_items, min_answered = 2),
+    frlf_ns  = scale_mean(., ns_items, min_answered = 2),
+    frlf_tot = scale_mean(., c(rd_items, ns_items), min_answered = 4)
   )
 
 # ---- KSA-3 ----
@@ -169,10 +169,10 @@ ksa_items <- c(a_items, u_items, k_items)
 
 dat <- dat %>%
   mutate(
-    ksa3_a   = scale_mean(., a_items, 2),
-    ksa3_u   = scale_mean(., u_items, 2),
-    ksa3_k   = scale_mean(., k_items, 2),
-    ksa3_tot = scale_mean(., ksa_items, 7)
+    ksa3_a   = scale_mean(., a_items, min_answered = 2),
+    ksa3_u   = scale_mean(., u_items, min_answered = 2),
+    ksa3_k   = scale_mean(., k_items, min_answered = 2),
+    ksa3_tot = scale_mean(., ksa_items, min_answered = 7)
   )
 
 # ---- SDR-5 ----
@@ -180,7 +180,7 @@ sdr_items <- paste0("sdr", 1:5)
 
 dat <- dat %>%
   mutate(
-    sdr5_tot = scale_mean(., sdr_items, 4)
+    sdr5_tot = scale_mean(., sdr_items, min_answered = 4)
   )
 ```
 

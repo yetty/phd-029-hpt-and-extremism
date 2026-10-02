@@ -50,13 +50,13 @@ z <- function(x) as.numeric(scale(x))
 
 dat <- dat_raw |>
   mutate(
-    hpt_cont    = scale_mean(dat_raw, cont_items, 2),
-    hpt_pop_rev = scale_mean(dat_raw, paste0(pop_items, "_rev"), 2),
+    hpt_cont    = scale_mean(dat_raw, cont_items, min_answered = 2),
+    hpt_pop_rev = scale_mean(dat_raw, paste0(pop_items, "_rev"), min_answered = 2),
     hpt_ctx6    = rowMeans(cbind(hpt_pop_rev, hpt_cont), na.rm = FALSE),
-    frlf_tot    = scale_mean(dat_raw, c(rd_items, ns_items), 4),
-    ksa3_tot    = scale_mean(dat_raw, ksa_items, 7),
+    frlf_tot    = scale_mean(dat_raw, c(rd_items, ns_items), min_answered = 4),
+    ksa3_tot    = scale_mean(dat_raw, ksa_items, min_answered = 7),
     kn_total    = rowSums(across(all_of(kn_items)),   na.rm = TRUE),
-    sdr5_tot    = scale_mean(dat_raw, sdr_items, 4)
+    sdr5_tot    = scale_mean(dat_raw, sdr_items, min_answered = 4)
   ) |>
   mutate(
     z_hpt_ctx6  = z(hpt_ctx6),

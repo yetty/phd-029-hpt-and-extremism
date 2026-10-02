@@ -61,11 +61,11 @@ dat_raw <- dat_raw |>
 # Score constructs on ORIGINAL scales (not z-scored)
 dat <- dat_raw |>
   mutate(
-    hpt_cont = scale_mean(dat_raw, cont_items, 2),
-    frlf_tot = scale_mean(dat_raw, c(rd_items, ns_items), 4),
-    ksa3_tot = scale_mean(dat_raw, ksa_items, 7),
+    hpt_cont = scale_mean(dat_raw, cont_items, min_answered = 2),
+    frlf_tot = scale_mean(dat_raw, c(rd_items, ns_items), min_answered = 4),
+    ksa3_tot = scale_mean(dat_raw, ksa_items, min_answered = 7),
     kn_total = rowSums(across(all_of(kn_items)), na.rm = TRUE),
-    sdr5_tot = scale_mean(dat_raw, sdr_items, 4)
+    sdr5_tot = scale_mean(dat_raw, sdr_items, min_answered = 4)
   ) |>
   drop_na(all_of(c(school_var, "class_id")))
 

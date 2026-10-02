@@ -47,9 +47,9 @@ dat_raw <- dat_raw %>%
   mutate(across(all_of(POP_rev_items),
                 ~ 5 - ., .names = "{.col}_rev")) %>%
   mutate(
-    HPT_POP_rev = scale_mean(., paste0(POP_rev_items, "_rev"), 2),
-    HPT_CONT = scale_mean(., paste0("CONT", 1:3), 2),
-    HPT_ROA  = scale_mean(., paste0("ROA", 1:3), 2),
+    HPT_POP_rev = scale_mean(., paste0(POP_rev_items, "_rev"), min_answered = 2),
+    HPT_CONT = scale_mean(., paste0("CONT", 1:3), min_answered = 2),
+    HPT_ROA  = scale_mean(., paste0("ROA", 1:3), min_answered = 2),
     HPT_CTX6 = rowMeans(cbind(HPT_POP_rev, HPT_CONT), na.rm = FALSE),
     HPT_TOT9 = rowMeans(cbind(HPT_POP_rev, HPT_CONT, HPT_ROA),
                          na.rm = FALSE)
@@ -68,11 +68,11 @@ dat <- dat_raw %>%
   mutate(across(all_of(num_blocks),
                 ~ suppressWarnings(as.numeric(.)))) %>%
   mutate(
-    FRLF_mean = scale_mean(., frlf_items, 4),
-    KSA_mean  = scale_mean(., ksa_items, 7),
+    FRLF_mean = scale_mean(., frlf_items, min_answered = 4),
+    KSA_mean  = scale_mean(., ksa_items, min_answered = 7),
     KN_sum    = rowSums(across(all_of(kn_items)), na.rm = TRUE),
-    SDR_mean  = scale_mean(., sdr_items, 4),
-    NS_mean   = scale_mean(., paste0("NS", 1:3), 2)
+    SDR_mean  = scale_mean(., sdr_items, min_answered = 4),
+    NS_mean   = scale_mean(., paste0("NS", 1:3), min_answered = 2)
   ) %>%
   mutate(
     FRLF_z = as.numeric(scale(FRLF_mean)),
@@ -94,6 +94,87 @@ dat <- dat %>%
 cat("\n", strrep("=", 70), "\n")
 cat("Group sizes:\n")
 print(table(dat$ideology_group))
+
+# =============================================================================
+# STEP 0: SINGLE-GROUP CFA AND NESTED ICCS
+# =============================================================================
+
+cat("\n", strrep("=", 70), "\n")
+cat("STEP 0: SINGLE-GROUP CFA AND NESTED ICCS\n")
+cat(strrep("=", 70), "\n")
+
+cfa_data <- dat %>%
+  filter(!is.na(school_id), !is.na(class_id)) %>%
+  select(all_of(hpt_items)) %>%
+  filter(if_all(everything(), ~ !is.na(.)))
+
+cfa_models <- list(
+  `2-factor (POP+CONT vs ROA)` = '
+    F1 =~ POP1 + POP2 + POP3 + CONT1 + CONT2 + CONT3
+    F2 =~ ROA1 + ROA2 + ROA3
+    F1 ~~ F2
+  ',
+  `3-factor (POP/CONT/ROA)` = '
+    POP  =~ POP1 + POP2 + POP3
+    CONT =~ CONT1 + CONT2 + CONT3
+    ROA  =~ ROA1 + ROA2 + ROA3
+    POP ~~ CONT + ROA
+    CONT ~~ ROA
+  ',
+  `1-factor (general)` = '
+    G =~ POP1 + POP2 + POP3 + ROA1 + ROA2 + ROA3 + CONT1 + CONT2 + CONT3
+  '
+)
+
+single_cfa_fits <- lapply(cfa_models, function(model) {
+  cfa(model, data = cfa_data, ordered = hpt_items, estimator = "WLSMV")
+})
+single_cfa_indices <- t(vapply(single_cfa_fits, function(fit) {
+  fitMeasures(fit, c(
+    "chisq.scaled", "df.scaled", "pvalue.scaled", "cfi.scaled",
+    "tli.scaled", "rmsea.scaled", "rmsea.ci.lower.scaled",
+    "rmsea.ci.upper.scaled", "rmsea.pvalue.scaled", "srmr"
+  ))
+}, numeric(10)))
+cat("\nSingle-group WLSMV CFA fit indices:\n")
+print(round(single_cfa_indices, 3))
+cat("\nCFA model order by scaled CFI:\n")
+print(sort(single_cfa_indices[, "cfi.scaled"], decreasing = TRUE))
+
+extract_nested_icc <- function(outcome) {
+  model <- lmer(
+    as.formula(paste0(
+      outcome, " ~ 1 + (1 | school_id) + (1 | school_id:class_label)"
+    )),
+    data = dat, REML = TRUE, na.action = na.omit
+  )
+  variances <- as.data.frame(VarCorr(model))
+  variance_for <- function(group) {
+    variances$vcov[variances$grp == group]
+  }
+  school_variance <- variance_for("school_id")
+  class_variance <- variance_for("school_id:class_label")
+  residual_variance <- variance_for("Residual")
+  total_variance <- school_variance + class_variance + residual_variance
+  flist <- getME(model, "flist")
+  c(
+    ICC_school = school_variance / total_variance,
+    ICC_class_within_school = class_variance / total_variance,
+    ICC_total_cluster = (school_variance + class_variance) / total_variance,
+    N = nobs(model),
+    n_schools = nlevels(flist$school_id),
+    n_classes = nlevels(flist[["school_id:class_label"]])
+  )
+}
+
+icc_outcomes <- c(
+  HPT_CTX6 = "HPT_CTX6", HPT_TOT9 = "HPT_TOT9", HPT_POP = "HPT_POP_rev",
+  HPT_ROA = "HPT_ROA", HPT_CONT = "HPT_CONT", FRLF_MINI = "FRLF_mean",
+  KSA_TOTAL = "KSA_mean", KN_TOTAL = "KN_sum", SDR_TOTAL = "SDR_mean"
+)
+icc_values <- t(vapply(icc_outcomes, extract_nested_icc, numeric(6)))
+cat("\nNested school/class variance components and ICCs:\n")
+print(round(icc_values, 3))
 
 # =============================================================================
 # STEP 1: VERIFY BONFERRONI P-VALUE FOR POP3_REV

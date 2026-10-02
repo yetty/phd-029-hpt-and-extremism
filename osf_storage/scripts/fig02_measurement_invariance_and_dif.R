@@ -44,8 +44,8 @@ dat_raw <- dat_raw %>%
 # Ideology composite and tertile split
 dat <- dat_raw %>%
   mutate(
-    FRLF_mean = scale_mean(dat_raw, frlf_items, 4),
-    KSA_mean  = scale_mean(dat_raw, ksa_items, 7),
+    FRLF_mean = scale_mean(dat_raw, frlf_items, min_answered = 4),
+    KSA_mean  = scale_mean(dat_raw, ksa_items, min_answered = 7),
     FRLF_z = as.numeric(scale(FRLF_mean)),
     KSA_z  = as.numeric(scale(KSA_mean)),
     IDEO_Z = (FRLF_z + KSA_z) / 2

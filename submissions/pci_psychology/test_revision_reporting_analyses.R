@@ -55,4 +55,142 @@ for (script in osf_scoring_scripts) {
   stopifnot(!any(grepl("min_n =", readLines(path), fixed = TRUE)))
 }
 
+test_failures <- character()
+expect_true <- function(condition, message) {
+  if (!isTRUE(condition)) {
+    test_failures <<- c(test_failures, message)
+  }
+}
+
+extract_calls <- function(text, function_name) {
+  pattern <- paste0("\\b", function_name, "\\s*\\(")
+  starts <- gregexpr(pattern, text, perl = TRUE)[[1]]
+  if (identical(starts, -1L)) {
+    return(character())
+  }
+
+  match_lengths <- attr(starts, "match.length")
+  calls <- character(length(starts))
+  for (i in seq_along(starts)) {
+    open <- starts[[i]] + match_lengths[[i]] - 1L
+    depth <- 0L
+    close <- NA_integer_
+    for (position in seq.int(open, nchar(text))) {
+      character <- substr(text, position, position)
+      if (identical(character, "(")) depth <- depth + 1L
+      if (identical(character, ")")) depth <- depth - 1L
+      if (depth == 0L) {
+        close <- position
+        break
+      }
+    }
+    calls[[i]] <- substr(text, starts[[i]], close)
+  }
+  calls
+}
+
+scoring_scripts <- c(
+  "01_measurement-checks.Rmd",
+  "02_descriptives-and-zero-order.Rmd",
+  "03_multilevel-models-hypothesis-tests.Rmd",
+  "04_dif-and-mg-cfa-hpt-bias.Rmd",
+  "05_sensitivity-analyses.Rmd",
+  "submissions/pci_psychology/revision_reporting_analyses.R",
+  "submissions/pci_psychology/verify_statistics.R",
+  file.path("osf_storage/scripts", osf_scoring_scripts)
+)
+
+for (script in scoring_scripts) {
+  calls <- extract_calls(paste(readLines(script, warn = FALSE), collapse = "\n"),
+                         "scale_mean")
+  missing_threshold <- !grepl("min_answered\\s*=", calls, perl = TRUE)
+  expect_true(
+    length(calls) > 0L && !any(missing_threshold),
+    paste0("Every scale_mean() call in ", script,
+           " must declare min_answered explicitly.")
+  )
+}
+
+cfa_scripts <- c(
+  "01_measurement-checks.Rmd",
+  "osf_storage/scripts/01_measurement_checks.Rmd"
+)
+for (script in cfa_scripts) {
+  calls <- extract_calls(paste(readLines(script, warn = FALSE), collapse = "\n"),
+                         "fitMeasures")
+  expect_true(length(calls) > 0L,
+              paste0(script, " must extract CFA fit indices."))
+  for (index in seq_along(calls)) {
+    expect_true(
+      all(vapply(c("cfi.scaled", "tli.scaled", "rmsea.scaled"),
+                 grepl, logical(1), x = calls[[index]], fixed = TRUE)),
+      paste0("CFA fitMeasures() call ", index, " in ", script,
+             " must use scaled WLSMV CFI, TLI, and RMSEA indices.")
+    )
+  }
+}
+
+icc_scripts <- c(
+  "02_descriptives-and-zero-order.Rmd",
+  "osf_storage/scripts/02_descriptives_and_zero_order_correlations.Rmd"
+)
+for (script in icc_scripts) {
+  text <- paste(readLines(script, warn = FALSE), collapse = "\n")
+  expect_true(
+    grepl("VarCorr\\s*\\(", text, perl = TRUE),
+    paste0(script, " must extract ICC components directly from VarCorr().")
+  )
+  expect_true(
+    !grepl("performance::icc\\s*\\(", text, perl = TRUE),
+    paste0(script,
+           " must not relabel performance::icc() aggregate output as a component ICC.")
+  )
+  expect_true(
+    grepl("ICC_school\\s*=", text, perl = TRUE) &&
+      grepl("ICC_class_within_school\\s*=", text, perl = TRUE) &&
+      grepl("ICC_total_cluster\\s*=", text, perl = TRUE),
+    paste0(script,
+           " must report separate school, class-within-school, and total-cluster ICCs.")
+  )
+}
+
+psy_arxiv_doi <- "https://doi.org/10.31234/osf.io/hxngm_v2"
+manuscript_lines <- readLines("submissions/pci_psychology/manuscript.tex",
+                              warn = FALSE)
+preprint_field <- manuscript_lines[grepl("Preprint DOI or URL", manuscript_lines,
+                                         fixed = TRUE)]
+expect_true(
+  length(preprint_field) == 1L && any(grepl(psy_arxiv_doi, preprint_field,
+                                             fixed = TRUE)),
+  "The manuscript preprint field must contain the current PsyArXiv DOI."
+)
+
+top_lines <- readLines("submissions/pci_psychology/top_disclosure_table.md",
+                       warn = FALSE)
+preregistration_lines <- top_lines[grepl("Preregistration of", top_lines,
+                                         fixed = TRUE)]
+expect_true(
+  length(preregistration_lines) == 2L &&
+    all(grepl("https://osf.io/zsngy", preregistration_lines, fixed = TRUE)),
+  "TOP preregistration disclosures must link to immutable OSF registration zsngy."
+)
+
+required_replication_files <- c(
+  "osf_storage/supplementary_materials.md",
+  "osf_storage/scripts/revision_reporting_analyses.R",
+  "osf_storage/scripts/scoring_helpers.R"
+)
+for (path in required_replication_files) {
+  expect_true(file.exists(path),
+              paste0("Replication package must include ", path, "."))
+}
+
+if (length(test_failures)) {
+  cat(c("Revision reporting regression checks failed:",
+        paste0("- ", test_failures), ""),
+      sep = "\n", file = stderr())
+  stop("Revision reporting regression checks failed; see failures above.",
+       call. = FALSE)
+}
+
 cat("revision reporting analysis helper tests passed\n")
