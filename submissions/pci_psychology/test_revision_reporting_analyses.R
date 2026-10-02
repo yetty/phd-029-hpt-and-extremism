@@ -201,8 +201,37 @@ expect_true(
 psy_arxiv_doi <- "https://doi.org/10.31234/osf.io/hxngm_v2"
 manuscript_lines <- readLines("submissions/pci_psychology/manuscript.tex",
                               warn = FALSE)
+manuscript_text <- paste(manuscript_lines, collapse = "\n")
+expect_true(
+  grepl("CFA showed good fit for the correlated three-factor model", manuscript_text,
+        fixed = TRUE) &&
+    grepl("data are compatible with the correlated three-factor specification",
+          manuscript_text, fixed = TRUE) &&
+    !grepl("analysis favored a correlated three-factor representation",
+           manuscript_text, fixed = TRUE) &&
+    !grepl("better fit of the three-factor model", manuscript_text,
+           fixed = TRUE),
+  "The manuscript must describe the correlated three-factor model as compatible, not favored over the bifactor model."
+)
+expect_true(
+  grepl("bifactor fit indices were higher", manuscript_text, fixed = TRUE) &&
+    grepl("model uncertainty limits structural\\s+claims", manuscript_text,
+          perl = TRUE),
+  "Section 5.2 must distinguish registered-alternative fit from the higher bifactor fit and its model uncertainty."
+)
+
+for (script in measurement_scripts) {
+  text <- paste(readLines(script, warn = FALSE), collapse = "\n")
+  expect_true(
+    !grepl("ICC|intraclass|clustering|class_label|school_id", text,
+           ignore.case = TRUE, perl = TRUE),
+    paste0(script,
+           " must not retain ICC-specific subtitle, description, comment, or setup references after ICCs moved to Report 02.")
+  )
+}
+
 preprint_field <- manuscript_lines[grepl("Preprint DOI or URL", manuscript_lines,
-                                         fixed = TRUE)]
+                                          fixed = TRUE)]
 expect_true(
   length(preprint_field) == 1L && any(grepl(psy_arxiv_doi, preprint_field,
                                              fixed = TRUE)),
