@@ -1,10 +1,77 @@
-07_reproducibility_report.Rmd
+---
+title: "Reproducibility report"
+author: "HPT and Extremism project"
+date: "`r format(Sys.Date())`"
+output:
+  pdf_document:
+    latex_engine: xelatex
+  md_document:
+    variant: markdown
+---
 
-Purpose: One-stop summary for reviewers.
-Content:
+# Scope
 
-Session info, package versions.
+This documentation report records reproducibility metadata for the public,
+de-identified package. It does not load confidential data.
 
-Data provenance.
+# Public-data checksums
 
-File map linking each .Rmd to each preregistered analytic step.
+```{r checksums, echo=FALSE}
+data_files <- c("../data/student_responses.RDS", "../data/student_responses.xlsx")
+checksum_command <- Sys.which("sha256sum")
+if (!nzchar(checksum_command)) stop("sha256sum is required to record checksums.")
+checksums <- system2(checksum_command, data_files, stdout = TRUE)
+knitr::kable(data.frame(SHA256 = checksums),
+             caption = "SHA-256 checksums for public analysis data")
+```
+
+# Seed policy
+
+The numbered analytic reports set a seed only where stochastic processing is
+used. Report 03 sets `1234`; the revision bootstrap uses `20260910`. Other
+analyses are deterministic conditional on the declared data and package
+versions. Exploratory scripts retain their own documented seeds.
+
+# Declared package versions
+
+```{r package-versions, echo=FALSE}
+declared_packages <- c(
+  "lavaan", "lme4", "lmerTest", "mirt", "psych", "semTools",
+  "tidyverse", "janitor", "knitr", "rmarkdown"
+)
+package_versions <- vapply(declared_packages, function(package) {
+  if (requireNamespace(package, quietly = TRUE)) {
+    as.character(utils::packageVersion(package))
+  } else {
+    "not installed"
+  }
+}, character(1))
+knitr::kable(data.frame(Package = declared_packages, Version = package_versions),
+             caption = "Declared package versions available at render time")
+```
+
+# File map
+
+```{r file-map, echo=FALSE}
+file_map <- data.frame(
+  File = c(
+    "01_measurement_checks.Rmd", "02_descriptives_and_zero_order_correlations.Rmd",
+    "03_multilevel_models_hypothesis_tests.Rmd",
+    "04_dif_and_mg_cfa_measurement_bias.Rmd", "05_sensitivity_analyses.Rmd",
+    "06_appendix_tables_and_figures.Rmd", "07_reproducibility_report.Rmd"
+  ),
+  Role = c(
+    "Measurement checks", "Descriptives, correlations, and ICC components",
+    "Multilevel focal models", "DIF and MG-CFA", "Sensitivity analyses",
+    "Supplement inventory", "Reproducibility metadata"
+  ),
+  stringsAsFactors = FALSE
+)
+knitr::kable(file_map, caption = "Numbered-report file map")
+```
+
+# Session information
+
+```{r session-info}
+sessionInfo()
+```

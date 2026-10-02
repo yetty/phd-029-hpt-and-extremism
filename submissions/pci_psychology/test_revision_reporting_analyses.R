@@ -258,6 +258,87 @@ for (path in required_replication_files) {
               paste0("Replication package must include ", path, "."))
 }
 
+readme_path <- "osf_storage/README.md"
+readme_text <- paste(readLines(readme_path, warn = FALSE), collapse = "\n")
+readme_compact <- gsub("[[:space:]]+", " ", readme_text)
+manuscript_title <- paste(
+  "Cross-Cultural Validation and Ideological Fairness of a Historical",
+  "Perspective Taking Instrument: Evidence from Czech Secondary Students"
+)
+expect_true(
+  grepl(manuscript_title, readme_compact, fixed = TRUE) &&
+    grepl("Institute of History, Faculty of Arts, Charles University",
+          readme_text, fixed = TRUE) &&
+    grepl("https://doi.org/10.31234/osf.io/hxngm_v2", readme_text,
+          fixed = TRUE) &&
+    grepl("https://doi.org/10.17605/OSF.IO/YNG37", readme_text,
+          fixed = TRUE) &&
+    grepl("https://osf.io/zsngy", readme_text, fixed = TRUE),
+  "The replication README must contain the current title, affiliation, preprint DOI, OSF project, and immutable registration."
+)
+expect_true(
+  !grepl("approved by|reviewed and approved|parental|parent or legal guardian",
+         readme_text, ignore.case = TRUE, perl = TRUE) &&
+    grepl("ethics committee approval is not required", readme_text,
+          fixed = TRUE) &&
+    grepl("Participation was voluntary", readme_text, fixed = TRUE) &&
+    grepl("de-identified at the point of data entry", readme_text,
+          fixed = TRUE),
+  "The replication README ethics statement must match the manuscript without approval or parental-consent claims."
+)
+expect_true(
+  grepl("planned archival migration to Zenodo", readme_text, fixed = TRUE) &&
+    !grepl("upload to Zenodo|Zenodo deposit has been", readme_text,
+           ignore.case = TRUE, perl = TRUE),
+  "The replication README must use repository-neutral, future-tense Zenodo wording."
+)
+
+analytic_rmds <- c(
+  "01_measurement_checks.Rmd",
+  "02_descriptives_and_zero_order_correlations.Rmd",
+  "03_multilevel_models_hypothesis_tests.Rmd",
+  "04_dif_and_mg_cfa_measurement_bias.Rmd",
+  "05_sensitivity_analyses.Rmd"
+)
+documentation_rmds <- c(
+  "06_appendix_tables_and_figures.Rmd",
+  "07_reproducibility_report.Rmd"
+)
+required_scripts <- c(
+  analytic_rmds, documentation_rmds,
+  "scoring_helpers.R", "revision_reporting_analyses.R",
+  "supplementary_analyses.R", "tost_equivalence_tests_and_mundlak.R"
+)
+for (script in required_scripts) {
+  expect_true(
+    file.exists(file.path("osf_storage/scripts", script)) &&
+      grepl(script, readme_text, fixed = TRUE),
+    paste0("The replication README must accurately inventory ", script, ".")
+  )
+}
+expect_true(
+  file.exists("osf_storage/supplementary_materials.md") &&
+    file.exists("osf_storage/supplementary_materials.pdf") &&
+    file.exists("osf_storage/instrument_adaptation_and_deviations.md") &&
+    grepl("Table S5", paste(readLines(
+      "osf_storage/instrument_adaptation_and_deviations.md", warn = FALSE
+    ), collapse = "\n"), fixed = TRUE),
+  "The replication package must include the supplement and adaptation/deviation documentation that points to Table S5."
+)
+
+for (script in c(analytic_rmds, documentation_rmds)) {
+  output <- file.path(
+    "osf_storage/outputs",
+    sub("\\.Rmd$", ".pdf", script)
+  )
+  source <- file.path("osf_storage/scripts", script)
+  expect_true(
+    file.exists(output) && file.info(output)$mtime > file.info(source)$mtime,
+    paste0("Replication output ", output,
+           " must be newer than its source script.")
+  )
+}
+
 if (length(test_failures)) {
   cat(c("Revision reporting regression checks failed:",
         paste0("- ", test_failures), ""),

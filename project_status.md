@@ -39,25 +39,18 @@
 
 ### OSF Replication Package
 - Complete package in `osf_storage/`: de-identified data (RDS + XLSX), codebook (PDF + LaTeX source), all 7 analysis scripts, 4 figure scripts, 2 supplementary scripts, 4 exploratory scripts, Makefile, pre-rendered PDF outputs, high-resolution figures, Czech-language instruments. README documents full reproduction workflow.
-
 ### Quality Audit
 - AI-assisted review simulations conducted (ChatGPT x4, Gemini x3) in `reviews/`. General manuscript quality audit (`checklist.md`, 27 categories) and TRSE-specific compliance audit (`trse_checklist.md`) completed.
-
 ---
-
 ### EJPE Submission Preparation
 - Switched target from TRSE to EJPE. Converted manuscript from Markdown/DOCX to LaTeX using `sn-jnl.cls` (Springer Nature template with `sn-apa` style). Created blinded manuscript (`manuscript_blinded.tex`) and separate title page (`title_page.tex`). Upload package assembled in `ejpe_submission/UPLOAD_PACKAGE_EUPE/`.
 
 ### EJPE Submission (EUPE-D-26-00272)
 - Submitted 2026-03-05 via Editorial Manager. Preview PDF revealed broken title page - `sn-jnl.cls` calls `\allowdisplaybreaks` at `\begin{document}` which requires `amsmath`, but `title_page.tex` didn't load it. Fixed by adding `\usepackage{amsmath}`. Merged two upload folders into single `UPLOAD_PACKAGE_EUPE/`.
-
 ---
-
 ### EJPE Desk Rejection (2026-03-18)
 - Submission EUPE-D-26-00272 desk-rejected by Editor in Chief Cintia Rodríguez Garrido. Manuscript deemed outside EJPE aims and scopes. Editor noted EJPE only accepts one-time questionnaire studies with novel concepts/relationships. Suggested resubmitting to a Social Psychology journal. Rejection materials archived in `_archive/ejpe_2026-03/`.
-
 ---
-
 ### Two-Paper Reframe and Submission Preparation (2026-03-18 → 2026-03-19)
 - Deep journal research with desk-reviewer simulations (`journal_target_analysis.md`). Identified SPE and AME as optimal targets.
 - Split single manuscript into two papers targeting different audiences:
@@ -67,9 +60,7 @@
 - Paper A converted to Springer LaTeX (`sn-jnl.cls`), built to PDF with separate title page. Paper B built to anonymous and authored DOCX via `build_docx.py`.
 - Cover letters written for both journals. Abstract and keywords extracted for SPE submission portal.
 - Original `trse_outputs/` figure scripts and outputs archived to `_archive/`.
-
 ---
-
 ### AME Desk Rejection (2026-03-20)
 - Paper B (HAME-2026-0087) desk-rejected by Joel Puchalla (Editorial Assistant). Reason: "AME does not publish studies on specific instruments." Suggested alternative: International Journal of Testing. Third desk rejection overall for phd-029 manuscripts.
 
@@ -175,6 +166,15 @@
 - Independent psychometric, reference, and compliance checks found no remaining
   submission blocker. Human specialist review remains optional quality control.
 
+### Replication Package Refresh (2026-10-02)
+- Refreshed the repository-neutral OSF replication package for a later Zenodo
+  archival migration without migrating or uploading it. Added the current
+  supplement, adaptation/deviation documentation, a corrected README, and
+  minimal supplement-inventory and reproducibility reports.
+- Documentation and revision-reporting outputs rendered successfully. The five
+  analytic report PDFs remain stale because the local R 4.6 library lacks
+  multiple packages declared by the reports; no package installation was made.
+
 ---
 ## Current Work
 
@@ -186,6 +186,7 @@
 - [x] Resolve MG-CFA and score-construction reproducibility discrepancies
 - [x] Correct remaining partial responses and rebuild the package
 - [x] Complete independent psychometric and reference verification
+- [ ] Restore the local R dependencies and refresh OSF analytic reports 01-05
 - [ ] Optionally obtain targeted human psychometric review
 - [ ] Submit the point-by-point response and revised preprint
 

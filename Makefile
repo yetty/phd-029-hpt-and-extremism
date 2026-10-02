@@ -1,24 +1,33 @@
 R = Rscript
 
-# List your Rmd reports here
-RMDS = \
+ANALYTIC_RMDS = \
   01_measurement-checks.Rmd \
   02_descriptives-and-zero-order.Rmd \
   03_multilevel-models-hypothesis-tests.Rmd \
   04_dif-and-mg-cfa-hpt-bias.Rmd \
   05_sensitivity-analyses.Rmd
 
-PDFS = $(RMDS:.Rmd=.pdf)
+DOCUMENTATION_RMDS = \
+  06_appendix-tables-and-figures.Rmd \
+  07_reproducibility-report.Rmd
 
-.PHONY: all clean list
+ANALYTIC_PDFS = $(addprefix outputs/,$(ANALYTIC_RMDS:.Rmd=.pdf))
+DOCUMENTATION_PDFS = $(addprefix outputs/,$(DOCUMENTATION_RMDS:.Rmd=.pdf))
+
+.PHONY: all analytic documentation codebook list clean
+
+all: analytic documentation
+
+analytic: $(ANALYTIC_PDFS)
+
+documentation: $(DOCUMENTATION_PDFS)
 
 codebook: normalised_responses_codebook.tex
+
 	latexmk -pdf -interaction=nonstopmode normalised_responses_codebook.tex
 
-all: $(PDFS)
-
 teacher:
-	# Convert TEACHER_NAME to a safe filename (spaces → underscores)
+	# Convert TEACHER_NAME to a safe filename (spaces -> underscores)
 	@SAFE_NAME=$$(echo "$(TEACHER_NAME)" | tr ' ' '_'); \
 	OUTPUT="report_$${SAFE_NAME}_$(SCHOOL_ID)_CONFIDENTIAL.pdf"; \
 	$(R) -e "rmarkdown::render('teacher_report.Rmd', \
@@ -31,16 +40,14 @@ teacher:
 		) \
 	)"
 
-# Generic rule: any .Rmd -> .pdf
-%.pdf: %.Rmd
+outputs/%.pdf: %.Rmd
 	$(R) -e "rmarkdown::render('$<', output_format='all', output_dir='outputs')"
 
-# File-specific data dependency (this report loads normalised_responses.RData)
-01_measurement-checks.pdf: normalised_responses.RData
-02_descriptives-and-zero-order.pdf: normalised_responses.RData
-03_multilevel-models-hypothesis-tests.pdf: normalised_responses.RData
-04_dif-and-mg-cfa-hpt-bias.pdf: normalised_responses.RData
-05_sensitivity-analyses.pdf: normalised_responses.RData
+$(ANALYTIC_PDFS): normalised_responses.RData
 
 list:
-	@echo "Rmd files:" $(RMDS)
+	@echo "Analytic reports:" $(ANALYTIC_RMDS)
+	@echo "Documentation reports:" $(DOCUMENTATION_RMDS)
+
+clean:
+	rm -f $(ANALYTIC_PDFS) $(DOCUMENTATION_PDFS)

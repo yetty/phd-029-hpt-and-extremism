@@ -1,10 +1,58 @@
-06_appendix_tables_and_figures.Rmd
+---
+title: "Supplement table and figure inventory"
+author: "HPT and Extremism project"
+date: "`r format(Sys.Date())`"
+output:
+  pdf_document:
+    latex_engine: xelatex
+  md_document:
+    variant: markdown
+---
 
-Purpose: Produce clean publication-ready outputs.
-Content:
+# Purpose
 
-Tables for reliability, CFA, model summaries.
+This documentation report inventories the current supplementary tables and
+figures and identifies their reproducible source files. It does not analyse
+confidential source data.
 
-Plots of HPT score distributions, ideology distributions, predicted effects.
+# Supplement tables
 
-Item characteristic curves for DIF findings.
+```{r supplement-tables, echo=FALSE}
+tables <- data.frame(
+  Element = c("Table S1", "Table S2", "Table S3 and S3b", "Table S4",
+              "Table S4b", "Table S5"),
+  Source = c(
+    "04_dif_and_mg_cfa_measurement_bias.Rmd; revision verification",
+    "01_measurement_checks.Rmd",
+    "revision_reporting_analyses.R",
+    "supplementary_materials.md",
+    "revision_reporting_analyses.R",
+    "supplementary_materials.md"
+  ),
+  stringsAsFactors = FALSE
+)
+knitr::kable(tables, caption = "Current supplementary-table inventory")
+```
+
+# Figures and revision outputs
+
+```{r figures, echo=FALSE}
+figures <- data.frame(
+  Element = c("Revision relationship figure", "Measurement invariance and DIF",
+              "Score distributions", "Coefficient plot", "Marginal effects"),
+  Source = c(
+    "revision_reporting_analyses.R",
+    "fig02_measurement_invariance_and_dif.R",
+    "fig03_score_distributions.R",
+    "fig04_coefficient_plot.R",
+    "fig05_marginal_effects.R"
+  ),
+  stringsAsFactors = FALSE
+)
+knitr::kable(figures, caption = "Current figure and revision-output inventory")
+```
+
+# Scope note
+
+The markdown and PDF supplement are the presentation source for Tables S1-S5.
+This report is an inventory, not a second presentation of the estimates.

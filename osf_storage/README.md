@@ -1,283 +1,158 @@
-# OSF Replication Package
+# Replication Package
 
-**Study:** Does Ideological Orientation Contaminate Historical Perspective Taking?
-A Boundary-Condition Validation of the Hartmann & Hasselhorn HPT Instrument
+## Study record
+
+**Title:** Cross-Cultural Validation and Ideological Fairness of a Historical
+Perspective Taking Instrument: Evidence from Czech Secondary Students
 
 **Author:** Juda Kaleta
-**Affiliation:** Institute of History, Faculty of Arts, Charles University, Prague
-**Preregistration:** https://osf.io/yng37/
-**Preprint:** [DOI to be assigned]
-**Submitted to:** PCI Psychology (Peer Community In)
 
----
+**Affiliation:** Institute of History, Faculty of Arts, Charles University,
+Czech Republic
 
-## Overview
+**Preprint:** <https://doi.org/10.31234/osf.io/hxngm_v2>
 
-This repository contains all data, analysis scripts, outputs, and instruments necessary to
-reproduce the results reported in the manuscript. The study examines whether students'
-right-authoritarian ideological attitudes constitute a source of construct-irrelevant variance
-in a widely used Historical Perspective Taking (HPT) instrument (Hartmann & Hasselhorn, 2008),
-using a sample of 293 Czech secondary students (20 classrooms, 10 schools).
+**Data and materials repository:** <https://doi.org/10.17605/OSF.IO/YNG37>
 
-The analytic approach combines:
-- Multilevel models with school and classroom random intercepts (lme4/lmerTest)
-- Exploratory TOST equivalence testing (post hoc SESOI = β ±0.20)
-- Multi-group confirmatory factor analysis (MG-CFA; lavaan, WLSMV estimator)
-- Differential Item Functioning analysis (DIF; mirt, graded response model)
-- Mundlak within/between classroom ideology decomposition
-- Sensitivity analyses across alternative scoring composites and exclusion rules
+**Immutable preregistration:** <https://osf.io/zsngy>
 
----
+This repository contains the de-identified analysis data, Czech-language
+instrument battery, analysis code, documentation, and rendered outputs for the
+preprint. The current public repository is the OSF project above. This package
+is prepared for a planned archival migration to Zenodo; it is not a Zenodo
+deposit and no migration or upload is made by this package.
 
-## Directory Structure
+## Contents
 
 ```
 osf_storage/
-├── README.md                        This file
-├── data/                            De-identified student response data
-├── scripts/                         All R and R Markdown analysis scripts
-├── outputs/                         Pre-rendered PDF analysis reports
-├── figures/                         High-resolution manuscript figures
-└── instruments/                     Questionnaire and test materials
+|-- README.md
+|-- instrument_adaptation_and_deviations.md
+|-- supplementary_materials.{md,pdf}
+|-- data/                         De-identified data and codebook
+|-- figures/                      Retained standalone figures (PDF and PNG)
+|-- instruments/                  Czech-language administered materials
+|-- outputs/                      Rendered reports and revision outputs
+`-- scripts/                      Reproducible analyses and Makefile
 ```
 
----
+### Data
 
-## data/
+`data/student_responses.RDS` is the de-identified, analysis-ready R object;
+`data/student_responses.xlsx` is the same data in an interoperable spreadsheet
+format. `data/codebook.pdf` and `data/codebook_source.tex` document variables,
+response scales, scoring, and descriptive statistics. School and classroom
+identifiers are anonymised codes. `school_level` distinguishes lower-secondary
+(ISCED 2) and upper-secondary (ISCED 3) education; it does not identify a
+school.
 
-De-identified, processed student responses. No individual names, teacher names, or
-school names are included. Schools are identified only by anonymised codes.
+The public data contain no student names, teacher names, school names, contact
+details, credentials, or raw Google Forms exports. The confidential data-pull
+script, teacher feedback, participation tracking, and identifiable source files
+are deliberately excluded.
 
-| File | Description |
-|------|-------------|
-| `student_responses.RDS` | De-identified data as a serialised R object. Load with `normalised_responses <- readRDS("student_responses.RDS")`. |
-| `student_responses.xlsx` | Same data in Excel format for non-R users. |
-| `codebook.pdf` | Full variable codebook: variable names, labels, response scales, scoring procedures, and descriptive statistics for all 50+ variables. |
-| `codebook_source.tex` | LaTeX source file for the codebook (for reproducibility). Compile with `latexmk -pdf codebook_source.tex`. |
+### Analysis and documentation reports
 
-**Key variables (see codebook for full list):**
+The numbered R Markdown reports comprise five analytic reports and two
+documentation reports:
 
-- `pop1`-`pop3`: HPT Perspective-on-the-Past subscale items (reverse-scored in analysis)
-- `cont1`-`cont3`: HPT Contextualization subscale items
-- `rd1`-`rd3`: FR-LF Right-wing Dictatorship endorsement facet
-- `ns1`-`ns3`: FR-LF National Socialist relativization facet
-- `a1`-`a3`, `u1`-`u3`, `k1`-`k3`: KSA-3 authoritarianism subscales (aggression, submission, conventionalism)
-- `kn1`-`kn6`: Historical knowledge test items (0/1 scored)
-- `sdr1`-`sdr5`: Social Desirability Rating items
-- `school_id`, `classroom_label`: Anonymised clustering identifiers
-- `school_level`: `lower_secondary` (základní škola, ISCED 2) or `upper_secondary` (gymnázium, ISCED 3)
-- `school_type`: `public`, `private`, or `church`
-- `gender`: `M`, `F`, `O`
-- `history_grade`: Most recent history course grade (Czech scale: 1 = excellent, 5 = failing)
+| Report | Role |
+|---|---|
+| `01_measurement_checks.Rmd` | Reliability and HPT factor-structure checks |
+| `02_descriptives_and_zero_order_correlations.Rmd` | Descriptives, correlations, and nested ICC components |
+| `03_multilevel_models_hypothesis_tests.Rmd` | Multilevel focal association models |
+| `04_dif_and_mg_cfa_measurement_bias.Rmd` | GRM DIF and multi-group CFA analyses |
+| `05_sensitivity_analyses.Rmd` | Exploratory robustness checks |
+| `06_appendix_tables_and_figures.Rmd` | Documentation inventory for supplement tables and figures |
+| `07_reproducibility_report.Rmd` | Session information, checksums, seed policy, and file map |
 
----
+`scoring_helpers.R` defines the shared minimum-answer scoring rules.
+`revision_reporting_analyses.R` produces the revision reliability,
+participant-description, correlation-interval, knowledge-facility, and
+relationship-figure outputs in `outputs/revision/`. The supplementary scripts
+are `supplementary_analyses.R` and
+`tost_equivalence_tests_and_mundlak.R`. The latter reports exploratory TOST
+equivalence and Mundlak decomposition analyses.
 
-## scripts/
+The retained standalone figure scripts are
+`fig02_measurement_invariance_and_dif.R`, `fig03_score_distributions.R`,
+`fig04_coefficient_plot.R`, and `fig05_marginal_effects.R`. Development-stage
+scripts remain for transparency but are not part of the numbered analytic
+pipeline.
 
-All scripts expect `student_responses.RDS` to be in the **working directory** (or one level up,
-depending on the script -- see each file header). The simplest approach is to copy
-`data/student_responses.RDS` to the same directory as the scripts before running.
+### DIF and supplementary material
 
-### Main analysis pipeline (R Markdown, numbered sequence)
+The DIF analysis uses an all-item graded-response-model procedure in `mirt`.
+Its item-test p-values use Bonferroni adjustment across the nine HPT items
+(`p.adjust = "bonferroni"`; equivalently, raw p-values multiplied by nine and
+capped at one) and are evaluated against familywise alpha = .05. It does not
+use an alpha of .01.
 
-Run these in order. Each produces a PDF and Markdown report (output goes to `../outputs/`
-or wherever `output_dir` is set in the Makefile/render call).
+`supplementary_materials.md` and `supplementary_materials.pdf` contain Tables
+S1-S5. `instrument_adaptation_and_deviations.md` records verified adaptation
+facts without reconstructing wording changes, and directs readers to Table S5
+for preregistration, instrument, and analysis-plan discrepancies.
 
-| Script | Contents |
-|--------|----------|
-| `01_measurement_checks.Rmd` | Instrument reliability (α, ω), EFA/CFA factor structure, descriptive item statistics, floor/ceiling checks |
-| `02_descriptives_and_zero_order_correlations.Rmd` | Sample descriptives, zero-order correlation matrix, group distribution plots |
-| `03_multilevel_models_hypothesis_tests.Rmd` | Main hypothesis tests (H1, H2): random-intercept models predicting HPT from ideology, knowledge, SDR, with school and classroom intercepts |
-| `04_dif_and_mg_cfa_measurement_bias.Rmd` | DIF analysis (graded response model, Bonferroni α = .01) and MG-CFA scalar invariance tests across ideology groups |
-| `05_sensitivity_analyses.Rmd` | Robustness checks: alternative composites, exclusion rules, random-slope models, fixed-effects models, attenuation correction |
-| `06_appendix_tables_and_figures.Rmd` | Appendix tables and supplementary figures cited in manuscript |
-| `07_reproducibility_report.Rmd` | Session info, package versions, random-seed confirmation |
-| `scoring_helpers.R` | Shared minimum-answer rules used by all current scoring, figure, and supplementary scripts |
-| `revision_reporting_analyses.R` | Reliability intervals, participant descriptives, correlation intervals, sample-size tables, and the manuscript relationship figure |
+### Mapping to manuscript and supplement elements
 
-**To run the full pipeline:**
-```r
-# From the scripts/ directory, with student_responses.RDS present:
-rmarkdown::render("01_measurement_checks.Rmd", output_dir = "../outputs")
-rmarkdown::render("02_descriptives_and_zero_order_correlations.Rmd", output_dir = "../outputs")
-# ... etc., or use the Makefile (see below)
-source("revision_reporting_analyses.R"); main()
-```
+| Element | Source |
+|---|---|
+| Tables 1-2 and Table S2 | `01_measurement_checks.Rmd` |
+| Table 3, Table 4, Table 7, Table S3, Table S3b, and Table S4b | `revision_reporting_analyses.R` |
+| Tables 5-6 and Table S1 | `04_dif_and_mg_cfa_measurement_bias.Rmd`; checked by `verify_statistics.R` in the revision source directory |
+| Table S4 | `supplementary_materials.md`, based on the cited source-population documentation |
+| Table S5 | `supplementary_materials.md` and `instrument_adaptation_and_deviations.md` |
+| Figure 1 and revision CSV outputs | `revision_reporting_analyses.R` |
+| Retained supporting figures | `fig02_measurement_invariance_and_dif.R` through `fig05_marginal_effects.R` |
 
-Or using **make** (requires R and latexmk):
+### Rendered outputs
+
+`outputs/` contains PDFs for reports 01-07. `outputs/revision/` contains the
+CSV files and PDF/PNG relationship figure created by
+`revision_reporting_analyses.R`. The PDFs are supplied for inspection; the
+scripts are the source of record.
+
+## Reproducing the reports
+
+Use R with the packages declared in the scripts, a LaTeX installation with
+XeLaTeX, and GNU Make. From `osf_storage/scripts`, run:
+
 ```bash
-# From scripts/ directory, after copying student_responses.RDS here:
 make all
+test ! -e student_responses.RDS
 ```
 
-**Expected runtime:** The full pipeline (7 Rmd reports + 4 figure
-scripts) takes approximately 10--15 minutes on a standard laptop
-(4-core CPU, 16 GB RAM). The most time-intensive step is
-`04_dif_and_mg_cfa_measurement_bias.Rmd` (IRT model fitting,
-~3--5 min). Individual figure scripts run in under 30 seconds each.
+`make all` creates a temporary local symbolic link to
+`../data/student_responses.RDS` while rendering and removes it on exit. It does
+not copy data into `scripts/` and leaves no `student_responses.RDS` there. To
+refresh the reviewer-requested outputs, use the same temporary link:
 
-### Mapping scripts to manuscript tables and figures
-
-| Manuscript element | Source script |
-|--------------------|--------------|
-| Table 1 (CFA fit) | `01_measurement_checks.Rmd` |
-| Table 2 (factor loadings) | `01_measurement_checks.Rmd` |
-| Table 3 (reliability summary) | `revision_reporting_analyses.R` |
-| Table 4 (study-variable descriptives) | `revision_reporting_analyses.R` |
-| Table 5 (DIF tests) | `04_dif_and_mg_cfa_measurement_bias.Rmd` |
-| Table 6 (MG-CFA invariance) | `04_dif_and_mg_cfa_measurement_bias.Rmd` |
-| Table 7 (zero-order correlations) | `revision_reporting_analyses.R` |
-| Table S1 (GRM item parameters) | `04_dif_and_mg_cfa_measurement_bias.Rmd` |
-| Figure 1 (observed relationships) | `revision_reporting_analyses.R` |
-
-### Additional figure scripts
-
-Standalone R scripts retained to regenerate additional analysis figures.
-Each loads `student_responses.RDS` from the working directory and saves output to `../figures/`.
-
-| Script | Figure |
-|--------|--------|
-| `fig02_measurement_invariance_and_dif.R` | MG-CFA factor loadings and DIF test statistics by ideology group |
-| `fig03_score_distributions.R` | Distribution of HPT subscale scores across ideology tertiles |
-| `fig04_coefficient_plot.R` | Multilevel model coefficient plot (standardised β with 95% CIs) |
-| `fig05_marginal_effects.R` | Marginal effects of knowledge on HPT across ideology levels |
-
-### Supplementary analysis scripts
-
-| Script | Contents |
-|--------|----------|
-| `supplementary_analyses.R` | Additional models reported in appendix: NS-only grouping, alternative ideology composites, ICC decomposition |
-| `tost_equivalence_tests_and_mundlak.R` | Formal TOST equivalence tests (SESOI = β ±0.20) and Mundlak within/between classroom ideology decomposition |
-
-### Exploratory/development scripts
-
-These were used during analysis development and are included for full transparency.
-They are not part of the primary reproducibility pipeline.
-
-| Script | Contents |
-|--------|----------|
-| `compute_instruments_validity.R` | Early-stage instrument validity calculations |
-| `factor_and_invariance.R` | Standalone factor analysis and invariance testing |
-| `multilevel_and_DIF.R` | Standalone multilevel model and DIF development script |
-| `H1_ideology_elevates_HPT.R` | Standalone test of Hypothesis 1 (congruence pathway) |
-
-### Build file
-
-| File | Contents |
-|------|----------|
-| `Makefile` | Automates rendering of all main Rmd reports to PDF. Run `make all` or `make codebook`. |
-
----
-
-## outputs/
-
-Pre-rendered PDF reports from the main analysis pipeline. These are the fully executed
-outputs corresponding to the scripts above and can be read without running any code.
-
-| File | Contents |
-|------|----------|
-| `01_measurement_checks.pdf` | Measurement validity, reliability, factor structure |
-| `02_descriptives_and_zero_order_correlations.pdf` | Descriptive statistics and zero-order correlations |
-| `03_multilevel_models_hypothesis_tests.pdf` | Main hypothesis tests |
-| `04_dif_and_mg_cfa_measurement_bias.pdf` | DIF and MG-CFA results |
-| `05_sensitivity_analyses.pdf` | Sensitivity and robustness analyses |
-| `06_appendix_tables_and_figures.pdf` | Appendix tables and figures |
-
----
-
-## figures/
-
-High-resolution versions of the four main manuscript figures, in both PDF (vector) and
-PNG (raster at 300 dpi) formats.
-
-| Files | Description |
-|-------|-------------|
-| `fig02_measurement_invariance_and_dif.*` | MG-CFA loadings + DIF plot |
-| `fig03_score_distributions.*` | HPT score distributions by ideology group |
-| `fig04_coefficient_plot.*` | Multilevel model coefficients |
-| `fig05_marginal_effects.*` | Marginal effects of knowledge |
-
----
-
-## instruments/
-
-The three questionnaires administered to students, in their Czech-language versions
-as used in data collection.
-
-| File | Description |
-|------|-------------|
-| `hpt_questionnaire.docx` | Historical Perspective Taking instrument (9 items: POP, ROA, CONT subscales; adapted from Hartmann & Hasselhorn, 2008) |
-| `ideology_authoritarianism_sdr_questionnaires.docx` | FR-LF mini (6 items: RD + NS facets), KSA-3 (9 items: authoritarianism), and Social Desirability Rating (5 items) |
-| `historical_knowledge_test.docx` | Historical knowledge test (6 items on the interwar period and Weimar Republic) |
-
----
-
-## Software Requirements
-
-All analyses were conducted in **R**. The following packages are required:
-
-**Core pipeline:**
-```
-lme4, lmerTest       # multilevel models
-lavaan               # confirmatory factor analysis (MG-CFA)
-mirt                 # item response theory (DIF, graded response model)
-psych                # reliability (α, ω), EFA
-tidyverse            # data manipulation and plotting
-janitor              # data cleaning
+```bash
+ln -s ../data/student_responses.RDS student_responses.RDS
+Rscript --vanilla revision_reporting_analyses.R
+rm -f student_responses.RDS
 ```
 
-**Supplementary:**
-```
-TOSTER               # TOST equivalence tests (or manual computation as in scripts)
-ggplot2              # figures
-patchwork            # figure composition
-broom.mixed          # multilevel-model coefficient extraction
-knitr, rmarkdown     # report rendering
-```
+The principal packages are `lavaan`, `lme4`, `lmerTest`, `mirt`, `psych`,
+`semTools`, `tidyverse`, `janitor`, `knitr`, and `rmarkdown`; individual
+reports declare their additional packages. Report 07 records the actual R
+session and available package versions at render time.
 
-R version used: see `07_reproducibility_report.Rmd` output for exact session info.
+## Ethics and access conditions
 
----
-
-## What Is Not Included
-
-The following files are excluded from this package on confidentiality grounds:
-
-- **Individual teacher response files** -- raw Google Forms exports linked to specific teachers and schools by name. These cannot be shared without violating data protection agreements (GDPR, Regulation 2016/679/EU) and participant consent terms.
-- **Individual teacher feedback reports** -- personalised reports sent to participating teachers, which contain school-identifiable information.
-- **Data collection script** (`pull_and_normalize_data_CONFIDENTAL.R`) -- the script that retrieved raw data from Google Sheets and normalised it. It contains API credentials and school-identifiable mapping tables.
-- **Teacher participation tracking spreadsheet** -- contains teacher names, school names, and contact information.
-
-The `data/student_responses.*` files are the fully de-identified, analysis-ready output
-of that pipeline. They contain no individual names, no school names, and no information
-that could identify participants.
-
----
-
-## Ethical Statement
-
-This study was conducted in accordance with the ethical requirements of Charles University,
-Faculty of Arts. Research procedures were reviewed and approved by the ethics committee of
-the Department of History and History Didactics prior to data collection. Participation was
-voluntary; written informed consent was obtained from parents or legal guardians of all
-participants under 18, and each student's assent was confirmed before administration.
-Student responses were anonymised at the point of data entry.
-
----
+This study involved secondary school students completing questionnaires during
+regular class periods. Under Czech law (Act No. 110/2019 Sb., on the processing
+of personal data), ethics committee approval is not required for
+non-interventional educational research involving anonymous questionnaires
+where no personal data are collected. Participation was voluntary; students
+were informed about the study's purpose and their right to decline without
+consequences. All responses were de-identified at the point of data entry. No
+personally identifiable information was collected or stored. The study followed
+the principles of the Declaration of Helsinki for research involving human
+participants.
 
 ## Citation
 
-Kaleta, J. (2026). Cross-cultural validation and ideological
-fairness of a Historical Perspective Taking instrument: Evidence
-from Czech secondary students. [Preprint submitted to PCI
-Psychology]. https://osf.io/yng37/
-
----
-
-## Contact
-
-Juda Kaleta
-Department of History and History Didactics
-Faculty of Arts, Charles University
-nám. Jana Palacha 2, 116 38 Prague 1, Czech Republic
-juda.kaleta@ff.cuni.cz
+Kaleta, J. (2026). *Cross-Cultural Validation and Ideological Fairness of a
+Historical Perspective Taking Instrument: Evidence from Czech Secondary
+Students* [Preprint]. https://doi.org/10.31234/osf.io/hxngm_v2

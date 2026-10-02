@@ -7,8 +7,10 @@
 
 The final reporting correction restores the verified post-registration bifactor
 result while preserving the submitted title, ethics text, and main conclusion.
-ICC reporting is centralized in Report 02. The regression suite now has only
-the expected pending assertion for `osf_storage/supplementary_materials.md`.
+The repository-neutral replication package now contains the supplement,
+adaptation/deviation record, refreshed README, and documentation reports.
+Documentation and revision outputs rendered successfully. Analytic PDFs 01-05
+remain pending because the current R library lacks several declared packages.
 
 ## Manuscripts
 
@@ -19,9 +21,8 @@ the expected pending assertion for `osf_storage/supplementary_materials.md`.
 ## Next Steps
 
 - [ ] Optionally obtain human psychometric review as additional quality control
-- [ ] Add `osf_storage/supplementary_materials.md` and rerun the regression suite
+- [ ] Restore declared R dependencies and render OSF analytic reports 01-05
 - [ ] Upload the revised package and point-by-point response to PCI Psychology
-- [ ] Re-render numbered R Markdown reports when local dependencies are restored
 
 ## Revision files
 - Manuscript: `submissions/pci_psychology/manuscript.tex`
