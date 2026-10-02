@@ -10,7 +10,7 @@ output:
     number_sections: true
     toc: true
     toc_depth: 3
-    keep_tex: false
+    keep_tex: true
   md_document:
     variant: markdown
     preserve_yaml: false

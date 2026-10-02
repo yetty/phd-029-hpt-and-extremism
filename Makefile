@@ -45,7 +45,10 @@ teacher:
 
 outputs/%.pdf: %.Rmd
 	$(R) -e "rmarkdown::render('$<', output_format='all', output_dir='outputs')"
-	sed -i 's/[[:space:]]\+$$//' outputs/$*.md outputs/$*.tex
+	sed -i 's/[[:space:]]\+$$//' outputs/$*.md
+	@if [ -f outputs/$*.tex ]; then \
+		sed -i 's/[[:space:]]\+$$//' outputs/$*.tex; \
+	fi
 
 $(ANALYTIC_PDFS): normalised_responses.RData
 

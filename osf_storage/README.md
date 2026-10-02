@@ -41,10 +41,11 @@ osf_storage/
 `data/student_responses.RDS` is the de-identified, analysis-ready R object;
 `data/student_responses.xlsx` is the same data in an interoperable spreadsheet
 format. `data/codebook.pdf` and `data/codebook_source.tex` document variables,
-response scales, scoring, and descriptive statistics. School and classroom
-identifiers are anonymised codes. `school_level` distinguishes lower-secondary
-(ISCED 2) and upper-secondary (ISCED 3) education; it does not identify a
-school.
+response scales, scoring, and descriptive statistics. School identifiers use
+anonymised codes; classroom identifiers use opaque `C01`--`C20` codes, with
+the same code in `class_label` and `class_id`. `school_level` distinguishes
+lower-secondary (ISCED 2) and upper-secondary (ISCED 3) education; it does not
+identify a school.
 
 The public data contain no student names, teacher names, school names, contact
 details, credentials, or raw Google Forms exports. The confidential data-pull

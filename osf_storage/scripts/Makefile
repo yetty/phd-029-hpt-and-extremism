@@ -36,9 +36,11 @@ analytic:
 		ln -s ../data/student_responses.RDS "$(DATA_LINK)"; created=1; \
 	fi; \
 	trap 'if [ "$$created" -eq 1 ]; then rm -f "$(DATA_LINK)"; fi' EXIT; \
-	$(MAKE) --no-print-directory $(ANALYTIC_PDFS)
+	$(MAKE) --no-print-directory $(ANALYTIC_PDFS); \
+	rm -f ../outputs/*.log
 
 documentation: $(DOCUMENTATION_PDFS)
+	@rm -f ../outputs/*.log
 	@$(MAKE) --no-print-directory remove-data-link
 
 codebook: ../data/codebook_source.tex

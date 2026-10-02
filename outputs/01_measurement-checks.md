@@ -511,7 +511,7 @@ print(efa2$loadings, cutoff = 0.25)
 
     ##
     ## Loadings:
-    ##       PA1    PA2
+    ##       PA2    PA1
     ## POP1  -0.288  0.371
     ## POP2          0.448
     ## POP3          0.635
@@ -522,7 +522,7 @@ print(efa2$loadings, cutoff = 0.25)
     ## CONT2  0.527
     ## CONT3  0.521
     ##
-    ##                  PA1   PA2
+    ##                  PA2   PA1
     ## SS loadings    1.811 0.833
     ## Proportion Var 0.201 0.093
     ## Cumulative Var 0.201 0.294

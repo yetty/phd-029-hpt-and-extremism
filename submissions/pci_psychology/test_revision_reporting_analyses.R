@@ -550,7 +550,8 @@ for (path in codebook_sources) {
   expect_true(
     grepl("\\texttt{lower\\_secondary}", codebook_text, fixed = TRUE) &&
       grepl("\\texttt{upper\\_secondary}", codebook_text, fixed = TRUE) &&
-      grepl("Anonymized class code", codebook_text, fixed = TRUE) &&
+      grepl("Opaque class code", codebook_text, fixed = TRUE) &&
+      grepl("C01--C20", codebook_text, fixed = TRUE) &&
       !grepl("gymnasium|gymnázium", codebook_text, ignore.case = TRUE),
     paste0(path, " must describe school_level and class_label using only public anonymized codes.")
   )
@@ -561,7 +562,9 @@ for (path in c("normalised_responses_codebook.pdf", "osf_storage/data/codebook.p
   expect_true(
     !grepl("gymnasium|gymnázium", codebook_pdf_text, ignore.case = TRUE) &&
       grepl("lower.secondary", codebook_pdf_text, perl = TRUE) &&
-      grepl("Anonymized class code", codebook_pdf_text, fixed = TRUE),
+        grepl("Opaque class code", codebook_pdf_text, fixed = TRUE) &&
+        grepl("C01", codebook_pdf_text, fixed = TRUE) &&
+        grepl("C20", codebook_pdf_text, fixed = TRUE),
     paste0(path, " must contain the corrected public school-level and class-label descriptions.")
   )
 }
@@ -582,6 +585,14 @@ expect_true(
     !grepl("Ripka_et_al2024EpistemicLocal", manuscript_text, fixed = TRUE) &&
     !grepl("Ripka_et_al2024EpistemicLocal", extras_text, fixed = TRUE),
   "The manuscript must cite canonical Ripka_et_al2024Epistemic without a local duplicate."
+)
+
+expect_true(
+  grepl("Authoritarianism & 283 & 2.86 & 0.62 & 1.00 & 5.00", manuscript_text,
+        fixed = TRUE) &&
+    !grepl("Authoritarianism & 283 & 2.86 & 0.62 & 1.00 & 4.60",
+           manuscript_text, fixed = TRUE),
+  "Table 4 must report the observed KSA-3 maximum of 5.00."
 )
 
 build_preprint_text <- paste(readLines(
