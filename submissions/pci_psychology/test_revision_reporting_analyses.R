@@ -575,6 +575,93 @@ expect_true(
   "The rendered Report 03 PDF must not use the stale main-confirmatory framing."
 )
 
+extras_text <- paste(readLines("submissions/pci_psychology/extras.bib",
+                               warn = FALSE), collapse = "\n")
+expect_true(
+  grepl("Ripka_et_al2024Epistemic", manuscript_text, fixed = TRUE) &&
+    !grepl("Ripka_et_al2024EpistemicLocal", manuscript_text, fixed = TRUE) &&
+    !grepl("Ripka_et_al2024EpistemicLocal", extras_text, fixed = TRUE),
+  "The manuscript must cite canonical Ripka_et_al2024Epistemic without a local duplicate."
+)
+
+build_preprint_text <- paste(readLines(
+  "submissions/pci_psychology/build_preprint.sh", warn = FALSE
+), collapse = "\n")
+redline_build_path <- "submissions/pci_psychology/build_redline.sh"
+redline_build_text <- if (file.exists(redline_build_path)) {
+  paste(readLines(redline_build_path, warn = FALSE), collapse = "\n")
+} else {
+  ""
+}
+expect_true(
+  grepl("UTF-8", build_preprint_text, fixed = TRUE) &&
+    grepl("bibtexu manuscript", build_preprint_text, fixed = TRUE) &&
+    grepl("BibTeXu returned warnings", build_preprint_text, fixed = TRUE) &&
+    grepl("test -s", build_preprint_text, fixed = TRUE) &&
+    grepl("bibtexu manuscript_diff", redline_build_text, fixed = TRUE) &&
+    grepl("BibTeXu returned warnings", redline_build_text, fixed = TRUE) &&
+    grepl("test -s", redline_build_text, fixed = TRUE) &&
+    grepl("graphics-markup=none", redline_build_text, fixed = TRUE),
+  "Clean and redline builds must use documented, non-fatal BibTeXu UTF-8 handling."
+)
+
+supplement_text <- paste(readLines(
+  "submissions/pci_psychology/supplementary_materials.md", warn = FALSE
+), collapse = "\n")
+expect_true(
+  grepl("| Three-factor CFA | 276 |", supplement_text, fixed = TRUE) &&
+    grepl("| HPT score descriptives | 287 |", supplement_text,
+          fixed = TRUE) &&
+    !grepl("Three-factor CFA and HPT descriptives", supplement_text,
+           fixed = TRUE),
+  "Table S4b must separate the three-factor CFA (n = 276) from HPT descriptives (n = 287)."
+)
+
+expect_true(
+  grepl(
+    "| Table 4 | `02_descriptives_and_zero_order_correlations.Rmd` and `revision_reporting_analyses.R` |",
+    readme_text, fixed = TRUE
+  ) &&
+    grepl(
+      "| Table S4b | `revision_reporting_analyses.R` |",
+      readme_text, fixed = TRUE
+    ),
+  "The README must accurately map Table 4 and Table S4b to their sources."
+)
+
+expect_true(
+  any(grepl("This is a Czech adaptation", top_lines, fixed = TRUE)) &&
+    !any(grepl("first Czech adaptation", top_lines, fixed = TRUE)),
+  "The TOP replication disclosure must not claim this is the first Czech adaptation."
+)
+
+project_status_text <- paste(readLines("project_status.md", warn = FALSE),
+                             collapse = "\n")
+project_status_compact <- gsub("[[:space:]]+", " ", project_status_text)
+expect_true(
+  grepl(manuscript_title, project_status_compact, fixed = TRUE) &&
+    grepl("Data and materials project", project_status_text, fixed = TRUE) &&
+    grepl("https://doi.org/10.17605/OSF.IO/YNG37", project_status_text,
+          fixed = TRUE) &&
+    grepl("Preregistration", project_status_text, fixed = TRUE) &&
+    grepl("https://osf.io/zsngy/", project_status_text, fixed = TRUE),
+  "Project status must use the manuscript title and distinguish data project from registration."
+)
+
+for (script in measurement_scripts) {
+  text <- paste(readLines(script, warn = FALSE), collapse = "\n")
+  compact_text <- gsub("[[:space:]]+", " ", text)
+  expected_steps <- paste0("# Step ", seq_len(8), " --")
+  expect_true(
+    all(vapply(expected_steps, grepl, logical(1), x = text, fixed = TRUE)) &&
+      !grepl("# Step 9 --", text, fixed = TRUE) &&
+      grepl("complete-case item diagnostics", compact_text, fixed = TRUE) &&
+      grepl("minimum-answer score descriptives", compact_text, fixed = TRUE),
+    paste0(script,
+           " must have consecutive steps and distinguish complete-case diagnostics from manuscript score descriptives.")
+  )
+}
+
 if (length(test_failures)) {
   cat(c("Revision reporting regression checks failed:",
         paste0("- ", test_failures), ""),

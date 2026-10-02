@@ -99,7 +99,9 @@ for preregistration, instrument, and analysis-plan discrepancies.
 | Element | Source |
 |---|---|
 | Tables 1-2 and Table S2 | `01_measurement_checks.Rmd` |
-| Table 3, Table 4, Table 7, Table S3, Table S3b, and Table S4b | `revision_reporting_analyses.R` |
+| Table 3, Table 7, Table S3, and Table S3b | `revision_reporting_analyses.R` |
+| Table 4 | `02_descriptives_and_zero_order_correlations.Rmd` and `revision_reporting_analyses.R` |
+| Table S4b | `revision_reporting_analyses.R` |
 | Table 5 | `04_dif_and_mg_cfa_measurement_bias.Rmd` (joint omnibus DIF tests) |
 | Table 6 | `04_dif_and_mg_cfa_measurement_bias.Rmd` (MG-CFA invariance ladder) |
 | Table S1 | `04_dif_and_mg_cfa_measurement_bias.Rmd`: constrained `mod_base` GRM extraction written to `outputs/table_s1_irt_parameters.csv` |

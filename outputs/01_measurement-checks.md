@@ -96,6 +96,11 @@ cat("Rows in full data: ", nrow_all,  "\n",
     ## Rows in full data: 293
     ## Rows kept (complete HPT items): 276
 
+The complete-case item diagnostics in this report use only students with
+all nine HPT responses. They are distinct from the manuscript's
+minimum-answer score descriptives, which retain a score when at least
+two items are answered within each three-item HPT subscale.
+
 # Step 1 -- Descriptives and scale construction
 
 **Why:** Simple summaries catch obvious data problems and help readers
@@ -535,7 +540,7 @@ print(efa3$loadings, cutoff = 0.25)
 
     ##
     ## Loadings:
-    ##       PA3    PA1    PA2
+    ##       PA2    PA3    PA1
     ## POP1                 0.397
     ## POP2                 0.382
     ## POP3                 0.763
@@ -546,7 +551,7 @@ print(efa3$loadings, cutoff = 0.25)
     ## CONT2  0.396
     ## CONT3  0.816
     ##
-    ##                  PA3   PA1   PA2
+    ##                  PA2   PA3   PA1
     ## SS loadings    1.109 1.035 0.912
     ## Proportion Var 0.123 0.115 0.101
     ## Cumulative Var 0.123 0.238 0.340
@@ -846,7 +851,7 @@ alpha_KR20
 ```{=html}
 </table>
 ```
-# Step 8 -- Ideology batteries (FR-LF mini, KSA-3) and Social Desirability (SDR-5)
+# Step 7 -- Ideology batteries (FR-LF mini, KSA-3) and Social Desirability (SDR-5)
 
 ``` r
 # Helper: reliability table for Likert batteries (polychoric + omega total)
@@ -1044,7 +1049,7 @@ if (!has_sdr) {
     ##          rmsea.scaled rmsea.ci.lower.scaled rmsea.ci.upper.scaled   rmsea.pvalue.scaled                  srmr
     ##                 0.206                 0.162                 0.254                 0.000                 0.103
 
-# Step 9 -- Cross-construct correlations (HPT, KN, FR-LF, KSA-3, SDR-5)
+# Step 8 -- Cross-construct correlations (HPT, KN, FR-LF, KSA-3, SDR-5)
 
 ``` r
 # Build scale scores that exist in your data (gracefully skipping any missing block)

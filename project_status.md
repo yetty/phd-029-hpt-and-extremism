@@ -1,11 +1,13 @@
 # Project Status Log: phd-029-hpt-and-extremism
-**Title:** Stress-Testing Historical Perspective Taking: Ideological Attitudes and Disciplinary Reasoning in Czech Adolescents
+**Title:** Cross-Cultural Validation and Ideological Fairness of a Historical
+Perspective Taking Instrument: Evidence from Czech Secondary Students
 **Active venue:** PCI Psychology -> Peer Community Journal
 **Previous submissions:** TRSE (desk-rejected 2026-02-25), EJPE
   EUPE-D-26-00272 (desk-rejected 2026-03-18), AME HAME-2026-0087
   (desk-rejected 2026-03-20), IJT IJT260038 (desk-rejected
   2026-04-11)
-**Preregistration:** https://osf.io/yng37/
+**Data and materials project:** https://doi.org/10.17605/OSF.IO/YNG37
+**Preregistration:** https://osf.io/zsngy/
 **Last updated:** 2026-10-02
 
 ---
@@ -172,6 +174,20 @@
   manuscript/preprint, and 69-page c952aa5 redline, and synchronized public
   codebooks with anonymized level and class codes. Zenodo upload is out of
   scope; PCI upload and optional human review remain outstanding.
+
+### Final Package Review Corrections (2026-10-02)
+- Reproduced plain BibTeX corruption of the canonical Ripka editor name and
+  verified that BibTeXu preserves "H. Å. Elmersjö" in the XeLaTeX/apacite
+  PDF. Restored `Ripka_et_al2024Epistemic`, removed the duplicate local entry,
+  and documented BibTeXu in clean and redline build scripts.
+- Split Table S4b into three-factor CFA (n = 276) and HPT score descriptives
+  (n = 287), synchronized the supplement PDF with OSF, corrected Report 01
+  step numbering, and clarified its complete-case diagnostics versus the
+  manuscript's minimum-answer descriptives.
+- Corrected README source mappings, softened the TOP adaptation claim, and
+  distinguished the OSF data/materials project (YNG37) from the immutable
+  registration (zsngy). Rebuilt and audited all affected PDFs; no upload or
+  push was performed.
 
 ---
 ## Current Work

@@ -133,6 +133,11 @@ cat("Rows in full data: ", nrow_all,  "\n",
     "Rows kept (complete HPT items): ", nrow_keep, "\n", sep = "")
 ```
 
+The complete-case item diagnostics in this report use only students with all
+nine HPT responses. They are distinct from the manuscript's minimum-answer
+score descriptives, which retain a score when at least two items are answered
+within each three-item HPT subscale.
+
 # Step 1 -- Descriptives and scale construction
 
 **Why:** Simple summaries catch obvious data problems and help readers develop intuition.
@@ -335,7 +340,7 @@ if (!has_kn) {
 }
 ```
 
-# Step 8 -- Ideology batteries (FR-LF mini, KSA-3) and Social Desirability (SDR-5)
+# Step 7 -- Ideology batteries (FR-LF mini, KSA-3) and Social Desirability (SDR-5)
 
 ```{r,ideology-batteries-helpers,warning=FALSE}
 # Helper: reliability table for Likert batteries (polychoric + omega total)
@@ -499,7 +504,7 @@ if (!has_sdr) {
 }
 ```
 
-# Step 9 -- Cross-construct correlations (HPT, KN, FR-LF, KSA-3, SDR-5)
+# Step 8 -- Cross-construct correlations (HPT, KN, FR-LF, KSA-3, SDR-5)
 
 ```{r,cross-construct-correlations}
 # Build scale scores that exist in your data (gracefully skipping any missing block)

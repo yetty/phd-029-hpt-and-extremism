@@ -18,7 +18,7 @@ following PCI Psychology requirements.
 | Design transparency | Level 2 | Study design fully described in manuscript Method section (Sections 3.1--3.4); deviations from original instrument documented in OSF repository |
 | Preregistration of studies | Level 2 | Study preregistered on OSF prior to data collection: <https://osf.io/zsngy> |
 | Preregistration of analysis plan | Level 2 | Analysis plan (hypotheses, statistical models, sample size justification) preregistered on OSF: <https://osf.io/zsngy> |
-| Replication | N/A | This is the first Czech adaptation of the HPT instrument; direct replication is not applicable |
+| Replication | N/A | This is a Czech adaptation of the HPT instrument; direct replication is not applicable |
 
 ## Notes
 

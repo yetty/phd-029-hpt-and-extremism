@@ -16,7 +16,7 @@ the manuscript and reviewer response, and finally rebuild every submission
 artifact. Keep the existing title and conclusions unless rerun results require
 a substantive change.
 
-**Tech Stack:** R, R Markdown, lavaan, lme4, LaTeX, BibTeX, Pandoc, Git.
+**Tech Stack:** R, R Markdown, lavaan, lme4, LaTeX, BibTeXu, Pandoc, Git.
 
 ---
 
@@ -139,3 +139,15 @@ a substantive change.
 - The current title is explicitly preserved.
 - The refreshed package is prepared for a later Zenodo migration without
   performing that migration in this task.
+
+## Final package-review follow-up (2026-10-02)
+
+- [x] Reproduced the canonical Ripka UTF-8 editor-name corruption under plain
+  BibTeX and verified BibTeXu output with XeLaTeX/apacite before restoring the
+  canonical key and removing its local duplicate.
+- [x] Added a clean/redline BibTeXu build procedure, split Table S4b's CFA and
+  HPT-descriptive sample rows, synchronized the rebuilt supplement with OSF,
+  and corrected the requested documentation and Report 01 mechanical items.
+- [x] Rebuilt and audited the affected reports and PDFs. The project commit is
+  local only; root-bibliography and submodule-pointer work remain for the
+  separate final root commit.

@@ -132,7 +132,8 @@ population portability.
 | Analysis or score | Included $n$ |
 |---|---:|
 | Recruited sample | 293 |
-| Three-factor CFA and HPT descriptives | 287 |
+| Three-factor CFA | 276 |
+| HPT score descriptives | 287 |
 | Historical-knowledge descriptives | 293 |
 | FR-LF descriptives | 284 |
 | KSA-3 descriptives | 283 |
