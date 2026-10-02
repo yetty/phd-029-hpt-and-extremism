@@ -48,6 +48,28 @@ solutions whose fit-index changes are compatible with scalar invariance; the
 manuscript retains small-group, clustering, and post-registration caveats and
 does not treat this as firm equivalence evidence.
 
+### Final reporting corrections (2026-10-02)
+
+- Single-group CFA values now follow the scaled WLSMV convention. The
+  three-factor model has $\chi^2(24)$ = 34.26, $p$ = .080, CFI = .975,
+  TLI = .962, RMSEA = .039 [.000, .067], and SRMR = .048; it is described as
+  good fit rather than near-perfect fit.
+- ICCs now separate school, class-within-school, and total-cluster components.
+  The primary six-item HPT composite is .041/.000/.041. The zero classroom
+  component is reported as consistent with the focal model's singularity
+  warning, without asserting an instructional mechanism.
+- The report uses the immutable preregistration link
+  <https://osf.io/zsngy>; YNG37 remains the data and materials repository.
+  The PsyArXiv preprint DOI is <https://doi.org/10.31234/osf.io/hxngm_v2>.
+- The Turkish source is described only as an abstract-level qualitative case
+  study using the Hartmann and Hasselhorn framework and components with sixth-
+  and eighth-grade students; it is not presented as direct nine-item
+  administration or psychometric evidence.
+- Table S5 records that neither the FR-LF-by-knowledge nor
+  KSA-by-knowledge interaction, nor their registered simple slopes, was
+  reported and that no reported test implemented the registered
+  Benjamini-Hochberg correction.
+
 ## Priority 1: Validity claims and factual accuracy
 
 ### REC-01 - Treat the single scenario as a content-validity limitation
@@ -371,8 +393,9 @@ plots score distributions. The manuscript does not present group means or a
 simple relationship plot.
 
 **User decision (2026-09-10):** **Add a two-panel continuous relationship
-figure.** Plot ideology against the primary HPT composite and historical
-knowledge against the same composite using transparent jittered observations
+figure.** Plot ideology against the primary six-item HPT composite and
+historical knowledge against the same composite using transparent jittered
+observations
 or defensible binning, unadjusted fit lines, and 95% confidence bands. Report
 panel-specific sample sizes, use construct names, label the display as
 descriptive rather than confirmatory, and check grayscale accessibility and
@@ -380,8 +403,9 @@ final-size legibility.
 
 **Recommended refinement:** Add one compact figure with raw observations
 (jittered or binned as appropriate), an unadjusted fit line, and uncertainty
-for (a) ideology versus the primary HPT composite and (b) historical knowledge
-versus the primary HPT composite. Alternatively, report low/middle/high
+for (a) ideology versus the primary six-item HPT composite and (b) historical
+knowledge versus the primary six-item HPT composite. Alternatively, report
+low/middle/high
 ideology group means with 95% intervals and retain the continuous scatterplot
 to avoid implying that tertiles are natural categories. Label this explicitly
 as descriptive, not as a replacement for the preregistered models.

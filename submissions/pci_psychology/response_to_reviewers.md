@@ -17,30 +17,15 @@ than retaining the earlier values or stronger conclusions.
 The responses below use the identifiers in the revision ledger. Section,
 table, and figure references refer to the revised manuscript and supplement.
 
-### Location map for the rebuilt files
+### Location map for the revised files
 
-| Location | Revised PDF page(s) |
-|---|---:|
-| Abstract | 1-2 |
-| Section 1 | 2-5 |
-| Section 2.1 | 5-8 |
-| Section 2.2 | 8-9 |
-| Section 2.3 | 9-11 |
-| Section 2.4 | 11-12 |
-| Section 2.5 | 12-13 |
-| Sections 3.1-3.3 | 13-17 |
-| Section 3.4 | 17-20 |
-| Sections 4.1-4.4 | 20-25 |
-| Section 4.5 | 25-26 |
-| Sections 4.6-4.8 | 26-29 |
-| Sections 4.9-4.10 | 29-33 |
-| Section 5.1 | 33-34 |
-| Sections 5.2-5.8 | 34-41 |
-| References | 43-50 |
-| Tables S1-S2 | Supplement 1-2 |
-| Tables S3-S3b | Supplement 2-4 |
-| Tables S4-S4b | Supplement 4-5 |
-| Table S5 | Supplement 5-6 |
+| Location | Contents |
+|---|---|
+| Abstract | Principal results and scope boundary |
+| Sections 1--2 | Background, prior evidence, and research questions |
+| Sections 3--4 | Method, psychometric evidence, and focal relationships |
+| Section 5 | Interpretation, limitations, and recommendations |
+| Tables S1--S5 | Item parameters, loadings, reliability, sample sizes, and preregistration mapping |
 
 ## Recommender
 
@@ -208,7 +193,11 @@ cognitive-interview work.
 
 **Response:** Section 2.1 names and describes the verified Huijgen studies
 rather than referring generically to comparative studies. Claims unsupported
-by direct use of the instrument were removed.
+by direct use of the instrument were removed. We also cite a recent Turkish
+qualitative case study only for its abstract-level description: it involved
+sixth- and eighth-grade students and used the Hartmann and Hasselhorn framework
+and components in qualitative analysis. We do not treat it as evidence of
+direct nine-item administration or psychometric performance.
 
 ## Reviewer 2
 
@@ -257,7 +246,7 @@ The focal model's singularity warning is now disclosed: the classroom
 random-intercept variance was estimated as zero, while school fixed-effects
 sensitivity models yielded the same substantive conclusion.
 
-Finally, the current data, model syntax, and lavaan 0.7-2 produce admissible
+Finally, the current data, model syntax, and lavaan 0.7.2 produce admissible
 configural, metric, and scalar multi-group CFA solutions. All models pass the
 post-estimation check, and the diagonals of their model-implied
 residual-variance matrices are positive. The fit-index changes remain
@@ -268,6 +257,17 @@ clustering, three-indicator factors, and the analysis's post-registration
 status. It also corrects the former interpretation of an ordinary
 modification index: the diagnostic suggested a POP2 cross-loading, not a
 between-group loading difference.
+
+The manuscript now consistently reports scaled WLSMV single-group CFA values:
+the one-, two-, and three-factor models have CFI values of .866, .913, and
+.975, respectively; the three-factor model has $\chi^2(24)$ = 34.26,
+$p$ = .080. Nested ICCs separate school, class-within-school, and total
+clustering; the primary six-item HPT composite has values of .041, .000, and
+.041. The zero classroom component is reported as consistent with the focal
+model's singularity warning, without attributing it to instruction or another
+unmeasured mechanism. Bonferroni-adjusted DIF $p$-values are raw $p \times 9$
+and are compared with familywise $\alpha$ = .05; no reported test implemented
+the registered Benjamini-Hochberg correction.
 
 Sincerely,
 

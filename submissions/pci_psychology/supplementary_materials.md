@@ -18,8 +18,9 @@ items. Parameters were estimated using the `mirt` R package
 with a constrained multi-group model (High- vs.
 Low-ideology groups defined by tertile split on the composite
 FR-LF + KSA score). An all-others-as-anchor DIF testing
-strategy with Bonferroni-corrected significance level
-($\alpha$ = .01) detected no significant DIF for any item.
+strategy with Bonferroni-adjusted *p*-values (raw *p* $\times$ 9)
+compared with a familywise $\alpha$ of .05 detected no significant DIF
+for any item.
 Because no items were flagged, the constrained model---in
 which item parameters are held equal across groups---is the
 final model. The parameters below therefore apply to both
@@ -43,10 +44,9 @@ responses entered the GRM and were not reversed for this analysis;
 their negative discrimination estimates therefore reflect the
 opposite direction of the present-oriented items relative to CONT and
 ROA. POP was reversed only when computing composite scores. The
-constrained model was retained because Bonferroni-corrected
-likelihood-ratio DIF tests showed no significant difference
-between free and constrained parameters for any item (all
-$p$ > .01).
+constrained model was retained because Bonferroni-adjusted
+likelihood-ratio DIF tests showed no significant difference between free
+and constrained parameters for any item (all adjusted $p$ > .05).
 
 ## Table S2: HPT Standardized Factor Loadings
 
@@ -73,7 +73,7 @@ $p$ < .001.
 | HPT: reversed present-oriented perspective | 3 | 282 | .46 | [.35, .57] | .52 | .54 |
 | HPT: role of the historical agent | 3 | 281 | .50 | [.40, .60] | .53 | .55 |
 | HPT: contextualization | 3 | 287 | .64 | [.57, .71] | .69 | .70 |
-| HPT composite | 6 | 282 | .60 | [.53, .68] | .65 | .66 |
+| Primary six-item HPT composite | 6 | 282 | .60 | [.53, .68] | .65 | .66 |
 | HPT total | 9 | 276 | .66 | [.60, .72] | .69 | .70 |
 | Historical knowledge | 6 | 286 | .55 | [.46, .63] | - | - |
 | FR-LF: dictatorship acceptance | 3 | 279 | .51 | [.42, .61] | .56 | .61 |
@@ -99,9 +99,9 @@ derived from the correlated-factor measurement model.
 
 ### Table S3b: Pairwise Sample Sizes for Table 7
 
-| | HPT | Context | Pres. (rev.) | Knowledge | FR-LF | KSA-3 | SDR-5 |
+| | Primary six-item HPT | Context | Pres. (rev.) | Knowledge | FR-LF | KSA-3 | SDR-5 |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| HPT | - | 287 | 287 | 287 | 283 | 282 | 282 |
+| Primary six-item HPT | - | 287 | 287 | 287 | 283 | 282 | 282 |
 | Context | 287 | - | 287 | 287 | 283 | 282 | 282 |
 | Pres. (rev.) | 287 | 287 | - | 287 | 283 | 282 | 282 |
 | Knowledge | 287 | 287 | 287 | - | 284 | 283 | 283 |
@@ -153,20 +153,21 @@ $SD$ = 1.62, median = 3, IQR [2, 4], with 4.1% at zero and 8.9% at six.
 
 ## Table S5: Preregistration Mapping and Deviations
 
-The immutable OSF registration `zsngy` was registered on 27 November
-2025. The table records how the present report differs from that plan.
+The immutable OSF registration <https://osf.io/zsngy> was registered on
+27 November 2025. The table records how the present report differs from
+that plan.
 
 | Registered element | Status in this report |
 |---|---|
 | H1: ideology positively predicts CONT with knowledge and SDR-5 covariates | Relevant associations are reported, but the exact registered one-tailed, covariate-adjusted test is not presented as a confirmatory test |
-| H2: ideology negatively predicts raw POP | Relevant associations are reported, but the exact registered one-tailed model is not presented as a confirmatory test |
-| H3: ideology positively predicts total HPT with covariates | Related models are reported, but HPT_CTX6 was adopted post-registration as the primary outcome |
+| H2: ideology negatively predicts raw POP | Relevant associations are reported, but the exact registered one-tailed model is not presented as a confirmatory test. The observed KSA-3/reversed-POP direction was not predicted: H2 predicted the opposite direction on raw POP. |
+| H3: ideology positively predicts total HPT with covariates | Related models are reported, but the primary six-item HPT composite was adopted post-registration as the primary outcome |
 | H4: positive DIF on CONT items | The registered primary continuous-ideology MIMIC analysis was not implemented; post-registration all-item GRM DIF and MG-CFA analyses are reported instead |
-| H5: stronger ideology-HPT associations at lower knowledge | KSA-by-knowledge moderation and registered simple slopes were not implemented |
+| H5: stronger ideology-HPT associations at lower knowledge | Neither the FR-LF $\times$ knowledge nor KSA $\times$ knowledge moderation analysis, nor the registered simple slopes, was implemented |
 | H6: exploratory positive correlations and FR-LF-CONT > KSA-CONT | Correlations are reported; class-clustered errors and the registered Williams/Steiger comparison were not implemented |
 | Two-level class random-intercept models | Three-level and school-level specifications were added post-registration |
 | Grade level, gender, history grade, knowledge, and SDR-5 covariates | The complete registered covariate set was not used in all reported models |
-| One-tailed tests and Benjamini-Hochberg correction | Reported tests are two-tailed and do not implement the registered correction family |
+| One-tailed tests and Benjamini-Hochberg correction | Reported tests are two-tailed; no reported test implemented the registered Benjamini-Hochberg correction |
 | Registered missing-data rule | The registered listwise-deletion/MICE decision rule was not implemented; the score-specific rules used in the manuscript are documented in Section 3.4 |
 | HPT response scale 0-3; two ROA items; approximately ten knowledge items | Administered battery used 1-4 HPT responses, three ROA items, and six knowledge items |
-| CFA-focused validation, bifactor model, NS-only invariance, TOST, and alternative exclusions | Added after registration and treated as exploratory or descriptive |
+| CFA-focused validation, NS-only invariance, TOST, and alternative exclusions | Added after registration and treated as exploratory or descriptive |

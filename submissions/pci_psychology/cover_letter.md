@@ -19,11 +19,13 @@ available sample and procedure. Multi-group confirmatory factor analysis
 produced admissible solutions and fit-index changes compatible with scalar
 invariance, although small extreme groups and unmodelled clustering prevent a
 firm equivalence claim. Multilevel models found no association between
-right-authoritarian attitudes and the primary composite after adjustment for
+right-authoritarian attitudes and the primary six-item HPT composite after
+adjustment for
 historical knowledge, authoritarianism, and social desirability. An exploratory
 authoritarianism association with one subscale was unadjusted and not subjected
-to the preregistered multiplicity procedure. Historical knowledge was positively
-associated with performance, although the cross-sectional design precludes a
+to the preregistered multiplicity procedure; no reported test implemented the
+registered Benjamini-Hochberg correction. Historical knowledge was positively
+associated with HPT scores, although the cross-sectional design precludes a
 causal interpretation.
 
 The paper also illustrates a staged approach to evaluating whether
@@ -33,8 +35,9 @@ post-registration measurement analyses, reports omitted registered tests,
 adds uncertainty and reliability estimates, and limits interpretation to the
 single scenario, item format, sample, and ideological range studied.
 
-The study was preregistered on OSF before data collection. Data, analysis
-scripts, instruments, and a reproducibility report are available at
+The study was preregistered on OSF before data collection
+(https://osf.io/zsngy). Data, analysis scripts, instruments, and a
+reproducibility report are available at
 https://doi.org/10.17605/OSF.IO/YNG37. A Transparency and Openness Promotion
 disclosure table is appended to the preprint.
 
