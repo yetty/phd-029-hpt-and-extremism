@@ -534,7 +534,8 @@ for (script in figure_scripts) {
 }
 
 stale_development_outputs <- file.path("osf_storage/scripts", c(
-  "instrument_reliability_summary.csv", "factor_and_invariance_summary.txt"
+  "instrument_reliability_summary.csv", "factor_and_invariance_summary.txt",
+  "fig_pca_scree.png"
 ))
 expect_true(
   !any(file.exists(stale_development_outputs)),
