@@ -9,8 +9,9 @@ The final reporting correction restores the verified post-registration bifactor
 result while preserving the submitted title, ethics text, and main conclusion.
 The repository-neutral replication package now contains the supplement,
 adaptation/deviation record, refreshed README, and documentation reports.
-Documentation and revision outputs rendered successfully. Analytic PDFs 01-05
-remain pending because the current R library lacks several declared packages.
+All OSF analytic, documentation, and revision outputs have been refreshed.
+The regression suite passes, and the rendered PDFs contain the corrected scaled
+CFA and nested ICC reporting.
 
 ## Manuscripts
 
@@ -21,7 +22,6 @@ remain pending because the current R library lacks several declared packages.
 ## Next Steps
 
 - [ ] Optionally obtain human psychometric review as additional quality control
-- [ ] Restore declared R dependencies and render OSF analytic reports 01-05
 - [ ] Upload the revised package and point-by-point response to PCI Psychology
 
 ## Revision files

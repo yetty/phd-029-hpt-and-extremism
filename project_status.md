@@ -171,9 +171,9 @@
   archival migration without migrating or uploading it. Added the current
   supplement, adaptation/deviation documentation, a corrected README, and
   minimal supplement-inventory and reproducibility reports.
-- Documentation and revision-reporting outputs rendered successfully. The five
-  analytic report PDFs remain stale because the local R 4.6 library lacks
-  multiple packages declared by the reports; no package installation was made.
+- Restored the missing direct CRAN dependencies to the user R 4.6 library and
+  refreshed all five analytic PDFs through the OSF Makefile. The regression
+  suite passes; the refreshed PDFs report scaled CFA indices and nested ICCs.
 
 ---
 ## Current Work
@@ -186,7 +186,7 @@
 - [x] Resolve MG-CFA and score-construction reproducibility discrepancies
 - [x] Correct remaining partial responses and rebuild the package
 - [x] Complete independent psychometric and reference verification
-- [ ] Restore the local R dependencies and refresh OSF analytic reports 01-05
+- [x] Restore the local R dependencies and refresh OSF analytic reports 01-05
 - [ ] Optionally obtain targeted human psychometric review
 - [ ] Submit the point-by-point response and revised preprint
 
