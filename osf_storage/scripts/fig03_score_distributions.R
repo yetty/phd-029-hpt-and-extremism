@@ -5,8 +5,8 @@
 #   Row 1 — HPT subscale and composite distributions (POP_rev, ROA, CONT, CTX6)
 #   Row 2 — Ideology and control distributions (FR-LF, KSA-3, KN, SDR-5)
 #
-# Output:  trse_outputs/fig03_score_distributions.pdf  (vector, 210 × 150 mm)
-#          trse_outputs/fig03_score_distributions.png  (300 DPI raster)
+# Output:  ../figures/fig03_score_distributions.pdf  (vector, 210 × 150 mm)
+#          ../figures/fig03_score_distributions.png  (300 DPI raster)
 # =============================================================================
 
 library(dplyr)

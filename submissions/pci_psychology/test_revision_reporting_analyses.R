@@ -445,6 +445,135 @@ expect_true(
   "The checksum report must separate file names from SHA-256 values."
 )
 
+current_package_sources <- c(
+  "osf_storage/README.md",
+  "osf_storage/supplementary_materials.md",
+  "osf_storage/instrument_adaptation_and_deviations.md",
+  file.path("osf_storage/scripts", c(analytic_rmds, documentation_rmds)),
+  file.path("osf_storage/scripts", c(
+    "fig02_measurement_invariance_and_dif.R",
+    "fig03_score_distributions.R",
+    "fig04_coefficient_plot.R",
+    "fig05_marginal_effects.R"
+  ))
+)
+current_package_text <- paste(
+  unlist(lapply(current_package_sources, readLines, warn = FALSE)),
+  collapse = "\n"
+)
+expect_true(
+  !grepl("PCI RR|Registered Report|Stage[[:space:]]+[12]",
+         current_package_text, perl = TRUE),
+  "Current package sources must not use PCI RR, Registered Report, or Stage 1/2 language."
+)
+
+dif_sources <- c(
+  "04_dif-and-mg-cfa-hpt-bias.Rmd",
+  "osf_storage/scripts/04_dif_and_mg_cfa_measurement_bias.Rmd"
+)
+for (path in dif_sources) {
+  dif_text <- gsub("[[:space:]]+", " ", paste(readLines(
+    path, warn = FALSE
+  ), collapse = "\n"))
+  expect_true(
+    grepl("registered H4", dif_text, fixed = TRUE) &&
+      grepl("positive ideology-related DIF on CONT items", dif_text,
+            fixed = TRUE) &&
+      grepl("do not implement the registered continuous-ideology MIMIC analysis",
+            dif_text, fixed = TRUE) &&
+      !grepl("supports H1", dif_text, fixed = TRUE),
+    paste0(path, " must distinguish registered H4 from the current post-registration GRM DIF/MG-CFA analyses.")
+  )
+}
+
+report03_sources <- c(
+  "03_multilevel-models-hypothesis-tests.Rmd",
+  "osf_storage/scripts/03_multilevel_models_hypothesis_tests.Rmd"
+)
+for (path in report03_sources) {
+  report03_text <- gsub("[[:space:]]+", " ", paste(readLines(
+    path, warn = FALSE
+  ), collapse = "\n"))
+  expect_true(
+    !grepl("main confirmatory", report03_text, fixed = TRUE) &&
+      grepl("registered hypotheses H1 and H2", report03_text, fixed = TRUE) &&
+      grepl("Table S5", report03_text, fixed = TRUE) &&
+      !grepl("H1 supported|H2 supported", report03_text, perl = TRUE),
+    paste0(path, " must describe its relationship to registered H1/H2 and Table S5 without a misleading confirmatory label.")
+  )
+}
+
+fig02_source <- "osf_storage/scripts/fig02_measurement_invariance_and_dif.R"
+fig02_text <- paste(readLines(fig02_source, warn = FALSE), collapse = "\n")
+expect_true(
+  grepl("familywise alpha = .05", fig02_text, fixed = TRUE) &&
+    grepl("Bonferroni-adjusted p-values", fig02_text, fixed = TRUE) &&
+    !grepl("alpha = .01", fig02_text, fixed = TRUE),
+  "The Figure 2 caption must report familywise alpha .05 and Bonferroni-adjusted p-values, not alpha .01."
+)
+
+figure_scripts <- c(
+  "fig02_measurement_invariance_and_dif.R",
+  "fig03_score_distributions.R",
+  "fig04_coefficient_plot.R",
+  "fig05_marginal_effects.R"
+)
+for (script in figure_scripts) {
+  path <- file.path("osf_storage/scripts", script)
+  figure_text <- paste(readLines(path, warn = FALSE), collapse = "\n")
+  figure_stem <- sub("\\.R$", "", script)
+  artifacts <- file.path("osf_storage/figures",
+                         paste0(figure_stem, c(".pdf", ".png")))
+  expect_true(
+    !grepl("trse_outputs", figure_text, fixed = TRUE) &&
+      grepl("../figures", figure_text, fixed = TRUE) &&
+      all(file.exists(artifacts)) &&
+      all(file.info(artifacts)$mtime > file.info(path)$mtime),
+    paste0(script, " must document ../figures output paths and have current PDF/PNG artifacts.")
+  )
+}
+
+stale_development_outputs <- file.path("osf_storage/scripts", c(
+  "instrument_reliability_summary.csv", "factor_and_invariance_summary.txt"
+))
+expect_true(
+  !any(file.exists(stale_development_outputs)),
+  "Uninventoried development-script outputs must be excluded from the public package."
+)
+
+codebook_sources <- c(
+  "normalised_responses_codebook.tex", "osf_storage/data/codebook_source.tex"
+)
+for (path in codebook_sources) {
+  codebook_text <- paste(readLines(path, warn = FALSE), collapse = "\n")
+  expect_true(
+    grepl("\\texttt{lower\\_secondary}", codebook_text, fixed = TRUE) &&
+      grepl("\\texttt{upper\\_secondary}", codebook_text, fixed = TRUE) &&
+      grepl("Anonymized class code", codebook_text, fixed = TRUE) &&
+      !grepl("gymnasium|gymnázium", codebook_text, ignore.case = TRUE),
+    paste0(path, " must describe school_level and class_label using only public anonymized codes.")
+  )
+}
+
+for (path in c("normalised_responses_codebook.pdf", "osf_storage/data/codebook.pdf")) {
+  codebook_pdf_text <- pdf_text(path)
+  expect_true(
+    !grepl("gymnasium|gymnázium", codebook_pdf_text, ignore.case = TRUE) &&
+      grepl("lower.secondary", codebook_pdf_text, perl = TRUE) &&
+      grepl("Anonymized class code", codebook_pdf_text, fixed = TRUE),
+    paste0(path, " must contain the corrected public school-level and class-label descriptions.")
+  )
+}
+
+report03_pdf_text <- pdf_text(
+  "osf_storage/outputs/03_multilevel_models_hypothesis_tests.pdf"
+)
+expect_true(
+  !grepl("main confirmatory", report03_pdf_text, fixed = TRUE) &&
+    grepl("Table S5", report03_pdf_text, fixed = TRUE),
+  "The rendered Report 03 PDF must not use the stale main-confirmatory framing."
+)
+
 if (length(test_failures)) {
   cat(c("Revision reporting regression checks failed:",
         paste0("- ", test_failures), ""),

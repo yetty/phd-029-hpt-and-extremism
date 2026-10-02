@@ -14,6 +14,9 @@ The regression suite passes. The packaged DIF report now uses `mirt` 1.47 joint
 omnibus item tests with familywise alpha = .05, and its constrained-GRM Table S1
 export matches the supplement. Root manuscript and preprint rebuilds remain
 Task 6 work.
+Task 5 quality cleanup removed stale package claims and development outputs,
+rebuilt Reports 03-04, the four retained figures, and synchronized public
+codebooks with anonymized education-level and class-code descriptions.
 
 ## Manuscripts
 

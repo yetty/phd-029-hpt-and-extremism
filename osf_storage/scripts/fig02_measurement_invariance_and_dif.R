@@ -6,8 +6,8 @@
 #   Panel B — Item discrimination and threshold parameters from unconstrained
 #             multi-group graded IRT model (Low vs High)
 #
-# Output: trse_outputs/fig02_measurement_invariance_and_dif.pdf  (vector, 210 × 130 mm)
-#         trse_outputs/fig02_measurement_invariance_and_dif.png  (300 DPI raster fallback)
+# Output: ../figures/fig02_measurement_invariance_and_dif.pdf  (vector, 210 × 130 mm)
+#         ../figures/fig02_measurement_invariance_and_dif.png  (300 DPI raster fallback)
 # =============================================================================
 
 library(dplyr)
@@ -276,7 +276,8 @@ fig2 <- panel_a + panel_b +
       "Note. Panel A shows standardised factor loadings (with 95% CIs) from a configural three-factor MG-CFA\n",
       "(WLSMV estimator; Low vs. High ideology tertiles). Panel B plots item discrimination (a) and average\n",
       "location parameters from unconstrained multi-group graded response models. Points near the identity\n",
-      "line indicate equivalent item functioning. No items were flagged for DIF (\u03b1 = .01, Bonferroni-adjusted)."
+      "line indicate equivalent item functioning. No items were flagged for DIF after Bonferroni adjustment\n",
+      "(familywise alpha = .05; Bonferroni-adjusted p-values)."
     ),
     theme = theme(
       plot.caption = element_text(size = 7.5, hjust = 0, lineheight = 1.2,

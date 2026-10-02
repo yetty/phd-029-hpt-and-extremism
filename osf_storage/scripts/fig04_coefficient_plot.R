@@ -6,8 +6,8 @@
 # Highlights that ideology (FR-LF, KSA-3) coefficients cluster around zero
 # while knowledge (KN) is the only significant predictor.
 #
-# Output:  trse_outputs/fig04_coefficient_plot.pdf  (vector, 180 × 140 mm)
-#          trse_outputs/fig04_coefficient_plot.png  (300 DPI raster)
+# Output:  ../figures/fig04_coefficient_plot.pdf  (vector, 180 × 140 mm)
+#          ../figures/fig04_coefficient_plot.png  (300 DPI raster)
 # =============================================================================
 
 library(dplyr)

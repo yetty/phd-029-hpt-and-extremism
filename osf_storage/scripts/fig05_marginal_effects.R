@@ -9,8 +9,8 @@
 # Purpose: Visualise effect size magnitude; demonstrate substantive triviality
 #          of ideology's relationship with contextualisation.
 #
-# Output:  trse_outputs/fig05_marginal_effects.pdf  (vector, 160 × 120 mm)
-#          trse_outputs/fig05_marginal_effects.png  (300 DPI raster)
+# Output:  ../figures/fig05_marginal_effects.pdf  (vector, 160 × 120 mm)
+#          ../figures/fig05_marginal_effects.png  (300 DPI raster)
 # =============================================================================
 
 library(dplyr)

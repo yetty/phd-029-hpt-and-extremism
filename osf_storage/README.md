@@ -76,9 +76,9 @@ equivalence and Mundlak decomposition analyses.
 
 The retained standalone figure scripts are
 `fig02_measurement_invariance_and_dif.R`, `fig03_score_distributions.R`,
-`fig04_coefficient_plot.R`, and `fig05_marginal_effects.R`. Development-stage
+`fig04_coefficient_plot.R`, and `fig05_marginal_effects.R`. Legacy development
 scripts remain for transparency but are not part of the numbered analytic
-pipeline.
+pipeline; their transient local outputs are excluded from this public package.
 
 ### DIF and supplementary material
 

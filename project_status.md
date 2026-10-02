@@ -177,6 +177,9 @@
 - Aligned the packaged DIF report with `mirt` 1.47 joint omnibus item tests,
   familywise alpha = .05, and the constrained-GRM Table S1 export. The current
   supplement PDF and OSF copy were rebuilt from the same Markdown source.
+- Removed stale PCI-RR, alpha=.01, output-path, and confirmatory claims from
+  current package materials; rebuilt Reports 03-04, the retained figure pairs,
+  and synchronized the public codebooks with anonymized level and class codes.
 
 ---
 ## Current Work

@@ -10,7 +10,7 @@ output:
     number_sections: true
     toc: true
     toc_depth: 3
-    keep_tex: true
+    keep_tex: false
   md_document:
     variant: markdown
     preserve_yaml: false
@@ -45,7 +45,10 @@ header-includes:
 
 # 1. Purpose and hypotheses
 
-This document runs the **main confirmatory analyses** for:
+This document presents multilevel association models relevant to the registered
+hypotheses H1 and H2. It does not implement the exact registered one-tailed,
+covariate-adjusted specifications and therefore is not a confirmatory test of
+those hypotheses; Table S5 documents the deviations.
 
 * **H1.** Higher right‐authoritarian / pro-Nazi attitudes predict **higher HPT scores** on the original instrument (risk of ideological contamination). Predictors: FR-LF-mini (total or RD/NS facets) and KSA-3.
 * **H2.** The H1 effect **persists controlling** for prior knowledge (KN total) and social desirability (SDR-5).
@@ -343,10 +346,15 @@ knitr::kable(
 
 # 4. Results -- decision rules
 
-Interpret **only the preregistered tests**:
+Interpret these models as associations related to the registered hypotheses, not
+as the exact confirmatory tests; see Table S5 for the deviations:
 
-* **H1 supported** if the coefficient for **FR-LF** (either `z_frlf_tot` in Base/Int. or `z_frlf_rd`/`z_frlf_ns` in Facet) is **> 0 and p < .05** for **HPT total (CTX6)** and/or **CONT**.
-* **H2 supported** if the same holds **after** adding controls (**KN**, **SDR-5**) and **KSA-3** (already included), and -- if preregistered -- the **FR-LF × KN** interaction is **not necessary** for the main effect to persist (or, if hypothesised, is significant in the expected direction).
+* An **H1-relevant association** has a positive coefficient for **FR-LF**
+  (either `z_frlf_tot` in Base/Int. or `z_frlf_rd`/`z_frlf_ns` in Facet) with
+  *p* < .05 for **HPT total (CTX6)** and/or **CONT**.
+* An **H2-relevant controlled association** has the same pattern after adding
+  controls (**KN**, **SDR-5**) and **KSA-3** (already included). These are not
+  the exact registered decision rules; see Table S5.
 
 **Reading POP_rev.** Because POP is reversed, higher **POP_rev** means **less presentism / more contextualised fit** on items that originally cued presentist endorsements. Interpret alongside **CONT**.
 

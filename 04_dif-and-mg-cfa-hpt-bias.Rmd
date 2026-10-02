@@ -10,7 +10,7 @@ output:
     number_sections: true
     toc: true
     toc_depth: 3
-    keep_tex: true
+    keep_tex: false
     
   md_document:
     variant: markdown
@@ -49,9 +49,15 @@ header-includes:
 We assess whether *ideological attitude groups* respond differently to the HPT items **even at equal underlying HPT competence**. Concretely:
 
 * Create **low/high ideology** groups from FR-LF-mini and KSA-3 (see codebook).  
-* Run **item-level DIF** (ordinal logistic) for each HPT item.
+* Run **joint omnibus GRM DIF** tests for each HPT item.
 * Run **multi-group CFA** (configural → metric → scalar).
-* **Interpretation:** If we find pervasive DIF and/or scalar non-invariance, this supports the PCI RR H1 that HPT scores can be ideologically contaminated. 
+* The registered H4 concerned positive ideology-related DIF on CONT items,
+  evaluated with a continuous-ideology MIMIC analysis. The current joint
+  omnibus GRM DIF and MG-CFA analyses are post-registration and do not
+  implement the registered continuous-ideology MIMIC analysis. Evidence of DIF
+  or scalar non-invariance would indicate measurement noninvariance between the
+  extreme ideology groups, limiting score comparability without itself
+  establishing a directional contamination mechanism.
 
 # Setup
 
@@ -364,7 +370,10 @@ deltas %>% mutate(across(where(is.numeric), round, 3)) %>%
   kable(caption = "Delta fit (CFI, RMSEA) across steps.")
 ```
 
-> **How to read this.** If **metric holds** (small ΔCFI/ΔRMSEA), loadings are equivalent. If **scalar fails**, thresholds differ → **biased group mean comparisons**, supporting H1.
+> **How to read this.** If **metric holds** (small ΔCFI/ΔRMSEA), loadings are
+> equivalent. If **scalar fails**, thresholds differ and group-mean comparisons
+> are measurement-noninvariant; this warrants cautious interpretation but does
+> not itself establish a directional ideological effect.
 
 # (Optional) Two-factor robustness check
 

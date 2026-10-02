@@ -63,11 +63,11 @@ These variables describe the school, class, and respondent context and support f
 \endfoot
 
 \texttt{school\_id}     & factor  & School identifier (anonymized) & S01, S02, \dots \\
-\texttt{school\_level}  & factor  & School level (vocational, gymnasium, etc.) & categorical \\
+\texttt{school\_level}  & factor  & Educational level & \texttt{lower\_secondary}; \texttt{upper\_secondary} \\
 \texttt{school\_type}   & factor  & School type (public, church, private) & categorical \\
 \texttt{region}         & factor  & Czech region of the school & categorical \\
-\texttt{class\_label}   & factor  & Class identifier & e.g., 1, 2, 9A, septima \\
-\texttt{class\_id}      & factor  & Unique class identifier (school + class) & e.g., S01.1, S01.2, S02.9A \\
+\texttt{class\_label}   & factor  & Anonymized class code & categorical \\
+\texttt{class\_id}      & factor  & Unique class identifier (school + class) & anonymized code \\
 \texttt{gender}         & factor  & Student gender (recoded) & M~=~male; F~=~female; O~=~other \\
 \texttt{history\_grade} & integer & Last reported history grade & 1--5 \\
 \end{longtable}
