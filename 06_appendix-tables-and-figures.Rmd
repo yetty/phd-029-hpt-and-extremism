@@ -22,7 +22,7 @@ tables <- data.frame(
   Element = c("Table S1", "Table S2", "Table S3 and S3b", "Table S4",
               "Table S4b", "Table S5"),
   Source = c(
-    "04_dif-and-mg-cfa-hpt-bias.Rmd; verify_statistics.R",
+    "04_dif-and-mg-cfa-hpt-bias.Rmd -> outputs/table_s1_irt_parameters.csv",
     "01_measurement-checks.Rmd",
     "submissions/pci_psychology/revision_reporting_analyses.R",
     "submissions/pci_psychology/supplementary_materials.md",
@@ -41,11 +41,11 @@ figures <- data.frame(
   Element = c("Revision relationship figure", "Measurement invariance and DIF",
               "Score distributions", "Coefficient plot", "Marginal effects"),
   Source = c(
-    "submissions/pci_psychology/revision_reporting_analyses.R",
-    "fig02_invariance_and_dif.R",
-    "fig03_score_distributions.R",
-    "fig04_coefficient_plot.R",
-    "fig05_marginal_effects.R"
+    "submissions/pci_psychology/revision_reporting_analyses.R -> revision_outputs/",
+    "osf_storage/scripts/fig02_measurement_invariance_and_dif.R",
+    "osf_storage/scripts/fig03_score_distributions.R",
+    "osf_storage/scripts/fig04_coefficient_plot.R",
+    "osf_storage/scripts/fig05_marginal_effects.R"
   ),
   stringsAsFactors = FALSE
 )

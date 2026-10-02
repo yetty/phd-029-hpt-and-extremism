@@ -10,8 +10,10 @@ result while preserving the submitted title, ethics text, and main conclusion.
 The repository-neutral replication package now contains the supplement,
 adaptation/deviation record, refreshed README, and documentation reports.
 All OSF analytic, documentation, and revision outputs have been refreshed.
-The regression suite passes, and the rendered PDFs contain the corrected scaled
-CFA and nested ICC reporting.
+The regression suite passes. The packaged DIF report now uses `mirt` 1.47 joint
+omnibus item tests with familywise alpha = .05, and its constrained-GRM Table S1
+export matches the supplement. Root manuscript and preprint rebuilds remain
+Task 6 work.
 
 ## Manuscripts
 
@@ -22,6 +24,7 @@ CFA and nested ICC reporting.
 ## Next Steps
 
 - [ ] Optionally obtain human psychometric review as additional quality control
+- [ ] Rebuild the manuscript and preprint package in Task 6
 - [ ] Upload the revised package and point-by-point response to PCI Psychology
 
 ## Revision files

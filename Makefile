@@ -14,7 +14,7 @@ DOCUMENTATION_RMDS = \
 ANALYTIC_PDFS = $(addprefix outputs/,$(ANALYTIC_RMDS:.Rmd=.pdf))
 DOCUMENTATION_PDFS = $(addprefix outputs/,$(DOCUMENTATION_RMDS:.Rmd=.pdf))
 
-.PHONY: all analytic documentation codebook list clean
+.PHONY: all analytic documentation codebook supplement list clean
 
 all: analytic documentation
 
@@ -25,6 +25,9 @@ documentation: $(DOCUMENTATION_PDFS)
 codebook: normalised_responses_codebook.tex
 
 	latexmk -pdf -interaction=nonstopmode normalised_responses_codebook.tex
+
+supplement: submissions/pci_psychology/supplementary_materials.md
+	pandoc $< --pdf-engine=xelatex -o submissions/pci_psychology/supplementary_materials.pdf
 
 teacher:
 	# Convert TEACHER_NAME to a safe filename (spaces -> underscores)

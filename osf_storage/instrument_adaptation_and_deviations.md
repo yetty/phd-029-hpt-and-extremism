@@ -2,13 +2,14 @@
 
 ## Verified adaptation record
 
-The Czech HPT instrument was adapted from the German instrument reported by
-Hartmann (2008). Two bilingual Czech-English experts independently translated
-the instrument, and the wording was cross-checked against the published English
-validation account. A third bilingual expert, unfamiliar with the original,
-completed a backward translation. Five Czech secondary-level history educators
-reviewed the adapted items for conceptual equivalence, age-appropriateness, and
-curricular alignment.
+The Czech HPT instrument was adapted from the German Historical Perspective
+Taking instrument of Hartmann and Hasselhorn, reported in Hartmann (2008).
+Two bilingual Czech-English experts independently translated the instrument,
+and the wording was cross-checked against the published English validation
+account by Hartmann and Hasselhorn. A third bilingual expert, unfamiliar with
+the original, completed a backward translation. Five Czech secondary-level
+history educators reviewed the adapted items for conceptual equivalence,
+age-appropriateness, and curricular alignment.
 
 The adaptation retained the four-point fit-to-situation response format. The
 expert review resulted in minor wording adjustments to two items for naturalness

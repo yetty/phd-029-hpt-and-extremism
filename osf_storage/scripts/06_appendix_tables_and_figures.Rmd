@@ -22,9 +22,9 @@ tables <- data.frame(
   Element = c("Table S1", "Table S2", "Table S3 and S3b", "Table S4",
               "Table S4b", "Table S5"),
   Source = c(
-    "04_dif_and_mg_cfa_measurement_bias.Rmd; revision verification",
+    "04_dif_and_mg_cfa_measurement_bias.Rmd -> ../outputs/table_s1_irt_parameters.csv",
     "01_measurement_checks.Rmd",
-    "revision_reporting_analyses.R",
+    "revision_reporting_analyses.R -> ../outputs/revision/",
     "supplementary_materials.md",
     "revision_reporting_analyses.R",
     "supplementary_materials.md"

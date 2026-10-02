@@ -175,7 +175,11 @@ kable(desc_tbl, digits = 2, caption = "Descriptives by ideology group (means)")
 
 # DIF analysis (ordinal, item-by-item)
 
-**Goal.** At *equal HPT ability*, do Low/High ideology groups respond differently to specific items? We match on total HPT (item-rest) and test both uniform and non-uniform DIF per item (α = .01, Bonferroni adjusted).
+**Goal.** Do Low/High ideology groups differ on individual HPT items in a
+joint omnibus likelihood-ratio DIF test? Each test jointly releases that item's
+slope and threshold constraints. Raw *p*-values are Bonferroni-adjusted across
+the nine items and evaluated at familywise alpha = .05 (equivalent per-test
+alpha = .0056).
 
 ```{r,DIF-prep, message=FALSE}
 ## Keep only Low/High groups
@@ -213,11 +217,11 @@ mod_base <- multipleGroup(
 
 params_all <- mirt::mod2values(mod_base)$name
 unique_pars <- unique(params_all)
-pars_slope <- grep("^a", unique_pars, value = TRUE)
-pars_thr   <- grep("^d\\d+$", unique_pars, value = TRUE)
-stopifnot(length(pars_slope) > 0, length(pars_thr) > 0)
-
-pars_to_test <- c(pars_slope, pars_thr)
+pars_to_test <- c(
+  grep("^a", unique_pars, value = TRUE),
+  grep("^d\\d+$", unique_pars, value = TRUE)
+)
+stopifnot(length(pars_to_test) > 0)
 
 dif_out <- DIF(
   mod_base,
@@ -228,39 +232,58 @@ dif_out <- DIF(
   verbose     = FALSE
 )
 
-res_tbl <- as.data.frame(dif_out)
-res_tbl$Item <- rownames(res_tbl)
+res_tbl <- as.data.frame(dif_out) %>%
+  tibble::rownames_to_column("Item") %>%
+  transmute(
+    Item,
+    X2,
+    df,
+    p,
+    adj_p,
+    Flag = ifelse(adj_p < .05, "YES", "no")
+  )
 
-get_min_p <- function(df, prefix_list) {
-  cols <- unlist(lapply(prefix_list, function(p) grep(paste0("^p\\.", p, "$"), names(df), value=TRUE)))
-  if (length(cols) == 0) return(rep(NA, nrow(df)))
-  apply(df[, cols, drop=FALSE], 1, min, na.rm = TRUE)
-}
-
-alpha <- 0.01
-
-res_tbl <- res_tbl %>%
-  mutate(
-    p_nonuniform = get_min_p(cur_data(), pars_slope),
-    p_uniform    = get_min_p(cur_data(), pars_thr),
-    Flag_nonuniform = ifelse(!is.na(p_nonuniform) & p_nonuniform < alpha, "YES", "no"),
-    Flag_uniform    = ifelse(!is.na(p_uniform)    & p_uniform    < alpha, "YES", "no")
-  ) %>%
-  select(Item, p_nonuniform, p_uniform, Flag_nonuniform, Flag_uniform)
-
-kable(res_tbl, digits = 4,
-      caption = "DIF per item (mirt; graded). Non-uniform = Slope (a1); Uniform = Any Threshold (d1-dK). Bonferroni alpha = 0.01.")
+kable(res_tbl, digits = 3,
+      caption = "DIF omnibus item tests (mirt; graded). Each test jointly releases slope and threshold constraints. Raw p-values and Bonferroni-adjusted p-values are shown; familywise alpha = .05 (per-test alpha = .0056).")
 ```
 
 ```{r,DIF-plot, fig.width=9, fig.height=4, message=FALSE, warning=FALSE}
-flagged <- with(res_tbl, Item[Flag_uniform == "YES" | Flag_nonuniform == "YES"])
+flagged <- res_tbl$Item[res_tbl$Flag == "YES"]
 if (length(flagged) > 0) {
   which_item <- which(colnames(hpt_mat) == flagged[1])
   plot(mod_base, type = "trace", which.items = which_item,
        facet_items = FALSE, groups = levels(grp))
 } else {
-  plot.new(); text(0.5, 0.5, "No DIF-flagged item at alpha = 0.01.")
+  plot.new(); text(0.5, 0.5,
+                   "No omnibus DIF item was flagged after Bonferroni adjustment (familywise alpha = .05).")
 }
+```
+
+```{r,table-s1-parameters}
+grm_coefficients <- coef(mod_base, IRTpars = FALSE, simplify = TRUE)
+stopifnot(isTRUE(all.equal(
+  grm_coefficients$Low$items,
+  grm_coefficients$High$items,
+  check.attributes = FALSE
+)))
+
+table_s1_for_group <- function(group) {
+  as.data.frame(grm_coefficients[[group]]$items) %>%
+    tibble::rownames_to_column("Item") %>%
+    transmute(Item, a1, d1, d2, d3)
+}
+
+table_s1 <- bind_rows(
+  High = table_s1_for_group("High"),
+  Low = table_s1_for_group("Low"),
+  .id = "Group"
+) %>%
+  arrange(Item, factor(Group, levels = c("High", "Low"))) %>%
+  mutate(across(c(a1, d1, d2, d3), ~ round(.x, 3)))
+
+write.csv(table_s1, "../outputs/table_s1_irt_parameters.csv", row.names = FALSE)
+kable(filter(table_s1, Group == "High") %>% select(-Group), digits = 3,
+      caption = "Table S1 source: constrained multi-group GRM item parameters from mod_base. Parameters are equal across Low and High ideology groups.")
 ```
 
 # Multi-group CFA (configural → metric → scalar)

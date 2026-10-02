@@ -339,6 +339,112 @@ for (script in c(analytic_rmds, documentation_rmds)) {
   )
 }
 
+pdf_text <- function(path) {
+  output <- system2("pdftotext", c("-layout", path, "-"), stdout = TRUE,
+                    stderr = TRUE)
+  expect_true(is.null(attr(output, "status")),
+              paste0("pdftotext must read ", path, "."))
+  paste(output, collapse = "\n")
+}
+
+supplement_pdf_text <- pdf_text("osf_storage/supplementary_materials.pdf")
+expect_true(
+  grepl("familywise", supplement_pdf_text, ignore.case = TRUE) &&
+    grepl(".05", supplement_pdf_text, fixed = TRUE) &&
+    grepl("Benjamini-Hochberg", supplement_pdf_text, fixed = TRUE) &&
+    grepl("Orthogonal bifactor CFA", supplement_pdf_text, fixed = TRUE) &&
+    !grepl("alpha = .01", supplement_pdf_text, fixed = TRUE),
+  "The packaged supplement PDF must contain the current familywise-alpha, Benjamini-Hochberg, and orthogonal-bifactor wording."
+)
+
+dif_script <- paste(readLines(
+  "osf_storage/scripts/04_dif_and_mg_cfa_measurement_bias.Rmd",
+  warn = FALSE
+), collapse = "\n")
+expect_true(
+  grepl("familywise alpha = .05", readme_text, fixed = TRUE) &&
+    grepl("familywise alpha = .05", dif_script, fixed = TRUE) &&
+    grepl("adj_p < .05", dif_script, fixed = TRUE),
+  "The README and DIF script must agree on familywise alpha .05 and adjusted-p flags."
+)
+
+dif_pdf_text <- pdf_text("osf_storage/outputs/04_dif_and_mg_cfa_measurement_bias.pdf")
+dif_table_start <- regexpr("DIF omnibus", dif_pdf_text, fixed = TRUE)[1]
+dif_table_text <- if (dif_table_start > 0L) {
+  substr(dif_pdf_text, dif_table_start, dif_table_start + 3000L)
+} else {
+  ""
+}
+expect_true(
+  nzchar(dif_table_text) && !grepl("\\bNA\\b", dif_table_text) &&
+    grepl("POP1", dif_table_text, fixed = TRUE) &&
+    grepl("0.033", dif_table_text, fixed = TRUE) &&
+    grepl("0.300", dif_table_text, fixed = TRUE),
+  "The refreshed DIF PDF must show non-missing omnibus p-values, including POP1 raw .033 and adjusted .300."
+)
+
+reproducibility_pdf_text <- pdf_text("osf_storage/outputs/07_reproducibility_report.pdf")
+expect_true(
+  !grepl("tidyverse[[:space:]]+not installed", reproducibility_pdf_text,
+         perl = TRUE) &&
+    !grepl("semTools[[:space:]]+not installed", reproducibility_pdf_text,
+           perl = TRUE),
+  "The reproducibility PDF must record installed tidyverse and semTools versions."
+)
+
+appendix_script <- paste(readLines(
+  "osf_storage/scripts/06_appendix_tables_and_figures.Rmd", warn = FALSE
+), collapse = "\n")
+expect_true(
+  grepl("mod2values\\(mod_base\\)", dif_script, perl = TRUE) &&
+    grepl("IRTpars = FALSE", dif_script, fixed = TRUE) &&
+    grepl("Table S1", dif_script, fixed = TRUE) &&
+    grepl("Table S1", readme_text, fixed = TRUE) &&
+    grepl("04_dif_and_mg_cfa_measurement_bias.Rmd", appendix_script,
+          fixed = TRUE),
+  "The Table S1 source and mappings must identify the constrained GRM extraction script."
+)
+
+table_s1_export <- "osf_storage/outputs/table_s1_irt_parameters.csv"
+table_s1_reference <- "submissions/pci_psychology/table_s1_irt_parameters.csv"
+if (file.exists(table_s1_export) && file.exists(table_s1_reference)) {
+  exported <- read.csv(table_s1_export, check.names = FALSE)
+  reference <- read.csv(table_s1_reference, check.names = FALSE)
+  expect_true(
+    identical(exported, reference),
+    "The constrained-GRM Table S1 export must match the current supplementary Table S1 CSV."
+  )
+} else {
+  expect_true(FALSE,
+              "The package and submission must both contain the Table S1 CSV export.")
+}
+
+osf_makefile <- paste(readLines("osf_storage/scripts/Makefile", warn = FALSE),
+                     collapse = "\n")
+expect_true(
+  grepl("output_format='pdf_document'", osf_makefile, fixed = TRUE),
+  "The OSF Makefile must render only the tracked PDF report format."
+)
+
+osf_generated_artifacts <- list.files(
+  "osf_storage/outputs",
+  pattern = "\\.(md|tex|log)$|_files$",
+  full.names = TRUE
+)
+expect_true(
+  !length(osf_generated_artifacts),
+  "The OSF output directory must not retain generated Markdown, TeX, log, or _files artifacts."
+)
+
+reproducibility_script <- paste(readLines(
+  "osf_storage/scripts/07_reproducibility_report.Rmd", warn = FALSE
+), collapse = "\n")
+expect_true(
+  grepl("File = sub", reproducibility_script, fixed = TRUE) &&
+    grepl("SHA256 = sub", reproducibility_script, fixed = TRUE),
+  "The checksum report must separate file names from SHA-256 values."
+)
+
 if (length(test_failures)) {
   cat(c("Revision reporting regression checks failed:",
         paste0("- ", test_failures), ""),

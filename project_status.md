@@ -7,7 +7,7 @@
   (desk-rejected 2026-03-20), IJT IJT260038 (desk-rejected
   2026-04-11)
 **Preregistration:** https://osf.io/yng37/
-**Last updated:** 2026-09-11
+**Last updated:** 2026-10-02
 
 ---
 
@@ -174,6 +174,9 @@
 - Restored the missing direct CRAN dependencies to the user R 4.6 library and
   refreshed all five analytic PDFs through the OSF Makefile. The regression
   suite passes; the refreshed PDFs report scaled CFA indices and nested ICCs.
+- Aligned the packaged DIF report with `mirt` 1.47 joint omnibus item tests,
+  familywise alpha = .05, and the constrained-GRM Table S1 export. The current
+  supplement PDF and OSF copy were rebuilt from the same Markdown source.
 
 ---
 ## Current Work

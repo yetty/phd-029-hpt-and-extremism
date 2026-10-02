@@ -15,12 +15,13 @@ Czech Republic
 Graded Response Model (GRM) item discrimination ($a_1$) and
 category-intercept ($d_1$, $d_2$, $d_3$) parameters for the nine HPT
 items. Parameters were estimated using the `mirt` R package
-with a constrained multi-group model (High- vs.
+with the constrained multi-group model (`mod_base`; High- vs.
 Low-ideology groups defined by tertile split on the composite
-FR-LF + KSA score). An all-others-as-anchor DIF testing
-strategy with Bonferroni-adjusted *p*-values (raw *p* $\times$ 9)
-compared with a familywise $\alpha$ of .05 detected no significant DIF
-for any item.
+FR-LF + KSA score). Nine joint omnibus item tests released each item's
+slope and threshold constraints. Bonferroni-adjusted *p*-values (raw
+*p* $\times$ 9, capped at one) were compared with a familywise
+$\alpha$ of .05 (equivalent per-test $\alpha$ = .0056); no item was
+flagged.
 Because no items were flagged, the constrained model---in
 which item parameters are held equal across groups---is the
 final model. The parameters below therefore apply to both
@@ -44,7 +45,7 @@ responses entered the GRM and were not reversed for this analysis;
 their negative discrimination estimates therefore reflect the
 opposite direction of the present-oriented items relative to CONT and
 ROA. POP was reversed only when computing composite scores. The
-constrained model was retained because Bonferroni-adjusted
+constrained model was retained because the joint omnibus
 likelihood-ratio DIF tests showed no significant difference between free
 and constrained parameters for any item (all adjusted $p$ > .05).
 

@@ -83,10 +83,11 @@ pipeline.
 ### DIF and supplementary material
 
 The DIF analysis uses an all-item graded-response-model procedure in `mirt`.
-Its item-test p-values use Bonferroni adjustment across the nine HPT items
-(`p.adjust = "bonferroni"`; equivalently, raw p-values multiplied by nine and
-capped at one) and are evaluated against familywise alpha = .05. It does not
-use an alpha of .01.
+Each item receives a joint omnibus likelihood-ratio test that releases its slope
+and threshold constraints. The raw p-values use Bonferroni adjustment across
+the nine HPT items (`p.adjust = "bonferroni"`; raw p-values multiplied by nine
+and capped at one) and are evaluated against familywise alpha = .05 (equivalent
+per-test alpha = .0056). It does not use an alpha of .01.
 
 `supplementary_materials.md` and `supplementary_materials.pdf` contain Tables
 S1-S5. `instrument_adaptation_and_deviations.md` records verified adaptation
@@ -99,7 +100,9 @@ for preregistration, instrument, and analysis-plan discrepancies.
 |---|---|
 | Tables 1-2 and Table S2 | `01_measurement_checks.Rmd` |
 | Table 3, Table 4, Table 7, Table S3, Table S3b, and Table S4b | `revision_reporting_analyses.R` |
-| Tables 5-6 and Table S1 | `04_dif_and_mg_cfa_measurement_bias.Rmd`; checked by `verify_statistics.R` in the revision source directory |
+| Table 5 | `04_dif_and_mg_cfa_measurement_bias.Rmd` (joint omnibus DIF tests) |
+| Table 6 | `04_dif_and_mg_cfa_measurement_bias.Rmd` (MG-CFA invariance ladder) |
+| Table S1 | `04_dif_and_mg_cfa_measurement_bias.Rmd`: constrained `mod_base` GRM extraction written to `outputs/table_s1_irt_parameters.csv` |
 | Table S4 | `supplementary_materials.md`, based on the cited source-population documentation |
 | Table S5 | `supplementary_materials.md` and `instrument_adaptation_and_deviations.md` |
 | Figure 1 and revision CSV outputs | `revision_reporting_analyses.R` |
@@ -107,10 +110,11 @@ for preregistration, instrument, and analysis-plan discrepancies.
 
 ### Rendered outputs
 
-`outputs/` contains PDFs for reports 01-07. `outputs/revision/` contains the
-CSV files and PDF/PNG relationship figure created by
-`revision_reporting_analyses.R`. The PDFs are supplied for inspection; the
-scripts are the source of record.
+`outputs/` contains PDFs for reports 01-07 and
+`table_s1_irt_parameters.csv`, the constrained-GRM source export for Table S1.
+`outputs/revision/` contains the CSV files and PDF/PNG relationship figure
+created by `revision_reporting_analyses.R`. The PDFs are supplied for
+inspection; the scripts are the source of record.
 
 ## Reproducing the reports
 
@@ -137,6 +141,14 @@ The principal packages are `lavaan`, `lme4`, `lmerTest`, `mirt`, `psych`,
 `semTools`, `tidyverse`, `janitor`, `knitr`, and `rmarkdown`; individual
 reports declare their additional packages. Report 07 records the actual R
 session and available package versions at render time.
+
+To rebuild the current PCI supplement from its Markdown source, run this from
+the project root before copying both files into this directory:
+
+```bash
+make supplement
+cp submissions/pci_psychology/supplementary_materials.{md,pdf} osf_storage/
+```
 
 ## Ethics and access conditions
 
