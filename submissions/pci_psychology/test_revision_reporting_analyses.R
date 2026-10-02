@@ -154,6 +154,50 @@ for (script in icc_scripts) {
   )
 }
 
+measurement_scripts <- c(
+  "01_measurement-checks.Rmd",
+  "osf_storage/scripts/01_measurement_checks.Rmd"
+)
+for (script in measurement_scripts) {
+  text <- paste(readLines(script, warn = FALSE), collapse = "\n")
+  expect_true(
+    !grepl("mk_icc_3|ICC_school\\s*=|Step 6 -- Class-level ICCs", text,
+           perl = TRUE),
+    paste0(script,
+           " must not duplicate the ICC analysis reported in the 02 script.")
+  )
+}
+
+verify_text <- paste(readLines("submissions/pci_psychology/verify_statistics.R",
+                               warn = FALSE), collapse = "\n")
+expect_true(
+  grepl("bifactor_fit\\s*<-\\s*cfa\\s*\\(", verify_text, perl = TRUE) &&
+    grepl("orthogonal\\s*=\\s*TRUE", verify_text, perl = TRUE) &&
+    grepl("bifactor_indices\\s*<-\\s*fitMeasures\\s*\\(", verify_text,
+          perl = TRUE) &&
+    grepl("cfi.scaled", verify_text, fixed = TRUE) &&
+    grepl("rmsea.scaled", verify_text, fixed = TRUE) &&
+    grepl("srmr", verify_text, fixed = TRUE) &&
+    grepl("standardizedSolution\\s*\\(", verify_text, perl = TRUE) &&
+    grepl("lavInspect\\s*\\(.*post.check", verify_text, perl = TRUE),
+  "verify_statistics.R must report scaled orthogonal bifactor fit, standardized loadings, and admissibility diagnostics."
+)
+
+verify_output <- system2(
+  "Rscript",
+  c("--vanilla", "submissions/pci_psychology/verify_statistics.R"),
+  stdout = TRUE,
+  stderr = TRUE
+)
+expect_true(
+  is.null(attr(verify_output, "status")) &&
+    any(grepl("Orthogonal bifactor WLSMV CFA fit indices", verify_output,
+              fixed = TRUE)) &&
+    any(grepl("Bifactor admissibility: converged=TRUE, post.check=TRUE",
+              verify_output, fixed = TRUE)),
+  "verify_statistics.R must execute and print bifactor fit and admissibility output."
+)
+
 psy_arxiv_doi <- "https://doi.org/10.31234/osf.io/hxngm_v2"
 manuscript_lines <- readLines("submissions/pci_psychology/manuscript.tex",
                               warn = FALSE)

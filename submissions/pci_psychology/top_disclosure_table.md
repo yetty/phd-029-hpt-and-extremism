@@ -11,7 +11,7 @@ following PCI Psychology requirements.
 
 | Standard | Level | Description / Location |
 |----------|-------|------------------------|
-| Citation | Level 2 | All references include DOIs where available; full bibliography in `references.bib` |
+| Citation | Level 2 | All references include DOIs where available; full bibliography in `bibliography.bib` and project-local `extras.bib` |
 | Data transparency | Level 3 | De-identified data publicly available on OSF: <https://doi.org/10.17605/OSF.IO/YNG37> in both RDS and xlsx formats with a full variable codebook (PDF) |
 | Analytic code transparency | Level 3 | All analysis scripts publicly available on OSF: <https://doi.org/10.17605/OSF.IO/YNG37> (7 R Markdown pipeline scripts, 4 figure R scripts, 2 supplementary analysis R scripts, 1 Makefile) |
 | Research materials transparency | Level 3 | Complete instrument battery (Czech-language versions of HPT, FR-LF, KSA-3, SDR-5, and historical knowledge test) publicly available on OSF: <https://doi.org/10.17605/OSF.IO/YNG37> |

@@ -43,7 +43,7 @@ The current manuscript removes the incorrect
 design-effect defense, treats the all-item GRM as a post-registration
 unidimensional sensitivity model, describes its item tests as omnibus, and
 uses one explicit set of minimum-answer scoring rules. A fresh run with the
-current data and lavaan 0.7-2 produced admissible composite-group MG-CFA
+current data and lavaan 0.7.2 produced admissible composite-group MG-CFA
 solutions whose fit-index changes are compatible with scalar invariance; the
 manuscript retains small-group, clustering, and post-registration caveats and
 does not treat this as firm equivalence evidence.
@@ -61,14 +61,21 @@ does not treat this as firm equivalence evidence.
 - The report uses the immutable preregistration link
   <https://osf.io/zsngy>; YNG37 remains the data and materials repository.
   The PsyArXiv preprint DOI is <https://doi.org/10.31234/osf.io/hxngm_v2>.
-- The Turkish source is described only as an abstract-level qualitative case
-  study using the Hartmann and Hasselhorn framework and components with sixth-
-  and eighth-grade students; it is not presented as direct nine-item
+- Full-text verification confirms that the Turkish qualitative case study used
+  Hartmann and Hasselhorn components as deductive analytic categories with
+  sixth- and eighth-grade students; it is not presented as direct nine-item
   administration or psychometric evidence.
 - Table S5 records that neither the FR-LF-by-knowledge nor
   KSA-by-knowledge interaction, nor their registered simple slopes, was
   reported and that no reported test implemented the registered
   Benjamini-Hochberg correction.
+- An earlier final-correction pass removed bifactor reporting while its scaled
+  fit was rechecked. The current verification restores it transparently: the
+  post-registration orthogonal bifactor model has CFI = .993, RMSEA = .024,
+  SRMR = .037, and $\Delta$CFI = +.018 versus the correlated three-factor
+  model. Its fit indices favor the more complex model, but non-nested,
+  parameterization-dependent comparison and three-item specific factors limit
+  strong structural claims.
 
 ## Priority 1: Validity claims and factual accuracy
 

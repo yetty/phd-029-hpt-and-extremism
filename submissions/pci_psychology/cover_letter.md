@@ -32,7 +32,8 @@ The paper also illustrates a staged approach to evaluating whether
 scenario-based content generates construct-irrelevant variance through
 attitude congruence. The revision distinguishes preregistered analyses from
 post-registration measurement analyses, reports omitted registered tests,
-adds uncertainty and reliability estimates, and limits interpretation to the
+adds uncertainty and reliability estimates, transparently restores the
+corrected post-registration bifactor result, and limits interpretation to the
 single scenario, item format, sample, and ideological range studied.
 
 The study was preregistered on OSF before data collection

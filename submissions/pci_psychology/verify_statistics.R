@@ -141,6 +141,48 @@ print(round(single_cfa_indices, 3))
 cat("\nCFA model order by scaled CFI:\n")
 print(sort(single_cfa_indices[, "cfi.scaled"], decreasing = TRUE))
 
+bifactor_model <- '
+  G =~ POP1 + POP2 + POP3 + ROA1 + ROA2 + ROA3 + CONT1 + CONT2 + CONT3
+  POP =~ POP1 + POP2 + POP3
+  CONT =~ CONT1 + CONT2 + CONT3
+  ROA =~ ROA1 + ROA2 + ROA3
+'
+bifactor_fit <- cfa(
+  bifactor_model,
+  data = cfa_data,
+  ordered = hpt_items,
+  estimator = "WLSMV",
+  orthogonal = TRUE
+)
+bifactor_indices <- fitMeasures(bifactor_fit, c(
+  "chisq.scaled", "df.scaled", "pvalue.scaled", "cfi.scaled",
+  "tli.scaled", "rmsea.scaled", "rmsea.ci.lower.scaled",
+  "rmsea.ci.upper.scaled", "srmr"
+))
+bifactor_loadings <- standardizedSolution(bifactor_fit) %>%
+  filter(op == "=~") %>%
+  select(lhs, rhs, est.std, se, z, pvalue)
+bifactor_theta <- lavInspect(bifactor_fit, "theta")
+bifactor_residual_variances <- diag(bifactor_theta)
+bifactor_post_check <- lavInspect(bifactor_fit, "post.check")
+
+cat("\nOrthogonal bifactor WLSMV CFA fit indices:\n")
+print(round(bifactor_indices, 3))
+cat(sprintf(
+  "Scaled CFI difference from the correlated three-factor model: %.3f\n",
+  bifactor_indices["cfi.scaled"] -
+    single_cfa_indices["3-factor (POP/CONT/ROA)", "cfi.scaled"]
+))
+cat("\nStandardized bifactor loadings:\n")
+print(bifactor_loadings %>% mutate(across(where(is.numeric), ~ round(.x, 3))))
+cat(sprintf(
+  "Bifactor admissibility: converged=%s, post.check=%s, minimum residual variance=%.3f, negative residuals=%d\n",
+  lavInspect(bifactor_fit, "converged"),
+  bifactor_post_check,
+  min(bifactor_residual_variances),
+  sum(bifactor_residual_variances < 0)
+))
+
 extract_nested_icc <- function(outcome) {
   model <- lmer(
     as.formula(paste0(

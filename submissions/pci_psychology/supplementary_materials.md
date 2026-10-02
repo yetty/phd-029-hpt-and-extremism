@@ -171,3 +171,4 @@ that plan.
 | Registered missing-data rule | The registered listwise-deletion/MICE decision rule was not implemented; the score-specific rules used in the manuscript are documented in Section 3.4 |
 | HPT response scale 0-3; two ROA items; approximately ten knowledge items | Administered battery used 1-4 HPT responses, three ROA items, and six knowledge items |
 | CFA-focused validation, NS-only invariance, TOST, and alternative exclusions | Added after registration and treated as exploratory or descriptive |
+| Orthogonal bifactor CFA | Added post-registration. Its scaled global fit indices favor the more complex model, but the non-nested, parameterization-dependent comparison and three indicators per specific factor limit strong structural claims. |

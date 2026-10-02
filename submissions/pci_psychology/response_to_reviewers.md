@@ -194,9 +194,9 @@ cognitive-interview work.
 **Response:** Section 2.1 names and describes the verified Huijgen studies
 rather than referring generically to comparative studies. Claims unsupported
 by direct use of the instrument were removed. We also cite a recent Turkish
-qualitative case study only for its abstract-level description: it involved
-sixth- and eighth-grade students and used the Hartmann and Hasselhorn framework
-and components in qualitative analysis. We do not treat it as evidence of
+qualitative case study after full-text verification: it involved sixth- and
+eighth-grade students and used the Hartmann and Hasselhorn components as
+deductive analytic categories. We do not treat it as evidence of
 direct nine-item administration or psychometric performance.
 
 ## Reviewer 2
@@ -261,7 +261,15 @@ between-group loading difference.
 The manuscript now consistently reports scaled WLSMV single-group CFA values:
 the one-, two-, and three-factor models have CFI values of .866, .913, and
 .975, respectively; the three-factor model has $\chi^2(24)$ = 34.26,
-$p$ = .080. Nested ICCs separate school, class-within-school, and total
+$p$ = .080. An earlier technical correction removed bifactor reporting while
+its scaled fit was being rechecked; that removal is now reversed. The
+post-registration orthogonal bifactor model has CFI = .993, RMSEA = .024, and
+SRMR = .037 ($\Delta$CFI = +.018 versus the correlated three-factor model).
+Although its fit indices favor the more complex bifactor model, the manuscript
+retains theory- and continuity-based primary subscale reporting and limits
+strong structural claims because the comparison is non-nested and
+parameterization-dependent and each specific factor has three indicators.
+Nested ICCs separate school, class-within-school, and total
 clustering; the primary six-item HPT composite has values of .041, .000, and
 .041. The zero classroom component is reported as consistent with the focal
 model's singularity warning, without attributing it to instruction or another

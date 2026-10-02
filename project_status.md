@@ -166,12 +166,12 @@
   focal regression differed across the manuscript, current script, and stated
   missing-data rules. Several bounded reviewer-response corrections remain.
 
-### PCI Psychology Revision Package Completed (2026-09-11)
+### PCI Psychology Revision Package Completed (2026-10-02)
 - Centralized minimum-answer scoring and reproduced corrected regression, DIF,
   TOST, and admissible MG-CFA results without changing the main conclusions.
 - Updated the manuscript, supplement, response, cover letter, and revision
-  ledger; rebuilt the clean preprint and redline against submitted commit
-  `c952aa5`.
+  ledger. Restored the verified post-registration bifactor model transparently,
+  while retaining theory- and continuity-based primary subscale reporting.
 - Independent psychometric, reference, and compliance checks found no remaining
   submission blocker. Human specialist review remains optional quality control.
 

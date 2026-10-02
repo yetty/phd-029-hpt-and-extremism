@@ -314,47 +314,7 @@ ggplot(long_scales, aes(x = score)) +
   labs(title = "Subscales and composites", x = "Mean score", y = "Count")
 ```
 
-# Step 6 -- Class-level ICCs (multilevel warranted?)
-
-```{r,icc}
-# Build the DV frame from analysis_df (items) and compute subscales/composites here
-icc_data <- analysis_df %>%
-  mutate(
-    POP_raw = rowMeans(select(., starts_with("POP")),  na.rm = TRUE),
-    ROA     = rowMeans(select(., starts_with("ROA")),  na.rm = TRUE),
-    CONT    = rowMeans(select(., starts_with("CONT")), na.rm = TRUE)
-  ) %>%
-  mutate(
-    POP_rev  = 5 - POP_raw,
-    HPT_CTX6 = rowMeans(cbind(POP_rev, CONT), na.rm = TRUE),
-    HPT_TOT9 = rowMeans(cbind(POP_rev, CONT, ROA), na.rm = TRUE)
-  ) %>%
-  select(school_id, class_label, class_id, POP_raw, ROA, CONT, HPT_CTX6, HPT_TOT9)
-
-mk_icc_3 <- function(dv){
-  f <- reformulate("1 + (1|school_id) + (1|school_id:class_label)", response = dv)
-  fit <- lmer(f, data = icc_data, REML = TRUE)
-
-  vc <- as.data.frame(VarCorr(fit))
-  v_school <- vc$vcov[vc$grp == "school_id"];             v_school <- if (length(v_school)) v_school[1] else 0
-  v_classW <- vc$vcov[vc$grp == "school_id:class_label"]; v_classW <- if (length(v_classW)) v_classW[1] else 0
-  v_resid  <- vc$vcov[vc$grp == "Residual"][1]
-  v_tot    <- v_school + v_classW + v_resid
-
-  tibble(
-    DV = dv,
-    ICC_school = v_school / v_tot,
-    ICC_class_within_school = v_classW / v_tot,
-    ICC_total_cluster = (v_school + v_classW) / v_tot,
-    singular = isSingular(fit)
-  )
-}
-
-icc_tbl <- purrr::map_dfr(c("HPT_CTX6","HPT_TOT9","POP_raw","ROA","CONT"), mk_icc_3)
-print_tbl(icc_tbl, digits = 3, caption = "ICCs: school and class-within-school (HPT composites and subscales).")
-```
-
-# Step 7 -- Knowledge mini-test (KN1-KN6)
+# Step 6 -- Knowledge mini-test (KN1-KN6)
 
 ```{r,kn-items,warning=FALSE}
 kn_cols <- paste0("KN", 1:6)
