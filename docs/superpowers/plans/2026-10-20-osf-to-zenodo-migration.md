@@ -410,7 +410,7 @@ does not authorize an OSF change or shorten any approval gate.
 - Create: `tests/test_zenodo_release.py`
 - Create later in Task 4: `tools/zenodo_release.py`
 
-- [ ] **Step 1: Add the complete failing test module.**
+- [x] **Step 1: Add the complete failing test module.**
 
   ```python
   import hashlib
@@ -459,7 +459,11 @@ does not authorize an OSF change or shorten any approval gate.
                   "rights": [{"id": "cc-by-4.0"}],
               },
               "allowlist": ["README.md"],
-              "denylist": ["**/*.log", "**/.zenodo-release-state.json"],
+              "denylist": [
+                  "instruments/**",
+                  "**/*.log",
+                  "**/.zenodo-release-state.json",
+              ],
           }
           return package, metadata
 
@@ -478,6 +482,17 @@ does not authorize an OSF change or shorten any approval gate.
                   zr.collect_sources(package, metadata),
                   [package / "README.md"],
               )
+
+      def test_collect_sources_rejects_allowlisted_instrument(self):
+          with tempfile.TemporaryDirectory() as directory:
+              root = Path(directory)
+              package, metadata = self.write_package(root)
+              instrument = package / "instruments" / "questionnaire.docx"
+              instrument.parent.mkdir()
+              instrument.write_bytes(b"third-party instrument")
+              metadata["allowlist"].append("instruments/questionnaire.docx")
+              with self.assertRaisesRegex(zr.ReleaseError, "denylist"):
+                  zr.collect_sources(package, metadata)
 
       def test_build_and_verify_bundle_hashes_every_payload_file(self):
           with tempfile.TemporaryDirectory() as directory:
@@ -551,6 +566,41 @@ does not authorize an OSF change or shorten any approval gate.
           self.assertEqual(client.list_files("123", published=True), [])
           client.request.assert_called_once_with("GET", "/records/123/files")
 
+      def test_write_state_rejects_secret_fields(self):
+          with tempfile.TemporaryDirectory() as directory:
+              state_path = Path(directory) / "state.json"
+              with self.assertRaisesRegex(zr.ReleaseError, "forbidden field"):
+                  zr.write_state(state_path, {
+                      "environment": "sandbox",
+                      "record_id": "123",
+                      "token": "must-not-be-written",
+                  })
+              self.assertFalse(state_path.exists())
+
+      def test_failed_doi_reservation_preserves_draft_identity(self):
+          class FailingClient:
+              def create_draft(self, metadata):
+                  return {
+                      "id": "123",
+                      "links": {"self_html": "https://example.test/draft/123"},
+                  }
+
+              def reserve_doi(self, record_id):
+                  raise zr.ReleaseError("DOI reservation failed")
+
+          with tempfile.TemporaryDirectory() as directory:
+              state_path = Path(directory) / "state.json"
+              with self.assertRaisesRegex(zr.ReleaseError, "DOI reservation"):
+                  zr.create_draft_and_reserve(
+                      FailingClient(), "sandbox", {}, state_path
+                  )
+              state = json.loads(state_path.read_text(encoding="utf-8"))
+              self.assertEqual(state, {
+                  "environment": "sandbox",
+                  "record_id": "123",
+                  "draft_url": "https://example.test/draft/123",
+              })
+
       def test_publish_needs_both_confirmation_flags(self):
           with self.assertRaisesRegex(zr.ReleaseError, "confirm-publish"):
               zr.require_publish_confirmation(False, True)
@@ -562,7 +612,7 @@ does not authorize an OSF change or shorten any approval gate.
       unittest.main(verbosity=2)
   ```
 
-- [ ] **Step 2: Run the focused test to prove the missing implementation.**
+- [x] **Step 2: Run the focused test to prove the missing implementation.**
 
   Run:
 
@@ -580,7 +630,7 @@ does not authorize an OSF change or shorten any approval gate.
 - Modify: `tests/test_zenodo_release.py` only if the failing test exposed a
   real error in the test fixture rather than a missing implementation.
 
-- [ ] **Step 1: Implement source validation, deterministic packaging, and
+- [x] **Step 1: Implement source validation, deterministic packaging, and
   local verification.**
 
   Write `tools/zenodo_release.py` with this complete implementation. It uses
@@ -594,7 +644,6 @@ does not authorize an OSF change or shorten any approval gate.
   import hashlib
   import json
   import os
-  import shutil
   import sys
   import urllib.error
   import urllib.request
@@ -667,14 +716,14 @@ does not authorize an OSF change or shorten any approval gate.
       missing = sorted(set(allowlist) - set(actual))
       denied = [relative for relative in allowlist
                 if any(matches(pattern, relative) for pattern in denylist)]
+      if denied:
+          raise ReleaseError("allowlist intersects denylist: " +
+                             ", ".join(denied))
       if unexpected:
           raise ReleaseError("unallowlisted package files: " +
                              ", ".join(unexpected))
       if missing:
           raise ReleaseError("allowlisted files missing: " + ", ".join(missing))
-      if denied:
-          raise ReleaseError("allowlist intersects denylist: " +
-                             ", ".join(denied))
       return [package / relative for relative in allowlist]
 
 
@@ -799,7 +848,7 @@ does not authorize an OSF change or shorten any approval gate.
                        "Accept": "application/vnd.inveniordm.v1+json"},
           )
           try:
-              with urllib.request.urlopen(request) as response:
+              with urllib.request.urlopen(request, timeout=60) as response:
                   payload = response.read()
                   return response.status, json.loads(payload) if payload else {}
           except urllib.error.HTTPError as error:
@@ -871,6 +920,19 @@ does not authorize an OSF change or shorten any approval gate.
       return payload
 
 
+  def create_draft_and_reserve(client, environment, metadata, state_path):
+      draft = client.create_draft(metadata)
+      state = {
+          "environment": environment,
+          "record_id": str(draft["id"]),
+          "draft_url": draft["links"]["self_html"],
+      }
+      write_state(state_path, state)
+      state["reserved_doi"] = client.reserve_doi(state["record_id"])
+      write_state(state_path, state)
+      return state
+
+
   def parser():
       result = argparse.ArgumentParser()
       result.add_argument("command", choices=(
@@ -909,8 +971,6 @@ does not authorize an OSF change or shorten any approval gate.
           raise ReleaseError("--environment is required for network stages")
       if args.command == "publish":
           require_publish_confirmation(args.confirm_publish, args.user_approved)
-      token = load_token(args.environment, args.env_file)
-      client = ZenodoClient(args.environment, token)
       if args.command == "create-draft":
           if not args.confirm_create_draft or not args.reserve_doi:
               raise ReleaseError("draft creation requires both confirmation flags")
@@ -918,16 +978,13 @@ does not authorize an OSF change or shorten any approval gate.
               raise ReleaseError(
                   "state file already exists; resolve the existing draft first"
               )
-          draft = client.create_draft(metadata_payload(document))
-          record_id = str(draft["id"])
-          doi = client.reserve_doi(record_id)
-          write_state(state_path, {
-              "environment": args.environment,
-              "record_id": record_id,
-              "draft_url": draft["links"]["self_html"],
-              "reserved_doi": doi,
-          })
-          print(doi)
+      token = load_token(args.environment, args.env_file)
+      client = ZenodoClient(args.environment, token)
+      if args.command == "create-draft":
+          state = create_draft_and_reserve(
+              client, args.environment, metadata_payload(document), state_path
+          )
+          print(state["reserved_doi"])
           return
       state = read_state(state_path)
       if state["environment"] != args.environment:
@@ -957,7 +1014,7 @@ does not authorize an OSF change or shorten any approval gate.
           raise SystemExit(2)
   ```
 
-- [ ] **Step 2: Run the test and local validation.**
+- [x] **Step 2: Run the test and local validation.**
 
   Run:
 
@@ -970,7 +1027,7 @@ does not authorize an OSF change or shorten any approval gate.
   allowlisted files, excludes ignored denylisted intermediates, and neither
   reads an environment file nor calls Zenodo.
 
-- [ ] **Step 3: Commit the tested local release tool.**
+- [x] **Step 3: Commit the tested local release tool.**
 
   Run:
 
