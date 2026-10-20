@@ -1,8 +1,8 @@
 # phd-029 - HPT and Extremism
 
-Manuscript *"Do Political Attitudes Contaminate Historical Reasoning?
-Ideological Attitudes and Disciplinary Thinking in Czech Adolescents"*:
-does a Historical Perspective Taking (HPT) instrument conflate
+Manuscript *"Cross-Cultural Validation and Ideological Fairness of a
+Historical Perspective Taking Instrument: Evidence from Czech Secondary
+Students"*: does a Historical Perspective Taking (HPT) instrument conflate
 right-authoritarian agreement with disciplinary reasoning? N = 293
 students, 10 schools; preregistered on OSF (https://osf.io/zsngy/).
 Result: no ideology effects; historical knowledge is the only consistent
@@ -14,7 +14,7 @@ The former OSF Project DOI is retained only as provenance.
 
 **Status:** `status.md`, `project_status.md`.
 **Details:** `docs/study-and-pipeline.md` (sample, constructs,
-hypotheses, files, Rmd pipeline 01-07, OSF package, conventions).
+hypotheses, files, Rmd pipeline 01-07, Zenodo package, conventions).
 
 ## Project rules
 
