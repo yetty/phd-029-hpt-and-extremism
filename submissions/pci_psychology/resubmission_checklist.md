@@ -271,10 +271,13 @@ preprint (`hxngm`) are unaffected and keep their identifiers.
 
 ### D2. REC-05: reliability framing
 
-- [ ] Read Loevinger (1954), "The attenuation paradox in test theory",
+- [x] Read Loevinger (1954), "The attenuation paradox in test theory",
   *Psychological Bulletin*, 51(5), 493-504; create the R/ note; cite it
   (the recommender named the attenuation paradox; the current citation is
   Loevinger, 1957).
+  Done 2026-10-20: cited in 5.3 for the paradox only (pp. 493-494, 504);
+  PDF in vault `L/Loevinger1954Attenuation.pdf`. The R/ note is still to
+  be written.
 - [x] Rewrite the 5.3 opening (849) to follow the recommender's framing:
   start with the breadth-precision trade-off and the attenuation paradox,
   not with "fall below conventional benchmarks". Keep one sentence
