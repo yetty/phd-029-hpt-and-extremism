@@ -25,8 +25,8 @@ Sections A-F, H (except F7) and most of B are done and pushed. Open items:
   `Wilschut_Schiphorst2019One` (still renders as "(?)") and of Loevinger
   (1954) (TODO comment in 5.3); Zotero casing fixes for Beierlein et al.
   (2014) and Decker et al. (2013) (Language = German) and Aktin et al.
-  (2026) ("Turkish", "November"); F-e ethics facts (principal approval,
-  parental information).
+  (2026) ("Turkish", "November"). `extras.bib` keys stay as they are
+  (decided 2026-10-20).
 - G3 run 2026-10-20: six claims reworded. Still open: 13 `extras.bib`
   keys are not in Zotero (Chen2007, Cheung2002, Finch2005, Flora2004,
   Hambleton2005, ITC2017, Jost2003, Kahan2017, Duckitt2001, Suedfeld1977,
