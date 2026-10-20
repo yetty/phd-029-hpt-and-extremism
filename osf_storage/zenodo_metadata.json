@@ -118,6 +118,7 @@
     "outputs/table_s1_irt_parameters.csv",
     "outputs/revision/revision_correlation_intervals.csv",
     "outputs/revision/revision_ideology_thresholds.csv",
+    "outputs/revision/revision_ideology_tertile_means.csv",
     "outputs/revision/revision_knowledge_facilities.csv",
     "outputs/revision/revision_participant_counts.csv",
     "outputs/revision/revision_participant_descriptives.csv",

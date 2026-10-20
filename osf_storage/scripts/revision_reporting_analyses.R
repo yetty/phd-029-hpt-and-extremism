@@ -275,6 +275,36 @@ write_descriptive_outputs <- function(data, output_dir) {
                    row.names = FALSE)
 }
 
+# Tertile cut points and boundary rules match the DIF grouping in Report 04.
+ideology_tertile_means <- function(ideology, hpt) {
+  keep <- stats::complete.cases(ideology, hpt)
+  ideology <- ideology[keep]
+  hpt <- hpt[keep]
+  cuts <- stats::quantile(ideology, probs = c(.3334, .6666))
+  group <- ifelse(ideology <= cuts[1], "Low",
+                  ifelse(ideology >= cuts[2], "High", "Middle"))
+  rows <- lapply(c("Low", "Middle", "High"), function(level) {
+    x <- hpt[group == level]
+    half_width <- stats::qt(.975, length(x) - 1) * stats::sd(x) / sqrt(length(x))
+    data.frame(group = level, n = length(x), mean = mean(x),
+               ci_lower = mean(x) - half_width,
+               ci_upper = mean(x) + half_width)
+  })
+  do.call(rbind, rows)
+}
+
+write_tertile_outputs <- function(data, output_dir) {
+  scored <- score_data(data)
+  means <- ideology_tertile_means(scored$Ideology_composite,
+                                  scored$HPT_composite)
+  means[c("mean", "ci_lower", "ci_upper")] <- lapply(
+    means[c("mean", "ci_lower", "ci_upper")], round, 3
+  )
+  utils::write.csv(means,
+                   file.path(output_dir, "revision_ideology_tertile_means.csv"),
+                   row.names = FALSE)
+}
+
 prepare_relationship_data <- function(ideology, knowledge, hpt) {
   plot_data <- rbind(
     data.frame(
@@ -342,6 +372,7 @@ main <- function() {
   write_reliability_outputs(normalised_responses, output_dir)
   write_correlation_outputs(normalised_responses, output_dir)
   write_descriptive_outputs(normalised_responses, output_dir)
+  write_tertile_outputs(normalised_responses, output_dir)
   write_relationship_figure(normalised_responses, output_dir)
   message("Revision reporting outputs written to ", output_dir)
 }

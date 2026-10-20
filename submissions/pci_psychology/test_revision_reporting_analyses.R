@@ -32,6 +32,13 @@ alpha_result <- alpha_summary(alpha_data, ordinal = FALSE)
 stopifnot(alpha_result[["n"]] == 3)
 stopifnot(abs(alpha_result[["alpha_raw"]] - complete_alpha) < 1e-10)
 
+tertile_means <- ideology_tertile_means(c(1:9, NA, 5), c(1:9, 5, NA))
+stopifnot(identical(tertile_means$group, c("Low", "Middle", "High")))
+stopifnot(identical(tertile_means$n, c(3L, 3L, 3L)))
+stopifnot(all(abs(tertile_means$mean - c(2, 5, 8)) < 1e-10))
+stopifnot(abs(tertile_means$ci_lower[1] - (2 - stats::qt(.975, 2) / sqrt(3))) < 1e-10)
+stopifnot(abs(tertile_means$ci_upper[3] - (8 + stats::qt(.975, 2) / sqrt(3))) < 1e-10)
+
 osf_scoring_scripts <- c(
   "01_measurement_checks.Rmd",
   "02_descriptives_and_zero_order_correlations.Rmd",
@@ -273,6 +280,20 @@ required_replication_files <- c(
 for (path in required_replication_files) {
   expect_true(file.exists(path),
               paste0("Replication package must include ", path, "."))
+}
+
+for (path in c(
+  "submissions/pci_psychology/revision_outputs/revision_ideology_tertile_means.csv",
+  "osf_storage/outputs/revision/revision_ideology_tertile_means.csv"
+)) {
+  tertile_output <- utils::read.csv(path)
+  expect_true(
+    identical(tertile_output$group, c("Low", "Middle", "High")) &&
+      sum(tertile_output$n) == 282L &&
+      identical(tertile_output$n[c(1, 3)], c(96L, 95L)),
+    paste0(path, " must report Low/Middle/High HPT composite means for the",
+           " 282 focal cases, with Low and High matching the DIF groups.")
+  )
 }
 
 readme_path <- "osf_storage/README.md"
