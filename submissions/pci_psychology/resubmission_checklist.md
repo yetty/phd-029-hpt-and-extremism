@@ -27,6 +27,11 @@ Sections A-F, H (except F7) and most of B are done and pushed. Open items:
   (2014) and Decker et al. (2013) (Language = German) and Aktin et al.
   (2026) ("Turkish", "November"); F-e ethics facts (principal approval,
   parental information).
+- G3 run 2026-10-20: six claims reworded. Still open: 13 `extras.bib`
+  keys are not in Zotero (Chen2007, Cheung2002, Finch2005, Flora2004,
+  Hambleton2005, ITC2017, Jost2003, Kahan2017, Duckitt2001, Suedfeld1977,
+  Evans2013, Shemilt1984, Barton2004); 35 cited works lack an annotated R/
+  note; `references.bib` is unused and stale.
 - **Then:** final rebuild (I3-I4), page and line references in the
   response letter (F7), I6 read-through, J1 PsyArXiv v3, switch the Zenodo
   preprint identifier to `hxngm_v3`, B6 publish, J3-J4, K.
@@ -428,7 +433,7 @@ the recommender to find one who can. These are cheap fixes.
   found in this review: `Barton2004`, `Evans2013`, `Duckitt2001`,
   `Suedfeld1977`, `Hays_et_al1989A_Five`, `Beierlein_et_al2014Die_Kurzskala`,
   `Decker_et_al2013Rechtsextremismus`, `Cohen1988`.
-- [ ] **G3.** Run `reference-verifier` on `manuscript.tex` and
+- [x] **G3.** Run `reference-verifier` on `manuscript.tex` and
   `response_to_reviewers.md` (plan 2026-10-02 Task 6 is still open).
 - [x] **G4.** After C1-C2, confirm whether `Hartmann2008` is still cited;
   if not, it drops out of the reference list automatically.
