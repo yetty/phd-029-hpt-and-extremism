@@ -16,5 +16,8 @@ cp manuscript.pdf preprint.pdf
 
 echo "Built: submissions/pci_psychology/preprint.pdf"
 
+# Fill page and line locations into the response letter from the line labels.
+"${PYTHON:-../../../../.venv/bin/python}" fill_response_locations.py manuscript.aux
+
 # Clean aux files
 rm -f manuscript.aux manuscript.log manuscript.out manuscript.toc manuscript.bbl manuscript.blg manuscript.bcf manuscript.run.xml
