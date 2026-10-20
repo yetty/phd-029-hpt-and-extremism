@@ -13,6 +13,10 @@ record a comment as resolved merely because related text exists. A point is
 resolved only when the proposed revision is present and the validation check
 passes in the rebuilt manuscript.
 
+> **Superseded (2026-10-20).** The validation boxes below were not ticked
+> individually. Final verification of every item is tracked in
+> `../resubmission_checklist.md`, which supersedes this ledger.
+
 ## Status key
 
 - **Unresolved:** the requested change is absent.
@@ -795,6 +799,12 @@ claims that it supports. Compare both sources with the administered Czech
 instrument when resolving the voting-versus-joining drift in R1-07. The final
 prose must make this source lineage explicit rather than silently replacing
 the German source.
+
+**Superseding decision (2026-10-20, checklist A3):** The 2026-09-10 decision
+above was wrong. The Czech version was translated from the published
+**English** article, as the submitted manuscript stated. The manuscript now
+cites Hartmann and Hasselhorn (2008) throughout and mentions Hartmann (2008)
+once, in Section 3.1, as the instrument's original development source.
 
 **Recommended refinement:** Replace instrument-source uses of `Hartmann2008`
 with the canonical global key `Hartmann_Hasselhorn2008Historical`. Retain the
