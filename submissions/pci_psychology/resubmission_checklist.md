@@ -394,7 +394,8 @@ the recommender to find one who can. These are cheap fixes.
   `Wilschut_Schiphorst2019One` (PDF in vault `L/`; write the note from
   your own reading, using the assessment in
   `docs/reviews/2026-10-20-wilschut-schiphorst-2019.md` as a starting
-  point). Make sure each new entry reaches `bibliography.bib` via Zotero. `Endacott_Brooks2013An_Updated`
+  point). Make sure each new entry reaches `bibliography.bib` via Zotero.
+  `Endacott_Brooks2013An_Updated`
   is a stub marked "needs full read".
 - [ ] **G2.** Also check notes for the other cited works without notes
   found in this review: `Barton2004`, `Evans2013`, `Duckitt2001`,
