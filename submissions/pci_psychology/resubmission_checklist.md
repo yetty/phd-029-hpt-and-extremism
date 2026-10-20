@@ -17,6 +17,33 @@ Order of work: A (decisions) -> B (Zenodo) -> C-F (text) -> G (citations)
 Zenodo comes early because its DOI must appear in the manuscript, TOP form,
 README and cover letter before the final build.
 
+## Progress (2026-10-20)
+
+Sections A-F, H (except F7) and most of B are done and pushed. Open items:
+
+- **Blocked on Juda:** G1/G2 reading and R/ notes; Zotero export of
+  `Wilschut_Schiphorst2019One` (still renders as "(?)") and of Loevinger
+  (1954) (TODO comment in 5.3); Zotero casing fixes for Beierlein et al.
+  (2014) and Decker et al. (2013) (Language = German) and Aktin et al.
+  (2026) ("Turkish", "November"); F-e ethics facts (principal approval,
+  parental information).
+- **Then:** final rebuild (I3-I4), page and line references in the
+  response letter (F7), I6 read-through, J1 PsyArXiv v3, switch the Zenodo
+  preprint identifier to `hxngm_v3`, B6 publish, J3-J4, K.
+- The build now uses Biber with biblatex-apa because the root
+  `bibliography.bib` is a Better BibLaTeX export; the 2026-10-20 rebuild in
+  commit `cb95472` had every citation as "n.d.".
+- The unversioned preprint DOI does not resolve; the TOP form, README and
+  tests use <https://osf.io/preprints/psyarxiv/hxngm>.
+- B3 deviation from A1: third-party instrument files and item text are
+  excluded from the Zenodo package pending redistribution permission.
+- B7: OSF storage confirmed empty via the API; the pointer note on the OSF
+  project is not yet confirmed.
+- Not on the original list: the preregistration names an MG-CFA with
+  ideology tertiles as the H4 sensitivity model (CONT items), while the
+  manuscript and Table S5 call the MG-CFA post-registration. Decide whether
+  to reword Section 3.4, 4.7 and Table S5.
+
 ---
 
 ## A. Decisions (made 2026-10-20)
@@ -63,30 +90,30 @@ preprint (`hxngm`) are unaffected and keep their identifiers.
 - [ ] **B1. Freeze the package contents.** Finish all analysis-affecting
   edits first (none of the items below should change statistics; if one
   does, rerun the pipeline before uploading).
-- [ ] **B2. Create a Zenodo draft and reserve the DOI.** Use "Reserve DOI"
+- [x] **B2. Create a Zenodo draft and reserve the DOI.** Use "Reserve DOI"
   so the DOI can go into the manuscript before publishing the record.
   Metadata:
-  - [ ] Title (match the manuscript title), creator with ORCID
+  - [x] Title (match the manuscript title), creator with ORCID
     0000-0003-0043-4039 and affiliation (Charles University, Faculty of
     Arts, Institute of History), resource type "Dataset" (or "Other" with
     a clear description), publication date, version `1.0`.
-  - [ ] Description: what the package contains, execution order, and the
+  - [x] Description: what the package contains, execution order, and the
     mapping to manuscript tables and figures (reuse the README text).
-  - [ ] Licence field: CC BY 4.0; state in the description that code is
+  - [x] Licence field: CC BY 4.0; state in the description that code is
     MIT-licensed (A1). Add a `LICENSE` file (MIT) to `scripts/` and a
     licence section to the README.
-  - [ ] Related identifiers: preregistration `https://osf.io/zsngy`
+  - [x] Related identifiers: preregistration `https://osf.io/zsngy`
     (relation: "is supplement to" or "references"); preprint
     `10.31234/osf.io/hxngm` (relation: "is supplement to"); the old OSF
     project `10.17605/OSF.IO/YNG37` (relation: "is new version of" or
     "is derived from"), for provenance.
-  - [ ] Keywords as in the manuscript.
-- [ ] **B3. Prepare the upload from `osf_storage/` only.** Never include
+  - [x] Keywords as in the manuscript.
+- [x] **B3. Prepare the upload from `osf_storage/` only.** Never include
   repository-root files (`*CONFIDENTAL*`, teacher reports,
   `normalised_responses.*`, `Research Log.docx`, recruitment material).
-  - [ ] Confirm the data files use the opaque `C01`-`C20` class codes and
+  - [x] Confirm the data files use the opaque `C01`-`C20` class codes and
     contain no other identifying field.
-  - [ ] Confirm the package holds everything the manuscript promises:
+  - [x] Confirm the package holds everything the manuscript promises:
     data (RDS, xlsx), codebook PDF, instruments, five analytic Rmd reports,
     two documentation reports, `scoring_helpers.R`,
     `revision_reporting_analyses.R`, four figure scripts, two
@@ -96,32 +123,32 @@ preprint (`hxngm`) are unaffected and keep their identifiers.
     repository-neutral (for example `replication_package/`); if so, update
     the Makefile, `test_revision_reporting_analyses.R` and
     `docs/study-and-pipeline.md` paths in the same commit.
-  - [ ] Upload as a single zip plus the README at top level, or as loose
+  - [x] Upload as a single zip plus the README at top level, or as loose
     files; keep the directory structure the README documents.
-- [ ] **B4. Update `osf_storage/README.md`.** Replace the OSF project link
+- [x] **B4. Update `osf_storage/README.md`.** Replace the OSF project link
   with the Zenodo DOI; keep the OSF DOI only as provenance; keep the
   preregistration and preprint links. Remove "prepared for migration"
   language.
-- [ ] **B5. Replace every OSF-project reference in the submission files.**
-  - [ ] `manuscript.tex:331` "OSF repository
+- [x] **B5. Replace every OSF-project reference in the submission files.**
+  - [x] `manuscript.tex:331` "OSF repository
     (https://doi.org/10.17605/OSF.IO/YNG37)"
-  - [ ] `manuscript.tex:657` "Table S1 in the OSF supplementary materials"
+  - [x] `manuscript.tex:657` "Table S1 in the OSF supplementary materials"
     (Table S1 is in the supplement that accompanies the manuscript; say so)
-  - [ ] `manuscript.tex:725` "analysis scripts in the OSF data and code
+  - [x] `manuscript.tex:725` "analysis scripts in the OSF data and code
     repository"
-  - [ ] `manuscript.tex:1045-1057` Data Availability: cite the Zenodo DOI;
+  - [x] `manuscript.tex:1045-1057` Data Availability: cite the Zenodo DOI;
     delete "currently available at OSF and is prepared for a planned
     archival migration to Zenodo; it has not yet been migrated"
-  - [ ] TOP form: `manuscript.tex:1135, 1151, 1183, 1202, 1210, 1229, 1239`
+  - [x] TOP form: `manuscript.tex:1135, 1151, 1183, 1202, 1210, 1229, 1239`
     (also delete the Zenodo-migration clause at 1202)
-  - [ ] Keep `https://osf.io/zsngy` at 312, 347, 1056 and 1256; consider
+  - [x] Keep `https://osf.io/zsngy` at 312, 347, 1056 and 1256; consider
     "preregistered (https://osf.io/zsngy)" instead of "preregistered on
     OSF" so the text does not imply the materials are on OSF
-  - [ ] `cover_letter.md:42`
-  - [ ] `top_disclosure_table.md:15-17, 36`
-  - [ ] `test_revision_reporting_analyses.R:274, 277, 655` (assertions
+  - [x] `cover_letter.md:42`
+  - [x] `top_disclosure_table.md:15-17, 36`
+  - [x] `test_revision_reporting_analyses.R:274, 277, 655` (assertions
     expect the OSF DOI; switch them to the Zenodo DOI)
-  - [ ] `docs/study-and-pipeline.md`, `CLAUDE.md`, `project_status.md`
+  - [x] `docs/study-and-pipeline.md`, `CLAUDE.md`, `project_status.md`
 - [ ] **B6. Publish the Zenodo record** after the final rebuild (I3) so
   the archived PDFs and outputs match the submitted manuscript. Check that
   the DOI resolves and that every file downloads.
@@ -132,38 +159,38 @@ preprint (`hxngm`) are unaffected and keep their identifiers.
   description or wiki note on the project pointing to the Zenodo DOI, if
   OSF still allows edits; otherwise put the pointer in the Zenodo record
   only. Do not touch the registration `zsngy`.
-- [ ] **B8. Mention the move in the response letter** (one line in the
+- [x] **B8. Mention the move in the response letter** (one line in the
   META entry, see F1).
 
 ---
 
 ## C. Factual corrections (must fix)
 
-- [ ] **C1. Translation source (325).** Revert to the submitted wording,
+- [x] **C1. Translation source (325).** Revert to the submitted wording,
   which was correct: "Two bilingual Czech-English experts conducted
   independent forward translations from the published English version of
   the instrument \citep{Hartmann_Hasselhorn2008Historical}." Remove "from
   the German instrument reported in \citet{Hartmann2008}; wording was
   cross-checked against the published English validation article".
-- [ ] **C2. Other German-source statements.** Make consistent with C1:
-  - [ ] `manuscript.tex:330` "reverse-scoring of POP items from the German
+- [x] **C2. Other German-source statements.** Make consistent with C1:
+  - [x] `manuscript.tex:330` "reverse-scoring of POP items from the German
     source" -> "from the original instrument"
-  - [ ] `manuscript.tex:362` "Czech adaptation of the scenario-based HPT
+  - [x] `manuscript.tex:362` "Czech adaptation of the scenario-based HPT
     instrument from the German dissertation \citep{Hartmann2008}, with the
     published English account used as supporting validation evidence" ->
     "Czech adaptation of the Hartmann and Hasselhorn (2008) instrument"
-  - [ ] Per A3, keep exactly one mention of `Hartmann2008`, as the
+  - [x] Per A3, keep exactly one mention of `Hartmann2008`, as the
     instrument's original development source. Suggested place: 3.1, for
     example "The instrument was developed in Hartmann's (2008) dissertation
     and published by \citet{Hartmann_Hasselhorn2008Historical}; the Czech
     version was translated from the published English article."
-  - [ ] `osf_storage/instrument_adaptation_and_deviations.md:5-9` (says
+  - [x] `osf_storage/instrument_adaptation_and_deviations.md:5-9` (says
     "adapted from the German ... instrument ... reported in Hartmann
     (2008)")
-  - [ ] Response R1-04 (see F4) and ledger R1-04 note
-  - [ ] Check the supplement Table S4 row for HPT (line 117) still reads
+  - [x] Response R1-04 (see F4) and ledger R1-04 note
+  - [x] Check the supplement Table S4 row for HPT (line 117) still reads
     correctly ("German" there refers to the original population; fine)
-- [ ] **C3. Invented example item (268).** "His decision was understandable
+- [x] **C3. Invented example item (268).** "His decision was understandable
   given the political and economic turmoil of the Weimar Republic" is not
   an instrument item, and the task never says Hannes decided. Replace the
   example with the real option alignment, citing Wilschut and Schiphorst
@@ -185,20 +212,20 @@ preprint (`hxngm`) are unaffected and keep their identifiers.
   party such as the NSDAP"), not Wilschut and Schiphorst's paraphrase
   ("whether or not to vote for Hitler"). Check the following sentences in
   2.3 still read correctly.
-- [ ] **C4. Sample-size claim (347).** "the achieved N = 285--293 met that
+- [x] **C4. Sample-size claim (347).** "the achieved N = 285--293 met that
   regression target" conflicts with the focal model n = 282. Replace with
   "the focal regression used n = 282 students, above the registered
   minimum of 250".
-- [ ] **C5. "Registered one- and two-factor alternatives" (835).** The
+- [x] **C5. "Registered one- and two-factor alternatives" (835).** The
   preregistration audit lists no registered CFA comparison. Verify against
   `https://osf.io/zsngy`; if not registered, delete "registered".
-- [ ] **C6. TOST bound (800).** "+-0.20 ... corresponding to Cohen's
+- [x] **C6. TOST bound (800).** "+-0.20 ... corresponding to Cohen's
   threshold for a 'small' effect" is wrong for standardized coefficients
   (Cohen's small is r = .10; .20 is small for d). Replace with a neutral
   justification, for example "set post hoc at +-0.20 standardized units,
   which we treated as the smallest practically relevant effect", and keep
   the existing disclosure that this exceeds the .15 power target.
-- [ ] **C7. Table 7 note (769).** Remove the definitions of FR-LF, KSA-3
+- [x] **C7. Table 7 note (769).** Remove the definitions of FR-LF, KSA-3
   and SDR-5 (they no longer appear in the table); keep scale ranges if
   useful.
 
@@ -208,19 +235,19 @@ preprint (`hxngm`) are unaffected and keep their identifiers.
 
 ### D1. REC-01: content validity (the recommender's main concern)
 
-- [ ] Split limitation 1 (953-957). Make **content validity** its own,
+- [x] Split limitation 1 (953-957). Make **content validity** its own,
   first limitation; move "single country" into the sampling limitation
   (item 5).
-- [ ] Use the terms "content validity" and "construct underrepresentation"
+- [x] Use the terms "content validity" and "construct underrepresentation"
   \citep{Messick1995Validity} explicitly.
-- [ ] Say what the scores license: claims about performance on the Weimar
+- [x] Say what the scores license: claims about performance on the Weimar
   voting task, not about HPT as a general competence.
-- [ ] Keep the existing points (nine ratings are not nine content samples;
+- [x] Keep the existing points (nine ratings are not nine content samples;
   scenario-specific knowledge and moral salience) and the
   multi-scenario recommendation; add that the fairness result is equally
   scenario-bound.
-- [ ] Carry one clause into 5.8 Conclusion ("for this scenario").
-- [ ] Suggested wording (5-6 sentences, adapt freely):
+- [x] Carry one clause into 5.8 Conclusion ("for this scenario").
+- [x] Suggested wording (5-6 sentences, adapt freely):
   "*Content validity.* The instrument samples the HPT domain through a
   single scenario. Nine ratings of one Weimar voting dilemma provide
   repeated judgments about the same content, not nine independent samples
@@ -232,7 +259,7 @@ preprint (`hxngm`) are unaffected and keep their identifiers.
   fairness findings are bounded in the same way. Stronger content
   evidence would require parallel item sets applied to several scenarios
   that vary in period, place, political valence, and familiarity."
-- [ ] Update response REC-01 to quote the new heading and location.
+- [x] Update response REC-01 to quote the new heading and location.
 
 ### D2. REC-05: reliability framing
 
@@ -240,59 +267,59 @@ preprint (`hxngm`) are unaffected and keep their identifiers.
   *Psychological Bulletin*, 51(5), 493-504; create the R/ note; cite it
   (the recommender named the attenuation paradox; the current citation is
   Loevinger, 1957).
-- [ ] Rewrite the 5.3 opening (849) to follow the recommender's framing:
+- [x] Rewrite the 5.3 opening (849) to follow the recommender's framing:
   start with the breadth-precision trade-off and the attenuation paradox,
   not with "fall below conventional benchmarks". Keep one sentence
   acknowledging that precision is modest.
-- [ ] Use the phrase "attenuation paradox" explicitly.
-- [ ] Re-check the Loevinger paraphrase ("repeated versions of a narrow
+- [x] Use the phrase "attenuation paradox" explicitly.
+- [x] Re-check the Loevinger paraphrase ("repeated versions of a narrow
   question") against the source; the 2026-09-11 audit flagged it.
-- [ ] Add the consequence the recommender asked for: modest reliability
+- [x] Add the consequence the recommender asked for: modest reliability
   attenuates validity coefficients, so the knowledge correlation is a
   lower bound **and the ideology nulls are also attenuated**, which
   limits the strength of the fairness evidence. One or two sentences.
-- [ ] Rewrite response REC-05: drop "rather than an acceptable consequence
+- [x] Rewrite response REC-05: drop "rather than an acceptable consequence
   of brevity" (it reads as contradicting the recommender); say you adopted
   his suggestion, cite the location, and state the validity consequence.
 
 ### D3. R1-02: protocol focus over pathways
 
-- [ ] Covered by E3 (condense the mechanism paragraphs in 5.4-5.5).
-- [ ] Remove "the instrument's resistance to attitudinal contamination"
+- [x] Covered by E3 (condense the mechanism paragraphs in 5.4-5.5).
+- [x] Remove "the instrument's resistance to attitudinal contamination"
   (921); it overstates the evidence.
 
 ### D4. Reviewer 1: smaller unanswered points
 
-- [ ] Dutch grade result: R1 noted no significant correlation with school
+- [x] Dutch grade result: R1 noted no significant correlation with school
   history grades in the Dutch work; here history grade correlated
   r = -.153. Add one sentence in 4.9 or 5.4 contrasting the two, and one
   line in the response.
-- [ ] R1's "It is interesting that the issues with reliability are still
+- [x] R1's "It is interesting that the issues with reliability are still
   present": acknowledge in response REC-05 or R1-06 (link to Huijgen et
   al., 2014, weaker reliability on transfer).
-- [ ] Wilschut and Schiphorst (2019), per A6 and the author's assessment
+- [x] Wilschut and Schiphorst (2019), per A6 and the author's assessment
   in `docs/reviews/2026-10-20-wilschut-schiphorst-2019.md`:
-  - [ ] (a) Section 2.1, after the Huijgen et al. (2014) sentence (around
+  - [x] (a) Section 2.1, after the Huijgen et al. (2014) sentence (around
     217): "\citet{Wilschut_Schiphorst2019One} adapted the format to two new
     scenarios (a nineteenth-century strike and an eleventh-century crusade)
     with 69 Dutch Grade 10 students; principal components did not recover
     the three response categories, and total-score reliability was low
     ($\alpha$ = .22 and .50)."
-  - [ ] (b) Section 2.3 congruence pathway: see C3.
-  - [ ] (c) Optional, 5.3 or 5.6, one clause: Czech reliabilities are
+  - [x] (b) Section 2.3 congruence pathway: see C3.
+  - [x] (c) Optional, 5.3 or 5.6, one clause: Czech reliabilities are
     modest but higher than in the Dutch new-content adaptation, consistent
     with the structure depending on the original scenario; supports the
     multi-scenario recommendation in D1.
-  - [ ] (d) Optional, 5.7 or limitation 8: alongside Huijgen et al.
+  - [x] (d) Optional, 5.7 or limitation 8: alongside Huijgen et al.
     (2017), closed ratings can miss change that written explanations
     detect; supports R1's think-aloud suggestion.
   - [ ] Optional for R1-03: W&S as the rationalist counterpoint to
     Endacott and Brooks (2013) in the construct-boundary paragraph.
-  - [ ] Do not cite W&S for "cognitive rather than affective" HPT.
+  - [x] Do not cite W&S for "cognitive rather than affective" HPT.
 
 ### D5. Reviewer 2
 
-- [ ] R2-03 (A5): add the tertile group-means output to
+- [x] R2-03 (A5): add the tertile group-means output to
   `revision_reporting_analyses.R` (Low / Middle / High composite-ideology
   tertile: n, mean HPT composite, 95% CI); add a regression test in
   `test_revision_reporting_analyses.R`; write it to `revision_outputs/`;
@@ -300,65 +327,65 @@ preprint (`hxngm`) are unaffected and keep their identifiers.
   pointing to it; mention it in response R2-03, together with one sentence
   on why the continuous display stays primary (tertiles are arbitrary
   cut-points).
-- [ ] R2-01: label the two questions "RQ1" and "RQ2" in 2.5 (303-309) and
+- [x] R2-01: label the two questions "RQ1" and "RQ2" in 2.5 (303-309) and
   reuse the labels in the Results roadmap (471-474), 4.9/4.10 and 5.1.
 
 ### D6. REC-02 and REC-03 polish
 
-- [ ] REC-02: add "differential prediction of external criteria" as an
+- [x] REC-02: add "differential prediction of external criteria" as an
   explicit future-research item in 5.7 Recommendations (currently only in
   4.1 and protocol step 5).
-- [ ] REC-03: Table 7 headers (753) "HPT" -> "HPT composite", "Context"
+- [x] REC-03: Table 7 headers (753) "HPT" -> "HPT composite", "Context"
   -> "Contextualization".
 
 ### D7. Voice (A7)
 
-- [ ] Change the six "we" sentences in `manuscript.tex` to "I": 155 "we
+- [x] Change the six "we" sentences in `manuscript.tex` to "I": 155 "we
   conducted", 177 "We follow", 408 "We computed", 525 "We therefore
   retain", 709 "we repeated", 849 "we recommend". Re-search for
   `we`/`our`/`us` as whole words after the other edits.
-- [ ] Same in `response_to_reviewers.md` (12 occurrences); the supplement
+- [x] Same in `response_to_reviewers.md` (12 occurrences); the supplement
   has none.
 
 ---
 
 ## E. Simplifications
 
-- [ ] **E1. Delete Table 2 (536-550).** It repeats the sentence above it;
+- [x] **E1. Delete Table 2 (536-550).** It repeats the sentence above it;
   full loadings are in Table S2. Keep the prose sentence and point to S2.
-- [ ] **E2. Delete Table 3 (557-571).** It repeats the 4.3 prose (the
+- [x] **E2. Delete Table 3 (557-571).** It repeats the 4.3 prose (the
   Mosier interval appears twice). Fold the two composite omegas into the
   prose and point to S3. Renumber Tables 4-7 to 2-5 and fix every
   reference (manuscript, supplement, response, ledger).
-- [ ] **E3. Condense the mechanism discussion.** Merge 5.4 "cancelling
+- [x] **E3. Condense the mechanism discussion.** Merge 5.4 "cancelling
   pathways" (871-880) and the three 5.5 paragraphs (918-943) into one
   paragraph of about five sentences: the null may reflect a genuine null,
   cancelling pathways, format effects, or task-demand compliance; the
   present data cannot distinguish them; limitation 8 says how to test them.
-- [ ] **E4. Remove revision-process wording from the manuscript.**
-  - [ ] 855 "in the current reproducible analysis"
-  - [ ] 668 "All three models converged and passed lavaan's
+- [x] **E4. Remove revision-process wording from the manuscript.**
+  - [x] 855 "in the current reproducible analysis"
+  - [x] 668 "All three models converged and passed lavaan's
     post-estimation admissibility check; the diagonals of their
     model-implied residual-variance matrices were positive." -> "All three
     solutions were admissible."
-  - [ ] Zenodo-migration clauses (covered by B5)
-- [ ] **E5. Merge the two curriculum paragraphs in 2.2 (243-259)** into
+  - [x] Zenodo-migration clauses (covered by B5)
+- [x] **E5. Merge the two curriculum paragraphs in 2.2 (243-259)** into
   about three sentences; keep the lower-secondary boundary as one
   sentence (A4: no new sources).
-- [ ] **E6. Shorten the composite label.** Define "primary six-item HPT
+- [x] **E6. Shorten the composite label.** Define "primary six-item HPT
   composite (hereafter, HPT composite)" once in 3.3.1; use "HPT
   composite" in the other 13 places, and harmonise Table 4/7 and the
   Figure 1 caption.
-- [ ] **E7. Reduce repeated caveats.** "Small extreme groups and unmodeled
+- [x] **E7. Reduce repeated caveats.** "Small extreme groups and unmodeled
   clustering" appears in the abstract, 4.7, 5.1, 5.4 and 5.8. Keep it in
   4.7 (full) and the abstract and 5.8 (short); cut it from 5.1 and 5.4.
-- [ ] **E8. Shorten 4.8 (NS-only grouping)** to two sentences; move the
+- [x] **E8. Shorten 4.8 (NS-only grouping)** to two sentences; move the
   fit values to a supplement table (the text currently says they are only
   "in the analysis scripts").
-- [ ] **E9. Abstract wording (93-95).** "showed good fit for a correlated
+- [x] **E9. Abstract wording (93-95).** "showed good fit for a correlated
   three-factor representation compatible with the Czech data" is
   redundant; use "showed good fit for a correlated three-factor model".
-- [ ] **E10. 4.7 wording (668).** "Adding equality constraints did not
+- [x] **E10. 4.7 wording (668).** "Adding equality constraints did not
   worsen global fit" -> "Adding equality constraints did not meaningfully
   worsen fit" (metric CFI dropped by .001).
 
@@ -369,15 +396,15 @@ preprint (`hxngm`) are unaffected and keep their identifiers.
 Neither reviewer felt able to assess the statistics, and Reviewer 2 asked
 the recommender to find one who can. These are cheap fixes.
 
-- [ ] **F-a. Protocol step 2 (909).** "Form extreme groups on that
+- [x] **F-a. Protocol step 2 (909).** "Form extreme groups on that
   dimension" recommends dichotomising a continuous attitude. Add "or,
   preferably, model the attitude continuously (for example, in a MIMIC
   model)"; this also matches the preregistered plan.
-- [ ] **F-b. 4.8 "tertile split".** The NS groups are 126/37/123 because
+- [x] **F-b. 4.8 "tertile split".** The NS groups are 126/37/123 because
   of ties; say "tertile-based split (unequal because of tied scores)".
-- [ ] **F-c. 4.8 criteria.** It reports Delta SRMR while the stated
+- [x] **F-c. 4.8 criteria.** It reports Delta SRMR while the stated
   criteria are Delta CFI and Delta RMSEA; report Delta RMSEA as well.
-- [ ] **F-d. 5.2 (842).** "under a near-saturated model" is inaccurate for
+- [x] **F-d. 5.2 (842).** "under a near-saturated model" is inaccurate for
   df = 24; use "with three indicators per factor".
 - [ ] **F-e. Ethics statement (1067).** Participants include 11-15 year
   olds. If school-principal approval or parental information/consent was
@@ -403,7 +430,7 @@ the recommender to find one who can. These are cheap fixes.
   `Decker_et_al2013Rechtsextremismus`, `Cohen1988`.
 - [ ] **G3.** Run `reference-verifier` on `manuscript.tex` and
   `response_to_reviewers.md` (plan 2026-10-02 Task 6 is still open).
-- [ ] **G4.** After C1-C2, confirm whether `Hartmann2008` is still cited;
+- [x] **G4.** After C1-C2, confirm whether `Hartmann2008` is still cited;
   if not, it drops out of the reference list automatically.
 
 ---
@@ -412,7 +439,7 @@ the recommender to find one who can. These are cheap fixes.
 
 ### Response letter (`response_to_reviewers.md`)
 
-- [ ] **F1 / META-01. Replace the narrative with a short table** of
+- [x] **F1 / META-01. Replace the narrative with a short table** of
   changes to reported results since the submitted version, followed by
   two or three sentences. Do not describe intermediate drafts (for
   example the bifactor removal and restoration; reviewers never saw it).
@@ -432,63 +459,63 @@ the recommender to find one who can. These are cheap fixes.
   | Preregistration disclosure | TOP: one deviation (TOST bound) | Table S5 lists omitted registered analyses (MIMIC, moderation, covariates, one-tailed tests, BH correction) and post-registration additions |
   | Repository | OSF project | Zenodo (OSF project functionality discontinued) |
 
-- [ ] **F2.** Call out the preregistration-disclosure correction openly in
+- [x] **F2.** Call out the preregistration-disclosure correction openly in
   one or two sentences; it corrects a statement in the submitted TOP form.
-- [ ] **F3.** REC-01 and REC-05: rewrite per D1 and D2.
-- [ ] **F4.** R1-04: rewrite. The Czech instrument was translated from the
+- [x] **F3.** REC-01 and REC-05: rewrite per D1 and D2.
+- [x] **F4.** R1-04: rewrite. The Czech instrument was translated from the
   English article; the German dissertation is cited only as the original
   development source (or not at all, per A3). Mention that the method
   description was corrected (the earlier revision draft is irrelevant to
   reviewers; compare against the submitted text, which already said
   English).
-- [ ] **F5.** R1-02: point to the condensed mechanism paragraph (E3).
-- [ ] **F6.** Add replies for D4 and D5:
-  - [ ] R1-06: Wilschut and Schiphorst (2019) now cited in 2.1 as a second
+- [x] **F5.** R1-02: point to the condensed mechanism paragraph (E3).
+- [x] **F6.** Add replies for D4 and D5:
+  - [x] R1-06: Wilschut and Schiphorst (2019) now cited in 2.1 as a second
     transfer study with low reliability, and in 2.3 for the alignment of
     option content with the voting decision.
-  - [ ] R1 reliability remark: "As Reviewer 1 notes, reliability problems
+  - [x] R1 reliability remark: "As Reviewer 1 notes, reliability problems
     recur; Wilschut and Schiphorst (2019) and Huijgen et al. (2014) report
     weaker reliability when the format is moved to new content, and
     Section 5.3 now places the Czech estimates against these."
-  - [ ] R1 Dutch grade remark: here history grade correlated r = -.15.
-  - [ ] R2-03: group-means table (A5); R2-01: RQ labels.
+  - [x] R1 Dutch grade remark: here history grade correlated r = -.15.
+  - [x] R2-03: group-means table (A5); R2-01: RQ labels.
 - [ ] **F7.** Add page and line references from the final clean PDF to
   every reply (the PDF has line numbers); update the location map (it
   lists Tables S1-S5 but S3b and S4b also exist; table numbers change if
   E1-E2 are done).
-- [ ] **F8.** Use "I" throughout (A7).
+- [x] **F8.** Use "I" throughout (A7).
 
 ### Cover letter (`cover_letter.md`)
 
-- [ ] Replace the OSF DOI with the Zenodo DOI (B5).
-- [ ] Shorten the results paragraph; it repeats the abstract's caveats.
-- [ ] Mention the preregistration-disclosure correction in one sentence.
-- [ ] Keep "I" (A7; already the case).
+- [x] Replace the OSF DOI with the Zenodo DOI (B5).
+- [x] Shorten the results paragraph; it repeats the abstract's caveats.
+- [x] Mention the preregistration-disclosure correction in one sentence.
+- [x] Keep "I" (A7; already the case).
 
 ### TOP form (manuscript appendix) and `top_disclosure_table.md`
 
-- [ ] **Preprint DOI (1118).** Use the unversioned DOI
+- [x] **Preprint DOI (1118).** Use the unversioned DOI
   `https://doi.org/10.31234/osf.io/hxngm` (resolves to the latest version)
   or the new `hxngm_v3` after J1; `hxngm_v2` is the April submission.
-- [ ] Repository links per B5.
-- [ ] Update `test_revision_reporting_analyses.R:201, 272` for the new
+- [x] Repository links per B5.
+- [x] Update `test_revision_reporting_analyses.R:201, 272` for the new
   preprint DOI.
 
 ### Supplement
 
-- [ ] Add the NS-only fit table (E8) and ideology group means (A5) if
+- [x] Add the NS-only fit table (E8) and ideology group means (A5) if
   adopted.
-- [ ] Check that all table cross-references match after E1-E2.
-- [ ] Sync `supplementary_materials.md/.pdf` into `osf_storage/` (or the
+- [x] Check that all table cross-references match after E1-E2.
+- [x] Sync `supplementary_materials.md/.pdf` into `osf_storage/` (or the
   renamed package folder).
 
 ---
 
 ## I. Rebuild and verify
 
-- [ ] **I1.** Run `test_revision_reporting_analyses.R` and
+- [x] **I1.** Run `test_revision_reporting_analyses.R` and
   `verify_statistics.R`; all pass with the new DOIs.
-- [ ] **I2.** Confirm no statistic changed (none of the edits above should
+- [x] **I2.** Confirm no statistic changed (none of the edits above should
   change one). If anything changes, rerun the pipeline and update every
   location.
 - [ ] **I3.** Rebuild `manuscript.pdf`, `preprint.pdf`,
@@ -498,7 +525,7 @@ the recommender to find one who can. These are cheap fixes.
 - [ ] **I4.** Inspect the PDFs: no `??` or `(?)`, tables fit, renumbered
   tables and figure referenced correctly, Figure 1 legible in greyscale,
   line numbers present, references list complete (Loevinger 1954 present).
-- [ ] **I5.** Search the built text for leftover strings: `OSF.IO/YNG37`
+- [x] **I5.** Search the built text for leftover strings: `OSF.IO/YNG37`
   (outside provenance), `Zenodo; it has not`, `German instrument`,
   `German dissertation`, `current reproducible`, `hxngm_v2`,
   `understandable given`, `285--293`, `Cohen`'s "small".
@@ -526,9 +553,9 @@ the recommender to find one who can. These are cheap fixes.
 
 - [ ] Update `status.md` and `project_status.md` (stage, Zenodo DOI,
   PsyArXiv v3, resubmission date).
-- [ ] Update project `CLAUDE.md`: current title, repository (Zenodo),
+- [x] Update project `CLAUDE.md`: current title, repository (Zenodo),
   desk-rejection list.
-- [ ] Tick the validation boxes in `reviews/revision_ledger.md` or mark it
+- [x] Tick the validation boxes in `reviews/revision_ledger.md` or mark it
   superseded by this checklist.
 - [ ] Mark `docs/superpowers/plans/2026-10-02-pci-final-corrections.md`
   Task 6 citation step done after G3.
