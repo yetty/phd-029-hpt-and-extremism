@@ -23,30 +23,32 @@ the redline baseline `c952aa5` has the same manuscript text as the submitted
 
 ## 1. Easy fixes (Claude, no input needed)
 
-- [ ] **1.1 Table 1 width.** Table 1 (CFA fit indices, `manuscript.tex`
+- [x] **1.1 Table 1 width.** Table 1 (CFA fit indices, `manuscript.tex`
   around line 492) runs about 1.2 cm into the right margin. Shorten the
   bifactor row label (for example "Bifactor (post-registration)") or set
-  the table in `\small`.
-- [ ] **1.2 Table 5 width.** Table 5 (correlations, around line 713) runs
+  the table in `\small`. Done: label shortened to "Bifactor
+  (post-registration)"; the Note still says the model is orthogonal.
+- [x] **1.2 Table 5 width.** Table 5 (correlations, around line 713) runs
   about 1.6 cm into the right margin. Narrow the first column or wrap the
-  column headers so the table fits the text width.
-- [ ] **1.3 `status.md`.** "Zenodo hosts the public reproducibility
+  column headers so the table fits the text width. Done: numbered rows
+  with column headers 1-7 (APA style); checked in the rendered PDF.
+- [x] **1.3 `status.md`.** "Zenodo hosts the public reproducibility
   package" is not true until the record is published; say the DOI is
   reserved and the record is unpublished. Update Next Steps to point to
   this checklist.
-- [ ] **1.4 `project_status.md`.** Same correction: line 183 marks the move
+- [x] **1.4 `project_status.md`.** Same correction: line 183 marks the move
   to Zenodo as done; change it to "DOI reserved, publication pending".
-- [ ] **1.5 Old plan.** Mark the citation step of Task 6 in
+- [x] **1.5 Old plan.** Mark the citation step of Task 6 in
   `docs/superpowers/plans/2026-10-02-pci-final-corrections.md` as done
   (reference-verifier ran 2026-10-20; results are in
   `resubmission_checklist.md`).
-- [ ] **1.6 Old checklist.** Add one line to `resubmission_checklist.md`
+- [x] **1.6 Old checklist.** Add one line to `resubmission_checklist.md`
   pointing to this file for the remaining items.
 - [ ] **1.7 Optional, R1-03.** Cite Wilschut and Schiphorst (2019) as the
   rationalist counterpoint to Endacott and Brooks (2013) in the
   construct-boundary paragraph, and add one sentence to the R1-03 reply.
-  Only if the R/ note in 2.1 supports it.
-- [ ] **1.8 Commit and push** each fix in the submodule, then the root
+  Only if the R/ note in 2.1 supports it. Not done: waits for the R/ note.
+- [x] **1.8 Commit and push** each fix in the submodule, then the root
   pointer.
 
 ---

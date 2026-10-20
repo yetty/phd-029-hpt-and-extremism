@@ -19,6 +19,9 @@ README and cover letter before the final build.
 
 ## Progress (2026-10-20)
 
+Remaining items are tracked in `final_resubmission_checklist.md`; this file
+stays the record of the A-K work already done.
+
 Sections A-F, H (except F7) and most of B are done and pushed. Open items:
 
 - **Blocked on Juda:** G1/G2 reading and R/ notes; Zotero export of

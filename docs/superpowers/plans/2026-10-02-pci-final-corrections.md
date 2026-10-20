@@ -122,9 +122,11 @@ a substantive change.
 - [x] Verify references, PDF text, page locations, identifiers, ethics text,
   absence of unresolved citations/placeholders, and replication-package
   completeness.
-- [ ] Run a final citation/reference verification against the knowledge base
+- [x] Run a final citation/reference verification against the knowledge base
   (scoped checks pass for Aktin; inherited metadata/read-status failures for
-  older cited R/ notes remain outside this project-only commit).
+  older cited R/ notes remain outside this project-only commit). Done
+  2026-10-20: reference-verifier ran; results and rewordings are recorded in
+  `submissions/pci_psychology/resubmission_checklist.md` (G3).
 - [x] Review explicit diffs and update status files with the verified state.
 - [x] Commit project-only changes. Do not push, stage the root repository, or
   upload the prepared package to Zenodo; those operations are out of scope.
