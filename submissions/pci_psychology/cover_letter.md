@@ -14,29 +14,22 @@ attitudes score higher because the scenario resonates with their beliefs
 rather than because they reason historically.
 
 The revised manuscript presents qualified evidence rather than a definitive
-fairness conclusion. No differential item functioning was detected with the
-available sample and procedure. Multi-group confirmatory factor analysis
-produced admissible solutions and fit-index changes compatible with scalar
-invariance, although small extreme groups and unmodelled clustering prevent a
-firm equivalence claim. Multilevel models found no association between
-right-authoritarian attitudes and the primary six-item HPT composite after
-adjustment for
-historical knowledge, authoritarianism, and social desirability. An exploratory
-authoritarianism association with one subscale was unadjusted and not subjected
-to the preregistered multiplicity procedure; no reported test implemented the
-registered Benjamini-Hochberg correction. Historical knowledge was positively
-associated with HPT scores, although the cross-sectional design precludes a
-causal interpretation.
+fairness conclusion. No differential item functioning was detected,
+multi-group fit-index changes were compatible with scalar invariance, and
+right-authoritarian attitudes were unrelated to the HPT composite after
+adjustment; historical knowledge was the only consistent predictor. The
+abstract and Discussion state the limits of this evidence.
 
 The paper also illustrates a staged approach to evaluating whether
 scenario-based content generates construct-irrelevant variance through
 attitude congruence. The revision distinguishes preregistered analyses from
-post-registration measurement analyses, reports omitted registered tests,
-adds uncertainty and reliability estimates, transparently restores the
-corrected post-registration bifactor result, and limits interpretation to the
-single scenario, item format, sample, and ideological range studied.
+post-registration measurement analyses, adds uncertainty and reliability
+estimates, and limits interpretation to the single scenario, item format,
+sample, and ideological range studied. It also corrects the submitted TOP
+form, which listed only one deviation from the preregistration: Table S5 now
+discloses all omitted registered analyses and post-registration additions.
 
-The study was preregistered on OSF before data collection
+The study was preregistered before data collection
 (https://osf.io/zsngy). De-identified data, analysis scripts, rendered outputs,
 and a reproducibility report are available at
 https://doi.org/10.5281/zenodo.23494026. Third-party instrument files and item

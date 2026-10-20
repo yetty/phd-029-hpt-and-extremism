@@ -6,276 +6,319 @@ Students*
 
 Dear Recommender and Reviewers,
 
-Thank you for the careful and constructive reviews. The manuscript has been
-revised to sharpen its measurement focus, add the requested reporting, and
-bound its claims to the single scenario, item format, sample, and ideological
-range studied. Additional checks identified an incorrect design-effect
-calculation, inconsistent score-construction rules, and ambiguity in the DIF
-description. We corrected these issues and reran the affected analyses rather
-than retaining the earlier values or stronger conclusions.
+Thank you for the careful and constructive reviews. I revised the manuscript
+to sharpen its measurement focus, add the requested reporting, and bound its
+claims to the single scenario, item format, sample, and ideological range
+studied. While revising, I also rechecked the analyses and corrected several
+reported results; these corrections are listed under META-01 at the end of
+this letter.
 
 The responses below use the identifiers in the revision ledger. Section,
-table, and figure references refer to the revised manuscript and supplement.
+table, and figure references refer to the revised manuscript and supplement;
+page and line numbers refer to the clean revised PDF. A tracked-changes PDF
+against the submitted version accompanies this letter.
 
 ### Location map for the revised files
 
 | Location | Contents |
 |---|---|
 | Abstract | Principal results and scope boundary |
-| Sections 1--2 | Background, prior evidence, and research questions |
+| Sections 1--2 | Background, prior evidence, and research questions RQ1 and RQ2 |
 | Sections 3--4 | Method, psychometric evidence, and focal relationships |
 | Section 5 | Interpretation, limitations, and recommendations |
-| Tables S1--S5 | Item parameters, loadings, reliability, sample sizes, and preregistration mapping |
+| Tables 1--5, Figure 1 | Factor-model fit, descriptives, DIF, invariance, correlations; observed relationships |
+| Tables S1--S3, S3b | Item parameters, loadings, reliability, pairwise sample sizes |
+| Tables S4, S4b | Instrument source populations; analysis-specific sample sizes |
+| Table S5 | Preregistration mapping and deviations |
+| Tables S6--S7 | NS-only invariance fit; HPT composite by ideology tertile |
+
+Tables 2 and 3 of the submitted version (a loading summary and a reliability
+summary) were removed because they repeated the text and Tables S2--S3; the
+remaining tables were renumbered.
 
 ## Recommender
 
 ### REC-01: Single-scenario content-validity limitation
 
-**Response:** We agree. Section 5.6 now distinguishes nine item responses from
-nine independent samples of HPT content and limits interpretation to the
-Weimar voting scenario. It identifies scenario-specific knowledge and moral
-salience as plausible sources of score variance and recommends testing
-multiple scenarios across periods, places, and political contexts. The
-abstract and conclusion carry the same boundary.
+**Response:** I agree that this is the main limitation and have made it the
+first limitation in Section 5.6, under the heading *Content validity*, separate
+from sampling. It states that nine ratings of one Weimar voting dilemma are
+repeated judgments about the same content rather than nine independent samples
+of the domain, so the scores risk construct underrepresentation (Messick,
+1995). It explains that scenario-specific knowledge, familiarity, and moral
+salience cannot be separated from perspective taking, that the evidence
+supports interpretations of performance on this task rather than HPT as a
+general competence, and that the fairness findings are bounded in the same
+way. It calls for parallel item sets applied to several scenarios that vary
+in period, place, political valence, and familiarity. The Conclusion (Section
+5.8) now opens with "For this single Weimar scenario".
 
 ### REC-02: Discriminant-validity claims
 
-**Response:** We replaced the former below-.85 rule with bounded
+**Response:** I replaced the former below-.85 rule with bounded
 internal-structure language. Section 4.1 reports the factor correlations as
-evidence that the item sets are distinguishable in this sample, while stating
-that this does not establish discriminant validity. Section 5.5 calls for
-differential prediction of external criteria.
+evidence that the item sets are distinguishable in this sample and states that
+this does not establish discriminant validity. Section 5.7 now lists, as
+recommendation (f), testing whether the subscales differentially predict
+external criteria; protocol step 5 in Section 5.5 makes the same point.
 
 ### REC-03: Construct names in results
 
-**Response:** Tables 2, 4, and 7 and the Results narrative now use readable
-construct names. Code-like composite labels have also been replaced by
-descriptions throughout the manuscript. Scale abbreviations are retained only
-where they identify named instruments or connect the text to archived scripts.
+**Response:** Table 5 (formerly Table 7) and the Results narrative now use
+construct names, including the column headers "HPT composite" and
+"Contextualization". The primary six-item composite is defined once in
+Section 3.3.1 and called "HPT composite" thereafter. Scale abbreviations are
+retained only where they identify named instruments.
 
 ### REC-04: Confidence intervals
 
-**Response:** Table 7 now reports Fisher-transformed 95% confidence intervals
+**Response:** Table 5 now reports Fisher-transformed 95% confidence intervals
 for every correlation. It states that the intervals are descriptive and do
 not adjust for clustering. Exact pairwise sample sizes are reported in Table
 S3b, and the values reproduce from `revision_reporting_analyses.R`.
 
 ### REC-05: Brief-scale consistency
 
-**Response:** Section 4.3 now reports the modest reliability of the HPT scores
-as a constraint on individual interpretation rather than an acceptable
-consequence of brevity. Table S3 reports raw alpha, standard-error intervals,
-polychoric alpha, and omega for all scored constructs. We removed the
-disattenuated estimate. The one-factor omega estimates for multidimensional
-composites are explicitly identified as descriptive.
+**Response:** I adopted your suggestion. Section 5.3 now opens with the
+breadth-precision trade-off and Loevinger's attenuation paradox: raising
+reliability does not necessarily raise validity, and three items that sample
+different considerations about one decision can serve the construct better
+than near-duplicates. One sentence acknowledges that the resulting precision
+is modest and limits individual-level interpretation. The section then states
+the consequence you asked for: modest reliability attenuates validity
+coefficients, so the knowledge correlation is a lower bound, and the ideology
+associations are attenuated in the same way, which limits the strength of the
+null fairness evidence. Table S3 reports raw alpha with standard-error
+intervals, polychoric alpha, and omega for all scored constructs; the
+one-factor omega estimates for multidimensional composites are identified as
+descriptive.
 
 ## Reviewer 1
 
 ### R1-01: Abstract findings
 
 **Response:** The abstract now gives the primary knowledge and ideology
-correlations with 95% confidence intervals. It states that no DIF was detected
-with this sample and procedure. The current reproducible multi-group CFA
-solutions are admissible and have fit-index changes compatible with scalar
-invariance; the abstract qualifies this evidence because the extreme groups
-are small and clustering was not modelled. Sections 4.9, 5.1, and 5.8 report
-the authoritarianism--reversed-presentism association as an unadjusted,
+correlations with 95% confidence intervals and states that no DIF was
+detected with this sample and procedure. It reports that multi-group CFA
+fit-index changes were compatible with scalar invariance and qualifies this
+evidence because the extreme groups are small and clustering was not
+modelled. Sections 4.9, 5.1, and 5.8 report the
+authoritarianism--reversed-presentism association as an unadjusted,
 hypothesis-generating result that was not subjected to the preregistered
 multiplicity procedure.
 
-### R1-02: Organizing contribution
+### R1-02: Organizing contribution and pathways
 
-**Response:** The adaptation evidence and staged fairness evaluation now form
-the paper's organizing sequence from the research questions through the
-Discussion and conclusion. Proposed cognitive pathways are presented as
-untested explanations requiring response-process evidence. The protocol is
-described as a possible template rather than automatically transferable.
+**Response:** I agree that the protocol is the more useful contribution. The
+adaptation evidence and staged fairness evaluation now organize the paper
+from the research questions through the Conclusion. The former discussion of
+pathways (three paragraphs in Section 5.5 and one in Section 5.4) is condensed
+into a single paragraph in Section 5.4. It lists the explanations the data
+cannot distinguish (a genuine null, cancelling pathways, a format effect, and
+task-demand compliance) and points to the response-process evidence in
+limitation 8 that could separate them. I also removed the phrase "the
+instrument's resistance to attitudinal contamination", which overstated the
+evidence.
 
 ### R1-03: Ideology mechanism and construct boundary
 
 **Response:** Sections 2.1 and 2.3 now distinguish contextual reconstruction
 from attitude-congruent endorsement, reduced integrative complexity,
-task-demand shortcuts, moral evaluation, and affective engagement. A new
-construct-boundary synthesis explains when affect and moral engagement may be
+task-demand shortcuts, moral evaluation, and affective engagement. A
+construct-boundary paragraph explains when affect and moral engagement may be
 target-relevant under broad historical-empathy accounts and when option
 matching or attitude congruence is construct-irrelevant under the narrower
-cognitive score interpretation used here.
+cognitive score interpretation used here. Section 2.3 now also explains
+concretely why the ideology question arises for this instrument: every
+contextualization option describes Hannes as likely to vote for the NSDAP and
+every present-oriented option describes him as rejecting it, so the POP--CONT
+continuum coincides with the direction of the political choice (Wilschut &
+Schiphorst, 2019).
 
 ### R1-04: Hartmann and Hasselhorn source
 
-**Response:** We now cite both sources by function. The German dissertation is
-identified as the source from which the Czech instrument was translated; the
-Hartmann and Hasselhorn article supports the published construct and
-validation account (Sections 2.1 and 3.1-3.3). The dissertation metadata was
-also corrected against its title page and DOI record.
+**Response:** The manuscript now cites Hartmann and Hasselhorn (2008)
+throughout. The Czech version was translated from that published English
+article, as the submitted version stated; Section 3.1 says so and mentions
+Hartmann's (2008) dissertation once, as the instrument's original development
+source. Section 3.3.1 and the adaptation record in the reproducibility
+package were made consistent with this description.
 
 ### R1-05: Author-date citations
 
-**Response:** The Hartmann/Hasselhorn and Lee/Ashby citation keys were repaired.
-The rebuilt manuscript renders the authors' names and years rather than
-publication titles.
+**Response:** The Hartmann/Hasselhorn and Lee/Ashby citation keys were
+repaired. The rebuilt manuscript renders the authors' names and years rather
+than publication titles.
 
 ### R1-06: Validation evidence map
 
 **Response:** Section 2.1 now distinguishes the original German PCA result
 from the separate latent-class analysis and from the correlated three-factor
 CFA tested here. It reports successful Dutch reuse of the Nazi scenario while
-also noting weaker reliability and validity evidence for transfer to a slavery
+noting weaker reliability and validity evidence for transfer to a slavery
 scenario and later evidence that students sometimes misunderstood response
-options. Claims that the instrument had been extensively validated or that
-the Czech CFA replicated an original three-factor structure were removed.
+options. Section 2.1 also cites Wilschut and Schiphorst (2019) as a second
+transfer study: with two new scenarios and 69 Dutch Grade 10 students,
+principal components did not recover the three response categories and
+total-score reliability was low. Claims that the instrument had been
+extensively validated or that the Czech CFA replicated an original
+three-factor structure were removed.
+
+**Reliability remark ("the issues with reliability are still present"):** As
+you note, reliability problems recur. Huijgen et al. (2014) and Wilschut and
+Schiphorst (2019) report weaker reliability when the format is moved to new
+content, and Section 5.3 now places the Czech estimates against these: they
+are modest but higher than in the new-content adaptations, consistent with a
+structure that depends on the original scenario.
+
+**School grades:** In this sample, history grade correlated with the HPT
+composite ($r$ = -.15, $p$ = .010; the negative sign reflects the Czech scale,
+on which 1 is the best grade). Section 4.9 now notes that this resembles the
+original German result rather than the Dutch applications, in which HPT
+scores were not significantly correlated with history grades.
 
 ### R1-07: Historical action in the scenario
 
-**Response:** We compared the German source, published English article, and
+**Response:** I compared the German source, published English article, and
 administered Czech instrument. Sections 1 and 3.3.1 now state that Hannes
 discusses Germany's crisis and the 1930 election and that students judge
-explanations including whether he could vote for an anti-democratic party such
-as the NSDAP. The manuscript no longer describes joining an extremist
-movement.
+explanations including whether he could vote for an anti-democratic party
+such as the NSDAP. The manuscript no longer describes joining an extremist
+movement, and the illustrative statement in Section 2.3, which was not an
+instrument item, was replaced by a description of the actual option
+alignment (see R1-03).
 
 ### R1-08: Czech history-education context
 
-**Response:** Section 2.2 now explains the compulsory lower-secondary
-curriculum area, the framework's coverage of the 1920s and 1930s, and its
-source-use expectation, with page-specific citation to the 2023 framework. It
-states that HPT is not named as a separate competence and that curriculum
-documents establish intended rather than enacted provision. Participating
-teachers' judgment of scenario familiarity is identified as sample-specific.
-Because no equivalent upper-secondary curriculum-document audit was
-conducted, the text now limits the documentary claim to the lower-secondary
-subsample and distinguishes it from teachers' eligibility confirmation at
-both levels.
+**Response:** Section 2.2 now describes the lower-secondary framework's
+coverage of the 1920s and 1930s and its source-use expectation, with
+page-specific citation to the 2023 framework, and states that HPT is not
+named as a separate competence and that curriculum documents establish
+intended rather than enacted provision. Because no equivalent
+upper-secondary curriculum-document audit was conducted, the documentary
+claim is limited to the lower-secondary subsample and distinguished from
+teachers' eligibility confirmation at both levels.
 
 ### R1-09: Other-scale consistency and suitability
 
 **Response:** Section 4.3 and Table S3 report reliability for FR-LF, KSA-3,
-historical knowledge, SDR-5, and the combined ideology score. Table S4 audits
-the original source populations. The manuscript now states that the German
-FR-LF surveys included respondents aged 14 and above but were predominantly
-adult, while KSA-3 and SDR-5 were developed with adults; none directly
-validates a Czech adolescent version.
+historical knowledge, SDR-5, and the combined ideology score. Table S4
+audits the original source populations. The manuscript now states that the
+German FR-LF surveys included respondents aged 14 and above but were
+predominantly adult, while KSA-3 and SDR-5 were developed with adults; none
+directly validates a Czech adolescent version.
 
 ### R1-10: Results emphasis
 
-**Response:** A short roadmap at the opening of Results now connects Sections
-4.1-4.5 to psychometric evidence, Sections 4.6-4.8 to fairness analyses, and
-Sections 4.9-4.10 to the focal relationships. Subsection openings state the
-principal result before technical detail. Detailed item loadings, reliability
-estimates, source populations, and analysis-specific sample sizes are in
-Tables S1-S4b; Table 7 and Figure 1 foreground the principal relationships.
+**Response:** A short roadmap at the opening of Results now maps Sections
+4.1--4.5 to RQ1, Sections 4.6--4.8 to RQ2, and Sections 4.9--4.10 to the
+focal relationships. Subsection openings state the principal result before
+technical detail. Detailed item loadings, reliability estimates, source
+populations, and analysis-specific sample sizes are in the supplement; Table
+5 and Figure 1 foreground the principal relationships.
 
 ### R1-11: Prior item-rating and think-aloud work
 
 **Response:** Section 2.1 now separates Huijgen and colleagues' transfer of
 the item-rating approach across topics from their later combination of closed
-ratings with think-alouds. We do not claim that the cited studies directly
-compared open and closed response formats. Section 5.6 proposes that direct
-comparison as an extension of the verified precedent.
+ratings with think-alouds. I do not claim that the cited studies directly
+compared open and closed response formats. Limitation 8 in Section 5.6
+proposes that direct comparison, adding that written explanations have
+detected change that closed ratings in this format missed (Wilschut &
+Schiphorst, 2019).
 
 ### R1-12: Gender-moderation claim
 
-**Response:** We found no direct source supporting the earlier adolescent
+**Response:** I found no direct source supporting the earlier adolescent
 gender-moderation statement and removed it. Section 5.6 now states only that
 the sample imbalance limits assessment of gender heterogeneity and that no
 gender interaction or gender DIF analysis was conducted.
 
 ### R1-13: Qualitative response-process design
 
-**Response:** Section 5.6 now specifies observable response-process indicators:
-use of contextual evidence and integration of conflicting considerations,
-moral evaluation and affective engagement, paraphrase or option matching, and
-explicit attitude-congruent endorsement. These indicators would help
-distinguish intended reconstruction from competing pathways in think-aloud or
-cognitive-interview work.
+**Response:** Following your suggestion, limitation 8 in Section 5.6 now
+specifies observable think-aloud indicators: use of contextual evidence and
+integration of conflicting considerations, moral evaluation and affective
+engagement, paraphrase or option matching, and explicit attitude-congruent
+endorsement. These indicators would help distinguish intended reconstruction
+from the competing pathways that Section 5.4 lists.
 
 ### R1-14: Comparative studies
 
-**Response:** Section 2.1 names and describes the verified Huijgen studies
-rather than referring generically to comparative studies. Claims unsupported
-by direct use of the instrument were removed. We also cite a recent Turkish
-qualitative case study after full-text verification: it involved sixth- and
-eighth-grade students and used the Hartmann and Hasselhorn components as
-deductive analytic categories. We do not treat it as evidence of
-direct nine-item administration or psychometric performance.
+**Response:** Section 2.1 names and describes the verified Huijgen studies and
+Wilschut and Schiphorst (2019) rather than referring generically to
+comparative studies. Claims unsupported by direct use of the instrument were
+removed. I also cite a recent Turkish qualitative case study after full-text
+verification: it involved sixth- and eighth-grade students and used the
+Hartmann and Hasselhorn components as deductive analytic categories. I do not
+treat it as evidence of direct nine-item administration or psychometric
+performance.
 
 ## Reviewer 2
 
 ### R2-01: Research questions and predictions
 
-**Response:** Section 2.5 now presents two explicit measurement questions. A
-concise disclosure identifies post-registration additions and omitted
-registered tests without reproducing the full preregistration. Table S5
-provides the full mapping of the six registered hypotheses.
+**Response:** Section 2.5 now presents two explicit research questions,
+labelled RQ1 (psychometric evidence for the Czech adaptation) and RQ2
+(whether scores are affected by political attitudes). The labels are reused
+in the Results roadmap and the Summary of Findings (Section 5.1). A concise
+disclosure identifies post-registration additions and omitted registered
+tests; Table S5 provides the full mapping of the six registered hypotheses.
 
 ### R2-02: Participant and school descriptives
 
 **Response:** Section 3.2 now gives participant-level ideology and knowledge
 medians alongside school distribution, gender, and grade level; Section 4.4
 provides the fuller distributions and floor and ceiling percentages. No
-defensible socioeconomic measure was collected. Sections 3.2 and 5.6 now state
+defensible socioeconomic measure was collected. Sections 3.2 and 5.6 state
 that socioeconomic coverage and associated selection bias cannot be
 characterized rather than inferring status from school location. Table S4b
 reports analysis-specific sample sizes.
 
 ### R2-03: Baseline presentation of key relationships
 
-**Response:** Table 7 reports unadjusted correlations and confidence intervals,
-and Figure 1 displays continuous ideology-HPT and knowledge-HPT relationships
-with sample sizes and uncertainty. The Results distinguish these descriptive
-patterns from adjusted multilevel models.
+**Response:** Table 5 reports unadjusted correlations with confidence
+intervals, and Figure 1 displays the continuous ideology-HPT and
+knowledge-HPT relationships with sample sizes and uncertainty. I also added
+Table S7, which reports the mean HPT composite with a 95% confidence interval
+for the low, middle, and high tertiles of the composite ideology score; a
+sentence after Figure 1 points to it. The continuous display remains primary
+because tertiles are arbitrary cut-points of a continuous score. The Results
+distinguish these descriptive patterns from the adjusted multilevel models.
 
-## Additional technical corrections
+## Additional corrections
 
-### META-01: Technical checks conducted during revision
+### META-01: Changes to reported results since the submitted version
 
-**Response:** Technical checks conducted during revision identified issues not
-raised in the reviews. We removed an incorrect design-effect argument that
-used classroom size with school ICCs; stated that unadjusted item and
-correlation analyses may understate uncertainty; corrected the DIF analysis
-from uniform/non-uniform to an omnibus joint parameter test; disclosed that
-raw POP responses entered the GRM; and stated that its unidimensional
-specification is not aligned with the correlated-factor CFA.
+While revising, I rechecked the analyses against the archived data and code.
+The table lists every change to a reported result or disclosure relative to
+the submitted version.
 
-We also centralized and enforced the manuscript's minimum-answer scoring
-rules. The rerun changed the focal estimate only from the previously reported
-near-zero value to $\beta$ = .016, SE = .068, 95% CI [-.117, .149], $p$ =
-.817 ($n$ = 282), without changing the substantive conclusion. The rerun DIF
-groups contain 96 Low and 95 High participants, and no item was flagged.
-The focal model's singularity warning is now disclosed: the classroom
-random-intercept variance was estimated as zero, while school fixed-effects
-sensitivity models yielded the same substantive conclusion.
+| Item | Submitted version | Revised version |
+|---|---|---|
+| Three-factor CFA fit | CFI .999, RMSEA .011 (unscaled) | CFI .975, RMSEA .039 (scaled WLSMV); described as good, not near-perfect |
+| Bifactor vs. three-factor | $\Delta$CFI .001, "no meaningful improvement" | $\Delta$CFI +.018; fit favors the bifactor model; structural claims softened |
+| MG-CFA admissibility | Heywood cases in the Low group | All solutions admissible; Heywood claim withdrawn |
+| Focal FR-LF coefficient | $\beta$ = .012, $p$ = .863 | $\beta$ = .016, 95% CI [-.117, .149], $p$ = .817, $n$ = 282 (one scoring rule applied throughout); singular fit disclosed |
+| Design-effect argument | DEFF 1.56/2.16 used to justify inference | Removed (it combined classroom size with school ICCs) |
+| ICCs | School level only | School / class-within-school / total |
+| DIF description | Uniform and non-uniform tests | Omnibus joint test; raw POP in the GRM disclosed |
+| Modification index | Read as loading non-invariance | Read as a POP2 cross-loading diagnostic only |
+| Authoritarianism-presentism | Not reported | Reported as exploratory and unadjusted |
+| Preregistration disclosure | TOP form: one deviation (TOST bound) | Table S5 lists omitted registered analyses and post-registration additions |
+| Repository | OSF project | Zenodo, <https://doi.org/10.5281/zenodo.23494026> |
 
-Finally, the current data, model syntax, and lavaan 0.7.2 produce admissible
-configural, metric, and scalar multi-group CFA solutions. All models pass the
-post-estimation check, and the diagonals of their model-implied
-residual-variance matrices are positive. The fit-index changes remain
-compatible with scalar invariance. The manuscript reports this reproducible
-result while retaining
-qualifications for small complete-case groups (92 Low, 90 High), unmodelled
-clustering, three-indicator factors, and the analysis's post-registration
-status. It also corrects the former interpretation of an ordinary
-modification index: the diagnostic suggested a POP2 cross-loading, not a
-between-group loading difference.
-
-The manuscript now consistently reports scaled WLSMV single-group CFA values:
-the one-, two-, and three-factor models have CFI values of .866, .913, and
-.975, respectively; the three-factor model has $\chi^2(24)$ = 34.26,
-$p$ = .080. An earlier technical correction removed bifactor reporting while
-its scaled fit was being rechecked; that removal is now reversed. The
-post-registration orthogonal bifactor model has CFI = .993, RMSEA = .024, and
-SRMR = .037 ($\Delta$CFI = +.018 versus the correlated three-factor model).
-Although its fit indices favor the more complex bifactor model, the manuscript
-retains theory- and continuity-based primary subscale reporting and limits
-strong structural claims because the comparison is non-nested and
-parameterization-dependent and each specific factor has three indicators.
-Nested ICCs separate school, class-within-school, and total
-clustering; the primary six-item HPT composite has values of .041, .000, and
-.041. The zero classroom component is reported as consistent with the focal
-model's singularity warning, without attributing it to instruction or another
-unmeasured mechanism. Bonferroni-adjusted DIF $p$-values are raw $p \times 9$
-and are compared with familywise $\alpha$ = .05; no reported test implemented
-the registered Benjamini-Hochberg correction.
+None of these changes alters the substantive conclusion: historical knowledge
+remains the only consistent predictor, and no ideology effect or DIF was
+detected. Two corrections deserve particular mention. First, the submitted
+TOP form listed a single deviation from the preregistration; that statement
+was incomplete. Table S5 now discloses every omitted registered analysis
+(including the MIMIC model, the knowledge moderation tests, the full
+covariate set, one-tailed tests, and the Benjamini-Hochberg correction) and
+every post-registration addition, and the revised TOP form refers to it.
+Second, because OSF has discontinued project storage, the data, code, and
+documentation now reside in a Zenodo record; the preregistration remains at
+<https://osf.io/zsngy>.
 
 Sincerely,
 
