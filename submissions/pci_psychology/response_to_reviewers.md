@@ -167,9 +167,10 @@ three-factor structure were removed.
 **Reliability remark ("the issues with reliability are still present"):** As
 you note, reliability problems recur. Huijgen et al. (2014) and Wilschut and
 Schiphorst (2019) report weaker reliability when the format is moved to new
-content, and Section 5.3 now places the Czech estimates against these: they
-are modest but higher than in the new-content adaptations, consistent with a
-structure that depends on the original scenario.
+content, and Section 5.3 now places the Czech estimates against these: the
+Czech composite estimates (omega = .66--.70) are modest but higher than the
+total-score alphas of .22--.50 in the new-content adaptations, consistent with
+a structure that depends on the original scenario.
 
 **School grades:** In this sample, history grade correlated with the HPT
 composite ($r$ = -.15, $p$ = .010; the negative sign reflects the Czech scale,
