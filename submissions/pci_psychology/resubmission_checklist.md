@@ -411,7 +411,7 @@ the recommender to find one who can. These are cheap fixes.
   criteria are Delta CFI and Delta RMSEA; report Delta RMSEA as well.
 - [x] **F-d. 5.2 (842).** "under a near-saturated model" is inaccurate for
   df = 24; use "with three indicators per factor".
-- [ ] **F-e. Ethics statement (1067).** Participants include 11-15 year
+- [x] **F-e. Ethics statement (1067).** Participants include 11-15 year
   olds. If school-principal approval or parental information/consent was
   obtained, say so in one sentence.
 

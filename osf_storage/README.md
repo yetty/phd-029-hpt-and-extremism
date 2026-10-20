@@ -169,7 +169,9 @@ This study involved secondary school students completing questionnaires during
 regular class periods. Under Czech law (Act No. 110/2019 Sb., on the processing
 of personal data), ethics committee approval is not required for
 non-interventional educational research involving anonymous questionnaires
-where no personal data are collected. Participation was voluntary; students
+where no personal data are collected. The principal of each participating
+school gave permission for data collection; parents were not separately
+informed or asked for consent. Participation was voluntary; students
 were informed about the study's purpose and their right to decline without
 consequences. All responses were de-identified at the point of data entry. No
 personally identifiable information was collected or stored. The study followed

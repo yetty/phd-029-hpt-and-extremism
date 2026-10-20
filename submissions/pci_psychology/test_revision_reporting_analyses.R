@@ -336,8 +336,12 @@ expect_true(
           fixed = TRUE) &&
     grepl("Participation was voluntary", readme_text, fixed = TRUE) &&
     grepl("de-identified at the point of data entry", readme_text,
-          fixed = TRUE),
-  "The replication README ethics statement must match the manuscript without approval or parental-consent claims."
+          fixed = TRUE) &&
+    grepl("principal of each participating school gave permission",
+          readme_compact, fixed = TRUE) &&
+    grepl("principal of each participating school gave permission",
+          manuscript_text, fixed = TRUE),
+  "The README and manuscript ethics statements must report principal permission without approval or parental-consent claims."
 )
 expect_true(
   grepl(zenodo_url, readme_text, fixed = TRUE) &&
