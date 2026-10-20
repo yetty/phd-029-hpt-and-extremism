@@ -205,7 +205,7 @@ expect_true(
   "verify_statistics.R must execute and print bifactor fit and admissibility output."
 )
 
-psy_arxiv_doi <- "https://doi.org/10.31234/osf.io/hxngm_v2"
+psy_arxiv_doi <- "https://osf.io/preprints/psyarxiv/hxngm"
 manuscript_lines <- readLines("submissions/pci_psychology/manuscript.tex",
                               warn = FALSE)
 manuscript_text <- paste(manuscript_lines, collapse = "\n")
@@ -323,7 +323,7 @@ expect_true(
   grepl(manuscript_title, readme_compact, fixed = TRUE) &&
     grepl("Institute of History, Faculty of Arts, Charles University",
           readme_text, fixed = TRUE) &&
-    grepl("https://doi.org/10.31234/osf.io/hxngm_v2", readme_text,
+    grepl(psy_arxiv_doi, readme_text,
           fixed = TRUE) &&
     grepl(zenodo_url, readme_text, fixed = TRUE) &&
     grepl("https://osf.io/zsngy", readme_text, fixed = TRUE),
@@ -660,15 +660,16 @@ redline_build_text <- if (file.exists(redline_build_path)) {
   ""
 }
 expect_true(
-  grepl("UTF-8", build_preprint_text, fixed = TRUE) &&
-    grepl("bibtexu manuscript", build_preprint_text, fixed = TRUE) &&
-    grepl("BibTeXu returned warnings", build_preprint_text, fixed = TRUE) &&
-    grepl("test -s", build_preprint_text, fixed = TRUE) &&
-    grepl("bibtexu manuscript_diff", redline_build_text, fixed = TRUE) &&
-    grepl("BibTeXu returned warnings", redline_build_text, fixed = TRUE) &&
-    grepl("test -s", redline_build_text, fixed = TRUE) &&
-    grepl("graphics-markup=none", redline_build_text, fixed = TRUE),
-  "Clean and redline builds must use documented, non-fatal BibTeXu UTF-8 handling."
+  grepl("biber --quiet manuscript\n", build_preprint_text, fixed = TRUE) &&
+    !grepl("bibtexu", build_preprint_text, fixed = TRUE) &&
+    grepl("biber --quiet manuscript_diff", redline_build_text, fixed = TRUE) &&
+    !grepl("bibtexu", redline_build_text, fixed = TRUE) &&
+    grepl("graphics-markup=none", redline_build_text, fixed = TRUE) &&
+    grepl("\\usepackage[style=apa,natbib=true,backend=biber]{biblatex}",
+          manuscript_text, fixed = TRUE) &&
+    !grepl("apacite", manuscript_text, fixed = TRUE),
+  paste("Clean and redline builds must use Biber with biblatex-apa, which",
+        "reads the Better BibLaTeX export of bibliography.bib.")
 )
 
 supplement_text <- paste(readLines(
