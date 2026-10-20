@@ -152,9 +152,12 @@ the redline baseline `c952aa5` has the same manuscript text as the submitted
   publishing. DOI resolves; both files download; the zip is byte-identical
   to the local bundle and all 55 checksums match. Also fixed the tool's
   `verify` for published records (Accept header).
-- [ ] **4.4 Post PsyArXiv version 3** of `hxngm` with the final
+- [x] **4.4 Post PsyArXiv version 3** of `hxngm` with the final
   `preprint.pdf`; check the title and abstract metadata; link the Zenodo
-  DOI in the PsyArXiv record.
+  DOI in the PsyArXiv record. Uploaded 2026-10-20
+  (<https://osf.io/preprints/psyarxiv/hxngm_v3>), waiting for moderator
+  approval; DOI `10.31234/osf.io/hxngm_v3` not yet registered (404), so
+  4.5 and 4.6 wait for approval.
 - [ ] **4.5 Update the Zenodo related identifier** for the preprint to
   `hxngm_v3` (Zenodo allows metadata edits after publication).
 - [ ] **4.6 Submit the revision on PCI Psychology:** link the PsyArXiv v3
