@@ -1,7 +1,7 @@
 # PCI Psychology resubmission checklist
 
-**Status:** Draft
-**Created:** 2026-10-20
+**Status:** Approved
+**Created:** 2026-10-20; decisions A1-A7 recorded 2026-10-20
 **Basis:** Full review of the revision package against the recommender
 letter, both reviews, `response_to_reviewers.md`, `cover_letter.md`,
 `reviews/revision_ledger.md`, the 2026-09-11 requirements review, the
@@ -19,35 +19,38 @@ README and cover letter before the final build.
 
 ---
 
-## A. Decisions to make first
+## A. Decisions (made 2026-10-20)
 
-- [ ] **A1. Zenodo licence.** Choose licences for the package (suggested:
-  CC BY 4.0 for data, documentation and instruments; MIT for code). Check
-  that redistributing the Czech translations of FR-LF, KSA-3 and SDR-5 is
-  compatible with the original instruments' terms.
-- [ ] **A2. Fate of the OSF project files.** OSF project storage still holds
-  the April package, whose data very likely contain the original class
-  labels (`septima`, `G1.E`, `I3.A`; `septima` reveals the school type).
-  Decide: delete the files from OSF storage and leave a pointer to Zenodo,
-  or make the project private. OSF keeps previous file versions
-  downloadable, so overwriting is not enough.
-- [ ] **A3. Translation source.** Confirmed by the author: the Czech version
-  was translated from the published **English** version. Decide the role
-  of `Hartmann2008` (German dissertation): cite it only as the instrument's
-  original development source, or drop it. Suggested: keep one mention as
-  the original development source; cite the 2008 article everywhere else.
-- [ ] **A4. Upper-secondary curriculum (R1-08).** Keep the current bounded
-  disclosure (curriculum account covers only the lower-secondary 30%), or
-  add an upper-secondary framework citation without naming the school
-  type. Suggested: keep the disclosure, but shorten it (see E5).
-- [ ] **A5. Ideology group means (R2-03).** Add tertile means of the HPT
-  composite to the supplement, or explain in the response why only the
-  continuous display is given. Suggested: add a three-row table to the
-  supplement; the groups already exist from the DIF analysis.
-- [ ] **A6. Wilschut and Schiphorst (2019).** Read and cite (where it fits
-  in Section 2.1), or explain in the response why it is not cited.
-- [ ] **A7. "We" or "I".** Single author: the manuscript and response use
-  "we", the cover letter uses "I". Pick one for all three documents.
+- [x] **A1. Zenodo licence:** CC BY 4.0 for data, documentation and
+  instruments; MIT for code. Zenodo takes one licence field: set CC BY 4.0
+  there and state the split in the README and description (B2, B4).
+  Still check that redistributing the Czech translations of FR-LF, KSA-3
+  and SDR-5 is compatible with the original instruments' terms (B3).
+- [x] **A2. Old OSF files:** delete all files from OSF project storage and
+  leave a note pointing to the Zenodo DOI (B7). The April data very likely
+  contain the original class labels (`septima`, `G1.E`, `I3.A`), and OSF
+  keeps old file versions downloadable, so overwriting is not enough. The
+  project page, its DOI and the preregistration stay.
+- [x] **A3. Translation source and dissertation:** the Czech version was
+  translated from the published **English** article. Cite
+  `Hartmann_Hasselhorn2008Historical` everywhere; mention `Hartmann2008`
+  (German dissertation) once, as the instrument's original development
+  source (C1, C2).
+- [x] **A4. Upper-secondary curriculum (R1-08):** keep the disclosure that
+  the documentary account covers only the lower-secondary subsample;
+  shorten Section 2.2 (E5). No new sources.
+- [x] **A5. Ideology group means (R2-03):** add a three-row supplement
+  table (Low / Middle / High composite-ideology tertile: n, mean HPT
+  composite, 95% CI), computed in `revision_reporting_analyses.R` (D5).
+- [x] **A6. Wilschut and Schiphorst (2019):** cite, using the author's
+  assessment in `docs/reviews/2026-10-20-wilschut-schiphorst-2019.md`
+  (citation key `Wilschut_Schiphorst2019One`). Placements (a) Section 2.1
+  and (b) Section 2.3 are required; (c) and (d) are optional (D4, C3, G1,
+  F6). Use it for its conceptual critique and as a second transfer
+  failure, not as strong psychometric evidence, and not for the
+  cognitive-versus-affective claim.
+- [x] **A7. Voice:** "I" in the manuscript, response letter and cover
+  letter (D7, F8).
 
 ---
 
@@ -69,7 +72,9 @@ preprint (`hxngm`) are unaffected and keep their identifiers.
     a clear description), publication date, version `1.0`.
   - [ ] Description: what the package contains, execution order, and the
     mapping to manuscript tables and figures (reuse the README text).
-  - [ ] Licence(s) from A1.
+  - [ ] Licence field: CC BY 4.0; state in the description that code is
+    MIT-licensed (A1). Add a `LICENSE` file (MIT) to `scripts/` and a
+    licence section to the README.
   - [ ] Related identifiers: preregistration `https://osf.io/zsngy`
     (relation: "is supplement to" or "references"); preprint
     `10.31234/osf.io/hxngm` (relation: "is supplement to"); the old OSF
@@ -120,8 +125,13 @@ preprint (`hxngm`) are unaffected and keep their identifiers.
 - [ ] **B6. Publish the Zenodo record** after the final rebuild (I3) so
   the archived PDFs and outputs match the submitted manuscript. Check that
   the DOI resolves and that every file downloads.
-- [ ] **B7. Clean up OSF** according to A2. Add a short note or wiki line
-  on the OSF project pointing to the Zenodo DOI, if OSF still allows it.
+- [ ] **B7. Clean up OSF** (A2): delete every file in OSF project storage
+  (including `preprint.pdf`, `supplementary_materials.md` and the data
+  folder), then confirm through the API that storage is empty
+  (`https://api.osf.io/v2/nodes/yng37/files/osfstorage/`). Add a short
+  description or wiki note on the project pointing to the Zenodo DOI, if
+  OSF still allows edits; otherwise put the pointer in the Zenodo record
+  only. Do not touch the registration `zsngy`.
 - [ ] **B8. Mention the move in the response letter** (one line in the
   META entry, see F1).
 
@@ -142,8 +152,11 @@ preprint (`hxngm`) are unaffected and keep their identifiers.
     instrument from the German dissertation \citep{Hartmann2008}, with the
     published English account used as supporting validation evidence" ->
     "Czech adaptation of the Hartmann and Hasselhorn (2008) instrument"
-    (plus, per A3, at most one mention that the instrument originates in
-    Hartmann's (2008) dissertation)
+  - [ ] Per A3, keep exactly one mention of `Hartmann2008`, as the
+    instrument's original development source. Suggested place: 3.1, for
+    example "The instrument was developed in Hartmann's (2008) dissertation
+    and published by \citet{Hartmann_Hasselhorn2008Historical}; the Czech
+    version was translated from the published English article."
   - [ ] `osf_storage/instrument_adaptation_and_deviations.md:5-9` (says
     "adapted from the German ... instrument ... reported in Hartmann
     (2008)")
@@ -152,13 +165,26 @@ preprint (`hxngm`) are unaffected and keep their identifiers.
     correctly ("German" there refers to the original population; fine)
 - [ ] **C3. Invented example item (268).** "His decision was understandable
   given the political and economic turmoil of the Weimar Republic" is not
-  an instrument item, and the task never says Hannes decided. Replace with
-  a translated real CONT item, for example CONT2: "Hitler probably
-  represents a strong leader to him. He will probably not think much about
-  the dangers associated with the NSDAP." Adjust the next two sentences
-  accordingly (a student who rates this as fitting Hannes's situation
-  because they reconstructed the context vs. because it matches their own
-  sympathies).
+  an instrument item, and the task never says Hannes decided. Replace the
+  example with the real option alignment, citing Wilschut and Schiphorst
+  (A6, placement b): every CONT option describes Hannes as likely to vote
+  for the NSDAP and every POP option describes him as rejecting it, so the
+  POP-CONT continuum coincides with the direction of the political choice.
+  Draft wording:
+  "In the Weimar scenario, every contextualization option describes Hannes
+  as likely to vote for the NSDAP and every present-oriented option
+  describes him as rejecting it, so the POP--CONT continuum coincides with
+  the direction of the political choice
+  \citep{Wilschut_Schiphorst2019One}. A student can therefore reach a high
+  score either by reconstructing the 1930 context or by finding an
+  anti-democratic vote unobjectionable."
+  Optionally quote one real item as illustration, for example CONT2
+  ("Hitler probably represents a strong leader to him. He will probably
+  not think much about the dangers associated with the NSDAP."). Keep the
+  manuscript's exact item-stem wording ("could vote for an anti-democratic
+  party such as the NSDAP"), not Wilschut and Schiphorst's paraphrase
+  ("whether or not to vote for Hitler"). Check the following sentences in
+  2.3 still read correctly.
 - [ ] **C4. Sample-size claim (347).** "the achieved N = 285--293 met that
   regression target" conflicts with the focal model n = 282. Replace with
   "the focal regression used n = 282 students, above the registered
@@ -244,12 +270,36 @@ preprint (`hxngm`) are unaffected and keep their identifiers.
 - [ ] R1's "It is interesting that the issues with reliability are still
   present": acknowledge in response REC-05 or R1-06 (link to Huijgen et
   al., 2014, weaker reliability on transfer).
-- [ ] Wilschut and Schiphorst (2019), per A6.
+- [ ] Wilschut and Schiphorst (2019), per A6 and the author's assessment
+  in `docs/reviews/2026-10-20-wilschut-schiphorst-2019.md`:
+  - [ ] (a) Section 2.1, after the Huijgen et al. (2014) sentence (around
+    217): "\citet{Wilschut_Schiphorst2019One} adapted the format to two new
+    scenarios (a nineteenth-century strike and an eleventh-century crusade)
+    with 69 Dutch Grade 10 students; principal components did not recover
+    the three response categories, and total-score reliability was low
+    ($\alpha$ = .22 and .50)."
+  - [ ] (b) Section 2.3 congruence pathway: see C3.
+  - [ ] (c) Optional, 5.3 or 5.6, one clause: Czech reliabilities are
+    modest but higher than in the Dutch new-content adaptation, consistent
+    with the structure depending on the original scenario; supports the
+    multi-scenario recommendation in D1.
+  - [ ] (d) Optional, 5.7 or limitation 8: alongside Huijgen et al.
+    (2017), closed ratings can miss change that written explanations
+    detect; supports R1's think-aloud suggestion.
+  - [ ] Optional for R1-03: W&S as the rationalist counterpoint to
+    Endacott and Brooks (2013) in the construct-boundary paragraph.
+  - [ ] Do not cite W&S for "cognitive rather than affective" HPT.
 
 ### D5. Reviewer 2
 
-- [ ] R2-03: ideology group means per A5; update response R2-03 either
-  way (one sentence on why the continuous display is primary).
+- [ ] R2-03 (A5): add the tertile group-means output to
+  `revision_reporting_analyses.R` (Low / Middle / High composite-ideology
+  tertile: n, mean HPT composite, 95% CI); add a regression test in
+  `test_revision_reporting_analyses.R`; write it to `revision_outputs/`;
+  add it as a new supplement table; add one sentence after Figure 1
+  pointing to it; mention it in response R2-03, together with one sentence
+  on why the continuous display stays primary (tertiles are arbitrary
+  cut-points).
 - [ ] R2-01: label the two questions "RQ1" and "RQ2" in 2.5 (303-309) and
   reuse the labels in the Results roadmap (471-474), 4.9/4.10 and 5.1.
 
@@ -260,6 +310,15 @@ preprint (`hxngm`) are unaffected and keep their identifiers.
   4.1 and protocol step 5).
 - [ ] REC-03: Table 7 headers (753) "HPT" -> "HPT composite", "Context"
   -> "Contextualization".
+
+### D7. Voice (A7)
+
+- [ ] Change the six "we" sentences in `manuscript.tex` to "I": 155 "we
+  conducted", 177 "We follow", 408 "We computed", 525 "We therefore
+  retain", 709 "we repeated", 849 "we recommend". Re-search for
+  `we`/`our`/`us` as whole words after the other edits.
+- [ ] Same in `response_to_reviewers.md` (12 occurrences); the supplement
+  has none.
 
 ---
 
@@ -285,7 +344,7 @@ preprint (`hxngm`) are unaffected and keep their identifiers.
   - [ ] Zenodo-migration clauses (covered by B5)
 - [ ] **E5. Merge the two curriculum paragraphs in 2.2 (243-259)** into
   about three sentences; keep the lower-secondary boundary as one
-  sentence.
+  sentence (A4: no new sources).
 - [ ] **E6. Shorten the composite label.** Define "primary six-item HPT
   composite (hereafter, HPT composite)" once in 3.3.1; use "HPT
   composite" in the other 13 places, and harmonise Table 4/7 and the
@@ -331,8 +390,11 @@ the recommender to find one who can. These are cheap fixes.
 - [ ] **G1.** Create or complete R/ notes (read) for citations that answer
   reviewers and currently have no note in the vault:
   `Huijgen_et_al2014Testing`, `Huijgen_et_al2017Toward`, `RVPZV2023`,
-  Loevinger (1954, new), `Hartmann2008` (if kept per A3), and Wilschut
-  and Schiphorst (2019) if cited per A6. `Endacott_Brooks2013An_Updated`
+  Loevinger (1954, new), `Hartmann2008` (kept as one mention per A3), and
+  `Wilschut_Schiphorst2019One` (PDF in vault `L/`; write the note from
+  your own reading, using the assessment in
+  `docs/reviews/2026-10-20-wilschut-schiphorst-2019.md` as a starting
+  point). Make sure each new entry reaches `bibliography.bib` via Zotero. `Endacott_Brooks2013An_Updated`
   is a stub marked "needs full read".
 - [ ] **G2.** Also check notes for the other cited works without notes
   found in this review: `Barton2004`, `Evans2013`, `Duckitt2001`,
@@ -379,20 +441,28 @@ the recommender to find one who can. These are cheap fixes.
   reviewers; compare against the submitted text, which already said
   English).
 - [ ] **F5.** R1-02: point to the condensed mechanism paragraph (E3).
-- [ ] **F6.** Add replies for D4 (Dutch grade result, reliability remark,
-  Wilschut and Schiphorst) and D5 (group means, RQ labels).
+- [ ] **F6.** Add replies for D4 and D5:
+  - [ ] R1-06: Wilschut and Schiphorst (2019) now cited in 2.1 as a second
+    transfer study with low reliability, and in 2.3 for the alignment of
+    option content with the voting decision.
+  - [ ] R1 reliability remark: "As Reviewer 1 notes, reliability problems
+    recur; Wilschut and Schiphorst (2019) and Huijgen et al. (2014) report
+    weaker reliability when the format is moved to new content, and
+    Section 5.3 now places the Czech estimates against these."
+  - [ ] R1 Dutch grade remark: here history grade correlated r = -.15.
+  - [ ] R2-03: group-means table (A5); R2-01: RQ labels.
 - [ ] **F7.** Add page and line references from the final clean PDF to
   every reply (the PDF has line numbers); update the location map (it
   lists Tables S1-S5 but S3b and S4b also exist; table numbers change if
   E1-E2 are done).
-- [ ] **F8.** Apply the A7 pronoun decision.
+- [ ] **F8.** Use "I" throughout (A7).
 
 ### Cover letter (`cover_letter.md`)
 
 - [ ] Replace the OSF DOI with the Zenodo DOI (B5).
 - [ ] Shorten the results paragraph; it repeats the abstract's caveats.
 - [ ] Mention the preregistration-disclosure correction in one sentence.
-- [ ] Apply A7.
+- [ ] Keep "I" (A7; already the case).
 
 ### TOP form (manuscript appendix) and `top_disclosure_table.md`
 
