@@ -76,10 +76,15 @@ the redline baseline `c952aa5` has the same manuscript text as the submitted
   Loevinger (1954), and Hartmann and Hasselhorn (2008) before Hartmann
   (2008). The probable cause is a `sortname` value in the Extra field of
   `Loevinger1957Objective` and `Hartmann2008`; remove it from both.
-- [ ] **2.4 Zotero: Wilschut and Schiphorst title.** The title starts with a
+  Checked 2026-10-20 after the re-export: Loevinger is fixed. Hartmann is
+  still wrong because `sortname = {Hartmann}` is on
+  `Hartmann_Hasselhorn2008`, not on `Hartmann2008`; remove it from the Extra
+  field of `Hartmann_Hasselhorn2008` and export again.
+- [x] **2.4 Zotero: Wilschut and Schiphorst title.** The title starts with a
   straight apostrophe, which renders as a closing quotation mark
   ("'One has to ..."). Use an opening single quotation mark at the start
   (or drop the quotation marks around the quoted phrase).
+  Checked 2026-10-20: renders with an opening quotation mark.
 - [ ] **2.5 Zotero sync and Better BibLaTeX export** so 2.3-2.4 reach
   `bibliography.bib`. Tell Claude when it is done.
 - [x] **2.6 Decide on the response-letter locations.** Decided 2026-10-20:
