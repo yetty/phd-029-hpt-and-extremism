@@ -103,17 +103,22 @@ the redline baseline `c952aa5` has the same manuscript text as the submitted
   and `manuscript_diff.tex/.pdf` (`build_redline.sh`, baseline `c952aa5`).
   Check the Biber log for new warnings (two invalid-ISBN warnings are
   known and harmless).
-- [ ] **3.3 Response letter locations** (per 2.6). Can be prepared in
+- [x] **3.3 Response letter locations** (per 2.6). Can be prepared in
   section 1, before the final build:
-  - [ ] Put invisible `\linelabel{...}` markers (from `lineno`) at each
+  - [x] Put invisible `\linelabel{...}` markers (from `lineno`) at each
     revised passage in `manuscript.tex`, one per reply.
-  - [ ] Put matching placeholders (for example `{{loc:rec01}}`) in
+  - [x] Put matching placeholders (for example `{{loc:rec01}}`) in
     `response_to_reviewers.md`.
-  - [ ] Write a small script that reads the page and line numbers from
+  - [x] Write a small script that reads the page and line numbers from
     `manuscript.aux` after the build and fills them in as "p. 12,
     lines 340-352"; fail on any unresolved label.
-  - [ ] Run it after the final build and check a sample of locations
+  - [x] Run it after the final build and check a sample of locations
     against the PDF by eye.
+  Done 2026-10-20: 34 `\Loc`/`\LocEnd` markers in `manuscript.tex`;
+  placeholders live in `response_to_reviewers_template.md` (edit that file);
+  `build_preprint.sh` runs `fill_response_locations.py`, which writes
+  `response_to_reviewers.md`. PDF text unchanged by the markers; 16 marker
+  lines checked against the PDF. Rerun automatically by the 3.2 build.
 - [ ] **3.4 Inspect the PDFs:** no `(?)`, `??` or "n.d."; Tables 1 and 5
   inside the margins; reference list in APA order (Loevinger 1954 before
   1957, Hartmann 2008 before Hartmann and Hasselhorn 2008); Wilschut title
