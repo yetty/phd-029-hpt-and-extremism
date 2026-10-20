@@ -87,12 +87,15 @@ the redline baseline `c952aa5` has the same manuscript text as the submitted
 
 ## 3. Final build and verification (Claude, after section 2)
 
-- [ ] **3.1 Rerun the tests:** `test_revision_reporting_analyses.R` and
+- [x] **3.1 Rerun the tests:** `test_revision_reporting_analyses.R` and
   `verify_statistics.R` from the project root.
-- [ ] **3.2 Rebuild** `manuscript.pdf`, `preprint.pdf` (`build_preprint.sh`)
+  Done 2026-10-20: both pass.
+- [x] **3.2 Rebuild** `manuscript.pdf`, `preprint.pdf` (`build_preprint.sh`)
   and `manuscript_diff.tex/.pdf` (`build_redline.sh`, baseline `c952aa5`).
   Check the Biber log for new warnings (two invalid-ISBN warnings are
   known and harmless).
+  Done 2026-10-20: only the two known ISBN warnings; manuscript and
+  preprint identical; 34 letter locations filled.
 - [x] **3.3 Response letter locations** (per 2.6). Can be prepared in
   section 1, before the final build:
   - [x] Put invisible `\linelabel{...}` markers (from `lineno`) at each
@@ -109,17 +112,25 @@ the redline baseline `c952aa5` has the same manuscript text as the submitted
   `build_preprint.sh` runs `fill_response_locations.py`, which writes
   `response_to_reviewers.md`. PDF text unchanged by the markers; 16 marker
   lines checked against the PDF. Rerun automatically by the 3.2 build.
-- [ ] **3.4 Inspect the PDFs:** no `(?)`, `??` or "n.d."; Tables 1 and 5
+- [x] **3.4 Inspect the PDFs:** no `(?)`, `??` or "n.d."; Tables 1 and 5
   inside the margins; reference list in APA order (Loevinger 1954 before
   1957, Hartmann 2008 before Hartmann and Hasselhorn 2008); Wilschut title
   quotation marks correct; Figure 1 legible in greyscale.
-- [ ] **3.5 Rebuild the Zenodo release bundle.** The bundle in
+  Done 2026-10-20: all checks pass in `manuscript.pdf`, the redline and
+  the supplement.
+- [x] **3.5 Rebuild the Zenodo release bundle.** The bundle in
   `.zenodo-release/` (10:48) predates the last README (11:14) and supplement
   (11:19) changes. Rebuild it from the final package and check the
   manifest, file count and checksums.
-- [ ] **3.6 Replace the files in the Zenodo draft** with the rebuilt bundle.
+  Done 2026-10-20: rebuilt (deterministic); 55 files plus manifest, all
+  SHA-256 checksums match; README and supplement current; no
+  confidential files.
+- [x] **3.6 Replace the files in the Zenodo draft** with the rebuilt bundle.
   The draft stays unpublished.
-- [ ] **3.7 Commit and push** the rebuilt files (submodule, then root
+  Done 2026-10-20: old draft files deleted, new bundle uploaded,
+  `zenodo_release.py verify` passes (zip MD5 `df640dc6...`); record
+  23494026 is still an unpublished draft.
+- [x] **3.7 Commit and push** the rebuilt files (submodule, then root
   pointer).
 
 ---
