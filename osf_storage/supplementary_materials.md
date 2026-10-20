@@ -74,7 +74,7 @@ $p$ < .001.
 | HPT: reversed present-oriented perspective | 3 | 282 | .46 | [.35, .57] | .52 | .54 |
 | HPT: role of the historical agent | 3 | 281 | .50 | [.40, .60] | .53 | .55 |
 | HPT: contextualization | 3 | 287 | .64 | [.57, .71] | .69 | .70 |
-| Primary six-item HPT composite | 6 | 282 | .60 | [.53, .68] | .65 | .66 |
+| HPT composite (six items) | 6 | 282 | .60 | [.53, .68] | .65 | .66 |
 | HPT total | 9 | 276 | .66 | [.60, .72] | .69 | .70 |
 | Historical knowledge | 6 | 286 | .55 | [.46, .63] | - | - |
 | FR-LF: dictatorship acceptance | 3 | 279 | .51 | [.42, .61] | .56 | .61 |
@@ -98,11 +98,11 @@ For the multidimensional HPT, FR-LF, and KSA composites, these omega
 values are descriptive one-factor estimates rather than reliability
 derived from the correlated-factor measurement model.
 
-### Table S3b: Pairwise Sample Sizes for Table 7
+### Table S3b: Pairwise Sample Sizes for Table 5
 
-| | Primary six-item HPT | Context | Pres. (rev.) | Knowledge | FR-LF | KSA-3 | SDR-5 |
+| | HPT composite | Context | Pres. (rev.) | Knowledge | FR-LF | KSA-3 | SDR-5 |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| Primary six-item HPT | - | 287 | 287 | 287 | 283 | 282 | 282 |
+| HPT composite | - | 287 | 287 | 287 | 283 | 282 | 282 |
 | Context | 287 | - | 287 | 287 | 283 | 282 | 282 |
 | Pres. (rev.) | 287 | 287 | - | 287 | 283 | 282 | 282 |
 | Knowledge | 287 | 287 | 287 | - | 284 | 283 | 283 |
@@ -163,7 +163,7 @@ that plan.
 |---|---|
 | H1: ideology positively predicts CONT with knowledge and SDR-5 covariates | Relevant associations are reported, but the exact registered one-tailed, covariate-adjusted test is not presented as a confirmatory test |
 | H2: ideology negatively predicts raw POP | Relevant associations are reported, but the exact registered one-tailed model is not presented as a confirmatory test. The observed KSA-3/reversed-POP direction was not predicted: H2 predicted the opposite direction on raw POP. |
-| H3: ideology positively predicts total HPT with covariates | Related models are reported, but the primary six-item HPT composite was adopted post-registration as the primary outcome |
+| H3: ideology positively predicts total HPT with covariates | Related models are reported, but the six-item HPT composite was adopted post-registration as the primary outcome |
 | H4: positive DIF on CONT items | The registered primary continuous-ideology MIMIC analysis was not implemented; post-registration all-item GRM DIF and MG-CFA analyses are reported instead |
 | H5: stronger ideology-HPT associations at lower knowledge | Neither the FR-LF $\times$ knowledge nor KSA $\times$ knowledge moderation analysis, nor the registered simple slopes, was implemented |
 | H6: exploratory positive correlations and FR-LF-CONT > KSA-CONT | Correlations are reported; class-clustered errors and the registered Williams/Steiger comparison were not implemented |
@@ -174,3 +174,41 @@ that plan.
 | HPT response scale 0-3; two ROA items; approximately ten knowledge items | Administered battery used 1-4 HPT responses, three ROA items, and six knowledge items |
 | CFA-focused validation, NS-only invariance, TOST, and alternative exclusions | Added after registration and treated as exploratory or descriptive |
 | Orthogonal bifactor CFA | Added post-registration. Its scaled global fit indices favor the more complex model, but the non-nested, parameterization-dependent comparison and three indicators per specific factor limit strong structural claims. |
+
+## Table S6: NS-Only Multi-Group CFA Fit
+
+| Model | CFI | RMSEA | SRMR | $\Delta$CFI | $\Delta$RMSEA | $\Delta$SRMR |
+|---|---:|---:|---:|---:|---:|---:|
+| Configural | .959 | .051 | .071 | - | - | - |
+| Metric | .961 | .047 | .076 | +.002 | -.004 | +.005 |
+| Scalar | .976 | .034 | .073 | +.015 | -.013 | -.003 |
+
+*Note.* Groups were formed by a tertile-based split on the National
+Socialist sympathy/relativization (NS) facet of the FR-LF, unequal
+because of tied scores (126 low, 123 high; 37 middle and 7 missing
+excluded). Three-factor model, WLSMV estimator, items treated as
+ordered categorical. Scaled $\chi^2$(48) = 62.77, $\chi^2$(54) = 68.15, and
+$\chi^2$(63) = 71.86 for the configural, metric, and scalar models; CFI and
+RMSEA also use lavaan's scaled WLSMV convention. Changes are relative to the preceding model; positive
+$\Delta$CFI and negative $\Delta$RMSEA indicate better fit. Source:
+`verify_statistics.R`, Step 3. This analysis was added after
+registration and is descriptive.
+
+## Table S7: HPT Composite by Composite-Ideology Tertile
+
+| Ideology tertile | $n$ | $M$ | 95% CI |
+|---|---:|---:|---|
+| Low | 96 | 2.91 | [2.80, 3.03] |
+| Middle | 91 | 2.86 | [2.76, 2.96] |
+| High | 95 | 2.75 | [2.63, 2.87] |
+
+*Note.* HPT composite = mean of reversed present-oriented perspective
+and contextualization scores (1-4). Tertiles of the composite ideology
+score (mean of standardized FR-LF and KSA-3 scores) use the cut points
+of the DIF analysis, so the Low and High groups are the DIF groups.
+Students with both scores available ($n$ = 282). Intervals are
+unadjusted $t$ intervals that ignore school and classroom clustering.
+Tertiles are arbitrary cut-points of a continuous score; the
+continuous relationship is shown in Figure 1. Source:
+`revision_reporting_analyses.R`
+(`revision_ideology_tertile_means.csv`).

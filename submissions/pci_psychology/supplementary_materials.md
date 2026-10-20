@@ -177,18 +177,19 @@ that plan.
 
 ## Table S6: NS-Only Multi-Group CFA Fit
 
-| Model | $\chi^2$ | *df* | CFI | RMSEA | SRMR | $\Delta$CFI | $\Delta$RMSEA | $\Delta$SRMR |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|
-| Configural | 62.77 | 48 | .959 | .051 | .071 | - | - | - |
-| Metric | 68.15 | 54 | .961 | .047 | .076 | +.002 | -.004 | +.005 |
-| Scalar | 71.86 | 63 | .976 | .034 | .073 | +.015 | -.013 | -.003 |
+| Model | CFI | RMSEA | SRMR | $\Delta$CFI | $\Delta$RMSEA | $\Delta$SRMR |
+|---|---:|---:|---:|---:|---:|---:|
+| Configural | .959 | .051 | .071 | - | - | - |
+| Metric | .961 | .047 | .076 | +.002 | -.004 | +.005 |
+| Scalar | .976 | .034 | .073 | +.015 | -.013 | -.003 |
 
 *Note.* Groups were formed by a tertile-based split on the National
 Socialist sympathy/relativization (NS) facet of the FR-LF, unequal
 because of tied scores (126 low, 123 high; 37 middle and 7 missing
 excluded). Three-factor model, WLSMV estimator, items treated as
-ordered categorical. $\chi^2$, CFI, and RMSEA use lavaan's scaled
-WLSMV convention. Changes are relative to the preceding model; positive
+ordered categorical. Scaled $\chi^2$(48) = 62.77, $\chi^2$(54) = 68.15, and
+$\chi^2$(63) = 71.86 for the configural, metric, and scalar models; CFI and
+RMSEA also use lavaan's scaled WLSMV convention. Changes are relative to the preceding model; positive
 $\Delta$CFI and negative $\Delta$RMSEA indicate better fit. Source:
 `verify_statistics.R`, Step 3. This analysis was added after
 registration and is descriptive.
