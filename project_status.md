@@ -180,8 +180,8 @@ Perspective Taking Instrument: Evidence from Czech Secondary Students
 
 **Phase:** Zenodo release and final PCI resubmission preparation.
 
-- [x] Move the rights-safe public reproducibility package to Zenodo
-  (<https://doi.org/10.5281/zenodo.23494026>)
+- [ ] Move the rights-safe public reproducibility package to Zenodo: DOI
+  reserved (<https://doi.org/10.5281/zenodo.23494026>), publication pending
 - [x] Preserve the OSF preregistration as the prospective study record
 - [x] Exclude third-party instrument files and item text pending documented
   redistribution permission
