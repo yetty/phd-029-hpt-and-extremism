@@ -16,3 +16,7 @@ gdocs
 *.blg
 *.fls
 *.fdb_latexmk
+
+# Zenodo release workspace and non-secret remote draft state
+.zenodo-release/
+.zenodo-release/state.json

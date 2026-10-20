@@ -1,0 +1,155 @@
+{
+  "release": {
+    "archive_name": "hpt-replication-package.zip",
+    "archive_root": "replication_package",
+    "state_file": ".zenodo-release/state.json",
+    "release_doi": "",
+    "version": "1.0"
+  },
+  "metadata": {
+    "title": "Cross-Cultural Validation and Ideological Fairness of a Historical Perspective Taking Instrument: Evidence from Czech Secondary Students",
+    "description": "De-identified data, analysis code, rendered outputs, and documentation for a preregistered study of historical perspective taking. The OSF preregistration remains the authoritative record of the prospective study plan. Data, original documentation, figures, and rendered outputs are licensed CC BY 4.0; code under scripts/ is licensed under the MIT License. Third-party instrument files and item text are excluded pending documented redistribution permission.",
+    "creators": [
+      {
+        "person_or_org": {
+          "type": "personal",
+          "given_name": "Juda",
+          "family_name": "Kaleta",
+          "identifiers": [
+            {
+              "scheme": "orcid",
+              "identifier": "0000-0003-0043-4039"
+            }
+          ]
+        },
+        "affiliations": [
+          {
+            "name": "Charles University, Faculty of Arts, Institute of History"
+          }
+        ]
+      }
+    ],
+    "subjects": [
+      {"subject": "historical perspective taking"},
+      {"subject": "cross-cultural validation"},
+      {"subject": "measurement invariance"},
+      {"subject": "differential item functioning"},
+      {"subject": "construct-irrelevant variance"},
+      {"subject": "test fairness"}
+    ],
+    "resource_type": {
+      "id": "dataset"
+    },
+    "rights": [
+      {
+        "id": "cc-by-4.0"
+      }
+    ],
+    "related_identifiers": [
+      {
+        "identifier": "10.17605/OSF.IO/ZSNGY",
+        "scheme": "doi",
+        "relation_type": {
+          "id": "issupplementto"
+        },
+        "resource_type": {
+          "id": "publication-other"
+        }
+      },
+      {
+        "identifier": "10.31234/osf.io/hxngm_v2",
+        "scheme": "doi",
+        "relation_type": {
+          "id": "issupplementto"
+        },
+        "resource_type": {
+          "id": "publication-preprint"
+        }
+      },
+      {
+        "identifier": "10.17605/OSF.IO/YNG37",
+        "scheme": "doi",
+        "relation_type": {
+          "id": "isderivedfrom"
+        },
+        "resource_type": {
+          "id": "dataset"
+        }
+      }
+    ]
+  },
+  "allowlist": [
+    "README.md",
+    "instrument_adaptation_and_deviations.md",
+    "supplementary_materials.md",
+    "supplementary_materials.pdf",
+    "zenodo_metadata.json",
+    "data/codebook.pdf",
+    "data/codebook_source.tex",
+    "data/student_responses.RDS",
+    "data/student_responses.xlsx",
+    "figures/fig02_measurement_invariance_and_dif.pdf",
+    "figures/fig02_measurement_invariance_and_dif.png",
+    "figures/fig03_score_distributions.pdf",
+    "figures/fig03_score_distributions.png",
+    "figures/fig04_coefficient_plot.pdf",
+    "figures/fig04_coefficient_plot.png",
+    "figures/fig05_marginal_effects.pdf",
+    "figures/fig05_marginal_effects.png",
+    "outputs/01_measurement_checks.pdf",
+    "outputs/02_descriptives_and_zero_order_correlations.pdf",
+    "outputs/03_multilevel_models_hypothesis_tests.pdf",
+    "outputs/04_dif_and_mg_cfa_measurement_bias.pdf",
+    "outputs/05_sensitivity_analyses.pdf",
+    "outputs/06_appendix_tables_and_figures.pdf",
+    "outputs/07_reproducibility_report.pdf",
+    "outputs/table_s1_irt_parameters.csv",
+    "outputs/revision/revision_correlation_intervals.csv",
+    "outputs/revision/revision_ideology_thresholds.csv",
+    "outputs/revision/revision_knowledge_facilities.csv",
+    "outputs/revision/revision_participant_counts.csv",
+    "outputs/revision/revision_participant_descriptives.csv",
+    "outputs/revision/revision_relationships.pdf",
+    "outputs/revision/revision_relationships.png",
+    "outputs/revision/revision_reliability.csv",
+    "scripts/01_measurement_checks.Rmd",
+    "scripts/02_descriptives_and_zero_order_correlations.Rmd",
+    "scripts/03_multilevel_models_hypothesis_tests.Rmd",
+    "scripts/04_dif_and_mg_cfa_measurement_bias.Rmd",
+    "scripts/05_sensitivity_analyses.Rmd",
+    "scripts/06_appendix_tables_and_figures.Rmd",
+    "scripts/07_reproducibility_report.Rmd",
+    "scripts/Makefile",
+    "scripts/LICENSE",
+    "scripts/H1_ideology_elevates_HPT.R",
+    "scripts/compute_instruments_validity.R",
+    "scripts/factor_and_invariance.R",
+    "scripts/fig02_measurement_invariance_and_dif.R",
+    "scripts/fig03_score_distributions.R",
+    "scripts/fig04_coefficient_plot.R",
+    "scripts/fig05_marginal_effects.R",
+    "scripts/multilevel_and_DIF.R",
+    "scripts/revision_reporting_analyses.R",
+    "scripts/scoring_helpers.R",
+    "scripts/supplementary_analyses.R",
+    "scripts/tost_equivalence_tests_and_mundlak.R"
+  ],
+  "denylist": [
+    "**/*CONFIDENTAL*",
+    "**/*CONFIDENTIAL*",
+    "**/teacher_report.*",
+    "**/pull_and_normalize_data_*",
+    "**/normalised_responses.*",
+    "instruments/**",
+    "**/.zenodo-release-state.json",
+    "**/.zenodo-release/**",
+    "**/*.aux",
+    "**/*.fdb_latexmk",
+    "**/*.fls",
+    "**/*.log",
+    "**/*.out",
+    "**/.DS_Store",
+    "**/__MACOSX/**",
+    "**/Thumbs.db"
+  ]
+}

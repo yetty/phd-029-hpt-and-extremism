@@ -12,15 +12,17 @@ Czech Republic
 
 **Preprint:** <https://doi.org/10.31234/osf.io/hxngm_v2>
 
-**Data and materials repository:** <https://doi.org/10.17605/OSF.IO/YNG37>
+**Former project (provenance):** <https://doi.org/10.17605/OSF.IO/YNG37>
 
 **Immutable preregistration:** <https://osf.io/zsngy>
 
-This repository contains the de-identified analysis data, Czech-language
-instrument battery, analysis code, documentation, and rendered outputs for the
-preprint. The current public repository is the OSF project above. This package
-is prepared for a planned archival migration to Zenodo; it is not a Zenodo
-deposit and no migration or upload is made by this package.
+This repository contains the de-identified analysis data, analysis code,
+documentation, and rendered outputs for the preprint. Third-party instrument
+files and item text are excluded pending documented redistribution permission;
+the documentation identifies and cites the measures used. Storage in the
+former OSF Project has been removed. This package is prepared for archival
+migration to Zenodo; it is not yet a Zenodo deposit and no upload is made by
+this package.
 
 ## Contents
 
@@ -31,7 +33,6 @@ osf_storage/
 |-- supplementary_materials.{md,pdf}
 |-- data/                         De-identified data and codebook
 |-- figures/                      Retained standalone figures (PDF and PNG)
-|-- instruments/                  Czech-language administered materials
 |-- outputs/                      Rendered reports and revision outputs
 `-- scripts/                      Reproducible analyses and Makefile
 ```
@@ -94,6 +95,12 @@ per-test alpha = .0056). It does not use an alpha of .01.
 S1-S5. `instrument_adaptation_and_deviations.md` records verified adaptation
 facts without reconstructing wording changes, and directs readers to Table S5
 for preregistration, instrument, and analysis-plan discrepancies.
+
+The public archive does not include administered questionnaires or instrument
+item text. These third-party materials remain excluded pending documented
+redistribution permission. The manuscript, supplement, and adaptation record
+provide source citations and describe the measures and deviations needed to
+interpret the released response variables.
 
 ### Mapping to manuscript and supplement elements
 
@@ -165,6 +172,18 @@ consequences. All responses were de-identified at the point of data entry. No
 personally identifiable information was collected or stored. The study followed
 the principles of the Declaration of Helsinki for research involving human
 participants.
+
+## Licence
+
+Except where a source citation identifies third-party material, the data,
+original documentation, figures, and rendered outputs in this archive are
+licensed under the Creative Commons Attribution 4.0 International licence
+(CC BY 4.0). Analysis code under `scripts/` is licensed under the MIT License;
+see `scripts/LICENSE`.
+
+Third-party instrument files and item text are not part of this archive and
+are not covered by either licence. Their exclusion does not alter the source
+attributions and adaptation disclosures in the manuscript and documentation.
 
 ## Citation
 

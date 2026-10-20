@@ -168,7 +168,7 @@ does not authorize an OSF change or shorten any approval gate.
   file. The user approved exclusion of third-party instrument files on
   2026-10-20 after the rights review triggered this stop condition.
 
-- [ ] **Step 2: Add the metadata file with the approved licence split.**
+- [x] **Step 2: Add the metadata file with the approved licence split.**
 
   Use CC BY 4.0 as Zenodo's record-level licence and state in the description
   that code under `scripts/` is MIT-licensed. Use this complete file:
@@ -331,7 +331,7 @@ does not authorize an OSF change or shorten any approval gate.
   }
   ```
 
-- [ ] **Step 3: Add the MIT licence for code.**
+- [x] **Step 3: Add the MIT licence for code.**
 
   Create `osf_storage/scripts/LICENSE` with this exact text:
 
@@ -365,7 +365,7 @@ does not authorize an OSF change or shorten any approval gate.
   are excluded pending documented redistribution permission. Do not claim
   those terms for any excluded source material.
 
-- [ ] **Step 4: Add ignored release-only paths without broad ignore rules.**
+- [x] **Step 4: Add ignored release-only paths without broad ignore rules.**
 
   Append exactly these lines to `.gitignore`:
 
@@ -387,7 +387,7 @@ does not authorize an OSF change or shorten any approval gate.
   Expected: both test paths match the two new rules and `git diff --check`
   exits successfully.
 
-- [ ] **Step 5: Commit the reviewed release contract.**
+- [x] **Step 5: Commit the reviewed release contract.**
 
   Run:
 
