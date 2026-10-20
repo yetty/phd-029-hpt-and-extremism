@@ -3,7 +3,7 @@
     "archive_name": "hpt-replication-package.zip",
     "archive_root": "replication_package",
     "state_file": ".zenodo-release/state.json",
-    "release_doi": "",
+    "release_doi": "10.5281/zenodo.23494026",
     "version": "1.0"
   },
   "metadata": {
@@ -30,12 +30,24 @@
       }
     ],
     "subjects": [
-      {"subject": "historical perspective taking"},
-      {"subject": "cross-cultural validation"},
-      {"subject": "measurement invariance"},
-      {"subject": "differential item functioning"},
-      {"subject": "construct-irrelevant variance"},
-      {"subject": "test fairness"}
+      {
+        "subject": "historical perspective taking"
+      },
+      {
+        "subject": "cross-cultural validation"
+      },
+      {
+        "subject": "measurement invariance"
+      },
+      {
+        "subject": "differential item functioning"
+      },
+      {
+        "subject": "construct-irrelevant variance"
+      },
+      {
+        "subject": "test fairness"
+      }
     ],
     "resource_type": {
       "id": "dataset"

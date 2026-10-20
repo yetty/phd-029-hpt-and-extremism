@@ -4,10 +4,13 @@ Manuscript *"Do Political Attitudes Contaminate Historical Reasoning?
 Ideological Attitudes and Disciplinary Thinking in Czech Adolescents"*:
 does a Historical Perspective Taking (HPT) instrument conflate
 right-authoritarian agreement with disciplinary reasoning? N = 293
-students, 10 schools; preregistered on OSF (https://osf.io/yng37/).
+students, 10 schools; preregistered on OSF (https://osf.io/zsngy/).
 Result: no ideology effects; historical knowledge is the only consistent
 predictor. Desk-rejected five times (TRSE, EJPE, AME, IJT, SPOE); sole
 active route PsyArXiv -> PCI Psychology -> Peer Community Journal.
+
+Public reproducibility package: <https://doi.org/10.5281/zenodo.23494026>.
+The former OSF Project DOI is retained only as provenance.
 
 **Status:** `status.md`, `project_status.md`.
 **Details:** `docs/study-and-pipeline.md` (sample, constructs,

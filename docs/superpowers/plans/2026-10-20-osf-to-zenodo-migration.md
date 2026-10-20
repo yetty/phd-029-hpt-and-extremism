@@ -1133,7 +1133,7 @@ does not authorize an OSF change or shorten any approval gate.
 - Regenerate: submission PDF artifacts and the exact bundle in
   `.zenodo-release/`
 
-- [ ] **Step 1: Stop for Gate B.**
+- [x] **Step 1: Stop for Gate B.**
 
   Present the exact title, description, creators, ORCID, affiliation, custom
   subjects used as Zenodo keywords, resource type, rights decision, related
@@ -1146,7 +1146,7 @@ does not authorize an OSF change or shorten any approval gate.
   coauthor is being asserted. Do not run the command below without an explicit
   user approval that covers production draft creation and DOI reservation.
 
-- [ ] **Step 2: Reserve the production DOI and persist only non-secret state.**
+- [x] **Step 2: Reserve the production DOI and persist only non-secret state.**
 
   Run:
 
@@ -1163,7 +1163,7 @@ does not authorize an OSF change or shorten any approval gate.
   or token. A failure leaves an unpublished draft that may be discarded only
   after the user understands that discarding loses the reserved DOI.
 
-- [ ] **Step 3: Propagate the reserved DOI in one controlled source change.**
+- [x] **Step 3: Propagate the reserved DOI in one controlled source change.**
 
   Obtain the DOI without echoing any secret and update only live sources. This
   command changes the tracked metadata's `release_doi` field:
@@ -1237,7 +1237,7 @@ does not authorize an OSF change or shorten any approval gate.
   in one uncommitted working change. Nothing is pushed while the final wording
   describes a record that has not yet been published.
 
-- [ ] **Step 4: Rebuild exactly the live artifacts that consume the DOI.**
+- [x] **Step 4: Rebuild exactly the live artifacts that consume the DOI.**
 
   Run:
 
@@ -1276,6 +1276,11 @@ does not authorize an OSF change or shorten any approval gate.
   preserve this reviewed local change without pushing its premature wording.
 
 ### Task 7: Upload, independently verify, and publish the production record
+
+> 2026-10-20: the user chose to commit the DOI-bearing change now and to
+> publish only after the PCI resubmission edits and final rebuild
+> (`submissions/pci_psychology/resubmission_checklist.md`, B6 and I3).
+> Task 6 Step 5 is superseded by that decision.
 
 **Files:**
 - Generated and ignored: `.zenodo-release/hpt-replication-package.zip`

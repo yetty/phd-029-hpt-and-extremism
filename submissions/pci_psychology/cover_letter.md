@@ -37,10 +37,12 @@ corrected post-registration bifactor result, and limits interpretation to the
 single scenario, item format, sample, and ideological range studied.
 
 The study was preregistered on OSF before data collection
-(https://osf.io/zsngy). Data, analysis scripts, instruments, and a
-reproducibility report are available at
-https://doi.org/10.17605/OSF.IO/YNG37. A Transparency and Openness Promotion
-disclosure table is appended to the preprint.
+(https://osf.io/zsngy). De-identified data, analysis scripts, rendered outputs,
+and a reproducibility report are available at
+https://doi.org/10.5281/zenodo.23494026. Third-party instrument files and item
+text are excluded pending documented redistribution permission; the manuscript
+and package documentation identify and cite the measures used. A Transparency
+and Openness Promotion disclosure table is appended to the preprint.
 
 I confirm that this preprint is not published or under consideration for
 evaluation elsewhere, and I have no financial conflicts of interest related

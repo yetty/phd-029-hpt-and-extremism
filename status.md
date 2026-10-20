@@ -1,7 +1,7 @@
 # Status: phd-029-hpt-and-extremism
 
 **Stage:** Revision invited at PCI Psychology
-**Updated:** 2026-10-02
+**Updated:** 2026-10-20
 
 ## Current State
 
@@ -11,8 +11,9 @@ and OSF data formats, Reports 01--07, revision outputs, figures, codebooks,
 supplement, manuscript/preprint, and redline were rebuilt. Statistical
 verification and all primary CSV anchors are unchanged from the pre-sanitizing
 baseline. The regression suite passes; manuscript and preprint PDFs are
-byte-identical. The public package remains prepared for, but has not been
-uploaded to, Zenodo.
+byte-identical. Zenodo hosts the public reproducibility package at
+<https://doi.org/10.5281/zenodo.23494026>. Third-party instrument files and
+item text are excluded pending documented redistribution permission.
 ## Manuscripts
 | Target | Status |
 |--------|--------|

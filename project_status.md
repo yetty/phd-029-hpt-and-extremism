@@ -6,9 +6,10 @@ Perspective Taking Instrument: Evidence from Czech Secondary Students
   EUPE-D-26-00272 (desk-rejected 2026-03-18), AME HAME-2026-0087
   (desk-rejected 2026-03-20), IJT IJT260038 (desk-rejected
   2026-04-11)
-**Data and materials project:** https://doi.org/10.17605/OSF.IO/YNG37
+**Public reproducibility package:** https://doi.org/10.5281/zenodo.23494026
+**Former OSF Project (provenance):** https://doi.org/10.17605/OSF.IO/YNG37
 **Preregistration:** https://osf.io/zsngy/
-**Last updated:** 2026-10-02
+**Last updated:** 2026-10-20
 
 ---
 ## Completed Milestones
@@ -177,7 +178,13 @@ Perspective Taking Instrument: Evidence from Czech Secondary Students
 ---
 ## Current Work
 
-**Phase:** Final package ready for PCI resubmission.
+**Phase:** Zenodo release and final PCI resubmission preparation.
+
+- [x] Move the rights-safe public reproducibility package to Zenodo
+  (<https://doi.org/10.5281/zenodo.23494026>)
+- [x] Preserve the OSF preregistration as the prospective study record
+- [x] Exclude third-party instrument files and item text pending documented
+  redistribution permission
 
 - [x] Disclose omitted registered analyses and post-registration additions
 - [x] Resolve substantive ledger items and rerun approved analyses

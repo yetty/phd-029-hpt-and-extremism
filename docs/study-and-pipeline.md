@@ -97,9 +97,11 @@ outputs/ (PDF, Markdown, LaTeX reports)
 - `make codebook` - Build data codebook PDF from LaTeX
 - Each Rmd renders to PDF, Markdown, and LaTeX simultaneously
 
-### OSF Replication Package
+### Zenodo Reproducibility Package
 
-`osf_storage/` contains the public replication package for the OSF project (https://osf.io/yng37/):
+`osf_storage/` is the source tree for the public reproducibility package on
+Zenodo (<https://doi.org/10.5281/zenodo.23494026>). The OSF preregistration
+(<https://osf.io/zsngy>) remains the prospective study record.
 
 ```
 osf_storage/
@@ -107,11 +109,16 @@ osf_storage/
 ├── data/           student_responses.{RDS,xlsx} + codebook.{pdf,tex}
 ├── scripts/        7 main .Rmd + 4 figure .R + 2 supplementary .R + 4 exploratory .R + Makefile
 ├── outputs/        6 pre-rendered analysis PDFs
-├── figures/        4 manuscript figures (PDF + PNG)
-└── instruments/    3 questionnaires (Czech-language .docx)
+└── figures/        4 manuscript figures (PDF + PNG)
 ```
 
-In osf_storage, data files are renamed to `student_responses.*` and scripts use `readRDS("student_responses.RDS")`. The R object inside is still named `normalised_responses`.
+Third-party instrument files and item text are excluded from the public release
+pending documented redistribution permission. Source citations and adaptation
+and deviation documentation remain in the manuscript and package.
+
+In `osf_storage`, data files are renamed to `student_responses.*` and scripts
+use `readRDS("student_responses.RDS")`. The R object inside is still named
+`normalised_responses`.
 
 ### Reviews
 

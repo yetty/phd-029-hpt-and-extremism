@@ -1,4 +1,4 @@
-# PCI Psychology Submission Checklist — Paper B
+# PCI Psychology Submission Checklist - Paper B
 
 **Paper:** Cross-Cultural Validation and Ideological Fairness
 of a Historical Perspective Taking Instrument
@@ -15,21 +15,21 @@ before-submission page, PCI help page, submission plan Phase 4.
 - [x] Preprint deposited on open archive (PsyArXiv)
 - [x] Preprint has DOI or unique identifier
 - [ ] Preprint is NOT published or under consideration elsewhere
-  - Paper A (SPE) is a **different** paper — confirm no overlap
+  - Paper A (SPE) is a **different** paper - confirm no overlap
     concern
-  - Paper B is not submitted anywhere else — OK
+  - Paper B is not submitted anywhere else - OK
 - [x] No financial conflicts of interest (no funding, no
   industry ties, no patents)
-- [x] Data, code, and materials available to reviewers at
-  submission (OSF: https://doi.org/10.17605/OSF.IO/YNG37)
+- [x] Data, code, and documentation available to reviewers at
+  submission (Zenodo: https://doi.org/10.5281/zenodo.23494026)
 
 ## B. Manuscript Content (in preprint PDF)
 
 ### Required Sections
 
-- [x] Title — clear, understandable beyond specialists
+- [x] Title - clear, understandable beyond specialists
 - [x] Author name, affiliation, email, ORCID
-- [x] Abstract — structured, acronyms spelled out
+- [x] Abstract - structured, acronyms spelled out
 - [x] Keywords
 - [x] Ethics statement (Helsinki Declaration + Czech Act
   No. 110/2019 Sb.)
@@ -56,14 +56,14 @@ before-submission page, PCI help page, submission plan Phase 4.
 ### Transparency & Reproducibility
 
 - [x] Data in machine-readable formats (RDS + xlsx)
-- [x] README.md in OSF repository
+- [x] README.md in Zenodo reproducibility package
 - [x] Scripts use relative paths
 - [x] Scripts have English comments
 - [x] Package requirements documented
   (07_reproducibility_report.Rmd)
 - [x] Codebook provided (PDF)
-- [x] OSF has permanent DOI
-  (https://doi.org/10.17605/OSF.IO/YNG37)
+- [x] Zenodo release has permanent DOI
+  (https://doi.org/10.5281/zenodo.23494026)
 - [x] Supplementary materials document (Table S1: IRT
   parameters)
 
@@ -75,68 +75,68 @@ before-submission page, PCI help page, submission plan Phase 4.
 - [x] Two rounds of 8-reviewer review completed
 - [x] Manuscript confirmed PCI-ready
 
-## C. Submission Form — Required Fields
+## C. Submission Form - Required Fields
 
-- [ ] **Preprint URL** — PsyArXiv DOI link
+- [ ] **Preprint URL** - PsyArXiv DOI link
   - Need: the actual URL from user
-- [ ] **Title** — "Cross-Cultural Validation and Ideological
+- [ ] **Title** - "Cross-Cultural Validation and Ideological
   Fairness of a Historical Perspective Taking Instrument:
   Evidence from Czech Secondary Students"
-- [ ] **Authors** — Juda Kaleta
-- [ ] **Abstract** — copy from preprint
-- [ ] **Version number** — v1
+- [ ] **Authors** - Juda Kaleta
+- [ ] **Abstract** - copy from preprint
+- [ ] **Version number** - v1
 - [ ] **Thematic fields** (up to 3):
   1. Quantitative Psychology
   2. Educational Psychology
   3. Social Psychology (if available)
-- [ ] **Data/code/materials location** —
-  https://doi.org/10.17605/OSF.IO/YNG37
-- [ ] **Funding information** — "No specific grant from any
+- [ ] **Data/code/materials location** -
+  https://doi.org/10.5281/zenodo.23494026
+- [ ] **Funding information** - "No specific grant from any
   funding agency"
 
-## D. Submission Form — Required Uploads
+## D. Submission Form - Required Uploads
 
 - [ ] **Submission icon** (PNG/JPG, NOT AI-generated)
   - Options: `fig02_measurement_invariance_and_dif.png`,
     `fig03_score_distributions.png`,
     `fig04_coefficient_plot.png`,
     `fig05_marginal_effects.png`
-  - Recommendation: fig04 (coefficient plot) — visually
+  - Recommendation: fig04 (coefficient plot) - visually
     distinctive, conveys the null-ideology finding
 
-## E. Submission Form — Optional but Recommended
+## E. Submission Form - Optional but Recommended
 
-- [ ] **Cover letter** — draft emphasizing:
+- [ ] **Cover letter** - draft emphasizing:
   - Generalizable CIV detection protocol (not just HPT)
   - Preregistration + fully open data/code/materials
   - Quantitative Psychology scope fit
   - Do NOT mention previous rejections or journal names
 - [ ] **Suggest recommenders** (5-10 candidates):
-  1. Tim Huijgen (U Groningen) — HPT measurement
-  2. Ulrich Hartmann (DIPF) — HPT instrument developer
-  3. W. Holmes Finch (Ball State) — DIF methodology
-  4. Mark D. Smith (NIU/SHEG) — history assessment
+  1. Tim Huijgen (U Groningen) - HPT measurement
+  2. Ulrich Hartmann (DIPF) - HPT instrument developer
+  3. W. Holmes Finch (Ball State) - DIF methodology
+  4. Mark D. Smith (NIU/SHEG) - history assessment
      psychometrics
-  5. André Kretzschmar — quantitative psych, PCI-active
+  5. André Kretzschmar - quantitative psych, PCI-active
   6. (check PCI Psychology recommender list for more)
-- [ ] **Suggest reviewers** (up to 10) — same candidates +
+- [ ] **Suggest reviewers** (up to 10) - same candidates +
   additional measurement/fairness experts
-- [ ] **Opposed reviewers** (up to 5) — probably none needed
-- [ ] **Keywords** — historical perspective taking,
+- [ ] **Opposed reviewers** (up to 5) - probably none needed
+- [ ] **Keywords** - historical perspective taking,
   cross-cultural validation, measurement invariance,
   differential item functioning, construct-irrelevant
   variance, test fairness
-- [ ] **Methods requiring specific expertise** —
+- [ ] **Methods requiring specific expertise** -
   IRT/DIF analysis, multi-group CFA, multilevel modelling
 
 ## F. Submission Decisions
 
-- [ ] **Anonymous submission?** — No (preprint is public,
+- [ ] **Anonymous submission?** - No (preprint is public,
   OSF linked to author, single author)
 - [ ] **Confirm**: not published/under review elsewhere
 - [ ] **Confirm**: no financial conflicts of interest
 - [ ] **Confirm**: ethics compliance (Helsinki)
-- [ ] **Confirm**: all authors aware and consenting (N/A —
+- [ ] **Confirm**: all authors aware and consenting (N/A -
   single author)
 
 ## G. Post-Submission

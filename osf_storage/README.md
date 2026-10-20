@@ -12,6 +12,9 @@ Czech Republic
 
 **Preprint:** <https://doi.org/10.31234/osf.io/hxngm_v2>
 
+**Public reproducibility package:**
+<https://doi.org/10.5281/zenodo.23494026>
+
 **Former project (provenance):** <https://doi.org/10.17605/OSF.IO/YNG37>
 
 **Immutable preregistration:** <https://osf.io/zsngy>
@@ -20,9 +23,9 @@ This repository contains the de-identified analysis data, analysis code,
 documentation, and rendered outputs for the preprint. Third-party instrument
 files and item text are excluded pending documented redistribution permission;
 the documentation identifies and cites the measures used. Storage in the
-former OSF Project has been removed. This package is prepared for archival
-migration to Zenodo; it is not yet a Zenodo deposit and no upload is made by
-this package.
+former OSF Project has been removed.
+
+Zenodo hosts the public reproducibility package.
 
 ## Contents
 

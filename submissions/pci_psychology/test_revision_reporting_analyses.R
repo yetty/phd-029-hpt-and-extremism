@@ -220,6 +220,23 @@ expect_true(
   "Section 5.2 must distinguish registered-alternative fit from the higher bifactor fit and its model uncertainty."
 )
 
+expect_true(
+  !grepl("His decision was understandable given", manuscript_text,
+         fixed = TRUE) &&
+    grepl(
+      "Are all measures, questions, and/or conditions used in the study described",
+      manuscript_text, fixed = TRUE
+    ) &&
+    grepl(
+      "\\textbf{[X] No, justification:} The manuscript describes the measures",
+      manuscript_text, fixed = TRUE
+    ),
+  paste(
+    "The manuscript must not reproduce illustrative item wording and must",
+    "disclose that third-party questions are unavailable."
+  )
+)
+
 for (script in measurement_scripts) {
   text <- paste(readLines(script, warn = FALSE), collapse = "\n")
   expect_true(
@@ -261,6 +278,22 @@ for (path in required_replication_files) {
 readme_path <- "osf_storage/README.md"
 readme_text <- paste(readLines(readme_path, warn = FALSE), collapse = "\n")
 readme_compact <- gsub("[[:space:]]+", " ", readme_text)
+zenodo_metadata_lines <- readLines(
+  "osf_storage/zenodo_metadata.json", warn = FALSE
+)
+release_doi_line <- zenodo_metadata_lines[grepl(
+  '"release_doi"', zenodo_metadata_lines, fixed = TRUE
+)]
+stopifnot(length(release_doi_line) == 1L)
+zenodo_doi <- sub(
+  '^[[:space:]]*"release_doi"[[:space:]]*:[[:space:]]*"([^"]+)".*$',
+  "\\1", release_doi_line
+)
+expect_true(
+  grepl("^10\\.5281/zenodo\\.[0-9]+$", zenodo_doi),
+  "The tracked release metadata must contain the reserved production Zenodo DOI."
+)
+zenodo_url <- paste0("https://doi.org/", zenodo_doi)
 manuscript_title <- paste(
   "Cross-Cultural Validation and Ideological Fairness of a Historical",
   "Perspective Taking Instrument: Evidence from Czech Secondary Students"
@@ -271,10 +304,9 @@ expect_true(
           readme_text, fixed = TRUE) &&
     grepl("https://doi.org/10.31234/osf.io/hxngm_v2", readme_text,
           fixed = TRUE) &&
-    grepl("https://doi.org/10.17605/OSF.IO/YNG37", readme_text,
-          fixed = TRUE) &&
+    grepl(zenodo_url, readme_text, fixed = TRUE) &&
     grepl("https://osf.io/zsngy", readme_text, fixed = TRUE),
-  "The replication README must contain the current title, affiliation, preprint DOI, OSF project, and immutable registration."
+  "The replication README must contain the current title, affiliation, preprint DOI, Zenodo release, and immutable registration."
 )
 expect_true(
   !grepl("approved by|reviewed and approved|parental|parent or legal guardian",
@@ -287,10 +319,12 @@ expect_true(
   "The replication README ethics statement must match the manuscript without approval or parental-consent claims."
 )
 expect_true(
-  grepl("planned archival migration to Zenodo", readme_text, fixed = TRUE) &&
-    !grepl("upload to Zenodo|Zenodo deposit has been", readme_text,
-           ignore.case = TRUE, perl = TRUE),
-  "The replication README must use repository-neutral, future-tense Zenodo wording."
+  grepl(zenodo_url, readme_text, fixed = TRUE) &&
+    grepl("Zenodo hosts the public reproducibility package", readme_text,
+          fixed = TRUE) &&
+    !grepl("prepared for a planned archival migration", readme_text,
+           fixed = TRUE),
+  "The README must name the published Zenodo release and not future migration."
 )
 
 analytic_rmds <- c(
@@ -651,12 +685,12 @@ project_status_text <- paste(readLines("project_status.md", warn = FALSE),
 project_status_compact <- gsub("[[:space:]]+", " ", project_status_text)
 expect_true(
   grepl(manuscript_title, project_status_compact, fixed = TRUE) &&
-    grepl("Data and materials project", project_status_text, fixed = TRUE) &&
-    grepl("https://doi.org/10.17605/OSF.IO/YNG37", project_status_text,
+    grepl("Public reproducibility package", project_status_text,
           fixed = TRUE) &&
+    grepl(zenodo_url, project_status_text, fixed = TRUE) &&
     grepl("Preregistration", project_status_text, fixed = TRUE) &&
     grepl("https://osf.io/zsngy/", project_status_text, fixed = TRUE),
-  "Project status must use the manuscript title and distinguish data project from registration."
+  "Project status must use the manuscript title and distinguish the Zenodo package from the registration."
 )
 
 for (script in measurement_scripts) {
