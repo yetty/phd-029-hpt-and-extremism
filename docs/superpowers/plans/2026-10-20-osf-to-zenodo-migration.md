@@ -32,7 +32,8 @@ XeLaTeX, `sha256sum`, `md5sum`, Git, Zenodo InvenioRDM Records API.
 - Create: `osf_storage/zenodo_metadata.json` - reviewed metadata and the
   complete release allowlist and approved licence split.
 - Create: `osf_storage/scripts/LICENSE` - MIT licence for analysis code; the
-  Zenodo record-level licence remains CC BY 4.0 for the package as a whole.
+  Zenodo record-level licence is CC BY 4.0, with the README defining its scope
+  and excluding third-party instrument files pending permission.
 - Modify: `.gitignore` - exclude the release workspace and non-secret draft
   state from Git and from the release allowlist.
 - Modify after DOI reservation: `osf_storage/README.md`,
@@ -50,11 +51,13 @@ XeLaTeX, `sha256sum`, `md5sum`, Git, Zenodo InvenioRDM Records API.
   must never contain a token, request headers, or response bodies.
 
 The bundle's source list is the `allowlist` in the metadata file. After the
-metadata and licence files are added, it must be identical to
-`git ls-files -- osf_storage`. It must reject any untracked, non-denied package
-file. The denylist excludes confidential-name patterns, teacher-report paths,
-raw source data names, the state file, release workspaces, and ignored build
-intermediates; it also rejects any allowlist entry matching those patterns.
+metadata and licence files are added, it must be identical to tracked files
+under `osf_storage/` except for the explicitly denied `instruments/` subtree.
+It must reject any untracked, non-denied package file. The denylist excludes
+confidential-name patterns, teacher-report paths, raw source data names,
+third-party instrument files, the state file, release workspaces, and ignored
+build intermediates; it also rejects any allowlist entry matching those
+patterns.
 Do not rename `osf_storage/`; its stable name is already coupled to the
 analytical scripts and tests.
 
@@ -73,10 +76,10 @@ The four approval gates are intentionally not interchangeable:
    pass. The approved plan retains the OSF Project DOI, so redirects remain
    out of scope.
 
-The scheduling assumptions are that OSF Project writes end on 2027-02-19 and
-Projects become read-only on 2027-02-27. Recheck both dates against current
-official OSF guidance immediately before any OSF execution. These dates do
-not authorize an OSF change or shorten any approval gate.
+Official OSF guidance checked on 2026-10-20 confirms that Project writes end
+and Projects become read-only on 2027-02-19. Recheck the date against current
+official OSF guidance immediately before any later OSF execution. This date
+does not authorize an OSF change or shorten any approval gate.
 
 ### Task 1: Make the urgent OSF privacy-containment decision first
 
@@ -87,7 +90,7 @@ not authorize an OSF change or shorten any approval gate.
 - Do not modify locally: repository files before the decision is recorded by
   the user outside the public repository.
 
-- [ ] **Step 1: Stop ordinary migration work and present Gate A.**
+- [x] **Step 1: Stop ordinary migration work and present Gate A.**
 
   Explain only that the distinct OSF Project and linked storage integration
   require privacy remediation because they may expose obsolete public content.
@@ -102,7 +105,7 @@ not authorize an OSF change or shorten any approval gate.
   Expected outcome: a written user decision that names the approved OSF
   Project action and explicitly excludes the preregistration.
 
-- [ ] **Step 2: Verify the OSF timing assumption before the approved action.**
+- [x] **Step 2: Verify the OSF timing assumption before the approved action.**
 
   Read the official OSF Projects transition guidance on the execution day and
   record, outside Git, the page URL, access date, the confirmed Project-write
@@ -113,7 +116,7 @@ not authorize an OSF change or shorten any approval gate.
   possible. No API call or browser automation is permitted until Gate A is
   explicitly approved.
 
-- [ ] **Step 3: Capture non-public provenance before a destructive OSF action.**
+- [x] **Step 3: Capture non-public provenance before a destructive OSF action.**
 
   Use OSF's supported export/download facilities to capture the Project file
   inventory, metadata, wikis, and activity information. Store raw exports
@@ -125,7 +128,7 @@ not authorize an OSF change or shorten any approval gate.
   Expected outcome: recoverable evidence of the OSF Project state without
   making it part of the Zenodo payload or the Git history.
 
-- [ ] **Step 4: Execute only the approved OSF Project remediation and verify
+- [x] **Step 4: Execute only the approved OSF Project remediation and verify
   it independently.**
 
   If the approval is to change visibility, confirm the Project's new
@@ -138,7 +141,7 @@ not authorize an OSF change or shorten any approval gate.
   Expected outcome: Gate A is completed or explicitly deferred by the user;
   the preregistration remains intact.
 
-- [ ] **Step 5: Do not commit this external decision.**
+- [x] **Step 5: Do not commit this external decision.**
 
   There is intentionally no Git commit for this gate: raw provenance belongs
   outside Git, and this task must complete before ordinary repository edits.
@@ -153,16 +156,17 @@ not authorize an OSF change or shorten any approval gate.
 - Modify: `osf_storage/README.md`
 - Modify: `.gitignore`
 
-- [ ] **Step 1: Verify the remaining instrument redistribution terms.**
+- [x] **Step 1: Verify the remaining instrument redistribution terms.**
 
-  The approved decision is CC BY 4.0 for data, documentation, and instruments,
-  with MIT for code. Before applying it, verify that redistribution of every
-  translated instrument is compatible with its source terms. Do not assume a
-  grant, Zenodo community, coauthor, or funding information.
+  The approved decision after rights review is CC BY 4.0 for data, original
+  documentation, figures, and rendered outputs, with MIT for code. Exclude all
+  files under `osf_storage/instruments/` pending documented redistribution
+  permission. Do not assume a grant, Zenodo community, coauthor, or funding
+  information.
 
   Expected outcome: evidence that the approved split covers every allowlisted
-  file. If an item is incompatible with public redistribution, stop before
-  creating a draft and revise the scope only with explicit user approval.
+  file. The user approved exclusion of third-party instrument files on
+  2026-10-20 after the rights review triggered this stop condition.
 
 - [ ] **Step 2: Add the metadata file with the approved licence split.**
 
@@ -180,7 +184,7 @@ not authorize an OSF change or shorten any approval gate.
     },
     "metadata": {
       "title": "Cross-Cultural Validation and Ideological Fairness of a Historical Perspective Taking Instrument: Evidence from Czech Secondary Students",
-      "description": "De-identified data, analysis code, Czech-language research materials, rendered outputs, and documentation for a preregistered study of historical perspective taking. The OSF preregistration remains the authoritative record of the prospective study plan. Data, documentation, and instruments are licensed CC BY 4.0; code under scripts/ is licensed under the MIT License.",
+      "description": "De-identified data, analysis code, rendered outputs, and documentation for a preregistered study of historical perspective taking. The OSF preregistration remains the authoritative record of the prospective study plan. Data, original documentation, figures, and rendered outputs are licensed CC BY 4.0; code under scripts/ is licensed under the MIT License. Third-party instrument files and item text are excluded pending documented redistribution permission.",
       "creators": [
         {
           "person_or_org": {
@@ -268,9 +272,6 @@ not authorize an OSF change or shorten any approval gate.
       "figures/fig04_coefficient_plot.png",
       "figures/fig05_marginal_effects.pdf",
       "figures/fig05_marginal_effects.png",
-      "instruments/historical_knowledge_test.docx",
-      "instruments/hpt_questionnaire.docx",
-      "instruments/ideology_authoritarianism_sdr_questionnaires.docx",
       "outputs/01_measurement_checks.pdf",
       "outputs/02_descriptives_and_zero_order_correlations.pdf",
       "outputs/03_multilevel_models_hypothesis_tests.pdf",
@@ -315,6 +316,7 @@ not authorize an OSF change or shorten any approval gate.
       "**/teacher_report.*",
       "**/pull_and_normalize_data_*",
       "**/normalised_responses.*",
+      "instruments/**",
       "**/.zenodo-release-state.json",
       "**/.zenodo-release/**",
       "**/*.aux",
@@ -357,9 +359,11 @@ not authorize an OSF change or shorten any approval gate.
   SOFTWARE.
   ```
 
-  Add a licence section to `osf_storage/README.md` stating that data,
-  documentation, and instruments are CC BY 4.0 and code under `scripts/` is
-  MIT-licensed. Do not claim those terms for any excluded source material.
+  Add a licence section to `osf_storage/README.md` stating that data, original
+  documentation, figures, and rendered outputs are CC BY 4.0, code under
+  `scripts/` is MIT-licensed, and third-party instrument files and item text
+  are excluded pending documented redistribution permission. Do not claim
+  those terms for any excluded source material.
 
 - [ ] **Step 4: Add ignored release-only paths without broad ignore rules.**
 
