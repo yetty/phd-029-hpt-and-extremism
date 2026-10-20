@@ -44,10 +44,13 @@ Sections A-F, H (except F7) and most of B are done and pushed. Open items:
   excluded from the Zenodo package pending redistribution permission.
 - B7: OSF storage confirmed empty via the API; the pointer note on the OSF
   project is not yet confirmed.
-- Not on the original list: the preregistration names an MG-CFA with
-  ideology tertiles as the H4 sensitivity model (CONT items), while the
-  manuscript and Table S5 call the MG-CFA post-registration. Decide whether
-  to reword Section 3.4, 4.7 and Table S5.
+- Done 2026-10-20: the MG-CFA is now described as the registered
+  tertile-group H4 sensitivity model, extended from the CONT items to the
+  full three-factor model (3.4, 4.7, 5.4, 5.8, TOP form, Table S5, META-01).
+- Zotero (2026-10-20): Loevinger1954Attenuation added; Beierlein and
+  Decker titles and language fixed; Aktin proper nouns protected;
+  Wilschut_Schiphorst2019One was already in collection R. All need a
+  Zotero desktop sync and Better BibTeX export to reach bibliography.bib.
 
 ---
 

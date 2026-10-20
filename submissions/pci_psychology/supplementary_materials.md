@@ -147,7 +147,8 @@ population portability.
 The differences arise from item nonresponse, the scale-specific
 minimum-answer rules described in the manuscript, listwise-complete
 item sets for reliability, pairwise-complete correlations, and the
-post-registration extreme-group exclusions used for DIF and MG-CFA.
+extreme-group exclusions used for DIF and MG-CFA (registered for the
+MG-CFA sensitivity model).
 
 Knowledge-item facilities were .57 (KN1), .44 (KN2), .73 (KN3), .44
 (KN4), .41 (KN5), and .47 (KN6). The total score had $M$ = 3.04,
@@ -164,7 +165,7 @@ that plan.
 | H1: ideology positively predicts CONT with knowledge and SDR-5 covariates | Relevant associations are reported, but the exact registered one-tailed, covariate-adjusted test is not presented as a confirmatory test |
 | H2: ideology negatively predicts raw POP | Relevant associations are reported, but the exact registered one-tailed model is not presented as a confirmatory test. The observed KSA-3/reversed-POP direction was not predicted: H2 predicted the opposite direction on raw POP. |
 | H3: ideology positively predicts total HPT with covariates | Related models are reported, but the six-item HPT composite was adopted post-registration as the primary outcome |
-| H4: positive DIF on CONT items | The registered primary continuous-ideology MIMIC analysis was not implemented; post-registration all-item GRM DIF and MG-CFA analyses are reported instead |
+| H4: positive DIF on CONT items | The registered primary continuous-ideology MIMIC analysis was not implemented; a post-registration all-item GRM DIF analysis is reported instead. The registered tertile-group MG-CFA sensitivity model was implemented with the registered steps and criteria but extended from the CONT items to the full three-factor model |
 | H5: stronger ideology-HPT associations at lower knowledge | Neither the FR-LF $\times$ knowledge nor KSA $\times$ knowledge moderation analysis, nor the registered simple slopes, was implemented |
 | H6: exploratory positive correlations and FR-LF-CONT > KSA-CONT | Correlations are reported; class-clustered errors and the registered Williams/Steiger comparison were not implemented |
 | Two-level class random-intercept models | Three-level and school-level specifications were added post-registration |

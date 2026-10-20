@@ -306,7 +306,7 @@ the submitted version.
 | DIF description | Uniform and non-uniform tests | Omnibus joint test; raw POP in the GRM disclosed |
 | Modification index | Read as loading non-invariance | Read as a POP2 cross-loading diagnostic only |
 | Authoritarianism-presentism | Not reported | Reported as exploratory and unadjusted |
-| Preregistration disclosure | TOP form: one deviation (TOST bound) | Table S5 lists omitted registered analyses and post-registration additions |
+| Preregistration disclosure | TOP form: one deviation (TOST bound) | Table S5 lists omitted registered analyses, post-registration additions, and the extension of the registered tertile-group MG-CFA from the CONT items to all nine items |
 | Repository | OSF project | Zenodo, <https://doi.org/10.5281/zenodo.23494026> |
 
 None of these changes alters the substantive conclusion: historical knowledge

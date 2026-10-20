@@ -346,7 +346,7 @@ approximately ages 11--15; \emph{n} = 87, 29.7\%) and upper-secondary
 (ISCED 3, approximately ages 15--19; \emph{n} = 206, 70.3\%) levels. The inclusion criterion was completion of the curricular unit on the interwar period. Schools were drawn from five Czech regions (Praha: 42.7\%; Královéhradecký: 34.8\%; Zlínský: 11.3\%; Jihomoravský: 8.2\%; Ústecký: 3.1\%) and three funding categories (public: 90.8\%; private: 6.5\%; church-affiliated: 2.7\%). Gender composition was 192 male (65.5\%), 88 female (30.0\%), and 13 identifying as another gender (4.4\%). Students' most recent history grade averaged 1.71 (\emph{SD} = 0.92; Czech scale: 1 = excellent, 5 = failing).
 
 Schools were recruited through convenience sampling; the sample over-represents upper-secondary students relative to the national age cohort composition and should not be treated as a probability sample of Czech adolescents. Sample size was determined by an a priori power analysis specified in the
-preregistered protocol (https://osf.io/zsngy), targeting 80\% power to detect standardized ideology effects of \(\beta\) \(\geq\) .15 in a two-level multilevel regression; the focal regression used \emph{n} = 282 students, above the registered minimum of 250. The calculation did not establish power for the post-registration DIF or MG-CFA analyses. Within each school, all participating students present on the day of administration completed the instrument battery during a regular class period (approximately 30--40 minutes). Teachers were present during administration but did not intervene in students' responses.
+preregistered protocol (https://osf.io/zsngy), targeting 80\% power to detect standardized ideology effects of \(\beta\) \(\geq\) .15 in a two-level multilevel regression; the focal regression used \emph{n} = 282 students, above the registered minimum of 250. The calculation did not establish power for the DIF or MG-CFA analyses. Within each school, all participating students present on the day of administration completed the instrument battery during a regular class period (approximately 30--40 minutes). Teachers were present during administration but did not intervene in students' responses.
 
 The sample's right-authoritarian attitude median was 2.33 on the
 five-point scale, and the historical-knowledge median was 3 of 6; fuller
@@ -431,7 +431,7 @@ sets, while correlations used pairwise-complete composite scores. These
 rules explain the analysis-specific sample sizes reported in the tables
 and supplement.
 
-\textbf{Differential item functioning.} Low and High ideology groups were formed post-registration using tertile splits on a composite ideology score (mean of \emph{z}-scored FR-LF and KSA-3), with the middle tertile excluded (Low \emph{n} = 96; High \emph{n} = 95). A constrained unidimensional multi-group graded response model (GRM item
+\textbf{Differential item functioning.} Low and High ideology groups were formed, as registered for the H4 sensitivity model, using tertile splits on a composite ideology score (mean of \emph{z}-scored FR-LF and KSA-3), with the middle tertile excluded (Low \emph{n} = 96; High \emph{n} = 95). A constrained unidimensional multi-group graded response model (GRM item
 discrimination and category-intercept parameters for each item by group are
 reported in Table S1 in the supplementary materials) using a
 sequential item-release design tested each item for omnibus DIF by
@@ -454,7 +454,7 @@ the item tests.
 
 \textbf{Sensitivity of DIF detection.} With approximately 96 respondents per ideology group and nine Bonferroni-adjusted tests, statistical power was limited. No design-specific simulation was conducted, so the minimum detectable DIF magnitude is unknown. The extreme-group design increases ideological contrast at the cost of excluding the middle tertile and reducing group size.
 
-\textbf{Multi-group CFA.} Stepwise MG-CFA tested configural, metric, and scalar invariance across ideology groups using the three-factor model with WLSMV estimation. Invariance was evaluated using \(\Delta\)CFI \(\leq\) .01 and \(\Delta\)RMSEA \(\leq\) .015 criteria \citep{Chen2007,Cheung2002}.
+\textbf{Multi-group CFA.} The preregistration specified a multi-group CFA with low and high ideology tertile groups as the sensitivity model for H4, testing configural, metric, and scalar invariance of the contextualization items with \(\Delta\)CFI \(\leq\) .01 and \(\Delta\)RMSEA \(\leq\) .015 criteria. The reported analysis keeps the registered grouping, steps, WLSMV estimation, and criteria \citep{Chen2007,Cheung2002}, but extends the model from the contextualization factor to the full three-factor model.
 
 \textbf{Substantive models.} Random-intercept linear models predicted each
 standardized HPT outcome from standardized FR-LF, KSA-3, historical-knowledge,
@@ -669,8 +669,9 @@ a between-group loading difference.
 
 The admissible solutions and changes in CFI and RMSEA are compatible
 with scalar invariance under the fitted model. This remains qualified
-evidence rather than a firm equivalence conclusion: the analysis was
-added after registration, used only 90--92 complete cases per extreme
+evidence rather than a firm equivalence conclusion: the analysis
+extended the registered contextualization-only model to all nine items,
+used only 90--92 complete cases per extreme
 group, estimated three-indicator factors, and did not model school or
 classroom clustering.
 
@@ -835,9 +836,9 @@ especially SDR-5, call for particular caution.
 \subsubsection{5.4 Measurement Fairness Evidence}\label{measurement-fairness-evidence}}
 
 Fit-index changes were compatible with scalar invariance for both
-ideology groupings, and the composite-group models were admissible. Their
-post-registration status and the limits listed in Section 4.7 nevertheless
-prevent a firm equivalence conclusion. The DIF analysis
+ideology groupings, and the composite-group models were admissible. The
+limits listed in Section 4.7 nevertheless prevent a firm equivalence
+conclusion. The DIF analysis
 adds item-level evidence, but no design-specific power analysis was
 conducted and the unidimensional GRM does not match the CFA structure.
 Together, these results provide qualified rather than definitive
@@ -985,9 +986,8 @@ For this single Weimar scenario, the Czech data were compatible with a
 correlated three-factor representation of the Hartmann and Hasselhorn HPT item
 sets and produced scores that relate to scenario-relevant historical knowledge
 in theoretically expected ways. Fit-index patterns were compatible with measurement
-invariance across ideology groups, but small extreme groups, unmodeled
-clustering, and post-registration analysis prevent a firm equivalence
-conclusion. At the
+invariance across ideology groups, but small extreme groups and unmodeled
+clustering prevent a firm equivalence conclusion. At the
 sensitivity levels afforded by the present sample and in the observed
 ideological range, right-authoritarian attitudes were unrelated to the
 HPT composite. An unadjusted exploratory authoritarianism association
@@ -1134,7 +1134,7 @@ The policy of PCI Psychology is to recommend papers only if the data, methods us
 
 \textbf{Do you report all data exclusions (e.g., outliers, careless responders)?}
 
-\textbf{[X] Yes.} (Section 3.4 and Table S5: the middle ideology tertile was excluded for post-registration DIF and MG-CFA analyses; this analysis-specific exclusion is reported.)
+\textbf{[X] Yes.} (Section 3.4 and Table S5: the middle ideology tertile was excluded for the DIF and MG-CFA analyses, as registered for the MG-CFA sensitivity model; this analysis-specific exclusion is reported.)
 
 \quad $\square$ No, justification:
 
@@ -1142,7 +1142,7 @@ The policy of PCI Psychology is to recommend papers only if the data, methods us
 
 \textbf{Do you report all inclusion/exclusion criteria and when they were established?}
 
-\textbf{[X] Yes.} (Participant eligibility is described in Section 3.2 and was preregistered; post-registration analysis-specific exclusions are described in Section 3.4 and Table S5.)
+\textbf{[X] Yes.} (Participant eligibility is described in Section 3.2 and was preregistered; analysis-specific exclusions are described in Section 3.4 and Table S5.)
 
 \quad $\square$ No, justification:
 
