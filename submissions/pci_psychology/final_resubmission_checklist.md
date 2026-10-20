@@ -80,10 +80,8 @@ the redline baseline `c952aa5` has the same manuscript text as the submitted
   (or drop the quotation marks around the quoted phrase).
 - [ ] **2.5 Zotero sync and Better BibLaTeX export** so 2.3-2.4 reach
   `bibliography.bib`. Tell Claude when it is done.
-- [ ] **2.6 Decide on the response-letter locations.** Either add page and
-  line numbers to every reply (Claude does it in 3.3) or drop the sentence
-  "page and line numbers refer to the clean revised PDF". Recommended: add
-  them; the PDF has line numbers and reviewers expect them.
+- [x] **2.6 Decide on the response-letter locations.** Decided 2026-10-20:
+  every reply gets page and line numbers, filled in automatically (3.3).
 
 ---
 
@@ -95,8 +93,17 @@ the redline baseline `c952aa5` has the same manuscript text as the submitted
   and `manuscript_diff.tex/.pdf` (`build_redline.sh`, baseline `c952aa5`).
   Check the Biber log for new warnings (two invalid-ISBN warnings are
   known and harmless).
-- [ ] **3.3 Response letter locations** (per 2.6): add page and line numbers
-  from the final `manuscript.pdf` to every reply and to the location map.
+- [ ] **3.3 Response letter locations** (per 2.6). Can be prepared in
+  section 1, before the final build:
+  - [ ] Put invisible `\linelabel{...}` markers (from `lineno`) at each
+    revised passage in `manuscript.tex`, one per reply.
+  - [ ] Put matching placeholders (for example `{{loc:rec01}}`) in
+    `response_to_reviewers.md`.
+  - [ ] Write a small script that reads the page and line numbers from
+    `manuscript.aux` after the build and fills them in as "p. 12,
+    lines 340-352"; fail on any unresolved label.
+  - [ ] Run it after the final build and check a sample of locations
+    against the PDF by eye.
 - [ ] **3.4 Inspect the PDFs:** no `(?)`, `??` or "n.d."; Tables 1 and 5
   inside the margins; reference list in APA order (Loevinger 1954 before
   1957, Hartmann 2008 before Hartmann and Hasselhorn 2008); Wilschut title
