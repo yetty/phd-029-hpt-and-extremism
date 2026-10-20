@@ -137,13 +137,21 @@ the redline baseline `c952aa5` has the same manuscript text as the submitted
 
 ## 4. Publication and submission (Juda, with Claude where possible)
 
-- [ ] **4.1 Read the final clean PDF end to end** (former I6).
+- [x] **4.1 Read the final clean PDF end to end** (former I6). Done
+  2026-10-20.
 - [ ] **4.2 Optional:** targeted human psychometric review (former I7).
-- [ ] **4.3 Approve Zenodo publication (Gate C)** and publish record
+- [x] **4.3 Approve Zenodo publication (Gate C)** and publish record
   23494026. Then check that
   <https://doi.org/10.5281/zenodo.23494026> resolves and every file
   downloads. This must happen before 4.5 because the manuscript, TOP form
   and cover letter describe the package as available.
+  Done 2026-10-20 (approved by Juda): published at
+  <https://zenodo.org/records/23494026>. Publishing first failed because
+  the metadata had no `publisher`; added "Zenodo" (now required by
+  `validate_metadata`), so the bundle was rebuilt and uploaded again before
+  publishing. DOI resolves; both files download; the zip is byte-identical
+  to the local bundle and all 55 checksums match. Also fixed the tool's
+  `verify` for published records (Accept header).
 - [ ] **4.4 Post PsyArXiv version 3** of `hxngm` with the final
   `preprint.pdf`; check the title and abstract metadata; link the Zenodo
   DOI in the PsyArXiv record.
