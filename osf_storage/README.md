@@ -10,7 +10,7 @@ Perspective Taking Instrument: Evidence from Czech Secondary Students
 **Affiliation:** Institute of History, Faculty of Arts, Charles University,
 Czech Republic
 
-**Preprint:** <https://doi.org/10.31234/osf.io/hxngm_v2>
+**Preprint (latest version):** <https://osf.io/preprints/psyarxiv/hxngm>
 
 **Public reproducibility package:**
 <https://doi.org/10.5281/zenodo.23494026>
@@ -192,4 +192,4 @@ attributions and adaptation disclosures in the manuscript and documentation.
 
 Kaleta, J. (2026). *Cross-Cultural Validation and Ideological Fairness of a
 Historical Perspective Taking Instrument: Evidence from Czech Secondary
-Students* [Preprint]. https://doi.org/10.31234/osf.io/hxngm_v2
+Students* [Preprint]. https://osf.io/preprints/psyarxiv/hxngm
