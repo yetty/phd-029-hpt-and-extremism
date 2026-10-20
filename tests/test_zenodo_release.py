@@ -1,9 +1,11 @@
 import hashlib
 import importlib.util
+import io
 import json
 import os
 import tempfile
 import unittest
+from contextlib import redirect_stderr
 from unittest import mock
 import zipfile
 from pathlib import Path
@@ -114,21 +116,22 @@ class ReleaseToolTests(unittest.TestCase):
             self.assertRegex(payload["publication_date"],
                              r"^\d{4}-\d{2}-\d{2}$")
 
-    def test_environment_tokens_cannot_cross_environments(self):
+    def test_production_token_is_required(self):
         with mock.patch.dict(os.environ, {
             "ZENODO_API_KEY": "production-token",
-            "ZENODO_SANDBOX_API_KEY": "sandbox-token",
         }, clear=True):
             self.assertEqual(zr.load_token("production", None),
                              "production-token")
-            self.assertEqual(zr.load_token("sandbox", None),
-                             "sandbox-token")
-        with mock.patch.dict(os.environ, {
-            "ZENODO_API_KEY": "production-token",
-        }, clear=True):
-            with self.assertRaisesRegex(zr.ReleaseError,
-                                        "ZENODO_SANDBOX_API_KEY"):
-                zr.load_token("sandbox", None)
+        with mock.patch.dict(os.environ, {}, clear=True):
+            with self.assertRaisesRegex(zr.ReleaseError, "ZENODO_API_KEY"):
+                zr.load_token("production", None)
+
+    def test_only_production_environment_is_supported(self):
+        with redirect_stderr(io.StringIO()):
+            with self.assertRaises(SystemExit):
+                zr.parser().parse_args([
+                    "verify", "--environment", "test",
+                ])
 
     def test_api_checksum_requires_zenodo_md5_match(self):
         content = b"release content"
@@ -141,7 +144,7 @@ class ReleaseToolTests(unittest.TestCase):
                                    content)
 
     def test_list_files_uses_draft_and_published_file_endpoints(self):
-        client = zr.ZenodoClient("sandbox", "not-a-real-token")
+        client = zr.ZenodoClient("production", "not-a-real-token")
         client.request = mock.Mock(return_value=(200, {"entries": []}))
         self.assertEqual(client.list_files("123", published=False), [])
         client.request.assert_called_once_with(
@@ -156,7 +159,7 @@ class ReleaseToolTests(unittest.TestCase):
             state_path = Path(directory) / "state.json"
             with self.assertRaisesRegex(zr.ReleaseError, "forbidden field"):
                 zr.write_state(state_path, {
-                    "environment": "sandbox",
+                    "environment": "production",
                     "record_id": "123",
                     "token": "must-not-be-written",
                 })
@@ -177,11 +180,11 @@ class ReleaseToolTests(unittest.TestCase):
             state_path = Path(directory) / "state.json"
             with self.assertRaisesRegex(zr.ReleaseError, "DOI reservation"):
                 zr.create_draft_and_reserve(
-                    FailingClient(), "sandbox", {}, state_path
+                    FailingClient(), "production", {}, state_path
                 )
             state = json.loads(state_path.read_text(encoding="utf-8"))
             self.assertEqual(state, {
-                "environment": "sandbox",
+                "environment": "production",
                 "record_id": "123",
                 "draft_url": "https://example.test/draft/123",
             })

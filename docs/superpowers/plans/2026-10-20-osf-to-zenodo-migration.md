@@ -415,10 +415,12 @@ does not authorize an OSF change or shorten any approval gate.
   ```python
   import hashlib
   import importlib.util
+  import io
   import json
   import os
   import tempfile
   import unittest
+  from contextlib import redirect_stderr
   from unittest import mock
   import zipfile
   from pathlib import Path
@@ -529,21 +531,22 @@ does not authorize an OSF change or shorten any approval gate.
               self.assertRegex(payload["publication_date"],
                                r"^\d{4}-\d{2}-\d{2}$")
 
-      def test_environment_tokens_cannot_cross_environments(self):
+      def test_production_token_is_required(self):
           with mock.patch.dict(os.environ, {
               "ZENODO_API_KEY": "production-token",
-              "ZENODO_SANDBOX_API_KEY": "sandbox-token",
           }, clear=True):
               self.assertEqual(zr.load_token("production", None),
                                "production-token")
-              self.assertEqual(zr.load_token("sandbox", None),
-                               "sandbox-token")
-          with mock.patch.dict(os.environ, {
-              "ZENODO_API_KEY": "production-token",
-          }, clear=True):
-              with self.assertRaisesRegex(zr.ReleaseError,
-                                          "ZENODO_SANDBOX_API_KEY"):
-                  zr.load_token("sandbox", None)
+          with mock.patch.dict(os.environ, {}, clear=True):
+              with self.assertRaisesRegex(zr.ReleaseError, "ZENODO_API_KEY"):
+                  zr.load_token("production", None)
+
+      def test_only_production_environment_is_supported(self):
+          with redirect_stderr(io.StringIO()):
+              with self.assertRaises(SystemExit):
+                  zr.parser().parse_args([
+                      "verify", "--environment", "test",
+                  ])
 
       def test_api_checksum_requires_zenodo_md5_match(self):
           content = b"release content"
@@ -556,7 +559,7 @@ does not authorize an OSF change or shorten any approval gate.
                                      content)
 
       def test_list_files_uses_draft_and_published_file_endpoints(self):
-          client = zr.ZenodoClient("sandbox", "not-a-real-token")
+          client = zr.ZenodoClient("production", "not-a-real-token")
           client.request = mock.Mock(return_value=(200, {"entries": []}))
           self.assertEqual(client.list_files("123", published=False), [])
           client.request.assert_called_once_with(
@@ -571,7 +574,7 @@ does not authorize an OSF change or shorten any approval gate.
               state_path = Path(directory) / "state.json"
               with self.assertRaisesRegex(zr.ReleaseError, "forbidden field"):
                   zr.write_state(state_path, {
-                      "environment": "sandbox",
+                      "environment": "production",
                       "record_id": "123",
                       "token": "must-not-be-written",
                   })
@@ -592,11 +595,11 @@ does not authorize an OSF change or shorten any approval gate.
               state_path = Path(directory) / "state.json"
               with self.assertRaisesRegex(zr.ReleaseError, "DOI reservation"):
                   zr.create_draft_and_reserve(
-                      FailingClient(), "sandbox", {}, state_path
+                      FailingClient(), "production", {}, state_path
                   )
               state = json.loads(state_path.read_text(encoding="utf-8"))
               self.assertEqual(state, {
-                  "environment": "sandbox",
+                  "environment": "production",
                   "record_id": "123",
                   "draft_url": "https://example.test/draft/123",
               })
@@ -654,7 +657,6 @@ does not authorize an OSF change or shorten any approval gate.
 
   API_BASES = {
       "production": "https://zenodo.org/api",
-      "sandbox": "https://sandbox.zenodo.org/api",
   }
 
 
@@ -791,8 +793,7 @@ does not authorize an OSF change or shorten any approval gate.
 
 
   def load_token(environment, env_file):
-      name = ("ZENODO_API_KEY" if environment == "production"
-              else "ZENODO_SANDBOX_API_KEY")
+      name = "ZENODO_API_KEY"
       token = os.environ.get(name) or load_dotenv_value(env_file, name)
       if not token:
           raise ReleaseError(name + " is required for " + environment)
@@ -938,7 +939,7 @@ does not authorize an OSF change or shorten any approval gate.
       result.add_argument("command", choices=(
           "validate", "create-draft", "upload", "verify", "publish", "state"
       ))
-      result.add_argument("--environment", choices=("sandbox", "production"))
+      result.add_argument("--environment", choices=("production",))
       result.add_argument("--repo", type=Path, default=Path.cwd())
       result.add_argument("--env-file", type=Path,
                           default=Path.home() / "PhD" / ".env")
@@ -1042,22 +1043,24 @@ does not authorize an OSF change or shorten any approval gate.
 
   Expected: one commit containing only the tool and its isolated unit tests.
 
-### Task 5: Prove the full API path in the sandbox before production
+### Task 5: Complete a production-only local preflight
 
 **Files:**
 - Verify: `osf_storage/zenodo_metadata.json`
+- Modify: `tools/zenodo_release.py`
+- Modify: `tests/test_zenodo_release.py`
 - Generated and ignored: `.zenodo-release/`
-- Generated and ignored: `.zenodo-release/state.json`
 
-- [ ] **Step 1: Recheck the reviewed metadata contract.**
+- [x] **Step 1: Recheck the reviewed metadata contract.**
 
   Confirm that the record-level right is `cc-by-4.0`, the description states
   the MIT split for code, `scripts/LICENSE` is allowlisted, and the approved
-  related identifiers are present. Add `metadata.funding` only when the user
-  supplies a verifiable award identifier and funder name. Do not add
+  related identifiers are present, and third-party instrument files remain
+  denied and absent from the allowlist. Add `metadata.funding` only when the
+  user supplies a verifiable award identifier and funder name. Do not add
   communities, contributors, or grants without user-supplied evidence.
 
-- [ ] **Step 2: Harden the parent environment file without displaying it.**
+- [x] **Step 2: Harden the parent environment file without displaying it.**
 
   Run exactly:
 
@@ -1068,65 +1071,52 @@ does not authorize an OSF change or shorten any approval gate.
 
   Expected: the command produces no secret output and exits zero. Do not use
   `cat`, `grep`, `printenv`, shell tracing, or any command that emits token
-  values. This hardens the existing production token file; it does not create
-  a sandbox token.
+  values. This hardens the existing production token file.
 
-- [ ] **Step 3: Require a separate sandbox token and run the sandbox workflow.**
+- [x] **Step 3: Remove the unused test-environment path.**
 
-  Create a separate sandbox account/token outside this repository, store it as
-  `ZENODO_SANDBOX_API_KEY` in `/home/yetty/PhD/.env`, and confirm its file
-  mode again using Step 2's command. Never copy or rename the production token
-  for sandbox use. Then run:
+  The user explicitly declined a separate test account on 2026-10-20. Remove
+  the test API base, credential name, parser choice, and workflow. Add a
+  failing parser test first, then retain production as the only accepted
+  environment. This reduces remote integration assurance but does not weaken
+  Gate B or Gate C; the production draft remains unpublished until Gate C.
+
+- [x] **Step 4: Run the full local production preflight.**
+
+  Run:
 
   ```bash
+  /home/yetty/PhD/.venv/bin/python tests/test_zenodo_release.py -v
   /home/yetty/PhD/.venv/bin/python tools/zenodo_release.py validate --repo .
-  /home/yetty/PhD/.venv/bin/python tools/zenodo_release.py create-draft \
-    --repo . --environment sandbox --confirm-create-draft --reserve-doi
-  /home/yetty/PhD/.venv/bin/python tools/zenodo_release.py upload --repo . --environment sandbox
-  /home/yetty/PhD/.venv/bin/python tools/zenodo_release.py verify --repo . --environment sandbox
+  wc -l .zenodo-release/MANIFEST-sha256.txt
+  unzip -Z1 .zenodo-release/hpt-replication-package.zip | sort
+  ! unzip -Z1 .zenodo-release/hpt-replication-package.zip | \
+    grep -q 'replication_package/instruments/'
   ```
 
-  Expected: validation creates exactly one archive and one manifest from the
-  allowlist; the sandbox draft returns a sandbox DOI; upload reports no local
-  checksum mismatch; verification obtains the draft file list from
-  `/api/records/{id}/draft/files` and confirms two remote filenames, sizes,
-  MD5 values, and completed status. Do not place a sandbox DOI in repository
-  files or public metadata.
+  Expected: all tests pass, validation creates exactly one archive and one
+  manifest from the 54-file allowlist, the ZIP contains the 54 payload files
+  plus `MANIFEST-sha256.txt`, and no instrument path appears. No network call
+  or credential read occurs.
 
-- [ ] **Step 4: Exercise the sandbox publish guard, then publish only the
-  disposable sandbox record.**
+- [x] **Step 5: Commit the production-only preflight change.**
 
-  First run without the second flag:
+  Run:
 
   ```bash
-  /home/yetty/PhD/.venv/bin/python tools/zenodo_release.py publish \
-    --repo . --environment sandbox --confirm-publish
+  git add tools/zenodo_release.py tests/test_zenodo_release.py \
+    docs/superpowers/plans/2026-10-20-osf-to-zenodo-migration.md
+  git diff --cached --check
+  git commit -m "reproducibility: use production-only Zenodo workflow"
+  git push origin main
+  git -C /home/yetty/PhD add projects/phd-029-hpt-and-extremism
+  git -C /home/yetty/PhD commit -m "projects: update phd-029 Zenodo workflow"
+  git -C /home/yetty/PhD push origin main
   ```
 
-  Expected: exit 2 with `--user-approved` in the error and no publish call.
-  Then, after the user explicitly approves publication of the sandbox test
-  record, run:
-
-  ```bash
-  /home/yetty/PhD/.venv/bin/python tools/zenodo_release.py publish \
-    --repo . --environment sandbox --confirm-publish --user-approved
-  ```
-
-  Expected: a published sandbox record. Confirm its DOI has the sandbox
-  prefix and discard or leave the disposable record according to sandbox
-  policy. Delete the ignored state file before any production run so a
-  sandbox record ID cannot be reused:
-
-  ```bash
-  rm -f .zenodo-release/state.json
-  ```
-
-- [ ] **Step 5: Confirm the sandbox run left no tracked change.**
-
-  Run `git status --short` and confirm no archive, state file, downloaded
-  data, token, or sandbox DOI is staged or tracked. If the sandbox exposed a
-  required metadata or code correction, return to the relevant test-first
-  task, make a focused commit, and rerun the complete sandbox workflow.
+  Expected: a focused commit containing only the production-only workflow,
+  tests, and synchronized plan. Stop at Gate B before creating a production
+  draft or reserving a DOI.
 
 ### Task 6: Reserve the production DOI, update live references, and rebuild
 
@@ -1497,8 +1487,9 @@ does not authorize an OSF change or shorten any approval gate.
   reservation, Zenodo publication, and OSF link/add-on changes.
 - The preregistration remains authoritative and unchanged; Zenodo contains the
   reproducibility/publication package under a new DOI.
-- The tool uses only `/api/records`, production and sandbox bases are
-  separated, and a production token cannot authenticate a sandbox command.
+- The tool uses only the production `/api/records` workflow. The user declined
+  a separate test account, so local tests and the unpublished production draft
+  checks provide the pre-publication verification.
 - The `.env` hardening command verifies mode `600` without printing contents.
 - `osf_storage/` is the sole source and a complete allowlist plus denylist
   rejects confidential files, teacher reports, root data, and build artifacts.

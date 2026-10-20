@@ -14,7 +14,6 @@ from pathlib import Path
 
 API_BASES = {
     "production": "https://zenodo.org/api",
-    "sandbox": "https://sandbox.zenodo.org/api",
 }
 
 
@@ -151,8 +150,7 @@ def load_dotenv_value(env_file, name):
 
 
 def load_token(environment, env_file):
-    name = ("ZENODO_API_KEY" if environment == "production"
-            else "ZENODO_SANDBOX_API_KEY")
+    name = "ZENODO_API_KEY"
     token = os.environ.get(name) or load_dotenv_value(env_file, name)
     if not token:
         raise ReleaseError(name + " is required for " + environment)
@@ -298,7 +296,7 @@ def parser():
     result.add_argument("command", choices=(
         "validate", "create-draft", "upload", "verify", "publish", "state"
     ))
-    result.add_argument("--environment", choices=("sandbox", "production"))
+    result.add_argument("--environment", choices=("production",))
     result.add_argument("--repo", type=Path, default=Path.cwd())
     result.add_argument("--env-file", type=Path,
                         default=Path.home() / "PhD" / ".env")
