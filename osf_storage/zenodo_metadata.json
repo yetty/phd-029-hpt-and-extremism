@@ -7,6 +7,7 @@
     "version": "1.0"
   },
   "metadata": {
+    "publisher": "Zenodo",
     "title": "Cross-Cultural Validation and Ideological Fairness of a Historical Perspective Taking Instrument: Evidence from Czech Secondary Students",
     "description": "De-identified data, analysis code, rendered outputs, and documentation for a preregistered study of historical perspective taking. The OSF preregistration remains the authoritative record of the prospective study plan. Data, original documentation, figures, and rendered outputs are licensed CC BY 4.0; code under scripts/ is licensed under the MIT License. Third-party instrument files and item text are excluded pending documented redistribution permission.",
     "creators": [

@@ -44,7 +44,7 @@ def validate_metadata(document):
     metadata = document.get("metadata", {})
     release = document.get("release", {})
     required = ("title", "description", "creators", "subjects",
-                "resource_type", "rights")
+                "resource_type", "rights", "publisher")
     missing = [key for key in required if not metadata.get(key)]
     if missing:
         raise ReleaseError("metadata requires: " + ", ".join(missing))
@@ -194,7 +194,8 @@ class ZenodoClient:
         self.base = API_BASES[environment]
         self.token = token
 
-    def request(self, method, path, body=None, content_type="application/json"):
+    def request(self, method, path, body=None, content_type="application/json",
+                accept="application/vnd.inveniordm.v1+json"):
         url = path if path.startswith("https://") else self.base + path
         data = None if body is None else (
             body if isinstance(body, bytes) else json.dumps(body).encode("utf-8")
@@ -203,7 +204,7 @@ class ZenodoClient:
             url, data=data, method=method,
             headers={"Authorization": "Bearer " + self.token,
                      "Content-Type": content_type,
-                     "Accept": "application/vnd.inveniordm.v1+json"},
+                     "Accept": accept},
         )
         try:
             with urllib.request.urlopen(request, timeout=60) as response:
@@ -255,8 +256,13 @@ class ZenodoClient:
             verify_remote_file(committed, path.read_bytes())
 
     def list_files(self, record_id, published=False):
-        suffix = "/files" if published else "/draft/files"
-        status, response = self.request("GET", "/records/" + record_id + suffix)
+        path = "/records/" + record_id
+        if published:
+            # The published-files endpoint accepts only plain JSON.
+            status, response = self.request("GET", path + "/files",
+                                            accept="application/json")
+        else:
+            status, response = self.request("GET", path + "/draft/files")
         if status != 200:
             raise ReleaseError("file listing did not return 200")
         return response.get("entries", [])

@@ -44,6 +44,7 @@ class ReleaseToolTests(unittest.TestCase):
                 "resource_type": {"id": "dataset"},
                 "related_identifiers": [],
                 "rights": [{"id": "cc-by-4.0"}],
+                "publisher": "Zenodo",
             },
             "allowlist": ["README.md"],
             "denylist": [
@@ -108,6 +109,14 @@ class ReleaseToolTests(unittest.TestCase):
             with self.assertRaisesRegex(zr.ReleaseError, "rights"):
                 zr.validate_metadata(metadata)
 
+    def test_metadata_requires_publisher_for_doi_registration(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            package, metadata = self.write_package(root)
+            del metadata["metadata"]["publisher"]
+            with self.assertRaisesRegex(zr.ReleaseError, "publisher"):
+                zr.validate_metadata(metadata)
+
     def test_api_payload_adds_required_publication_date(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -152,7 +161,9 @@ class ReleaseToolTests(unittest.TestCase):
         )
         client.request.reset_mock()
         self.assertEqual(client.list_files("123", published=True), [])
-        client.request.assert_called_once_with("GET", "/records/123/files")
+        client.request.assert_called_once_with(
+            "GET", "/records/123/files", accept="application/json"
+        )
 
     def test_write_state_rejects_secret_fields(self):
         with tempfile.TemporaryDirectory() as directory:
