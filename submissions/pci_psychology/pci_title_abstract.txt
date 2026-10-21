@@ -1,0 +1,11 @@
+Title
+
+Cross-Cultural Validation and Ideological Fairness of a Historical Perspective Taking Instrument: Evidence from Czech Secondary Students
+
+Abstract
+
+This study reports a Czech adaptation of the Hartmann and Hasselhorn Historical Perspective Taking (HPT) instrument and examines whether its politically charged scenario introduces construct-irrelevant variance (CIV) related to students' ideological attitudes. Among 293 Czech secondary students, confirmatory factor analysis showed good fit for a correlated three-factor model. An item-level bias analysis detected no differential item functioning across ideology groups with this sample and procedure. Multi-group factor analysis produced fit-index changes compatible with scalar invariance, but small extreme groups and unmodeled clustering limit the strength of that evidence. Historical knowledge correlated with the six-item HPT composite (r = .34, 95% CI [.23, .43]); right-authoritarian attitudes were unrelated (r = -.05, 95% CI [-.16, .07]). These findings support a possible protocol for evaluating measurement fairness when assessment content carries attitudinal valence, subject to the limits of this single scenario, item format, and ideologically restricted sample.
+
+Keywords
+
+historical perspective taking, cross-cultural validation, measurement invariance, differential item functioning, construct-irrelevant variance, test fairness
