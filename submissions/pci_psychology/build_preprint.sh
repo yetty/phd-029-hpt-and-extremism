@@ -19,5 +19,14 @@ echo "Built: submissions/pci_psychology/preprint.pdf"
 # Fill page and line locations into the response letter from the line labels.
 "${PYTHON:-../../../../.venv/bin/python}" fill_response_locations.py manuscript.aux
 
+# PDF versions of the letters for the PCI upload.
+for letter in response_to_reviewers cover_letter; do
+  pandoc -f markdown+autolink_bare_uris "$letter.md" -o "$letter.pdf" \
+    --pdf-engine=xelatex -V geometry:margin=2.5cm \
+    -V mainfont="TeX Gyre Pagella" -V fontsize=11pt -V colorlinks=true \
+    -V header-includes='\usepackage{xurl}'
+done
+echo "Built: response_to_reviewers.pdf, cover_letter.pdf"
+
 # Clean aux files
 rm -f manuscript.aux manuscript.log manuscript.out manuscript.toc manuscript.bbl manuscript.blg manuscript.bcf manuscript.run.xml
