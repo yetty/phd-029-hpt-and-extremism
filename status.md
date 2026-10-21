@@ -1,7 +1,7 @@
 # Status: phd-029-hpt-and-extremism
 
-**Stage:** Revision invited at PCI Psychology
-**Updated:** 2026-10-20
+**Stage:** Revision submitted to PCI Psychology (2026-10-21)
+**Updated:** 2026-10-21
 
 ## Current State
 
@@ -18,17 +18,18 @@ redistribution permission.
 ## Manuscripts
 | Target | Status |
 |--------|--------|
-| PCI Psychology -> Peer Community Journal | **Revise invited** |
+| PCI Psychology -> Peer Community Journal | **Revision submitted 2026-10-21** |
 ## Next Steps
 
-Remaining work is tracked in
+The resubmission record is
 `submissions/pci_psychology/final_resubmission_checklist.md`.
 
 - [x] Zotero fixes (checklist section 2; R/ notes no longer required)
 - [x] Final build, response-letter locations, Zenodo bundle (section 3)
 - [x] Publish Zenodo (2026-10-20)
-- [ ] Post PsyArXiv v3, update the Zenodo preprint link, submit to PCI
-  Psychology (section 4)
+- [x] Post PsyArXiv v3 (<https://doi.org/10.31234/osf.io/hxngm_v3>), link it
+  from Zenodo, submit to PCI Psychology (2026-10-21)
+- [ ] Await the recommender's decision
 
 ## Revision files
 - Manuscript: `submissions/pci_psychology/manuscript.tex`

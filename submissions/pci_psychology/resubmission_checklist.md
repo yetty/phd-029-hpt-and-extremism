@@ -1,6 +1,6 @@
 # PCI Psychology resubmission checklist
 
-**Status:** Approved
+**Status:** Shipped (revision submitted 2026-10-21)
 **Created:** 2026-10-20; decisions A1-A7 recorded 2026-10-20
 **Basis:** Full review of the revision package against the recommender
 letter, both reviews, `response_to_reviewers.md`, `cover_letter.md`,

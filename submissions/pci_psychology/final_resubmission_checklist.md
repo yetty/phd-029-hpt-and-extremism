@@ -1,6 +1,6 @@
 # PCI Psychology: final resubmission checklist
 
-**Status:** Approved
+**Status:** Shipped (revision submitted 2026-10-21)
 **Created:** 2026-10-20
 **Basis:** Review of `resubmission_checklist.md` against the repository state
 at commit `8d5e9c4`, the built PDFs, the test suite and the public Zenodo,
@@ -165,18 +165,19 @@ the redline baseline `c952aa5` has the same manuscript text as the submitted
   1.0, files unchanged (`verify` passes). `osf_storage/zenodo_metadata.json`
   deliberately still says `hxngm_v2`: it is inside the published zip, and
   changing it would break `verify`. Update it with the next package version.
-- [ ] **4.6 Submit the revision on PCI Psychology:** link the PsyArXiv v3
+- [x] **4.6 Submit the revision on PCI Psychology:** link the PsyArXiv v3
   version; upload `response_to_reviewers.md` (as text or PDF),
   `manuscript_diff.pdf` and the cover letter.
-- [ ] **4.7 Check the PCI form fields** for data, code and materials links
+- [x] **4.7 Check the PCI form fields** for data, code and materials links
   and set them to the Zenodo DOI.
+  Done 2026-10-21: revision submitted by Juda.
 
 ---
 
 ## 5. Housekeeping (Claude, after submission)
 
-- [ ] Update `status.md` and `project_status.md`: stage "Revision
+- [x] Update `status.md` and `project_status.md`: stage "Revision
   submitted", resubmission date, PsyArXiv v3, Zenodo published.
-- [ ] Set `Status: Shipped` on this checklist and on
+- [x] Set `Status: Shipped` on this checklist and on
   `resubmission_checklist.md`.
-- [ ] Commit and push (submodule, then root pointer); no dirty submodule.
+- [x] Commit and push (submodule, then root pointer); no dirty submodule.

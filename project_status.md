@@ -9,7 +9,7 @@ Perspective Taking Instrument: Evidence from Czech Secondary Students
 **Public reproducibility package:** https://doi.org/10.5281/zenodo.23494026
 **Former OSF Project (provenance):** https://doi.org/10.17605/OSF.IO/YNG37
 **Preregistration:** https://osf.io/zsngy/
-**Last updated:** 2026-10-20
+**Last updated:** 2026-10-21
 
 ---
 ## Completed Milestones
@@ -175,10 +175,20 @@ Perspective Taking Instrument: Evidence from Czech Secondary Students
   RDS, RData, and XLSX data. Rebuilt public artifacts; statistical verification
   and primary CSV anchors are unchanged from the pre-sanitization baseline.
 
+### Revision Submitted to PCI Psychology (2026-10-21)
+- Published the Zenodo package (record 23494026, 2026-10-20) and posted
+  PsyArXiv version 3 (<https://doi.org/10.31234/osf.io/hxngm_v3>, approved
+  2026-10-21); the Zenodo record links to v3.
+- Submitted the revision with the response letter (reviewer comments quoted,
+  page and line locations generated from the build), the redline against the
+  submitted version, and the cover letter. Record of the final steps:
+  `submissions/pci_psychology/final_resubmission_checklist.md`.
+
 ---
 ## Current Work
 
-**Phase:** Zenodo release and final PCI resubmission preparation.
+**Phase:** Revision submitted to PCI Psychology (2026-10-21); awaiting the
+recommender's decision.
 
 - [x] Move the rights-safe public reproducibility package to Zenodo
   (<https://doi.org/10.5281/zenodo.23494026>, published 2026-10-20)
@@ -194,8 +204,9 @@ Perspective Taking Instrument: Evidence from Czech Secondary Students
 - [x] Complete project-source psychometric and rendered-package verification
 - [x] Rebuild and audit root/OSF reports and the final submission PDF package
 - [x] Replace public classroom labels with opaque identifiers and verify results
-- [ ] Optionally obtain targeted human psychometric review
-- [ ] Submit the point-by-point response and revised preprint
+- [ ] Optionally obtain targeted human psychometric review (not done before
+  submission)
+- [x] Submit the point-by-point response and revised preprint (2026-10-21)
 
 ---
 ## Upcoming
