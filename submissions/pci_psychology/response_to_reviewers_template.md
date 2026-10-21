@@ -15,13 +15,14 @@ Thank you for the careful and constructive reviews. I revised the manuscript
 to sharpen its measurement focus, add the requested reporting, and bound its
 claims to the single scenario, item format, sample, and ideological range
 studied. While revising, I also rechecked the analyses and corrected several
-reported results; these corrections are listed under META-01 at the end of
-this letter.
+reported results; these corrections are listed under *Additional corrections*
+at the end of this letter.
 
-The responses below use the identifiers in the revision ledger. Section,
-table, and figure references refer to the revised manuscript and supplement;
-page and line numbers refer to the clean revised PDF. A tracked-changes PDF
-against the submitted version accompanies this letter.
+Each comment is quoted below, followed by my response. Page and line numbers
+in the quoted comments refer to the submitted version. In my responses,
+section, table, and figure references refer to the revised manuscript and
+supplement, and page and line numbers refer to the clean revised PDF. A
+tracked-changes PDF against the submitted version accompanies this letter.
 
 ### Location map for the revised files
 
@@ -43,7 +44,17 @@ remaining tables were renumbered.
 
 ## Recommender
 
-### REC-01: Single-scenario content-validity limitation
+### Comment 1
+
+> The biggest limitation to me is content validity of the instrument. The
+> measure presents only one scenario from one historical and sociopolitical
+> context. Although multiple items are rated about that scenario, it is
+> difficult to know how much the content of the scenario itself represents
+> the underlying construct of interest. A measure in which these items were
+> applied to multiple scenarios that span time and place would be much
+> stronger. You list this as a limitation, but the limitation is currently
+> included with sampling in one brief sentence. It should elaborated in terms
+> of the more general issue of content validity.
 
 **Response:** I agree that this is the main limitation and have made it the
 first limitation in Section 5.6 ({{loc:lim1}}), under the heading *Content
@@ -59,7 +70,13 @@ scenarios that vary in period, place, political valence, and familiarity. The
 Conclusion (Section 5.8, {{loc:s58-open}}) now opens with "For this single
 Weimar scenario".
 
-### REC-02: Discriminant-validity claims
+### Comment 2
+
+> You say discriminant validity is supported based on better fit of the three
+> factor model and factor correlations below .85, but this is a weak standard.
+> Evidence that the scales differentially predict external outcomes would be
+> more convincing, and that should be listed as a question for further
+> research.
 
 **Response:** I replaced the former below-.85 rule with bounded
 internal-structure language. Section 4.1 ({{loc:s41-factorcorr}}) reports the
@@ -69,15 +86,21 @@ sample and states that this does not establish discriminant validity. Section
 subscales differentially predict external criteria; protocol step 5 in Section
 5.5 ({{loc:s55-step5}}) makes the same point.
 
-### REC-03: Construct names in results
+### Comment 3
+
+> I recommend using construct names rather than scale abbreviations in table 7
+> and the results section to improve readability.
 
 **Response:** Table 5 (formerly Table 7) and the Results narrative now use
-construct names, including the column headers "HPT composite" and
-"Contextualization". The primary six-item composite is defined once in Section
-3.3.1 ({{loc:s331-composite}}) and called "HPT composite" thereafter. Scale
+construct names; the table's rows are labelled "HPT composite",
+"Contextualization", "Present-oriented perspective (rev.)", and so on. The
+primary six-item composite is defined once in Section 3.3.1
+({{loc:s331-composite}}) and called "HPT composite" thereafter. Scale
 abbreviations are retained only where they identify named instruments.
 
-### REC-04: Confidence intervals
+### Comment 4
+
+> You should add confidence intervals to the effects presented in Table 7.
 
 **Response:** Table 5 now reports Fisher-transformed 95% confidence intervals
 for every correlation. It states that the intervals are descriptive and do not
@@ -85,7 +108,12 @@ adjust for clustering ({{loc:tab5-note}}). Exact pairwise sample sizes are
 reported in Table S3b, and the values reproduce from
 `revision_reporting_analyses.R`.
 
-### REC-05: Brief-scale consistency
+### Comment 5
+
+> I agree with your framing of internal consistency for brief scales in the
+> discussion. You could cite Loevinger's attenuation paradox rather than
+> framing this as a deficiency relative to standard benchmarks. At the same
+> time, you should acknowledge that this will constrain validity estimates.
 
 **Response:** I adopted your suggestion. Section 5.3 ({{loc:s53}}) now opens
 with the breadth-precision trade-off and Loevinger's attenuation paradox:
@@ -103,7 +131,9 @@ descriptive.
 
 ## Reviewer 1
 
-### R1-01: Abstract findings
+### Comment 1
+
+> Does the abstract present the main findings of the study? [ ] Yes, [x] No
 
 **Response:** The abstract ({{loc:abstract}}) now gives the primary knowledge
 and ideology correlations with 95% confidence intervals and states that no DIF
@@ -115,7 +145,27 @@ Sections 4.9, 5.1, and 5.8 ({{loc:s49-exploratory}}; {{loc:s51-exploratory}};
 association as an unadjusted, hypothesis-generating result that was not
 subjected to the preregistered multiplicity procedure.
 
-### R1-02: Organizing contribution and pathways
+### Comment 2
+
+> The instrument has already been used in the Dutch context, and also there
+> issues emerged regarding the validity and reliability of the scale, and, for
+> example, there was no significant correlation with school achievement in
+> history.
+
+**Response:** In this sample, history grade correlated with the HPT composite
+($r$ = -.15, $p$ = .010; the negative sign reflects the Czech scale, on which 1
+is the best grade). Section 4.9 ({{loc:s49-grade}}) now notes that this
+resembles the original German result rather than the Dutch applications, in
+which HPT scores were not significantly correlated with history grades. The
+Dutch validity and reliability findings are now described in Section 2.1 (see
+Comment 7).
+
+### Comment 3
+
+> I do, however, welcome the fact that the article provides a protocol for
+> this type of cross-cultural validation. Maybe the focus could be more on
+> that aspect of the paper than on the different pathways disucssed at page
+> 34.
 
 **Response:** I agree that the protocol is the more useful contribution. The
 adaptation evidence and staged fairness evaluation now organize the paper from
@@ -128,7 +178,19 @@ evidence in limitation 8 that could separate them. I also removed the phrase
 "the instrument's resistance to attitudinal contamination", which overstated
 the evidence.
 
-### R1-03: Ideology mechanism and construct boundary
+### Comment 4
+
+> Construct-irrelevant variance: the idea that test scores are influenced by
+> respondents' positionality and could lead to two pathways: lower cognitive
+> effort, making the instrument less effective in capturing a cognitive skill.
+> Another interesting possibility is that the scores are influenced by
+> authoritarianism. This latter aspect could be explained more clearly in the
+> theoretical framework. What exactly makes the HPT instrument more difficult
+> for these students? Perhaps the authors could also make the connection here
+> with researchers who regard the moral and affective dimensions of HPT as an
+> indispensable part of the construct, and the link with political attitudes
+> could also be elaborated somewhat more explicitly on a conceptual level
+> (also because of the instruments used in the methods
 
 **Response:** Sections 2.1 and 2.3 now distinguish contextual reconstruction
 from attitude-congruent endorsement, reduced integrative complexity,
@@ -143,7 +205,10 @@ likely to vote for the NSDAP and every present-oriented option describes him as
 rejecting it, so the POP--CONT continuum coincides with the direction of the
 political choice (Wilschut & Schiphorst, 2019).
 
-### R1-04: Hartmann and Hasselhorn source
+### Comment 5
+
+> On page 2, refer to the Hartmann & Hasselhorn publication instead of, or in
+> combination with, the German-language dissertation (in APA format).
 
 **Response:** The manuscript now cites Hartmann and Hasselhorn (2008)
 throughout. The Czech version was translated from that published English
@@ -153,13 +218,29 @@ original development source. Section 3.3.1 ({{loc:s331-hannes}}) and the
 adaptation record in the reproducibility package were made consistent with this
 description.
 
-### R1-05: Author-date citations
+### Comment 6
 
-**Response:** The Hartmann/Hasselhorn and Lee/Ashby citation keys were
-repaired. The rebuilt manuscript renders the authors' names and years rather
-than publication titles.
+> Pp. 5 and 6: use Hartmann & Hasselhorn (2008) and Lee & Ashby (2001) instead
+> of the titles.
 
-### R1-06: Validation evidence map
+**Response:** Corrected. These citations now render as author-date citations,
+Hartmann and Hasselhorn (2008) and Lee and Ashby (2001), rather than as
+publication titles.
+
+### Comment 7
+
+> L. 41: "The instrument developed by *Perspektivenübernahme als eine
+> Kompetenz historischen Verstehens* (2008) is among the most extensively
+> validated standardized HPT measures in European research." I am not sure
+> this is true. I know of some Turkish work and some work in the Netherlands.
+> The literature contains only a small, methodologically heterogeneous
+> follow-up tradition surrounding the HPT of Hartmann and Hasselhorn. The
+> German standardization positions historical perspective taking as a
+> context-dependent competence, whereas Turkish and Dutch-oriented
+> applications mainly reveal the transferability-but also the
+> vulnerability-of the measurement. Some studies report validity issues and
+> indicate that the method of measurement cannot always be transferred to
+> other substantive contexts.
 
 **Response:** Section 2.1 ({{loc:s21-validation}}) now distinguishes the
 original German PCA result from the separate latent-class analysis and from the
@@ -171,34 +252,34 @@ misunderstood response options. Section 2.1 also cites Wilschut and Schiphorst
 students, principal components did not recover the three response categories
 and total-score reliability was low. Claims that the instrument had been
 extensively validated or that the Czech CFA replicated an original three-factor
-structure were removed.
+structure were removed. The Turkish work is addressed under Comment 16.
 
-**Reliability remark ("the issues with reliability are still present"):** As
-you note, reliability problems recur. Huijgen et al. (2014) and Wilschut and
-Schiphorst (2019) report weaker reliability when the format is moved to new
-content, and Section 5.3 ({{loc:s53-transfer}}) now places the Czech estimates
-against these: the Czech composite estimates (omega = .66--.70) are modest but
-higher than the total-score alphas of .22--.50 in the new-content adaptations,
-consistent with a structure that depends on the original scenario.
+### Comment 8
 
-**School grades:** In this sample, history grade correlated with the HPT
-composite ($r$ = -.15, $p$ = .010; the negative sign reflects the Czech scale,
-on which 1 is the best grade). Section 4.9 ({{loc:s49-grade}}) now notes that
-this resembles the original German result rather than the Dutch applications,
-in which HPT scores were not significantly correlated with history grades.
+> Page 3, l. 61: "The scenario describes a young man in the Weimar Republic
+> deliberating whether to join an extremist political movement." I believe
+> this is not correct. The original scenario by Hartmann & Hasselhorn states:
+> "The scenario we developed presents a young man (Hannes) in the Weimar
+> Republic in Germany, thinking about which party to vote for in the 1930
+> election" (p. 266). Voting is something different from joining. Has the
+> scenario been changed for the Czech audience? Is this an example of the
+> "cross-cultural adaptation" of this item?
 
-### R1-07: Historical action in the scenario
-
-**Response:** I compared the German source, published English article, and
+**Response:** You are right, and the scenario was not changed for the Czech
+version. I compared the German source, published English article, and
 administered Czech instrument. Sections 1 and 3.3.1 ({{loc:intro-hannes}};
 {{loc:s331-hannes}}) now state that Hannes discusses Germany's crisis and the
 1930 election and that students judge explanations including whether he could
 vote for an anti-democratic party such as the NSDAP. The manuscript no longer
 describes joining an extremist movement, and the illustrative statement in
 Section 2.3, which was not an instrument item, was replaced by a description of
-the actual option alignment ({{loc:s23-alignment}}; see R1-03).
+the actual option alignment ({{loc:s23-alignment}}; see Comment 4).
 
-### R1-08: Czech history-education context
+### Comment 9
+
+> Could it be possible to provide more information about the history
+> education context in the Czech Republic? Is HPT part of the curriculum? Is
+> history a compulsory subject in school, etc.?
 
 **Response:** Section 2.2 ({{loc:s22-curriculum}}) now describes the
 lower-secondary framework's coverage of the 1920s and 1930s and its source-use
@@ -209,7 +290,11 @@ upper-secondary curriculum-document audit was conducted, the documentary claim
 is limited to the lower-secondary subsample and distinguished from teachers'
 eligibility confirmation at both levels.
 
-### R1-09: Other-scale consistency and suitability
+### Comment 10
+
+> Methods: p. 15, could it be possible to report the internal consistency of
+> these scales as well? I assume these are validated scales. Were they
+> suitable for this target group?
 
 **Response:** Section 4.3 ({{loc:s43-reliability}}) and Table S3 report
 reliability for FR-LF, KSA-3, historical knowledge, SDR-5, and the combined
@@ -219,7 +304,11 @@ respondents aged 14 and above but were predominantly adult, while KSA-3 and
 SDR-5 were developed with adults; none directly validates a Czech adolescent
 version.
 
-### R1-10: Results emphasis
+### Comment 11
+
+> Results: As a non-statistical expert, I think the authors did a good job of
+> presenting the results. Perhaps there could be more focus on the main
+> outcomes, and some tables could be moved to an appendix.
 
 **Response:** A short roadmap at the opening of Results
 ({{loc:results-roadmap}}) now maps Sections 4.1--4.5 to RQ1, Sections 4.6--4.8
@@ -229,7 +318,10 @@ reliability estimates, source populations, and analysis-specific sample sizes
 are in the supplement; Table 5 and Figure 1 foreground the principal
 relationships.
 
-### R1-11: Prior item-rating and think-aloud work
+### Comment 12
+
+> P. 36, l. 680: I believe Huijgen already used such an approach; comparing a
+> closed and an open format (and thinking aloud).
 
 **Response:** Section 2.1 ({{loc:s21-thinkaloud}}) now separates Huijgen and
 colleagues' transfer of the item-rating approach across topics from their later
@@ -239,7 +331,10 @@ Section 5.6 ({{loc:lim8}}) proposes that direct comparison, adding that written
 explanations have detected change that closed ratings in this format missed
 (Wilschut & Schiphorst, 2019).
 
-### R1-12: Gender-moderation claim
+### Comment 13
+
+> P. 37, l. 708: "gender...samples", please provide a reference for this
+> claim.
 
 **Response:** I found no direct source supporting the earlier adolescent
 gender-moderation statement and removed it. Section 5.6 ({{loc:lim4-gender}})
@@ -247,7 +342,22 @@ now states only that the sample imbalance limits assessment of gender
 heterogeneity and that no gender interaction or gender DIF analysis was
 conducted.
 
-### R1-13: Qualitative response-process design
+### Comment 14
+
+> It is interesting that the issues with reliability are still present.
+
+**Response:** As you note, reliability problems recur. Huijgen et al. (2014)
+and Wilschut and Schiphorst (2019) report weaker reliability when the format is
+moved to new content, and Section 5.3 ({{loc:s53-transfer}}) now places the
+Czech estimates against these: the Czech composite estimates (omega =
+.66--.70) are modest but higher than the total-score alphas of .22--.50 in the
+new-content adaptations, consistent with a structure that depends on the
+original scenario.
+
+### Comment 15
+
+> P. 34, regarding the different pathways: wouldn't it be an option to
+> investigate these pathways in a more qualitative manner (thinking aloud?).
 
 **Response:** Following your suggestion, limitation 8 in Section 5.6
 ({{loc:lim8}}) now specifies observable think-aloud indicators: use of
@@ -257,20 +367,26 @@ explicit attitude-congruent endorsement. These indicators would help
 distinguish intended reconstruction from the competing pathways that Section
 5.4 lists.
 
-### R1-14: Comparative studies
+### Comment 16
+
+> L. 45: "employed in comparative studies in historical reasoning" (please
+> name those studies).
 
 **Response:** Section 2.1 ({{loc:s21-comparative}}) names and describes the
 verified Huijgen studies and Wilschut and Schiphorst (2019) rather than
 referring generically to comparative studies. Claims unsupported by direct use
-of the instrument were removed. I also cite a recent Turkish qualitative case
-study after full-text verification: it involved sixth- and eighth-grade
-students and used the Hartmann and Hasselhorn components as deductive analytic
-categories. I do not treat it as evidence of direct nine-item administration or
-psychometric performance.
+of the instrument were removed. I also cite the Turkish qualitative case study
+you suggested (Aktın et al., 2026) after full-text verification: it involved
+sixth- and eighth-grade students and used the Hartmann and Hasselhorn
+components as deductive analytic categories. I do not treat it as evidence of
+direct nine-item administration or psychometric performance.
 
 ## Reviewer 2
 
-### R2-01: Research questions and predictions
+### Comment 1
+
+> Are the research questions/hypotheses/predictions clearly presented? [ ]
+> Yes, [X] No
 
 **Response:** Section 2.5 ({{loc:s25-rqs}}) now presents two explicit research
 questions, labelled RQ1 (psychometric evidence for the Czech adaptation) and
@@ -279,7 +395,20 @@ in the Results roadmap and the Summary of Findings (Section 5.1). A concise
 disclosure identifies post-registration additions and omitted registered tests;
 Table S5 provides the full mapping of the six registered hypotheses.
 
-### R2-02: Participant and school descriptives
+### Comment 2
+
+> First, in describing the participants on pg. 13, I would provide more
+> descriptive data on the students and schools. For instance, what is the
+> ideological distribution of the students? It is only mentioned in the
+> Discussion section (which 17% of students having above average right-wing
+> sympathies), but should be included earlier. It's the key independent
+> variable being examined, so it needs more discussion of its distribution up
+> front. In addition, there is a mention of the most recent history grade, but
+> more detail on the distribution of students' historical knowledge would be
+> good to have. In addition, what is the socioeconomic background of the
+> schools sampled? Given that this is not a representative sample, that would
+> be a good statistic to include, in addition to the region and funding source
+> of the schools.
 
 **Response:** Section 3.2 ({{loc:s32-medians}}) now gives participant-level
 ideology and knowledge medians alongside school distribution, gender, and grade
@@ -290,7 +419,18 @@ socioeconomic coverage and associated selection bias cannot be characterized
 rather than inferring status from school location. Table S4b reports
 analysis-specific sample sizes.
 
-### R2-03: Baseline presentation of key relationships
+### Comment 3
+
+> Second, and this could be due to my lack of technical knowledge, but adding
+> some simpler presentations of the relationship between ideology and HPT, and
+> historical knowledge and HPT, would help (in addition to, not in replacement
+> of, the great work done in the Methods section). There are CFA scores, DIF
+> scores, betas from regression models, etc. But just add something more
+> descriptive as well - a mean score for each ideology group, a data plot with
+> a fit line illustrating the relationshiop between HPT and ideology and/or
+> knowledge, etc. Adding a more 'naïve' or baseline representation of these
+> key relationships could help orient the reader as they dig into the more
+> technical statistical analysis.
 
 **Response:** Table 5 reports unadjusted correlations with confidence
 intervals, and Figure 1 displays the continuous ideology-HPT and knowledge-HPT
@@ -304,7 +444,7 @@ models.
 
 ## Additional corrections
 
-### META-01: Changes to reported results since the submitted version
+### Changes to reported results since the submitted version
 
 While revising, I rechecked the analyses against the archived data and code.
 The table lists every change to a reported result or disclosure relative to
