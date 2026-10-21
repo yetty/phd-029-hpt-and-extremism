@@ -158,8 +158,13 @@ the redline baseline `c952aa5` has the same manuscript text as the submitted
   (<https://osf.io/preprints/psyarxiv/hxngm_v3>), waiting for moderator
   approval; DOI `10.31234/osf.io/hxngm_v3` not yet registered (404), so
   4.5 and 4.6 wait for approval.
-- [ ] **4.5 Update the Zenodo related identifier** for the preprint to
+- [x] **4.5 Update the Zenodo related identifier** for the preprint to
   `hxngm_v3` (Zenodo allows metadata edits after publication).
+  Done 2026-10-21 after moderator approval (v3 DOI resolves; Crossref
+  posted 2026-10-20): metadata-only edit of the live record, still version
+  1.0, files unchanged (`verify` passes). `osf_storage/zenodo_metadata.json`
+  deliberately still says `hxngm_v2`: it is inside the published zip, and
+  changing it would break `verify`. Update it with the next package version.
 - [ ] **4.6 Submit the revision on PCI Psychology:** link the PsyArXiv v3
   version; upload `response_to_reviewers.md` (as text or PDF),
   `manuscript_diff.pdf` and the cover letter.
