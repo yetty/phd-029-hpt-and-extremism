@@ -6,7 +6,9 @@ Students*
 
 Dear Recommender and Reviewers,
 
-Thank you for the careful and constructive reviews. I revised the manuscript
+I am particularly grateful to the recommender for persevering in securing
+reviewers for this manuscript and for a thorough, insightful evaluation of it.
+Thank you all for the careful and constructive reviews. I revised the manuscript
 to sharpen its measurement focus, add the requested reporting, and bound its
 claims to the single scenario, item format, sample, and ideological range
 studied. While revising, I also rechecked the analyses and corrected several
