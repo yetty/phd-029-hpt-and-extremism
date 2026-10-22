@@ -12,7 +12,8 @@ active route PsyArXiv -> PCI Psychology -> Peer Community Journal.
 Public reproducibility package: <https://doi.org/10.5281/zenodo.23494026>.
 The former OSF Project DOI is retained only as provenance.
 
-**Status:** `status.md`, `project_status.md`.
+**Hub:** `README.md` (status, Next steps, Log). Read it first; at the end
+of a session update Next steps and Log.
 **Details:** `docs/study-and-pipeline.md` (sample, constructs,
 hypotheses, files, Rmd pipeline 01-07, Zenodo package, conventions).
 

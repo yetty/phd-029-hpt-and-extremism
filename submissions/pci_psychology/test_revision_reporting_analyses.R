@@ -706,7 +706,7 @@ expect_true(
   "The TOP replication disclosure must not claim this is the first Czech adaptation."
 )
 
-project_status_text <- paste(readLines("project_status.md", warn = FALSE),
+project_status_text <- paste(readLines("README.md", warn = FALSE),
                              collapse = "\n")
 project_status_compact <- gsub("[[:space:]]+", " ", project_status_text)
 expect_true(
@@ -716,7 +716,7 @@ expect_true(
     grepl(zenodo_url, project_status_text, fixed = TRUE) &&
     grepl("Preregistration", project_status_text, fixed = TRUE) &&
     grepl("https://osf.io/zsngy/", project_status_text, fixed = TRUE),
-  "Project status must use the manuscript title and distinguish the Zenodo package from the registration."
+  "The project hub must use the manuscript title and distinguish the Zenodo package from the registration."
 )
 
 for (script in measurement_scripts) {
