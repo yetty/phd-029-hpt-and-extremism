@@ -14,9 +14,11 @@
 \usepackage[style=apa,natbib=true,backend=biber]{biblatex}
 \addbibresource{bibliography.bib}
 \addbibresource{extras.bib}
-% Two fixes to the root bibliography, pending in Zotero (then drop the maps):
-% the editor's family name is "Åström Elmersjö", and Barton & Levstik (2004)
-% has a DOI.
+% Reference-list fixes to the root bibliography, pending in Zotero (then drop
+% the maps): editor family name "Åström Elmersjö"; Barton & Levstik (2004)
+% DOI; stray final period (Messick); issue number of Teaching History (Lee &
+% Shemilt); subtitle colons (Seixas & Morton, Wineburg); opening quote
+% (Wilschut & Schiphorst); article number instead of pages (Badham et al.).
 \DeclareSourcemap{\maps[datatype=bibtex, overwrite]{
   \map{
     \step[fieldsource=entrykey, match=\regexp{^Ripka_et_al2024Epistemic$}, final]
@@ -25,6 +27,31 @@
   \map{
     \step[fieldsource=entrykey, match=\regexp{^Barton_Levstik2004Teaching$}, final]
     \step[fieldset=doi, fieldvalue={10.4324/9781410610508}]
+  }
+  \map{
+    \step[fieldsource=entrykey, match=\regexp{^Messick1995Validity$}, final]
+    \step[fieldset=title, fieldvalue={Validity of Psychological Assessment: {{Validation}} of Inferences from Persons' Responses and Performances as Scientific Inquiry into Score Meaning}]
+  }
+  \map{
+    \step[fieldsource=entrykey, match=\regexp{^Lee_Shemilt2003A_scaffold$}, final]
+    \step[fieldset=number, null]
+  }
+  \map{
+    \step[fieldsource=entrykey, match=\regexp{^Seixas_Morton2013TheBig$}, final]
+    \step[fieldset=title, fieldvalue={The Big Six Historical Thinking Concepts}]
+  }
+  \map{
+    \step[fieldsource=entrykey, match=\regexp{^Wineburg2001Historical$}, final]
+    \step[fieldset=title, fieldvalue={Historical Thinking and Other Unnatural Acts: {{Charting}} the Future of Teaching the Past}]
+  }
+  \map{
+    \step[fieldsource=entrykey, match=\regexp{^Wilschut_Schiphorst2019One$}, final]
+    \step[fieldset=title, fieldvalue={`{{One}} Has to Take Leave as Much as Possible of One's Own Standards and Values': {{Improving}} and Measuring Historical Empathy and Perspective Reconstruction}]
+  }
+  \map{
+    \step[fieldsource=entrykey, match=\regexp{^Badham_et_al2025Construct$}, final]
+    \step[fieldset=pages, null]
+    \step[fieldset=eid, fieldvalue={1616879}]
   }
 }}
 % \citealp is used inside manual parentheses, so it takes the APA ampersand.
