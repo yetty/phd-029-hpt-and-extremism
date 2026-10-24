@@ -1,6 +1,8 @@
 # PCJ submission form: what to paste
 
-Submit at <https://peercommunityjournal.org/submit> (sign in with ORCID).
+Juda submitted by hand on 2026-10-24 (the form returned Error 500). Use
+this if PCJ asks for the formatted files or the form data again. Form:
+<https://peercommunityjournal.org/submit> (sign in with ORCID).
 Title, abstract and keywords are the PCI-recommended ones. For an exact
 single-line copy of the abstract, use `../pci_psychology/pci_title_abstract.txt`
 (the text below is the same, wrapped for reading).
@@ -63,7 +65,7 @@ item format, and ideologically restricted sample.
 3. `references.bib` - BibTeX of the cited references only
 4. `article_image.png` - article-page image (Figure 1, own script)
 
-## Before you press submit
+## Before using the form again
 
 - Check that <https://doi.org/10.24072/pci.psych.100475> resolves. On
   2026-10-24 doi.org still answered "DOI Not Found" (the PCI page gives this
