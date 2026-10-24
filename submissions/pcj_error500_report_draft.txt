@@ -1,0 +1,25 @@
+To: contact@peercommunityjournal.org
+Cc: contact@peercommunityin.org
+Subject: Error 500 when creating a submission (PCI Psychology recommendation 10.24072/pci.psych.100475)
+
+Dear Peer Community Journal team,
+
+I am trying to submit my PCI Psychology-recommended article to Peer Community Journal, but the submission form returns an error.
+
+Steps: logged in with ORCID, opened https://peercommunityjournal.org/submit/submission/create, entered the Preprint ID 10.31234/osf.io/hxngm_v3 and the Recommendation DOI 10.24072/pci.psych.100475, ticked the three declarations and clicked "Create".
+
+Result: "500 Internal Server Error (server-side error)" from BunkerWeb.
+Request ID: 8963f571beab0621383623aabc053150
+Time: 2026-10-24 06:37:48 UTC
+
+Article: Kaleta, J. (2026). Cross-Cultural Validation and Ideological Fairness of a Historical Perspective Taking Instrument: Evidence from Czech Secondary Students. PsyArXiv, version 3. https://doi.org/10.31234/osf.io/hxngm_v3
+Recommendation: https://psych.peercommunityin.org/articles/rec?id=475
+
+Could you please look into it, or let me know if I should submit in another way?
+
+Best regards,
+
+Juda Kaleta
+Charles University, Faculty of Arts, Institute of History
+juda.kaleta@ff.cuni.cz
+ORCID 0000-0003-0043-4039
