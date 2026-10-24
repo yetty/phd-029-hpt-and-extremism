@@ -12,7 +12,8 @@ end).
   gives 8062 vs 8052 body words; the only differences are the five
   hand-typed "Table N." labels (now `\caption`, numbered by the class) and
   the order of `\begin{scriptsize}`. Back matter: Data availability +2
-  words (the Zenodo and OSF citations), Acknowledgements +18 words (the
+  words (the Zenodo and OSF citations) and "S1--S5" -> "S1--S7" (open
+  item 2), Acknowledgements +18 words (the
   recommendation sentence); Conflict, Ethics, Funding, CRediT and AI use
   have 0 differences. The TOP checklist appendix is gone (`grep -c "TOP
   Checklist" manuscript.tex` = 0). Side effect of the new OSF reference:
@@ -129,10 +130,9 @@ end).
    doi.org yet. Probably also the cause of the "error 500" on the PCJ form
    (`../pcj_error500_report_draft.txt`), which takes this DOI. Check it
    resolves before trying again or sending the report.
-2. Availability section says "Supplementary materials (Tables S1--S5)",
-   but the body cites Tables S6 and S7 and the supplement has S1-S7. A
-   content change, so left as in v3; decide whether to change it to
-   S1--S7 (PCJ proofs would be the place).
+2. Done 2026-10-24 (Juda's decision): availability section now says
+   "Tables S1--S7" (v3 said S1--S5, but the body cites S6 and S7 and the
+   supplement has S1-S7). The one deliberate content change from v3.
 3. Zotero: add Hopwood (2026), the Zenodo record and the OSF
    preregistration (now in `extras.bib`), and fix: Ripka et al. (2024)
    editor "Åström Elmersjö, Henrik"; Barton & Levstik (2004) DOI

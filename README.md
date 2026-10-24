@@ -38,8 +38,9 @@ Students
   in [final_check.md](submissions/pcj/final_check.md); then drop the
   sourcemap in `submissions/pcj/manuscript.tex`
 - [ ] Decide the open items in
-  [final_check.md](submissions/pcj/final_check.md) (Tables S1--S5 vs
-  S6/S7 in the availability text; ITC 2017 and Smith et al. year;
+  [final_check.md](submissions/pcj/final_check.md) (ITC 2017 and
+  Smith et al. year; tell PCJ the availability text now says Tables
+  S1--S7 if the submitted file still says S1--S5;
   reference-verifier reading gaps); the proofs are the place for any fix
 - [ ] After publication: add the PCJ DOI to Zenodo, PsyArXiv, ORCID and
   `areas/Publications.md`
@@ -110,3 +111,5 @@ Students
   unchanged from v3, checked in `final_check.md`), ready if PCJ asks for
   the formatted files; recommendation DOI not yet resolving at doi.org
   (likely cause of the form error)
+- 2026-10-24 PCJ package: availability text corrected to Tables S1--S7
+  (v3 said S1--S5; supplement has S1-S7)
