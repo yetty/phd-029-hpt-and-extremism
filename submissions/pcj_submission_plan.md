@@ -1,8 +1,8 @@
 # Peer Community Journal: submission plan
 
-**Status:** Submitted to PCJ 2026-10-24 (by hand); waiting for the
-format check and proofs. PCJ-format package ready in `pcj/` (see
-`pcj/final_check.md`) if they ask for it.
+**Status:** PCJ-format package ready in `pcj/` (see
+`pcj/final_check.md`); not submitted yet, the PCJ form returned Error 500
+on 2026-10-24.
 **Created:** 2026-10-24
 **Basis:** PCI Psychology recommendation of PsyArXiv v3 and the PCJ author
 instructions (`../../../sources/Publications/2026-10-24-pcj-author-instructions.txt`,
@@ -101,7 +101,8 @@ Agent instructions with a final double check:
    items there).
 4. Optional: post the formatted text as PsyArXiv v4 (not required by PCJ;
    the recommended version stays v3).
-5. Done 2026-10-24 by hand (the form returned Error 500). Submit at
+5. Not done: the form returned Error 500 on 2026-10-24 (report draft
+   `pcj_error500_report_draft.txt`, not sent). Submit at
    <https://peercommunityjournal.org/submit> (Juda, ORCID
    login), then check the proofs.
 6. After publication: add the PCJ DOI to Zenodo (related identifier),

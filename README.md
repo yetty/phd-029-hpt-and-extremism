@@ -1,5 +1,5 @@
 ---
-status: waiting
+status: active
 end: publication in Peer Community Journal
 drive:
 ---
@@ -13,8 +13,8 @@ Students
 > Psychology and published in Peer Community Journal - Done when: PCI
 > recommendation and publication in Peer Community Journal
 > State (2026-10-24): recommended by PCI Psychology on 2026-10-22
-> (PsyArXiv v3); submitted to Peer Community Journal on 2026-10-24;
-> waiting for the PCJ format check and proofs.
+> (PsyArXiv v3); PCJ package ready, not yet submitted: the PCJ form
+> returns Error 500 (2026-10-24).
 
 - Public reproducibility package: https://doi.org/10.5281/zenodo.23494026
 - Preregistration: https://osf.io/zsngy/
@@ -27,11 +27,13 @@ Students
   (https://psych.peercommunityin.org/articles/rec?id=475)
 
 ## Next steps
-- [x] Submit to Peer Community Journal (2026-10-24, by hand after the
-  form returned Error 500)
-- [ ] Answer PCJ format requests with the PCJ-template package in
+- [ ] Submit to Peer Community Journal with the package in
   [submissions/pcj/](submissions/pcj/README.md) (PDF, source, BibTeX,
-  image; form text in [form_fields.md](submissions/pcj/form_fields.md))
+  image; form text in [form_fields.md](submissions/pcj/form_fields.md)).
+  Blocked: the form returned Error 500 (2026-10-24). Retry once the
+  recommendation DOI resolves at doi.org; if it still fails, send
+  [the error report](submissions/pcj_error500_report_draft.txt)
+- [ ] Answer PCJ format requests
 - [ ] Check and approve the PCJ proofs
 - [ ] Zotero: add Hopwood (2026), the Zenodo record and the OSF
   preregistration (`submissions/pcj/extras.bib`) and the reference fixes
@@ -106,7 +108,7 @@ Students
   formats the article in the PCJ template and submits it with a BibTeX
   export, an article-page image and the Zenodo DOI
 - 2026-10-24 PCJ submission form returned Error 500 several times (report
-  drafted, not sent); submitted to Peer Community Journal by hand
+  drafted, not sent); not submitted yet
 - 2026-10-24 PCJ-template package built in `submissions/pcj/` (content
   unchanged from v3, checked in `final_check.md`), ready if PCJ asks for
   the formatted files; recommendation DOI not yet resolving at doi.org
