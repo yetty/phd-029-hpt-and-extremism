@@ -53,5 +53,11 @@ for entry in re.split(r"\n(?=@)", text.strip()):
         body.append("  %s = %s," % (FIELDS.get(name, name), value))
     out.append("@%s{%s,\n%s\n}" % (etype, key, "\n".join(body)))
 
-open(path, "w", encoding="utf-8").write("\n\n".join(out) + "\n")
+# Typographic punctuation as TeX ASCII ligatures (the repo hook rejects it).
+TYPO = {"–": "--", "—": "---", "‘": "`", "’": "'",
+        "“": "``", "”": "''"}
+result = "\n\n".join(out) + "\n"
+for char, tex in TYPO.items():
+    result = result.replace(char, tex)
+open(path, "w", encoding="utf-8").write(result)
 print("%d entries" % len(out))
