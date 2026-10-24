@@ -85,6 +85,9 @@ instructions (`../../../sources/Publications/2026-10-24-pcj-author-instructions.
 
 ## Order of work
 
+Agent instructions with a final double check:
+`../docs/pcj-submission-brief.md`.
+
 1. Build the PCJ version in `submissions/pcj/` (copy of the recommended
    v3 text; only the format changes above, no content changes).
 2. Zotero: add Hopwood (2026), Zenodo record, OSF preregistration.

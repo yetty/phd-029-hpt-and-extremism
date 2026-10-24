@@ -46,6 +46,8 @@ Students
   manuscript (PCI Psychology)
 - [PCJ plan](submissions/pcj_submission_plan.md): how to publish the
   recommended preprint in Peer Community Journal (rules, files, gaps)
+- [PCJ brief](docs/pcj-submission-brief.md): instructions for an agent
+  to build the PCJ package and double-check it
 - [checklist](submissions/pci_psychology/final_resubmission_checklist.md):
   record of the final resubmission steps
 - [submissions/pci_psychology/reviews/](submissions/pci_psychology/reviews/):
