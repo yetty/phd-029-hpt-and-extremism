@@ -12,6 +12,8 @@ Result: "500 Internal Server Error (server-side error)" from BunkerWeb.
 Request ID: 8963f571beab0621383623aabc053150
 Time: 2026-10-24 06:37:48 UTC
 
+I tried it several times, with delays of a few minutes between attempts, and got the same error each time.
+
 Article: Kaleta, J. (2026). Cross-Cultural Validation and Ideological Fairness of a Historical Perspective Taking Instrument: Evidence from Czech Secondary Students. PsyArXiv, version 3. https://doi.org/10.31234/osf.io/hxngm_v3
 Recommendation: https://psych.peercommunityin.org/articles/rec?id=475
 
