@@ -1,6 +1,6 @@
 ---
-status: waiting
-end: PCI Psychology decision on the revision
+status: active
+end: publication in Peer Community Journal
 drive:
 ---
 # phd-029 - HPT and Extremism
@@ -12,17 +12,27 @@ Students
 > Goal: the HPT validation and ideological-fairness paper recommended by PCI
 > Psychology and published in Peer Community Journal - Done when: PCI
 > recommendation and publication in Peer Community Journal
-> State (2026-10-22): revision submitted to PCI Psychology on 2026-10-21
-> (PsyArXiv v3, Zenodo package published); awaiting the recommender's
-> decision.
+> State (2026-10-24): recommended by PCI Psychology on 2026-10-22
+> (PsyArXiv v3); next, format for Peer Community Journal and submit.
 
 - Public reproducibility package: https://doi.org/10.5281/zenodo.23494026
 - Preregistration: https://osf.io/zsngy/
 - Former OSF project (provenance only): https://doi.org/10.17605/OSF.IO/YNG37
 - Preprint: https://doi.org/10.31234/osf.io/hxngm_v3
+- PCI recommendation: Hopwood, C. (2026). Recommendation of a Czech
+  translation of an historical perspective taking instrument. Peer
+  Community in Psychology, 100475.
+  https://doi.org/10.24072/pci.psych.100475
+  (https://psych.peercommunityin.org/articles/rec?id=475)
 
 ## Next steps
-- [ ] Wait for the PCI Psychology decision on the revision
+- [ ] Reformat the recommended v3 in the PCJ LaTeX template, content
+  unchanged (no front matter, PCJ section names, recommendation sentence
+  in Acknowledgements, TOP appendix out); see
+  [PCJ plan](submissions/pcj_submission_plan.md)
+- [ ] Zotero: add the Hopwood (2026) recommendation and the Zenodo record
+  so both appear in the reference list
+- [ ] Submit to Peer Community Journal (ORCID login) and check the proofs
 
 ## Drive
 - No Google Drive folder recorded in the project.
@@ -34,6 +44,8 @@ Students
   Registered Report; confidentiality; scoring conventions)
 - [manuscript.tex](submissions/pci_psychology/manuscript.tex): revised
   manuscript (PCI Psychology)
+- [PCJ plan](submissions/pcj_submission_plan.md): how to publish the
+  recommended preprint in Peer Community Journal (rules, files, gaps)
 - [checklist](submissions/pci_psychology/final_resubmission_checklist.md):
   record of the final resubmission steps
 - [submissions/pci_psychology/reviews/](submissions/pci_psychology/reviews/):
@@ -71,3 +83,9 @@ Students
   23494026); third-party instrument files excluded pending permission
 - 2026-10-21 PsyArXiv v3 posted; revision submitted to PCI Psychology
 - 2026-10-22 decision: keep the project open (waiting), not archived
+- 2026-10-22 recommended by PCI Psychology (Chris Hopwood; reviewers Ryan
+  Strickler and one anonymous), validated 2026-10-23; doi
+  10.24072/pci.psych.100475
+- 2026-10-24 PCJ route researched: no new review, no fee; the author
+  formats the article in the PCJ template and submits it with a BibTeX
+  export, an article-page image and the Zenodo DOI
