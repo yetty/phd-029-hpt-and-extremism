@@ -1,6 +1,7 @@
 # Peer Community Journal: submission plan
 
-**Status:** Draft, not started
+**Status:** Submitted to PCJ 2026-10-24 (by hand); waiting for the
+format check and proofs
 **Created:** 2026-10-24
 **Basis:** PCI Psychology recommendation of PsyArXiv v3 and the PCJ author
 instructions (`../../../sources/Publications/2026-10-24-pcj-author-instructions.txt`,

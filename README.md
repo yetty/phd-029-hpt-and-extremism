@@ -1,5 +1,5 @@
 ---
-status: active
+status: waiting
 end: publication in Peer Community Journal
 drive:
 ---
@@ -13,7 +13,8 @@ Students
 > Psychology and published in Peer Community Journal - Done when: PCI
 > recommendation and publication in Peer Community Journal
 > State (2026-10-24): recommended by PCI Psychology on 2026-10-22
-> (PsyArXiv v3); next, format for Peer Community Journal and submit.
+> (PsyArXiv v3); submitted to Peer Community Journal on 2026-10-24;
+> waiting for the PCJ format check and proofs.
 
 - Public reproducibility package: https://doi.org/10.5281/zenodo.23494026
 - Preregistration: https://osf.io/zsngy/
@@ -26,13 +27,14 @@ Students
   (https://psych.peercommunityin.org/articles/rec?id=475)
 
 ## Next steps
-- [ ] Reformat the recommended v3 in the PCJ LaTeX template, content
-  unchanged (no front matter, PCJ section names, recommendation sentence
-  in Acknowledgements, TOP appendix out); see
-  [PCJ plan](submissions/pcj_submission_plan.md)
-- [ ] Zotero: add the Hopwood (2026) recommendation and the Zenodo record
-  so both appear in the reference list
-- [ ] Submit to Peer Community Journal (ORCID login) and check the proofs
+- [x] Submit to Peer Community Journal (2026-10-24, by hand after the
+  form returned Error 500)
+- [ ] Answer PCJ format requests; the PCJ-template version was not built
+  in this repo (see [PCJ plan](submissions/pcj_submission_plan.md) and
+  [PCJ brief](docs/pcj-submission-brief.md) if they ask for it)
+- [ ] Check and approve the PCJ proofs
+- [ ] After publication: add the PCJ DOI to Zenodo, PsyArXiv, ORCID and
+  `areas/Publications.md`
 
 ## Drive
 - No Google Drive folder recorded in the project.
@@ -91,3 +93,5 @@ Students
 - 2026-10-24 PCJ route researched: no new review, no fee; the author
   formats the article in the PCJ template and submits it with a BibTeX
   export, an article-page image and the Zenodo DOI
+- 2026-10-24 PCJ submission form returned Error 500 several times (report
+  drafted, not sent); submitted to Peer Community Journal by hand
