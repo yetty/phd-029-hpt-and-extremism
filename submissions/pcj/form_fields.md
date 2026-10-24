@@ -67,6 +67,10 @@ item format, and ideologically restricted sample.
 
 - Check that <https://doi.org/10.24072/pci.psych.100475> resolves. On
   2026-10-24 doi.org still answered "DOI Not Found" (the PCI page gives this
-  DOI, so it is probably not registered yet).
+  DOI, so it is probably not registered yet). The form's "Create" step
+  takes this DOI, so this is a likely cause of the error 500 in
+  `../pcj_error500_report_draft.txt`; try again once it resolves, before
+  sending that report.
+- Open items and decisions: `final_check.md`, section "Open items".
 - After publication: add the PCJ DOI to Zenodo (related identifier),
   PsyArXiv, ORCID, `areas/Publications.md` and the doctoral-study record.
