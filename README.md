@@ -29,10 +29,18 @@ Students
 ## Next steps
 - [x] Submit to Peer Community Journal (2026-10-24, by hand after the
   form returned Error 500)
-- [ ] Answer PCJ format requests; the PCJ-template version was not built
-  in this repo (see [PCJ plan](submissions/pcj_submission_plan.md) and
-  [PCJ brief](docs/pcj-submission-brief.md) if they ask for it)
+- [ ] Answer PCJ format requests with the PCJ-template package in
+  [submissions/pcj/](submissions/pcj/README.md) (PDF, source, BibTeX,
+  image; form text in [form_fields.md](submissions/pcj/form_fields.md))
 - [ ] Check and approve the PCJ proofs
+- [ ] Zotero: add Hopwood (2026), the Zenodo record and the OSF
+  preregistration (`submissions/pcj/extras.bib`) and the reference fixes
+  in [final_check.md](submissions/pcj/final_check.md); then drop the
+  sourcemap in `submissions/pcj/manuscript.tex`
+- [ ] Decide the open items in
+  [final_check.md](submissions/pcj/final_check.md) (Tables S1--S5 vs
+  S6/S7 in the availability text; ITC 2017 and Smith et al. year;
+  reference-verifier reading gaps); the proofs are the place for any fix
 - [ ] After publication: add the PCJ DOI to Zenodo, PsyArXiv, ORCID and
   `areas/Publications.md`
 
@@ -50,6 +58,9 @@ Students
   recommended preprint in Peer Community Journal (rules, files, gaps)
 - [PCJ brief](docs/pcj-submission-brief.md): instructions for an agent
   to build the PCJ package and double-check it
+- [submissions/pcj/](submissions/pcj/README.md): PCJ upload package
+  (PDF, source, BibTeX, image, form text) and its
+  [final check](submissions/pcj/final_check.md)
 - [checklist](submissions/pci_psychology/final_resubmission_checklist.md):
   record of the final resubmission steps
 - [submissions/pci_psychology/reviews/](submissions/pci_psychology/reviews/):
@@ -95,3 +106,7 @@ Students
   export, an article-page image and the Zenodo DOI
 - 2026-10-24 PCJ submission form returned Error 500 several times (report
   drafted, not sent); submitted to Peer Community Journal by hand
+- 2026-10-24 PCJ-template package built in `submissions/pcj/` (content
+  unchanged from v3, checked in `final_check.md`), ready if PCJ asks for
+  the formatted files; recommendation DOI not yet resolving at doi.org
+  (likely cause of the form error)

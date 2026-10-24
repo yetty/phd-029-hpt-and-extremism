@@ -1,7 +1,8 @@
 # Peer Community Journal: submission plan
 
 **Status:** Submitted to PCJ 2026-10-24 (by hand); waiting for the
-format check and proofs
+format check and proofs. PCJ-format package ready in `pcj/` (see
+`pcj/final_check.md`) if they ask for it.
 **Created:** 2026-10-24
 **Basis:** PCI Psychology recommendation of PsyArXiv v3 and the PCJ author
 instructions (`../../../sources/Publications/2026-10-24-pcj-author-instructions.txt`,
@@ -49,39 +50,39 @@ instructions (`../../../sources/Publications/2026-10-24-pcj-author-instructions.
 
 ## Gaps between the current manuscript and PCJ format
 
-- [ ] **Template.** Move `pci_psychology/manuscript.tex` (pandoc article
+- [x] **Template.** Move `pci_psychology/manuscript.tex` (pandoc article
   class, biblatex-apa) into the PCJ LaTeX class: OSF
   <https://osf.io/kmwfv> or the Overleaf template "PCI and Peer Community
   Journal". Use the class option `mode=plain` and leave the metadata
   fields empty.
-- [ ] **No front matter.** Text starts with the Introduction: no title
+- [x] **No front matter.** Text starts with the Introduction: no title
   page, abstract, keywords, headers, footers, line or page numbers. PCJ
   adds the cover page from the form metadata (title and abstract from
   `pci_title_abstract.txt`).
-- [ ] **Recommendation sentence** in Acknowledgements: "Preprint version 3
+- [x] **Recommendation sentence** in Acknowledgements: "Preprint version 3
   of this article has been peer-reviewed and recommended by Peer
   Community In Psychology (https://doi.org/10.24072/pci.psych.100475;
   Hopwood, 2026)." Add the Hopwood (2026) recommendation to Zotero so it
   appears in the reference list.
-- [ ] **Mandatory section names:** "Acknowledgements", "Funding",
+- [x] **Mandatory section names:** "Acknowledgements", "Funding",
   "Conflict of interest disclosure", "Data, script, code, and
   supplementary information availability", "References". Rename the
   current "Data Availability Statement" accordingly; keep Ethics, CRediT
   and AI use (PCJ requires AI disclosure in methods or acknowledgements).
-- [ ] **Zenodo in the references.** PCJ wants the data and code record in
+- [x] **Zenodo in the references.** PCJ wants the data and code record in
   the reference list and cited in the availability section. Today it is
   only a bare URL. Add the Zenodo record (and the OSF preregistration) to
   Zotero and cite them.
-- [ ] **Remove the TOP checklist appendix.** It is a PCI Psychology
+- [x] **Remove the TOP checklist appendix.** It is a PCI Psychology
   submission requirement, not part of the article.
-- [ ] **Supplement.** Stays in the Zenodo package; cite it from the
+- [x] **Supplement.** Stays in the Zenodo package; cite it from the
   availability section (already done).
-- [ ] **References:** APA 7, alphabetical, DOIs as full
+- [x] **References:** APA 7, alphabetical, DOIs as full
   `https://doi.org/...` URLs, every citation in the list and back.
   Re-run `reference-verifier` after the move to the new template.
-- [ ] **Figures and tables** within the margins; figures as PNG/JPG (no
+- [x] **Figures and tables** within the margins; figures as PNG/JPG (no
   SVG/EMF/WMF).
-- [ ] **Language.** PCJ has no spelling rule; keep American English and
+- [x] **Language.** PCJ has no spelling rule; keep American English and
   APA 7 as in the recommended version.
 
 ## Order of work
@@ -89,14 +90,19 @@ instructions (`../../../sources/Publications/2026-10-24-pcj-author-instructions.
 Agent instructions with a final double check:
 `../docs/pcj-submission-brief.md`.
 
-1. Build the PCJ version in `submissions/pcj/` (copy of the recommended
-   v3 text; only the format changes above, no content changes).
-2. Zotero: add Hopwood (2026), Zenodo record, OSF preregistration.
-3. Build the PDF, check it against the checklist above, run
-   `reference-verifier`, export the BibTeX of cited references.
+1. Done 2026-10-24: PCJ version built in `pcj/` (copy of the recommended
+   v3 text; only the format changes above, no content changes). Upload
+   files and form text: `pcj/README.md`, `pcj/form_fields.md`.
+2. Open: Zotero - add Hopwood (2026), the Zenodo record and the OSF
+   preregistration (now in `pcj/extras.bib`) and the reference fixes
+   listed in `pcj/final_check.md`.
+3. Done 2026-10-24: PDF built and checked, `reference-verifier` run,
+   BibTeX of cited references exported (`pcj/final_check.md`; open
+   items there).
 4. Optional: post the formatted text as PsyArXiv v4 (not required by PCJ;
    the recommended version stays v3).
-5. Submit at <https://peercommunityjournal.org/submit> (Juda, ORCID
+5. Done 2026-10-24 by hand (the form returned Error 500). Submit at
+   <https://peercommunityjournal.org/submit> (Juda, ORCID
    login), then check the proofs.
 6. After publication: add the PCJ DOI to Zenodo (related identifier),
    PsyArXiv, ORCID, `areas/Publications.md` and the doctoral-study
