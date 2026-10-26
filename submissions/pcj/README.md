@@ -3,37 +3,45 @@
 PCJ version of the article recommended by PCI Psychology (Hopwood, 2026,
 <https://doi.org/10.24072/pci.psych.100475>), built from PsyArXiv v3
 (<https://doi.org/10.31234/osf.io/hxngm_v3>, source
-`../pci_psychology/manuscript.tex`). Content unchanged; see
+`../pci_psychology/manuscript.tex`). Content unchanged except the AI
+disclosure (moved into Acknowledgements, as PCJ asks) and Tables S1--S7; see
 `final_check.md`. Agent brief: `../../docs/pcj-submission-brief.md`.
 
 ## Files to upload
 
 - `manuscript.pdf` - article in PCJ format (`mode=plain`, starts with the
   Introduction, no cover page, headers, footers or line/page numbers)
-- `manuscript.tex` - LaTeX source (needs `figures/revision_relationships.pdf`
-  and the class files below)
-- `references.bib` - BibTeX export of the 52 cited references only
+- `manuscript.tex` - the editable source. Self-contained: it needs only
+  `references.bib` and the PCJ class files (Figure 1 is TikZ code inside
+  the file). Build: pdflatex, biber, pdflatex, pdflatex.
+- `references.bib` - the 52 cited references only, the file
+  `manuscript.tex` reads
 - `article_image.png` - article-page image, 2160 x 1080 px; Figure 1 made by
   our script `revision_reporting_analyses.R` (also in the Zenodo package)
 - Form text: `form_fields.md`
 
 ## Build
 
-`./build.sh` runs pdfLaTeX + Biber (biblatex-apa, as in v3), fails on LaTeX
-errors, undefined citations or overfull boxes, then writes `references.bib`
-(Biber tool mode, converted to plain BibTeX field names by
-`bib2bibtex.py`). `check_content.py` diffs the text against v3.
+`./build.sh` runs pdfLaTeX + Biber (biblatex-apa, as in v3) and fails on
+LaTeX errors, undefined citations or overfull boxes. `check_content.py`
+diffs the text against v3.
 
-- `bibliography.bib` is a relative symlink to the root `bibliography.bib`
-  (Zotero export; never edit it).
+- `references.bib` is the only bibliography source. It was made once
+  (2026-10-26) by Biber in tool mode from the root `bibliography.bib`
+  (Zotero), `extras.bib` and the biblatex sourcemap fixes then in
+  `manuscript.tex`, tidied by `clean_bib.py` (see its docstring). It keeps
+  biblatex fields (`langid`, `date`, `urldate`, ...): without them
+  biblatex-apa lowercases German titles and drops retrieval dates. Reference
+  fixes now go into both Zotero and `references.bib`.
 - `extras.bib`: entries not in Zotero (copied from `../pci_psychology/` plus
-  Hopwood 2026, the Zenodo record and the OSF preregistration).
-- `figures/revision_relationships.pdf` is the v3 figure
-  (`../pci_psychology/revision_outputs/`) passed through Ghostscript
-  (`pdfwrite -dEmbedAllFonts=true -dPDFSETTINGS=/prepress`) so that
-  Helvetica is embedded; renders identical at 150 dpi.
-- `manuscript.tex` holds a biblatex sourcemap with two fixes that belong in
-  Zotero (editor of Ripka et al. 2024; DOI of Barton & Levstik 2004).
+  Hopwood 2026, the Zenodo record and the OSF preregistration), kept for the
+  Zotero import.
+- Figure 1 was drawn by tikzDevice from `revision_reporting_analyses.R`
+  re-run up to the figure (same data, same random seed: the PDF from that
+  run renders 0 pixels different from the v3 figure at 150 dpi), with
+  Helvetica metrics at 10 pt, as in the R figure. The only edits: the
+  axis label "-2" set as a true minus; the R PDF device had printed every
+  hyphen in the figure text as a minus.
 
 ## Template
 

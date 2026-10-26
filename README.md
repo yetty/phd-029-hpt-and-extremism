@@ -37,8 +37,8 @@ Students
 - [ ] Check and approve the PCJ proofs
 - [ ] Zotero: add Hopwood (2026), the Zenodo record and the OSF
   preregistration (`submissions/pcj/extras.bib`) and the reference fixes
-  in [final_check.md](submissions/pcj/final_check.md); then drop the
-  sourcemap in `submissions/pcj/manuscript.tex`
+  in [final_check.md](submissions/pcj/final_check.md) (already in
+  `submissions/pcj/references.bib`)
 - [ ] Decide the open items in
   [final_check.md](submissions/pcj/final_check.md) (ITC 2017 and
   Smith et al. year; tell PCJ the availability text now says Tables
@@ -118,3 +118,7 @@ Students
 - 2026-10-26 PCJ package rechecked against the live instructions: passes;
   recommendation DOI now resolves; open: reference DOIs/years in
   `final_check.md` item 4
+- 2026-10-26 PCJ package: AI disclosure moved into Acknowledgements;
+  `manuscript.tex` self-contained (reads only `references.bib`, Figure 1 in
+  TikZ); `references.bib` rebuilt with biblatex fields so the article builds
+  from it unchanged; references left as they are (Juda's decision)

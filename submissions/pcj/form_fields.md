@@ -60,9 +60,9 @@ item format, and ideologically restricted sample.
 ## Files to upload
 
 1. `manuscript.pdf` - formatted article
-2. `manuscript.tex` - source (if the form takes more than one source
-   file, add `figures/revision_relationships.pdf`)
-3. `references.bib` - BibTeX of the cited references only
+2. `manuscript.tex` - editable source, self-contained (reads only
+   `references.bib`; Figure 1 is TikZ inside it)
+3. `references.bib` - BibTeX of the 52 cited references only
 4. `article_image.png` - article-page image (Figure 1, own script)
 
 ## Before using the form again

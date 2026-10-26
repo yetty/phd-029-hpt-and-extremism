@@ -36,8 +36,9 @@ end).
 - [x] Five mandatory sections with the exact names: Acknowledgements,
   Funding, Conflict of interest disclosure, Data, script, code, and
   supplementary information availability, References (all p. 20).
-  Ethics Statement, Author Contributions (CRediT) and AI Use Disclosure
-  kept with their v3 wording (p. 19).
+  Ethics Statement and Author Contributions (CRediT) kept with their v3
+  wording (p. 19). The v3 AI Use Disclosure section is now a paragraph in
+  Acknowledgements (2026-10-26, see below).
 - [x] Recommendation sentence in Acknowledgements (p. 20) with
   `https://doi.org/10.24072/pci.psych.100475` and "Hopwood, 2026"; Hopwood
   (2026) is in the reference list. **But** the DOI does not resolve yet:
@@ -59,9 +60,11 @@ end).
 
 - [x] PDF built from source with the PCJ class (`./build.sh`), not the
   PsyArXiv PDF.
-- [x] Source `manuscript.tex` (with `figures/` and the class files).
-- [x] `references.bib`: only the 52 cited entries, plain BibTeX field names
-  (`bib2bibtex.py`), same keys as the printed list (see above).
+- [x] Source `manuscript.tex`, self-contained (needs only `references.bib`
+  and the PCJ class files; Figure 1 is TikZ inside it). Updated 2026-10-26.
+- [x] `references.bib`: only the 52 cited entries, same keys as the printed
+  list (see above), and the file `manuscript.tex` reads. Updated
+  2026-10-26 (see below).
 - [x] `article_image.png`: PNG, 2160 x 1080 px, Figure 1 made by our
   `revision_reporting_analyses.R` (identical hash to the Zenodo copy
   `outputs/revision/revision_relationships.png`).
@@ -96,8 +99,8 @@ end).
 - [x] Conflict of interest: no financial conflicts, no non-financial ones
   (p. 20).
 - [x] Funding stated (p. 20).
-- [x] AI use disclosed (AI Use Disclosure, p. 19); the only figure is made
-  by an R script, not by AI.
+- [x] AI use disclosed in Acknowledgements (p. 20), as the AI rule asks;
+  the only figure is made by an R script, not by AI.
 - [x] No previously published figures or tables reproduced; instrument
   items not included; all sources cited.
 - [x] Single author; affiliation for the form in `form_fields.md`: Charles
@@ -109,8 +112,8 @@ end).
   `submissions/pcj/` and in the PDF text: no hits. No file with
   CONFID(E)NTIAL or teacher report in `submissions/pcj/`.
 - [ ] `reference-verifier` run (2026-10-24): all 53 keys resolve and no
-  drift; the formatting fixes it found are applied via the sourcemap in
-  `manuscript.tex`. **Unresolved** (none can be fixed without changing
+  drift; the formatting fixes it found are applied in `references.bib`
+  (formerly via a sourcemap in `manuscript.tex`). **Unresolved** (none can be fixed without changing
   content or reading the sources):
   - reading evidence: 14 cited works have no R/ note, 22 only an archived
     stub, 3 a note without annotations (e.g. Wilschut & Schiphorst 2019,
@@ -138,7 +141,7 @@ end).
    10.4324/9781410610508; Messick (1995) stray final period; Lee & Shemilt
    (2003) no issue number; Seixas & Morton (2013) and Wineburg (2001)
    subtitles; Wilschut & Schiphorst (2019) opening quote; Badham et al.
-   (2025) article number 1616879. Then remove the sourcemap.
+   (2025) article number 1616879. These are already in `references.bib`.
 4. Decide: ITC (2017) could cite the International Journal of Testing
    version (https://doi.org/10.1080/15305058.2017.1398166) instead of the
    web PDF; Seixas et al. (2015) chapter DOI (book
@@ -155,6 +158,27 @@ same PDF text and a byte-identical `references.bib` (52 entries); all fonts
 embedded; the recommendation, Zenodo and preprint DOIs resolve; Zenodo
 record is v1.0, CC BY 4.0. Remaining gaps against "DOIs where they exist"
 and "correct, accurate": open item 4 (ITC 2017 IJT DOI, Seixas et al. 2015
-chapter DOI, Smith et al. year). Crossref has no DOI for Cinatl et al.
-(2021). AI use is disclosed in its own section, not in Methods or
-Acknowledgements as the AI rule says; content is compliant.
+chapter DOI, Smith et al. year); Juda decided to leave the references as
+they are. Crossref has no DOI for Cinatl et al. (2021).
+
+## Changes 2026-10-26
+
+- AI disclosure: the separate "AI Use Disclosure" section is now a "Use of
+  AI tools" paragraph in Acknowledgements (PCJ: disclose in Methods or
+  Acknowledgements), same content plus "checked all AI-assisted text and
+  code for errors" and "No figures were generated with AI".
+- `manuscript.tex` self-contained: `\addbibresource{references.bib}` only,
+  no sourcemap; Figure 1 drawn in TikZ (see README.md), the external figure
+  file and the `bibliography.bib` symlink removed.
+- `references.bib` rebuilt with biblatex fields (`clean_bib.py`). The old
+  plain-BibTeX conversion was not enough to build the article: compiled
+  from it, biblatex-apa lowercased German titles (Beierlein et al., Decker
+  et al.) and dropped retrieval dates, the Zenodo "[Data set]" label and
+  "Article" numbers, and flipped Kaleta 2025a/b.
+- Verified: built in an empty folder from `manuscript.tex`,
+  `references.bib` and the unmodified PCJ class files only: no errors,
+  undefined citations or overfull boxes, PDF text identical to
+  `manuscript.pdf` (24 pages). Word diff against the previous PDF: only the
+  AI paragraph and the figure text (hyphens, the minus in "-2") differ.
+  Biber warns about two ISBNs (van Boxtel & van Drie 2018 has two in one
+  field; Barton & Levstik 2004 fails the checksum); ISBNs are not printed.
