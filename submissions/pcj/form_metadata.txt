@@ -19,7 +19,8 @@ First name: Juda
 Last name: Kaleta
 Corresponding Author: yes (tick)
 Email: juda.kaleta@ff.cuni.cz
-Affiliation: Charles University, Faculty of Arts, Institute of History, Prague, Czech Republic
+Affiliation 1: Charles University, Faculty of Arts, Institute of History, Prague, Czech Republic (ROR https://ror.org/024d6js02)
+Affiliation 2: Universidad de Murcia, Murcia, Spain (ROR https://ror.org/03p3aeb86)
 ORCID: 0000-0003-0043-4039
 Equal contrib: no
 

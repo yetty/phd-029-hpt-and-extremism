@@ -118,4 +118,5 @@ Students
   TikZ); `references.bib` rebuilt with biblatex fields so the article builds
   from it unchanged; references left as they are (Juda's decision)
 - 2026-10-26 submitted to Peer Community Journal (form worked once the
-  recommendation DOI resolved)
+  recommendation DOI resolved); affiliations Charles University and
+  Universidad de Murcia (second, cotutela; not in v3)

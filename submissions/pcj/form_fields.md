@@ -54,8 +54,9 @@ item format, and ideologically restricted sample.
   of History, Prague, Czech Republic
 - **Affiliation (Czech, if asked):** Univerzita Karlova, Filozofická
   fakulta, Ústav historie
-- Cotutela with Universidad de Murcia: not an affiliation of this article
-  in v3; add only if you want it (it would change the author metadata).
+- **Second affiliation (entered 2026-10-26):** Universidad de Murcia,
+  Murcia, Spain (cotutela; ROR https://ror.org/03p3aeb86). Not in v3.
+- ROR of Charles University: https://ror.org/024d6js02
 
 ## Files to upload
 
