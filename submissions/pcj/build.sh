@@ -1,8 +1,8 @@
 #!/bin/bash
 # Build the Peer Community Journal PDF from LaTeX source.
 # pdfLaTeX (the PCJ cedram class loads inputenc/fontenc itself) with Biber
-# for biblatex-apa, as in ../pci_psychology/build_preprint.sh. Then export
-# the cited references as BibTeX for the PCJ upload.
+# for biblatex-apa, as in ../pci_psychology/build_preprint.sh. The only
+# inputs are manuscript.tex, references.bib and the PCJ class files.
 
 set -euo pipefail
 cd "$(dirname "$0")"
@@ -20,12 +20,6 @@ if grep -E '^!|Citation .* undefined|Reference .* undefined|Overfull' \
 fi
 grep -E 'WARN|ERROR' manuscript.blg >&2 || true
 echo "Built: submissions/pcj/manuscript.pdf"
-
-# BibTeX export of only the cited entries (Biber tool mode on the .bcf).
-biber --quiet --output-format=bibtex --output-resolve --output-legacy-dates \
-  --output-file=references.bib manuscript.bcf
-"${PYTHON:-../../../../.venv/bin/python}" bib2bibtex.py references.bib
-echo "Exported: submissions/pcj/references.bib"
 
 # Clean aux files (keep the .log for checks).
 rm -f manuscript.aux manuscript.out manuscript.toc manuscript.bbl \
