@@ -12,9 +12,10 @@ Students
 > Goal: the HPT validation and ideological-fairness paper recommended by PCI
 > Psychology and published in Peer Community Journal - Done when: PCI
 > recommendation and publication in Peer Community Journal
-> State (2026-10-24): recommended by PCI Psychology on 2026-10-22
-> (PsyArXiv v3); PCJ package ready, not yet submitted: the PCJ form
-> returns Error 500 (2026-10-24).
+> State (2026-10-26): recommended by PCI Psychology on 2026-10-22
+> (PsyArXiv v3); submitted to Peer Community Journal on 2026-10-26;
+> waiting for the PCJ format check and proofs (median 3 weeks from
+> recommendation to publication in 2026).
 
 - Public reproducibility package: https://doi.org/10.5281/zenodo.23494026
 - Preregistration: https://osf.io/zsngy/
@@ -27,12 +28,8 @@ Students
   (https://psych.peercommunityin.org/articles/rec?id=475)
 
 ## Next steps
-- [ ] Submit to Peer Community Journal with the package in
-  [submissions/pcj/](submissions/pcj/README.md) (PDF, source, BibTeX,
-  image; form text in [form_fields.md](submissions/pcj/form_fields.md)).
-  The form returned Error 500 (2026-10-24); the recommendation DOI
-  resolves since 2026-10-26, so retry now; if it still fails, send
-  [the error report](submissions/pcj_error500_report_draft.txt)
+- [x] Submit to Peer Community Journal (2026-10-26, package in
+  [submissions/pcj/](submissions/pcj/README.md))
 - [ ] Answer PCJ format requests
 - [ ] Check and approve the PCJ proofs
 - [ ] Zotero: add Hopwood (2026), the Zenodo record and the OSF
@@ -41,9 +38,7 @@ Students
   `submissions/pcj/references.bib`)
 - [ ] Decide the open items in
   [final_check.md](submissions/pcj/final_check.md) (ITC 2017 and
-  Smith et al. year; tell PCJ the availability text now says Tables
-  S1--S7 if the submitted file still says S1--S5;
-  reference-verifier reading gaps); the proofs are the place for any fix
+  Smith et al. year; reference-verifier reading gaps); the proofs are the place for any fix
 - [ ] After publication: add the PCJ DOI to Zenodo, PsyArXiv, ORCID and
   `areas/Publications.md`
 
@@ -122,3 +117,5 @@ Students
   `manuscript.tex` self-contained (reads only `references.bib`, Figure 1 in
   TikZ); `references.bib` rebuilt with biblatex fields so the article builds
   from it unchanged; references left as they are (Juda's decision)
+- 2026-10-26 submitted to Peer Community Journal (form worked once the
+  recommendation DOI resolved)

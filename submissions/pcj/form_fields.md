@@ -1,7 +1,7 @@
 # PCJ submission form: what to paste
 
-Not submitted yet: on 2026-10-24 the form returned Error 500 after
-"Create". Use this for the submission. Form:
+Submitted 2026-10-26 (on 2026-10-24 the form returned Error 500 after
+"Create"). Kept for reference. Form:
 <https://peercommunityjournal.org/submit> (sign in with ORCID).
 Title, abstract and keywords are the PCI-recommended ones. For an exact
 single-line copy of the abstract, use `../pci_psychology/pci_title_abstract.txt`
