@@ -30,8 +30,8 @@ Students
 - [ ] Submit to Peer Community Journal with the package in
   [submissions/pcj/](submissions/pcj/README.md) (PDF, source, BibTeX,
   image; form text in [form_fields.md](submissions/pcj/form_fields.md)).
-  Blocked: the form returned Error 500 (2026-10-24). Retry once the
-  recommendation DOI resolves at doi.org; if it still fails, send
+  The form returned Error 500 (2026-10-24); the recommendation DOI
+  resolves since 2026-10-26, so retry now; if it still fails, send
   [the error report](submissions/pcj_error500_report_draft.txt)
 - [ ] Answer PCJ format requests
 - [ ] Check and approve the PCJ proofs
