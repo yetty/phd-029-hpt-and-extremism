@@ -126,10 +126,9 @@ end).
 
 ## Open items for Juda
 
-1. Recommendation DOI 10.24072/pci.psych.100475 does not resolve at
-   doi.org yet. Probably also the cause of the "error 500" on the PCJ form
-   (`../pcj_error500_report_draft.txt`), which takes this DOI. Check it
-   resolves before trying again or sending the report.
+1. Resolved 2026-10-26: recommendation DOI 10.24072/pci.psych.100475 now
+   resolves at doi.org (it did not on 2026-10-24, the likely cause of the
+   form's "error 500").
 2. Done 2026-10-24 (Juda's decision): availability section now says
    "Tables S1--S7" (v3 said S1--S5, but the body cites S6 and S7 and the
    supplement has S1-S7). The one deliberate content change from v3.
@@ -147,3 +146,15 @@ end).
    Smith et al. year; VanSledright year.
 5. Reference-verifier reading gaps and content flags above (pre-existing,
    outside the format scope).
+
+## Recheck 2026-10-26
+
+Against the live instructions (sections 2.4, 2.5, 4 and 5): all format and
+checklist items still pass. A clean rebuild in a scratch copy gives the
+same PDF text and a byte-identical `references.bib` (52 entries); all fonts
+embedded; the recommendation, Zenodo and preprint DOIs resolve; Zenodo
+record is v1.0, CC BY 4.0. Remaining gaps against "DOIs where they exist"
+and "correct, accurate": open item 4 (ITC 2017 IJT DOI, Seixas et al. 2015
+chapter DOI, Smith et al. year). Crossref has no DOI for Cinatl et al.
+(2021). AI use is disclosed in its own section, not in Methods or
+Acknowledgements as the AI rule says; content is compliant.

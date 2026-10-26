@@ -115,3 +115,6 @@ Students
   (likely cause of the form error)
 - 2026-10-24 PCJ package: availability text corrected to Tables S1--S7
   (v3 said S1--S5; supplement has S1-S7)
+- 2026-10-26 PCJ package rechecked against the live instructions: passes;
+  recommendation DOI now resolves; open: reference DOIs/years in
+  `final_check.md` item 4
