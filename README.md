@@ -1,5 +1,5 @@
 ---
-status: active
+status: done
 end: publication in Peer Community Journal
 drive:
 ---
@@ -12,14 +12,17 @@ Students
 > Goal: the HPT validation and ideological-fairness paper recommended by PCI
 > Psychology and published in Peer Community Journal - Done when: PCI
 > recommendation and publication in Peer Community Journal
-> State (2026-10-26): recommended by PCI Psychology on 2026-10-22
-> (PsyArXiv v3); submitted to Peer Community Journal on 2026-10-26;
-> waiting for the PCJ format check and proofs (median 3 weeks from
-> recommendation to publication in 2026).
+> State (2026-10-27): done - published in Peer Community Journal 6
+> (2026), https://doi.org/10.24072/pcjournal.831; project archived.
 
 - Public reproducibility package: https://doi.org/10.5281/zenodo.23494026
 - Preregistration: https://osf.io/zsngy/
 - Former OSF project (provenance only): https://doi.org/10.17605/OSF.IO/YNG37
+- Article: Kaleta, J. (2026). Cross-Cultural Validation and Ideological
+  Fairness of a Historical Perspective Taking Instrument: Evidence from
+  Czech Secondary Students. Peer Community Journal, 6.
+  https://doi.org/10.24072/pcjournal.831 (CC BY 4.0; article number still
+  "XX" on 2026-10-27)
 - Preprint: https://doi.org/10.31234/osf.io/hxngm_v3
 - PCI recommendation: Hopwood, C. (2026). Recommendation of a Czech
   translation of an historical perspective taking instrument. Peer
@@ -28,21 +31,8 @@ Students
   (https://psych.peercommunityin.org/articles/rec?id=475)
 
 ## Next steps
-- [x] Submit to Peer Community Journal (2026-10-26, package in
-  [submissions/pcj/](submissions/pcj/README.md))
-- [ ] Answer PCJ format requests
-- [ ] Proofs V2 (2026-10-27): all corrections applied; ask PCJ only
-  about the publication date (2026-10-20, before the 2026-10-22
-  recommendation) and the missing keywords, then approve
-- [ ] Zotero: add Hopwood (2026), the Zenodo record and the OSF
-  preregistration (`submissions/pcj/extras.bib`) and the reference fixes
-  in [final_check.md](submissions/pcj/final_check.md) (already in
-  `submissions/pcj/references.bib`)
-- [ ] Decide the open items in
-  [final_check.md](submissions/pcj/final_check.md) (ITC 2017 and
-  Smith et al. year; reference-verifier reading gaps); the proofs are the place for any fix
-- [ ] After publication: add the PCJ DOI to Zenodo, PsyArXiv, ORCID and
-  `areas/Publications.md`
+- None in the project. Follow-ups (OBD entry; PCJ DOI on Zenodo,
+  PsyArXiv, ORCID and in Zotero) are in the root `TASKS.md`.
 
 ## Drive
 - No Google Drive folder recorded in the project.
@@ -130,3 +120,8 @@ Students
 - 2026-10-27 proofs V2 (LaTeX/Mersenne layout) checked: all A1-A18,
   C1-C5 and the abstract fixes applied, text and numbers match, links,
   italics, sub- and superscripts correct; date and keywords still open
+- 2026-10-27 published in Peer Community Journal, vol. 6 (2026),
+  doi 10.24072/pcjournal.831 (Crossref: published online 2026-10-20;
+  article number not yet assigned); remaining package items
+  (`final_check.md`, Zotero) closed as overtaken by publication; project
+  done and archived
