@@ -81,8 +81,9 @@ column widened and cell padding reduced to 60 twips, so "(rev.)" fits on
 one line.
 
 `proofs/831V2_corrected.pdf` is the docx exported with LibreOffice
-(no cover, no header/footer, as PCJ asked). Arial is not installed
-here, so LibreOffice used the metric-compatible Liberation Sans.
+(no cover, no header/footer, as PCJ asked), set in Arial
+(msttcorefonts installed); its page breaks match the proofs (proof page
+n+1 = page n, since the proofs add a cover).
 Verification against a LibreOffice export of the unmodified docx: only
 the intended wording changes differ, every number matches (apart from
 the two repaired DOIs), no stat symbol is upright, chi-square
