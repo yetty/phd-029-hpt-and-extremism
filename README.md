@@ -31,9 +31,9 @@ Students
 - [x] Submit to Peer Community Journal (2026-10-26, package in
   [submissions/pcj/](submissions/pcj/README.md))
 - [ ] Answer PCJ format requests
-- [ ] Correct the PCJ proofs per
-  [proofs_check.md](submissions/pcj/proofs_check.md) (docx fixes, new PDF,
-  reply to PCJ with the cover-page items), then approve
+- [ ] Reply to PCJ with the corrected docx and PDF
+  (`submissions/pcj/proofs/`) and the cover-page items B1-B3 in
+  [proofs_check.md](submissions/pcj/proofs_check.md), then approve
 - [ ] Zotero: add Hopwood (2026), the Zenodo record and the OSF
   preregistration (`submissions/pcj/extras.bib`) and the reference fixes
   in [final_check.md](submissions/pcj/final_check.md) (already in
@@ -125,3 +125,5 @@ Students
 - 2026-10-27 PCJ proofs received; checked against the submission: text
   and numbers match, 18 conversion errors and 5 older typos listed in
   `submissions/pcj/proofs_check.md`
+- 2026-10-27 corrected docx and PDF built from the PCJ source
+  (`submissions/pcj/proofs/`, script `fix_docx.py`)

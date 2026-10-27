@@ -68,3 +68,25 @@ line end, so it looks fine, but it will break if the text reflows (source:
   https://doi.org/10.17605/OSF.IO/ZSNGY (same record).
 - Section headings gained a final period ("2.1."); body text reflowed to
   Arial; figure image is intact and legible.
+
+## E. Corrections applied (2026-10-27)
+
+`proofs/831V2_corrected.docx` is PCJ's `831V2.docx` with A1-A18 and
+C1-C5 applied by `proofs/fix_docx.py` (each edit asserts its match
+count). Also replaced the ligature characters (fi, fl) that the
+conversion had baked into the text (167 instances), so search and copy
+work. Greek symbols set upright (alpha, beta, omega) were italicised to
+match the rest of the article and the submitted PDF. Table 5: label
+column widened and cell padding reduced to 60 twips, so "(rev.)" fits on
+one line.
+
+`proofs/831V2_corrected.pdf` is the docx exported with LibreOffice
+(no cover, no header/footer, as PCJ asked). Arial is not installed
+here, so LibreOffice used the metric-compatible Liberation Sans.
+Verification against a LibreOffice export of the unmodified docx: only
+the intended wording changes differ, every number matches (apart from
+the two repaired DOIs), no stat symbol is upright, chi-square
+superscripts and the Badham and Breakstone link targets are correct.
+
+Still to raise with PCJ (cover metadata, B1-B3): publication date,
+missing keywords, italic r and minus signs in the abstract.
