@@ -19,68 +19,69 @@ refer to your proof PDF.
 - Keywords are missing. They are: historical perspective taking,
   cross-cultural validation, measurement invariance, differential item
   functioning, construct-irrelevant variance, test fairness.
-- Abstract: please set "r" in italics (both occurrences) and use true
-  minus signs instead of hyphens: "r = -.05, 95% CI [-.16, .07]" should
-  read r = (minus).05, 95% CI [(minus).16, .07].
+- Abstract: please set r in italics (both occurrences) and use true
+  minus signs instead of hyphens, i.e. "r = −.05, 95% CI [−.16, .07]".
 - Author name, ORCID, affiliations, email and the PCI recommendation
   DOI are correct.
 
 2. Conversion errors corrected in the Word file
 
 - p. 10 and 11, Tables 1 and 3 (column headers) and the Table 3 note:
-  "chi2" had lost its superscript; restored as chi-square with
-  superscript 2.
+  "χ2" had lost its superscript; restored to χ².
 - p. 19, Badham et al. (2025): the DOI contained a space and the link
   was broken; corrected to https://doi.org/10.3389/feduc.2025.1616879.
 - p. 19, Breakstone (2014): the DOI was split onto a separate line and
   the link was truncated; corrected to
   https://doi.org/10.1080/00933104.2014.965860.
-- p. 6: "developed in Hartmann (2008)'s dissertation" corrected to
-  "developed in Hartmann's (2008) dissertation".
+- p. 6: "developed in Hartmann (2008)'s dissertation" → "developed in
+  Hartmann's (2008) dissertation".
 - Words with a hyphen left inside them (mid-line):
-  p. 3 "substan-tive" -> "substantive";
-  p. 6 "mi-nor" -> "minor";
-  p. 7 "Recht-sextremer" -> "Rechtsextremer";
-  p. 20 "sec-ondary" -> "secondary" (Huijgen et al., 2014);
-  p. 21 "Dick-inson" -> "Dickinson" (Shemilt, 1984);
-  p. 16 "under-representation" -> "underrepresentation" (at a line end
+  p. 3 "substan-tive" → "substantive";
+  p. 6 "mi-nor" → "minor";
+  p. 7 "Recht-sextremer" → "Rechtsextremer";
+  p. 20 "sec-ondary" → "secondary" (Huijgen et al., 2014);
+  p. 21 "Dick-inson" → "Dickinson" (Shemilt, 1984);
+  p. 16 "under-representation" → "underrepresentation" (at a line end
   in the proof, but a fixed hyphen in the Word file).
-- p. 4 and p. 21: "Ministerstvo školství mládeže a tělovýchovy" ->
+- p. 4 and p. 21: "Ministerstvo školství mládeže a tělovýchovy" →
   "Ministerstvo školství, mládeže a tělovýchovy" (in-text citation and
   reference).
-- p. 6: "(e.g. think-aloud" -> "(e.g., think-aloud".
-- p. 12: the comma was moved outside the quotation mark; restored to
-  "...with this sample and procedure," not "no DIF present."
-- p. 14: "beta =.20" -> "beta = .20" (missing space).
-- p. 13, Table 5 note: "p <.05" -> "p < .05" (missing space).
-- p. 4: heading "2.2 Cross-Cultural Test Adaptation" -> "2.2. ..."
-  (period, as in all other headings).
+- p. 6: "(e.g. think-aloud" → "(e.g., think-aloud".
+- p. 12: the comma had moved outside the closing quotation mark; it is
+  back inside: "no DIF detected with this sample and procedure," not
+  "no DIF present."
+- p. 14: "β =.20" → "β = .20" (missing space).
+- p. 13, Table 5 note: "p <.05" → "p < .05" (missing space).
+- p. 4: heading "2.2 Cross-Cultural Test Adaptation" → "2.2. Cross-
+  Cultural Test Adaptation" (period, as in all other headings).
 - Statistical symbols that had lost their italics are italic again:
-  p. 7 SD; p. 10 p ("significant at p < .001"); p. 11 alpha (twice, in
-  the Table 3 note); p. 13 p ("p = .010"), beta, SE and p (Section
-  4.10, twice each for beta and p); p. 15 omega.
+  p. 7 SD; p. 10 p ("significant at p < .001"); p. 11 α (twice, Table 3
+  note); p. 13 p ("p = .010"); p. 13, Section 4.10: β, SE and p
+  ("β = .016, SE = .068, ... p = .817") and β and p in the next
+  sentence ("historical knowledge was the only consistent predictor");
+  p. 15 ω ("ω = .66 and .70").
 - p. 12, Table 4: "Note." set in italics, as in the other tables.
 - p. 13, Table 5: "Present-oriented perspective (rev.)" wrapped onto a
   second line that nearly touched the next row; the first column is
   now wider (cell padding slightly reduced) so the label fits on one
   line.
 - Throughout: the conversion had stored "fi" and "fl" as single
-  ligature characters (167 instances), which break text search and
-  copying; replaced with ordinary letters. This does not change the
+  ligature characters (ﬁ, ﬂ; 167 instances), which break text search
+  and copying; replaced with ordinary letters. This does not change the
   appearance.
 
 3. Typos of my own, also corrected
 
-- p. 17, Limitation 8: "cognitive- interview" -> "cognitive-interview"
-  and "option- matching" -> "option-matching".
-- p. 11, Table 3 note: "p_raw" and "p_adj" -> p with subscript "raw"
-  and "adj".
-- p. 19: "The wiley international handbook" -> "The Wiley
-  international handbook"; p. 21: "canadian social studies" ->
-  "Canadian social studies".
-- p. 20, Kaleta (2025a): "22(1), 14." -> "22(1), Article 14."
-- p. 13, heading 4.10: "Ideology-HPT" -> "Ideology[en dash]HPT" (as in
-  the text).
+- p. 17, Limitation 8: "cognitive- interview" → "cognitive-interview"
+  and "option- matching" → "option-matching".
+- p. 11, Table 3 note: "p_raw" and "p_adj" (literal underscores) → p
+  with subscript "raw" and p with subscript "adj".
+- p. 19: "The wiley international handbook" → "The Wiley international
+  handbook"; p. 21: "canadian social studies" → "Canadian social
+  studies".
+- p. 20, Kaleta (2025a): "22(1), 14." → "22(1), Article 14."
+- p. 13, heading 4.10: in "Ideology-HPT" the hyphen is replaced by an
+  en dash, as in the body text.
 
 Apart from these points, the proofs are fine. I am the sole author, so
 no further approvals are needed. Once the first-page items are fixed I
