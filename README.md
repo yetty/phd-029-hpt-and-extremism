@@ -125,3 +125,6 @@ Students
   article number not yet assigned); remaining package items
   (`final_check.md`, Zotero) closed as overtaken by publication; project
   done and archived
+- 2026-10-30 article number e114; Zotero item
+  `Kaleta2026Cross-Cultural`, PDF in vault `L/`, `R/` note written
+  from the published text
